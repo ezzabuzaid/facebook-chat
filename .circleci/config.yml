@@ -1,0 +1,68 @@
+version: 2
+jobs:
+    build:
+        working_directory: ~/project
+        docker:
+            - image: circleci/node:lts
+        steps:
+            - checkout
+            - run:
+                name: Show current branch
+                command: echo ${CIRCLE_BRANCH}
+            - run:
+                name: pwa command used to show the current directory use pwd -L to present the full path from ./root
+                command: pwd
+            - restore_cache:
+                keys:
+                    - npm-dependencies-{{ checksum "package.json" }}
+            - run:
+                name: Install application dependencies
+                command: npm install
+            - save_cache:
+                key: npm-dependencies-{{ checksum "package.json" }}
+                paths:
+                    - node_modules
+            # - run:
+            #     name: Linting
+            #     command: npm run lint
+            # - run:
+            #     name: Testing
+            #     command: npm run test --prod
+            - run:
+                name: Building
+                command: npm run build:ssr
+    deploy:
+        docker:
+            - image: circleci/node:lts
+        working_directory: ~/project
+        steps:
+            - run:
+                name: Show current branch
+                command: echo ${CIRCLE_BRANCH}
+            - run:
+                name: Install Firebase
+                command: npm install --save-dev firebase-tools
+            - run:
+                name: open functions folder and install dependeinces
+                command: cd functions
+            - run:
+                name: install dependeinces
+                command: npm install
+            - run:
+                name: Build firebase functions
+                command: npm run build
+            - run:
+                name: Deploy Master to Firebase
+                command: npm run firebase-deploy --token "$FIREBASE_TOKEN"
+
+workflows:
+    version: 2
+    -deploy:
+        jobs:
+        - build
+        # - deploy:
+        #     requires:
+        #         - build
+        #     filters:
+        #         branches:
+        #             only: master
