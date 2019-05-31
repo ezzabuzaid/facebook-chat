@@ -21,7 +21,8 @@ export const GLOBAL_CONFIG_FOR_DIALOG = new InjectionToken<ModelDialog.DialogPro
     ])]
 })
 export class DialogComponent implements OnInit, OnDestroy {
-  @Output() close: EventEmitter<any> = new EventEmitter();
+  // tslint:disable-next-line: no-output-native
+  @Output() close = new EventEmitter();
   @HostBinding('style.width') hostWidth;
   animation: ModelDialog.DialogAnimation = {
     value: 'default',

@@ -32,6 +32,7 @@ export class RequestInterceptor implements HttpRequestInterceptor {
   }
 
   private defaultState() {
+    // tslint:disable-next-line: forin
     for (const header in CustomHttpHeaders) {
       this[CustomHttpHeaders[header]] = false;
     }

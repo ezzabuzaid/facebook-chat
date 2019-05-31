@@ -32,7 +32,7 @@ export class HttpService extends HttpClient {
 
   private getInterceptor(InterceptorConstructor) {
     return this.interceptors.find((interceptor) => {
-      return interceptor['name'] === InterceptorConstructor.name;
+      return interceptor.name === InterceptorConstructor.name;
     });
   }
 
@@ -47,9 +47,9 @@ declare module '@angular/common/http/http' {
   // HttpClient with HttpService using dependency injection
   export interface HttpClient {
     /**
-      * Configure request object.
-      * @return The new instance.
-      */
+     * Configure request object.
+     * @return The new instance.
+     */
     configure(obj: MutateRequest): HttpClient;
 
   }
