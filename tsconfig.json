@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -11,12 +11,48 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
+    "removeComments": true,
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"
     ],
+    "paths": {
+      "@core/*": [
+        "app/@core/*"
+      ],
+      "@shared/*": [
+        "app/@shared/*"
+      ],
+      "@features/*": [
+        "app/@features/*"
+      ],
+      "@widget/*": [
+        "app/@widget/*"
+      ],
+      "@partials/*": [
+        "app/@partials/*"
+      ],
+      "@layout/*": [
+        "app/@layout/*"
+      ],
+      "@environments/*": [
+        "environments/*"
+      ]
+    },
     "lib": [
       "es2018",
       "dom"
     ]
+  },
+  "include": [
+    "src"
+  ],
+  "angularCompilerOptions": {
+    "strictMetadataEmit": false,
+    "skipTemplateCodegen": false,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "trace": true,
+    "annotationsAs": "static fields"
   }
 }

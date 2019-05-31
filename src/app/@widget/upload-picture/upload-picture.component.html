@@ -1,0 +1,9 @@
+<div class="wrapper w-100 h-100 d-flex align-items-center justify-content-center">
+  <label class="file-upload position-relative d-flex align-items-center justify-content-center bg--primary pointer" for="pricure-{{label}}">
+    <input id="pricure-{{label}}" accept="image/*" #imageInput (change)="uploadPicture(imageInput)" hidden type="file" />
+    <mat-icon class="text--primary">cloud_upload</mat-icon>
+    <ng-container *ngIf="false">
+      <img [class.uploaded]="value" src="{{ value }}" alt="avatar">
+    </ng-container>
+  </label>
+</div>

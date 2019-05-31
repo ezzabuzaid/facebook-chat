@@ -1,0 +1,65 @@
+@import "./utils/functions";
+@import "./utils/mixins";
+@import "./utils/variables";
+@import "./helpers/cards";
+@import "./helpers/material-fix";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: get_color_from_platte($mat-gray, 50);
+  overflow: hidden;
+}
+
+.backdrop {
+  @include backdrop;
+}
+
+.full-height {
+  height: 100vh;
+}
+.text-underline {
+  text-decoration: underline;
+}
+.overflow-auto {
+  overflow: auto;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.center-absolute {
+  @include center_absolute();
+}
+
+.center-flex {
+  @include center_flex();
+}
+
+.center-block {
+  @include center_block();
+}
+
+mat-form-field {
+  width: 100%;
+  $base_width: 0.75em;
+  &[appearance="outline"] {
+    .mat-form-field-infix {
+      padding: $base_width 0 $base_width 0 !important;
+      .mat-form-field-label-wrapper {
+        top: -1em !important;
+        padding-top: $base_width !important;
+      }
+    }
+  }
+}
+// TODO remove it
+semi-table-actions {
+  display: block;
+  @extend .center-flex;
+}

@@ -1,0 +1,13 @@
+<app-navbar>
+  <app-content>
+    <main class="flex-fill d-flex flex-column h-100">
+      <nav class="bg-white mat-elevation-z1">
+        <app-toolbar class="h-100 w-100 p-2 d-flex justify-content-end align-items-center"></app-toolbar>
+      </nav>
+      <section class="position-relative router-container h-100" [@routerAnimation]="prepareRoute(routerOutlet)">
+        <router-outlet #routerOutlet="outlet"></router-outlet>
+      </section>
+      <app-footer class="p-3"> </app-footer>
+    </main>
+  </app-content>
+</app-navbar>

@@ -1,0 +1,51 @@
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, HostBinding, Inject, InjectionToken, OnDestroy } from '@angular/core';
+import { trigger, state, transition, style, animate } from '@angular/animations';
+import { ModelDialog } from './dialog.types';
+export const GLOBAL_CONFIG_FOR_DIALOG = new InjectionToken<ModelDialog.DialogProperites>('GLOBAL_CONFIG_FOR_DIALOG');
+
+@Component({
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('dialogAnimation', [
+      state('end', style({ opacity: 0, transform: 'translateY(100px)' })),
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(100px)' }),
+        animate('{{ fadeEnter }}ms', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition('default => end', [
+        animate('{{ fadeLeave }}ms')
+      ])
+    ])]
+})
+export class DialogComponent implements OnInit, OnDestroy {
+  @Output() close: EventEmitter<any> = new EventEmitter();
+  @HostBinding('style.width') hostWidth;
+  animation: ModelDialog.DialogAnimation = {
+    value: 'default',
+    params: {
+      fadeEnter: this.config.fadeEnter,
+      fadeLeave: this.config.fadeLeave
+    }
+  };
+  options: ModelDialog.DialogProperites = {};
+  constructor(
+    @Inject(GLOBAL_CONFIG_FOR_DIALOG) public config
+  ) { }
+
+  ngOnInit() {
+    console.log(this.options.width);
+    this.hostWidth = this.options.width || this.config.width;
+  }
+
+  closeDialog() {
+    // this.close.emit();
+    this.animation = { value: 'end', params: { fadeEnter: this.config.fadeEnter, fadeLeave: this.config.fadeLeave } };
+  }
+
+  ngOnDestroy() {
+  }
+
+}

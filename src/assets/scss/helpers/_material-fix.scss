@@ -1,0 +1,106 @@
+// Fix: "Icon button ripple radius is not correct on Edge & Safari"
+.mat-icon-button {
+  .mat-button-ripple {
+    border-radius: 50%;
+  }
+}
+
+// Fix: "Smooth scrolling for iOS"
+.mat-dialog-container {
+  -webkit-overflow-scrolling: touch;
+}
+
+// Fix: "Inconsistent font sizes across elements"
+.mat-checkbox {
+  font-size: 16px;
+}
+
+.mat-radio-button {
+  font-size: 16px;
+}
+
+.mat-pseudo-checkbox-checked:after {
+  width: 14px !important;
+  height: 7px !important;
+}
+
+// Fix: "Input underlines has wrong color opacity value"
+.mat-form-field-underline {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+// Fix: "Table-cell and inline-table in mat-select"
+.mat-form-field {
+  &.mat-form-field-type-mat-select {
+    .mat-form-field-infix {
+      display: inline-flex;
+      width: auto;
+      .mat-select-trigger {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        .mat-select-value {
+          display: flex;
+          max-width: none;
+          margin-right: 8px;
+        }
+        .mat-select-arrow-wrapper {
+          display: inline-flex;
+        }
+      }
+    }
+  }
+}
+
+// Fix: Stepper icons are broken due to Fuse's icon helpers
+mat-horizontal-stepper,
+mat-vertical-stepper {
+  mat-step-header {
+    mat-icon {
+      height: 16px !important;
+      width: 16px !important;
+      min-width: 0 !important;
+      min-height: 0 !important;
+      color: inherit !important;
+    }
+  }
+}
+
+mat-vertical-stepper {
+  padding: 16px 0;
+}
+
+// Fix: Chip remove icon is broken due to Fuse's icon helpers
+mat-chip {
+  mat-icon {
+    min-width: 0 !important;
+    min-height: 0 !important;
+  }
+}
+
+// Fix: Mat-card-image requires a bigger width than 100%
+.mat-card-image {
+  max-width: none !important;
+}
+
+// Minimize the outline style of mat-form-field
+mat-form-field {
+  width: 100%;
+  $base_width: 0.5em;
+  &[appearance="outline"] {
+    .mat-form-field-infix {
+      padding: $base_width 0 $base_width 0 !important;
+      .mat-form-field-label-wrapper {
+        top: -1em !important;
+        padding-top: $base_width !important;
+        // label {
+        //   border-width: 1.5px !important;
+        //   $label-transition-time: 0.25s;
+        //   $label-transition-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+        //   transition: transform #{$label-transition-time}, color #{$label-transition-time} #{$label-transition-function},
+        //     width #{$label-transition-time} #{$label-transition-function} !important;
+        // }
+      }
+    }
+  }
+}

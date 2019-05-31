@@ -1,14 +1,68 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>Up</title>
+  <title>Angular Buildozer</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script async defer src='https://www.google-analytics.com/analytics.js'></script>
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140879795-1"></script> -->
+
+  <!-- Disable tap highlight on IE -->
+  <meta name="msapplication-tap-highlight" content="no">
+
+  <!-- Web Application Manifest -->
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Add to homescreen for Chrome on Android -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Angular Buildozer">
+  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Angular Buildozer">
+  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+
+  <!-- Tile icon for Win8 (144x144 + tile color) -->
+  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileColor" content="#2F3BA2">
+
+  <!-- Color the status bar on mobile devices -->
+  <meta name="theme-color" content="#1976d2">
+
 </head>
+
 <body>
   <app-root></app-root>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgV1woChyZyh90cQU3YA6dy0_6jHs6Fds&libraries=places&language=us&region=JP"
+    async defer></script>
+  <script>
+    // Google analytics
+    // TODO replace them with google tag manger
+    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- <script>
+    Google tag manager
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-140879795-1');
+  </script> -->
+  <noscript>
+    Please enable JavaScript to continue using this application.
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZKD4B" height="0" width="0"
+      style="display:none;visibility:hidden">
+    </iframe>
+  </noscript>
 </body>
+
 </html>

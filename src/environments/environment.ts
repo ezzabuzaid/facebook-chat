@@ -3,8 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  supportedLanguages: ['ar', 'en'],
+  defaultLanguage: 'en',
+  endpointUrl: '',
+  firebase: {
+    apiKey: 'AIzaSyBZtOQcwlZZYu7IEmuDnS2i_ziyVa2a5bo',
+    authDomain: 'chatbase-ebaa0.firebaseapp.com',
+    databaseURL: 'https://chatbase-ebaa0.firebaseio.com',
+    projectId: 'chatbase-ebaa0',
+    storageBucket: 'chatbase-ebaa0.appspot.com',
+    messagingSenderId: '483016343062'
+  }
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

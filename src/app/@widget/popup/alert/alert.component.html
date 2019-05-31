@@ -1,0 +1,9 @@
+<div class="d-flex flex-column">
+  <h5 class="text-left">{{ data?.title || '' }}</h5>
+</div>
+<div class="text-left" mat-dialog-content>
+  <p>{{ data?.description }}</p>
+</div>
+<div mat-dialog-actions class="text-left">
+  <button class="text-white" mat-flat-button mat-dialog-close cdkFocusInitial color="accent">Close</button>
+</div>

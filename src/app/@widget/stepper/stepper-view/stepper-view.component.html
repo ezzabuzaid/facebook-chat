@@ -1,0 +1,12 @@
+<header class="step-navigation-bar d-flex justify-content-between">
+  <button *ngFor="let step of steps; let ind = index;" class="py-3 px-5 w-100" mat-flat-button
+    [color]="selectedStep(ind) ? 'primary' : ''" (click)="selectedIndex = ind" [ngClass]="{
+        'active': selectedStep(ind),
+        'bg-transparent': !selectedStep(ind)}">
+    {{ step.label }}
+  </button>
+</header>
+
+<div [style.display]="selected ? 'block' : 'none'">
+  <ng-container [ngTemplateOutlet]="selected.content"></ng-container>
+</div>

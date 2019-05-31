@@ -1,0 +1,9 @@
+<h5 class="text-left">{{ data?.title || ('confirmition' | translate) }}</h5>
+<div class="text-left" mat-dialog-content>
+  <p>{{ data?.description }}</p>
+</div>
+<div mat-dialog-actions class="text-right">
+  <button class="text-white" mat-flat-button color="accent" mat-dialog-close cdkFocusInitial
+    (click)="result = true">{{ 'confirm' | translate }}</button>
+  <button class="text-white" mat-flat-button color="warn" mat-dialog-close>{{ 'close' | translate }}</button>
+</div>

@@ -1,0 +1,21 @@
+<div class="d-flex align-items-center text--accent">
+  <button (click)="toggleSidebar()" class="mx-2" mat-icon-button>
+    <mat-icon>reorder</mat-icon>
+  </button>
+  <button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
+    <mat-icon>fullscreen</mat-icon>
+  </button>
+  <button [matMenuTriggerFor]="menu" mat-icon-button class="mx-2">
+    <mat-icon>public</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button (click)="changeLanguage('ar')" mat-menu-item>
+      <img style="width:10%" src="assets/images/flags/sa.svg" alt="Arabic">
+      <span class="mx-3">{{ 'arabic' | translate }}</span>
+    </button>
+    <button (click)="changeLanguage('en')" mat-menu-item>
+      <img style="width:10%" src="assets/images/flags/us.svg" alt="English">
+      <span class="mx-3">{{ 'english' | translate }}</span>
+    </button>
+  </mat-menu>
+</div>

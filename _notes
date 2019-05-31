@@ -1,0 +1,19 @@
+TODO
+6_ toolbar spinner to run on resolvers and module loading
+9_ routing animation
+12_ (!important) { authChange strategies }
+
+SECTION Navbar
+1_ only one navbar item should be collapsed
+
+SECTION Interceptors
+1_ setup cache service to deal with indexedDB
+2_ setup CahceInterceptor | see ngx starter kit
+4_ errorHandling (retry the request 3 time in the third one notify the user about that)
+
+SECTION Password component
+1_ is password equal validation
+2_ show hide password
+3_ confirm password async
+
+https://www.npmjs.com/package/@speedy/build-angular

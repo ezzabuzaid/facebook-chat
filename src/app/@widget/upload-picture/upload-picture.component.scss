@@ -1,0 +1,26 @@
+@import "utils/functions";
+@import "utils/variables";
+
+.wrapper {
+  .file-upload {
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    border: 1px dashed #0177bd;
+    overflow: hidden;
+    // use primary from
+    background-image: linear-gradient(
+      to bottom,
+      #ffffff 50%,
+      map-get($map: $app_colors, $key: primary) 50%
+    );
+    background-size: 100% 200%;
+    transition: background-position 0.35s;
+    &:hover {
+      background-position: 0 100%;
+      mat-icon {
+        color: #fff;
+      }
+    }
+  }
+}

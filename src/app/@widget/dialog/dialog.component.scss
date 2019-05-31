@@ -1,0 +1,18 @@
+@import 'utils/mixins';
+
+body.dialog-opened {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  overflow: hidden;
+  position: relative;
+}
+
+app-dialog {
+  z-index: 1000;
+  @include center_absolute(fixed);
+  #content{
+    overflow: hidden;
+  }
+}

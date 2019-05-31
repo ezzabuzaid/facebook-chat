@@ -1,0 +1,34 @@
+@import "@layout/layout.theme";
+@import "~assets/scss/utils/functions";
+@import "~assets/scss/utils/variables";
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+@mixin application_theme($theme) {
+  @include angular-material-theme($theme);
+  @include theme_classes($theme);
+  @include layout_theme($theme);
+}
+
+.default-theme {
+  $primary: mat-palette($mat-blue, 700);
+  $accent: mat-palette($mat-blue-gray, 800);
+  
+  // $primary: mat-palette($mat-red, 900);
+  // $accent: mat-palette($mat-red, 300);
+  $theme: mat-light-theme($primary, $accent);
+  @include application_theme($theme);
+  // $primary: mat-palette($mat-grey, 900);
+  // $accent: mat-palette($mat-blue, 900);
+  // @include mat-form-field-theme(mat-light-theme($primary, $primary));
+}
+
+.second-theme {
+  $primary: mat-palette($mat-green, 900);
+  $accent: mat-palette($mat-yellow, 300);
+  $theme: mat-light-theme($primary, $accent);
+  @include application_theme($theme);
+}
+
+// Uitlity function to get the current theme that applied to application iwde

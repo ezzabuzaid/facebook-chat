@@ -1,0 +1,193 @@
+// All scss mixins must be here, expand the mixins into folder if the file has a huge line
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin center_absolute($position: absolute) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@mixin center_flex {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+@mixin center_block {
+  display: block;
+  margin: auto;
+}
+
+@mixin anchor_style {
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+      outline: none;
+    }
+  }
+}
+
+// All scss mixins must be here, expand the mixins into folder if the file has a huge line
+@mixin fab_button($dimension: 35px) {
+  width: $dimension;
+  height: $dimension;
+  border-radius: $dimension;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin container-height($height: map-get($map: $layout_dimension, $key: toolbar_height)) {
+  // after layout configuration file remove @container-height mixin
+  min-height: calc(100vh - #{$height}) !important;
+  display: flex;
+  flex-direction: column !important;
+}
+
+@mixin scrollbar-theme($width: 12px, $height: 12px, $border-color: #fff, $background-color: $colors(primary)) {
+  // Refactor
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+  }
+  ::-webkit-scrollbar:vertical {
+    width: 12px;
+  }
+  ::-webkit-scrollbar:horizontal {
+    height: 12px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $background-color;
+    border-radius: 10px;
+    border: 2px solid $border-color;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: $border-color;
+  }
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  ::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    box-shadow: inset 0 0 0 24px rgba(0, 0, 0, 0.37);
+    border-radius: 24px;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    box-shadow: inset 0 0 0 24px rgba(0, 0, 0, 0.54);
+    border-radius: 24px;
+  }
+}
+
+@mixin fixed_bar($position: fixed, $height: map-get($map: $layout_dimensions, $key: toolbar-height)) {
+  height: $height;
+  position: $position;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+}
+
+@mixin form-validaition($color: map-get($map: $colors, $key: warn)) {
+  &.ng-submitted {
+    input:not(.ng-valid),
+    select:not(.ng-valid),
+    textarea:not(.ng-valid) {
+      border: 1px solid $color;
+      @include placeholder {
+        color: $color !important;
+      }
+    }
+  }
+  input,
+  select,
+  textarea {
+    transition: border 0.15s cubic-bezier(0.165, 0.84, 0.44, 1);
+    &.ng-touched.ng-invalid {
+      @include placeholder {
+        color: $color !important;
+      }
+      border: 1px solid $color;
+    }
+  }
+}
+
+@mixin backdrop($color: rgba(0, 0, 0, 0.5)) {
+  &::before {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $color;
+    z-index: 999;
+    content: "";
+  }
+}
+
+@mixin font_size($by: 1) {
+  @for $size from 1 to 5 {
+    .font-size-#{$size} {
+      font-size: calc(#{$size}em / #{$by});
+    }
+  }
+}
+
+@mixin border_radius($by: 1) {
+  @for $size from 0 to 20 {
+    .border-radius-#{$size} {
+      border-radius: calc(#{$size}em / #{$by});
+    }
+  }
+}
+
+@mixin border_width() {
+  @for $size from 0 to 20 {
+    .border--#{$size} {
+      border-width: #{$size}px !important;
+    }
+  }
+}
+
+@mixin bootstrab_default {
+  input {
+    &:focus {
+      outline: transparent;
+      box-shadow: none;
+      border: none;
+    }
+  }
+  .fab-button {
+    @include fab_button;
+  }
+  button {
+    &:focus {
+      outline: none !important;
+    }
+  }
+}
+
+@mixin direction($dir) {
+  body[dir="#{$dir}"] &,
+  html[dir="#{$dir}"] & {
+    @content;
+  }
+}

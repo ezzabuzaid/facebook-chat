@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+@import "~assets/scss/utils/functions";
+:host {
+  display: block;
+  .navbar-item {
+    font-weight: 400;
+    ::ng-deep {
+      .mat-button-wrapper {
+        width: 100%;
+      }
+    }
+  }
+}

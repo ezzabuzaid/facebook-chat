@@ -1,0 +1,9 @@
+@import "assets/scss/utils/_variables.scss";
+@import "assets/scss/utils/_mixins.scss";
+
+:host {
+  display: block;
+  overflow: auto;
+  position: relative;
+  height: 100vh;
+}

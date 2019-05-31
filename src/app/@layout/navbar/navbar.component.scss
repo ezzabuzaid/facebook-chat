@@ -1,0 +1,32 @@
+@import "~assets/scss/utils/variables";
+@import "~assets/scss/utils/mixins";
+@import "~assets/scss/utils/functions";
+@import "~bootstrap/scss/bootstrap-grid";
+
+$navbar-width: map-deep-get($layout_dimensions, "navbar-width", xLarge);
+$navbar-folded-width: map-deep-get($layout_dimensions, "navbar-width", folded);
+$navbar-mobile-width: map-deep-get($layout_dimensions, "navbar-width", small);
+@debug $navbar-folded-width;
+:host {
+  app-sidebar {
+    .sidebar-drawer {
+      background-color: #262f3d;
+    }
+    --width: #{$navbar-width};
+    &.toggled {
+      --width: #{$navbar-folded-width};
+      ::ng-deep {
+        .drawer-invisible {
+          transition: visibility 0s linear 0.2s;
+          visibility: hidden;
+        }
+      }
+    }
+    &.mobile {
+      --width: 0;
+      &.toggled {
+        --width: #{$navbar-mobile-width};
+      }
+    }
+  }
+}

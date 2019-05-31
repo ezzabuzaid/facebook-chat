@@ -1,0 +1,60 @@
+// The primary purpose of this file export functions and maps and all other scss utility
+// !don't but mixins here
+
+// @import '~@angular/material/theming';
+// @include mat-core();
+
+// Author:: ezzabuzaid
+// Date:: 15 / 1 / 2019
+@function get_color_from_theme($color, $theme) {
+  $platte: map-get(
+    $map: $theme,
+    $key: #{$color}
+  );
+  @return mat-color($platte);
+}
+@function get_color_from_platte($color, $hue...) {
+  $platte: mat-palette($color, $hue...);
+  @return mat-color($platte);
+}
+
+@function genterate_material-theme($theme) {
+  $colors: ();
+  @each $var in (accent, primary, warn) {
+    $colors: map_merge(
+      $colors,
+      (
+        $var: get_color_from_theme($var, $theme)
+      )
+    );
+  }
+  @return $colors;
+}
+
+@function get_theme() {
+  $primary: mat-palette($mat-red, 900);
+  $accent: mat-palette($mat-red, 300);
+  // $warn: mat-palette($mat-yellow, 600);
+  @return mat-light-theme($primary, $accent);
+}
+
+@mixin theme_classes($theme) {
+  @each $var in (accent, primary, warn) {
+    $color: get_color_from_theme($var, $theme);
+    .text--#{$var} {
+      color: $color;
+    }
+    .bg--#{$var} {
+      background-color: $color;
+    }
+    .border--#{$var} {
+      border-color: $color !important;
+    }
+  }
+}
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+      $map: map-get($map, $key);
+  }
+  @return $map;
+}

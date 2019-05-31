@@ -1,0 +1,18 @@
+@mixin navbar_item($theme) {
+  app-navbar-item {
+    .navbar-item {
+      // TODO get color from material theme
+      // color: get_color_from_platte($mat-gray, 50);
+      color: #98979d;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+      &.active {
+        $color: #fff;
+        background-color: #1e202d;
+        color: $color;
+        border-left: 2px solid $color;
+      }
+    }
+  }
+}

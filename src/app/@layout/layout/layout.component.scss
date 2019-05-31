@@ -1,0 +1,23 @@
+@import "~assets/scss/utils/variables";
+@import "~assets/scss/utils/mixins";
+@mixin content_margin($side_width) {
+  width: calc(100% - #{$side_width});
+  margin-left: $side_width;
+}
+app-layout {
+  nav {
+    @include fixed_bar(absolute);
+  }
+
+  .router-container {
+    $height: map-get(
+      $map: $layout_dimensions,
+      $key: toolbar-height
+    );
+    margin-top: calc(#{$height} * 2);
+    // .container-fluid,
+    // .container {
+      // @include container-height(0);
+    // }
+  }
+}
