@@ -30,6 +30,12 @@ export class AppComponent implements OnInit {
   ) {
     if (this.isBrowser) {
       this.languageService.populate(Language.EN);
+      this.indexDBService.populate({ name: 'test', version: 4 })
+        .onUpgrade
+        .subscribe(database => {
+          console.log(database);
+        });
+      this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
     }
     this.renderer.addClass(this.document.body, 'default-theme');
     // this.seoService.populate({
@@ -38,15 +44,9 @@ export class AppComponent implements OnInit {
     //   image: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg',
     //   keywords: 'backbone'
     // });
-    this.indexDBService.populate({ name: 'test', version: 4 })
-      .onUpgrade
-      .subscribe(database => {
-        console.log(database);
-      });
     this.serviceWorkerUtils.checkEveryHour(0.00001);
     this.serviceWorkerUtils.updateAvailable.subscribe(console.log);
     this.serviceWorkerUtils.updateActivated.subscribe(console.log);
-    this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
   }
 
   ngOnInit() {

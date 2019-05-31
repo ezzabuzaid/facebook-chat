@@ -25,22 +25,11 @@ export default () => {
             InfoWindow() { },
             KmlLayer() { },
             KmlLayerStatus: {},
-            LatLng() { },
+            LatLng : class { },
             LatLngBounds() { },
             MVCArray() { },
             MVCObject() { },
-            Map() {
-                return {
-                    setTilt() { },
-                    mapTypes: {
-                        set() { }
-                    },
-                    overlayMapTypes: {
-                        insertAt() { },
-                        removeAt() { }
-                    }
-                };
-            },
+            Map:class {},
             MapTypeControlStyle: {},
             MapTypeId: {
                 HYBRID: '',
