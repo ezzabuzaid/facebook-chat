@@ -65,7 +65,7 @@ export class IndexDBService {
             // been created before, or a new version number has been
             // submitted via the window.indexedDB.open
             request.addEventListener('upgradeneeded', ({ target }) => {
-                this.onUpgrade.next(target.result as any);
+                this.onUpgrade.next(target['result'] as any);
             });
         });
     }

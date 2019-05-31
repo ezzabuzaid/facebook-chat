@@ -32,7 +32,7 @@ export class HttpService extends HttpClient {
 
   private getInterceptor(InterceptorConstructor) {
     return this.interceptors.find((interceptor) => {
-      return interceptor.name === InterceptorConstructor.name;
+      return interceptor['name'] === InterceptorConstructor.name;
     });
   }
 

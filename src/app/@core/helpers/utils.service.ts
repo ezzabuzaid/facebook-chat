@@ -108,25 +108,26 @@ export class AppUtils {
   static strictText(text, count, insertDots = true) {
     return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
   }
+
   static fullScreen() {
     const doc = window.document;
     const docEl = doc.documentElement;
     const requestFullScreen =
-      docEl.requestFullscreen || docEl.mozRequestFullScreen ||
-      docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+      docEl.requestFullscreen || docEl['mozRequestFullScreen'] ||
+      docEl['webkitRequestFullScreen'] || docEl['msRequestFullscreen'];
     const cancelFullScreen =
-      doc.exitFullscreen || doc.mozCancelFullScreen ||
-      doc.webkitExitFullscreen || doc.msExitFullscreen;
+      doc.exitFullscreen || doc['mozCancelFullScreen'] ||
+      doc['webkitExitFullscreen'] || doc['msExitFullscreen'];
     if (
-      !doc.fullscreenElement && !doc.mozFullScreenElement &&
-      !doc.webkitFullscreenElement && !doc.msFullscreenElement
+      !doc.fullscreenElement && !doc['mozFullScreenElement'] &&
+      !doc['webkitFullscreenElement'] && !doc['msFullscreenElement']
     ) {
       requestFullScreen.call(docEl);
     } else {
       cancelFullScreen.call(doc);
-
     }
   }
+
   static replaceTextCharToHTMLentity(text) {
     const entityMap = {
       '&': '&amp;',
