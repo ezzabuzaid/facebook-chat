@@ -5,9 +5,13 @@
   <button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
     <mat-icon>fullscreen</mat-icon>
   </button>
+  <button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
+    <mat-icon>widgets</mat-icon>
+  </button>
   <button [matMenuTriggerFor]="menu" mat-icon-button class="mx-2">
     <mat-icon>public</mat-icon>
   </button>
+
   <mat-menu #menu="matMenu">
     <button (click)="changeLanguage('ar')" mat-menu-item>
       <img style="width:10%" src="assets/images/flags/sa.svg" alt="Arabic">

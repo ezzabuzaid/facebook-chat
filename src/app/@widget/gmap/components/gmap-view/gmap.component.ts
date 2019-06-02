@@ -9,7 +9,7 @@ import {
   OnChanges, SimpleChanges, forwardRef
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil, map, share } from 'rxjs/operators';
+import { takeUntil, map, share, tap } from 'rxjs/operators';
 import { GoogleMapService } from '../../lib/gmap.service';
 import { GmapModel, Google } from '../../gmap.model';
 import { Logger } from '@core/utils';
@@ -45,6 +45,7 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
     log.warn(value);
     if (value) {
       GoogleMapService.getCurrentLocation(35, 35)
+        .pipe(tap(console.log))
         .pipe(map(cords => cords.toJSON()))
         .subscribe(position => {
           if (!this.latitude || !this.longitude) {
@@ -54,7 +55,7 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
     }
   }
 
-  // tslint:disable: no-input-rename
+    // tslint:disable: no-input-rename
   @Input('lng') longitude: number = null;
   @Input('lat') latitude: number = null;
 

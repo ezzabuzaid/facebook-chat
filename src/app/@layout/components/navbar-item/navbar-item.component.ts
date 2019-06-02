@@ -4,6 +4,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BREACKPOINTS } from '@shared/common';
+import { LocalStorage } from '@core/helpers';
+import { LayoutNavigation } from '@layout/navbar/navigation';
 
 @Component({
   selector: 'app-navbar-item',
@@ -11,21 +13,22 @@ import { BREACKPOINTS } from '@shared/common';
   styleUrls: ['./navbar-item.component.scss']
 })
 export class NavbarItemComponent implements OnInit, OnDestroy {
-  @Input() item;
-  @Input() collapse = false;
-  subscribtion = new Subject();
+  @Input() public item: LayoutNavigation;
+  @Input() public collapse = false;
+  private _subscribtion = new Subject();
   // @HostListener('click') _() {
   //   this.toggleNavbar();
   // }
   private isTable = false;
   constructor(
     private sidebarService: SidebarService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private localstorage: LocalStorage
   ) { }
 
   ngOnInit() {
     this.breakpointObserver.observe(BREACKPOINTS.TABLET)
-      .pipe(takeUntil(this.subscribtion))
+      .pipe(takeUntil(this._subscribtion))
       .subscribe(({ matches }) => {
         this.isTable = matches;
       });
@@ -37,9 +40,15 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
     }
   }
 
+  addShortcut() {
+    const shortcuts = this.localstorage.get<LayoutNavigation[]>('shortcuts') || [];
+    shortcuts.push(this.item)
+    this.localstorage.set('shortcuts', shortcuts);
+  }
+
   ngOnDestroy() {
-    this.subscribtion.next();
-    this.subscribtion.complete();
+    this._subscribtion.next();
+    this._subscribtion.complete();
   }
 
 }

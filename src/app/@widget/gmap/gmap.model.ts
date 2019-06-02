@@ -1,23 +1,21 @@
-import { isPlatformBrowser } from '@angular/common';
-import { PLATFORM_ID } from '@angular/core';
 import gmapMock from './lib/gmap.mock';
 
 export const Google = (() => {
-    if (isPlatformBrowser(PLATFORM_ID)) {
+    try {
         return google.maps;
-    } else {
+    } catch (error) {
         return gmapMock().maps;
     }
 })() as typeof google.maps;
 
 export namespace GmapModel {
 
-    export type LatLng = typeof Google.LatLng | typeof Google.LatLng;
-    export class Position extends (Google.LatLng || null) {
+    export class Position extends Google.LatLng {
         constructor(lat: number, lng: number) {
             super(lat, lng);
         }
     }
+    export type LatLng = typeof Google.LatLng | typeof Google.LatLng;
     export type AddressInfoType = 'placeId' | 'location';
 
 }

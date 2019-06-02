@@ -1,6 +1,8 @@
 export default () => {
     return {
         maps: {
+            LatLng : class { },
+            Map: class {},
             Animation: {},
             BicyclingLayer() { },
             Circle() { },
@@ -25,11 +27,9 @@ export default () => {
             InfoWindow() { },
             KmlLayer() { },
             KmlLayerStatus: {},
-            LatLng : class { },
             LatLngBounds() { },
             MVCArray() { },
             MVCObject() { },
-            Map:class {},
             MapTypeControlStyle: {},
             MapTypeId: {
                 HYBRID: '',

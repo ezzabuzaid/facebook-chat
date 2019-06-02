@@ -9,5 +9,16 @@
         width: 100%;
       }
     }
+    &__pin {
+      display: none;
+    }
+  }
+
+  &:hover {
+    .navbar-item {
+      &__pin {
+        display: block;
+      }
+    }
   }
 }

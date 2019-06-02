@@ -6,6 +6,7 @@ export interface LayoutNavigation {
   routerLink?: string;
   children?: LayoutNavigation[];
 }
+
 export type LayoutNavigationType = 'item' | 'collapse';
 
 export default [
