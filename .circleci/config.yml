@@ -46,7 +46,7 @@ jobs:
                 command: sudo npm install -g angular-cli-ghpages
             - run:
                 name: Install angular cli
-                command: sudo npm install -g @angular/cli
+                command: sudo npm install -g @angular/cli@7.3.9
             - run:
                 name: Building
                 command: npm run build deploy
