@@ -14,7 +14,7 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "extract": "ngx-translate-extract  -i ./src -o ./src/assets/languages/ar.json ./src/assets/languages/en.json --sort --clean --marker _extract",
     "bundle-report": "ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json",
-    "deploy": "ng build --prod --base-href 'https://ezzabuzaid.github.io/angular-buildozer/'"
+    "deploy": "ng build --prod --base-href '/angular-buildozer/'"
   },
   "dependencies": {
     "@angular/animations": "~8.0.0",
