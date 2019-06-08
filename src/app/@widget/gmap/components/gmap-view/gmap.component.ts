@@ -36,7 +36,9 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
     GoogleMapService.geocode({ placeId })
       .pipe(map(([placeResult]) => placeResult.geometry.location.toJSON()))
       .subscribe(position => {
-        this.refreshPosition(position);
+        if (!this.latitude || !this.longitude) {
+          this.refreshPosition(position);
+        }
       });
   }
 
@@ -55,12 +57,11 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
     }
   }
 
-    // tslint:disable: no-input-rename
   @Input('lng') longitude: number = null;
   @Input('lat') latitude: number = null;
 
   constructor(
-    private elref: ElementRef<HTMLElement>
+    elref: ElementRef<HTMLElement>
   ) {
     super(elref.nativeElement, {
       mapTypeControl: false,

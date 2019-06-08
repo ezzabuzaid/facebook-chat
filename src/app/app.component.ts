@@ -5,9 +5,9 @@ import { NavigationEnd, ActivatedRoute, Router, RouterEvent } from '@angular/rou
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '@core/helpers';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-declare const ga: (...args) => void;
 import { IndexDBService } from '@shared/services/indexdb.service';
 import { ServiceWorkerUtils } from '@shared/services/service-worker-update.service';
+declare const ga: (...args: any[]) => void;
 
 @Component({
   selector: 'app-root',
@@ -36,6 +36,17 @@ export class AppComponent implements OnInit {
           console.log(database);
         });
       this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
+
+      // Detects if device is on iOS
+      const isIos = () => {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(userAgent);
+      };
+
+      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      // https://www.netguru.com/codestories/few-tips-that-will-make-your-pwa-on-ios-feel-like-native (PWA ON IOS)
+      // Checks if should display install popup notification:
+      if (isIos() && !isInStandaloneMode()) { }
     }
     this.renderer.addClass(this.document.body, 'default-theme');
     // this.seoService.populate({
@@ -47,8 +58,8 @@ export class AppComponent implements OnInit {
     this.serviceWorkerUtils.checkEveryHour(0.00001);
     this.serviceWorkerUtils.updateAvailable.subscribe(console.log);
     this.serviceWorkerUtils.updateActivated.subscribe(console.log);
-  }
 
+  }
   ngOnInit() {
     if (environment.production) {
       Logger.enableProductionMode();

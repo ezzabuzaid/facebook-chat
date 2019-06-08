@@ -1,68 +1,87 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>Angular Buildozer</title>
-  <base href="/">
+  <head>
+    <meta charset="utf-8">
+    <title>Angular Buildozer</title>
+    <base href="/">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script async defer src='https://www.google-analytics.com/analytics.js'></script>
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140879795-1"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script async defer src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140879795-1"></script> -->
 
-  <!-- Disable tap highlight on IE -->
-  <meta name="msapplication-tap-highlight" content="no">
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
 
-  <!-- Web Application Manifest -->
-  <link rel="manifest" href="manifest.webmanifest">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.webmanifest">
 
-  <!-- Add to homescreen for Chrome on Android -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Angular Buildozer">
-  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Angular Buildozer">
+    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
 
-  <!-- Add to homescreen for Safari on iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Angular Buildozer">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Angular Buildozer">
+    <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">
+    <!-- Add to splash screen for Safari on iOS -->
+    <link rel="apple-touch-startup-image" href="images/splash/launch-640x1136.png"
+      media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/splash/launch-750x1294.png"
+      media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/splash/launch-1242x2148.png"
+      media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/splash/launch-1125x2436.png"
+      media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/splash/launch-1536x2048.png"
+      media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/splash/launch-1668x2224.png"
+      media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/splash/launch-2048x2732.png"
+      media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
 
-  <!-- Tile icon for Win8 (144x144 + tile color) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-  <meta name="msapplication-TileColor" content="#2F3BA2">
 
-  <!-- Color the status bar on mobile devices -->
-  <meta name="theme-color" content="#1976d2">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
 
-</head>
+    <!-- Color the status bar on mobile devices -->
+    <meta name="theme-color" content="#1976d2">
 
-<body>
-  <app-root></app-root>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgV1woChyZyh90cQU3YA6dy0_6jHs6Fds&libraries=places&language=us&region=JP"
-    async defer></script>
-  <script>
-    // Google analytics
-    // TODO replace them with google tag manger
-    window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto');
-    ga('send', 'pageview');
-  </script>
-  <!-- <script>
+  </head>
+
+  <body>
+    <app-root></app-root>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgV1woChyZyh90cQU3YA6dy0_6jHs6Fds&libraries=places&language=us&region=JP"
+      async defer></script>
+    <script>
+      // Google analytics
+      // TODO replace them with google tag manger
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+      ga('create', 'UA-XXXXX-Y', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <!-- <script>
     Google tag manager
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'UA-140879795-1');
   </script> -->
-  <noscript>
-    Please enable JavaScript to continue using this application.
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZKD4B" height="0" width="0"
-      style="display:none;visibility:hidden">
-    </iframe>
-  </noscript>
-</body>
+    <noscript>
+      Please enable JavaScript to continue using this application.
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZKD4B" height="0" width="0"
+        style="display:none;visibility:hidden">
+      </iframe>
+    </noscript>
+  </body>
 
 </html>

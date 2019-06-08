@@ -28,9 +28,9 @@ jobs:
             # - run:
             #     name: Testing
             #     command: npm run test --prod
-            - run:
-                name: Building
-                command: npm run build:ssr
+            # - run:
+            #     name: Building
+            #     command: npm run build:ssr
     deploy:
         docker:
             - image: circleci/node:lts
@@ -40,29 +40,23 @@ jobs:
                 name: Show current branch
                 command: echo ${CIRCLE_BRANCH}
             - run:
-                name: Install Firebase
-                command: npm install --save-dev firebase-tools
+                name: Install angular cli github pages
+                command: sudo npm install -g angular-cli-ghpages
             - run:
-                name: open functions folder and install dependeinces
-                command: cd functions
+                name: Building
+                command: npm run build deploy
             - run:
-                name: install dependeinces
-                command: npm install
-            - run:
-                name: Build firebase functions
-                command: npm run build
-            - run:
-                name: Deploy Master to Firebase
-                command: npm run firebase-deploy --token "$FIREBASE_TOKEN"
+                name: Deploy Master to Github pages
+                command: ngh dir "./dist/browser" --token "$GITHUB_TOKEN"
 
 workflows:
     version: 2
     -deploy:
         jobs:
         - build
-        # - deploy:
-        #     requires:
-        #         - build
-        #     filters:
-        #         branches:
-        #             only: master
+        - deploy:
+            requires:
+                - build
+            filters:
+                branches:
+                    only: master

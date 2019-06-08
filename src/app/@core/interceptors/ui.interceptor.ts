@@ -36,9 +36,7 @@ export class UiInterceptor implements HttpInterceptor {
     let snackbarRef: MatSnackBarRef<SnackbarViewComponent> = null;
     if (this.showSnackbar && (method === 'POST' || method === 'PUT' || method === 'DELETE')) {
       const translated = this.translateService.instant(_extract('request_is_proccessing'));
-      setTimeout(() => {
-        snackbarRef = this.snackbar.open(translated, { duration: 500000 });
-      });
+      Promise.resolve(null).then(() => snackbarRef = this.snackbar.open(translated, { duration: 500000 }));
     }
     return next.handle(req.clone())
       .pipe(

@@ -22,8 +22,7 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   private isTable = false;
   constructor(
     private sidebarService: SidebarService,
-    private breakpointObserver: BreakpointObserver,
-    private localstorage: LocalStorage
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit() {
@@ -34,21 +33,40 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
       });
   }
 
+  // TODO shortcuts service
+  addShortcut() { }
+  
   toggleNavbar() {
     if (this.isTable && !this.collapse) {
       this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggleSidebar();
     }
   }
 
-  addShortcut() {
-    const shortcuts = this.localstorage.get<LayoutNavigation[]>('shortcuts') || [];
-    shortcuts.push(this.item)
-    this.localstorage.set('shortcuts', shortcuts);
-  }
-
   ngOnDestroy() {
     this._subscribtion.next();
     this._subscribtion.complete();
   }
+
+}
+
+
+class ShortcutService {
+
+
+  constructor(
+    private localstorage: LocalStorage
+  ) {
+
+  }
+
+  addShortcut(item: LayoutNavigation) {
+    const shortcuts = this.localstorage.get<LayoutNavigation[]>('shortcuts') || [];
+    shortcuts.push(item);
+    this.localstorage.set('shortcuts', shortcuts);
+  }
+
+  removeShortcut() {
+  }
+
 
 }
