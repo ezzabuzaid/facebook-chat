@@ -57,6 +57,7 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
     }
   }
 
+  // tslint:disable: no-input-rename
   @Input('lng') longitude: number = null;
   @Input('lat') latitude: number = null;
 

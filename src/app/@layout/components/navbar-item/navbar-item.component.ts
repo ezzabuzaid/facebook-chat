@@ -35,7 +35,7 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
 
   // TODO shortcuts service
   addShortcut() { }
-  
+
   toggleNavbar() {
     if (this.isTable && !this.collapse) {
       this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggleSidebar();

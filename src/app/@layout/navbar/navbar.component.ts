@@ -136,7 +136,7 @@ export class NavbarComponent implements AfterViewInit {
 
       const appSidebar = document.querySelector('app-sidebar');
       const style = getComputedStyle(appSidebar);
-      const currentWidth = parseInt(style.getPropertyValue('--width'));
+      const currentWidth = parseInt(style.getPropertyValue('--width'), 5);
 
       if (dimension.screenX >= lastScreenPosition) {
         console.log('right');
