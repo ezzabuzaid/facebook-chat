@@ -30,12 +30,14 @@ jobs:
             #     command: npm run test --prod
             # - run:
             #     name: Building
+            - checkout
             #     command: npm run build:ssr
     deploy:
+        working_directory: ~/project
         docker:
             - image: circleci/node:lts
-        working_directory: ~/project
         steps:
+            - checkout
             - run:
                 name: Show current branch
                 command: echo ${CIRCLE_BRANCH}
