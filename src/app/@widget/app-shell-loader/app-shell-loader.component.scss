@@ -9,7 +9,7 @@ $size: 2em;
 
 :host {
   @include center_absolute;
-  .c {
+  .wrapper {
     list-style: none;
     margin: 0;
     padding: 0;

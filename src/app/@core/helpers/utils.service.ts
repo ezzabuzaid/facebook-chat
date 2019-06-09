@@ -1,3 +1,5 @@
+// TODO move the utils file to utils folder and add testing
+
 import { Observable, of, EMPTY } from 'rxjs';
 export class AppUtils {
 
@@ -54,41 +56,34 @@ export class AppUtils {
   static pipe(...functions) {
     return (args) => functions.reduce((arg, fn) => fn(arg), args);
   }
-  /**
-   *
-   * @param concatTo list to append to (a list from service)
-   * @param filterFrom list to filter from (default list)
-   * assume that you have a default static list, and another one coming from a some service,
-   * and you wanna to merge the asynced one with the default
-   */
-  static mergeList(concatTo, filterFrom) {
-    return concatTo.concat(filterFrom.filter((el, pos) => !concatTo.find(e => e.type === el.type)));
+
+  // NOTE merge and return unique list from two lists
+  static mergeList<T>(concatTo: Partial<T>[], filterFrom: Partial<T>[], key: keyof T) {
+    return concatTo.concat(filterFrom.filter(one => !concatTo.find(two => two[key] === one[key])));
   }
-  static excludeEmptyKeys(toCheckObject, withEmptyString = false) {
-    function replaceUndefinedOrNull(key, value) {
+
+  static excludeEmptyKeys(toCheckObject: { [key: string]: string }, withEmptyString = false) {
+    function replaceUndefinedOrNull(key: string, value: any) {
       if (withEmptyString) {
         return !value ? undefined : value;
       } else {
         return value !== '' && !value ? undefined : value;
       }
     }
-    return JSON.parse(JSON.stringify(toCheckObject, replaceUndefinedOrNull, 4));
+    return JSON.parse(JSON.stringify(toCheckObject, replaceUndefinedOrNull));
   }
 
-  static isAllKeyEmpty(toCheckObject) {
-    const list = [];
-    for (const key in toCheckObject) {
-      if (toCheckObject[key] !== '' && !toCheckObject[key]) {
-        console.log(toCheckObject[key]);
-        list.push(true);
-      } else {
-        list.push(false);
+  static isAllKeyEmpty(object: { [key: string]: string }) {
+    for (const key in object) {
+      // NOTE add support for checking objects and arrays
+      if (!!object[key]) {
+        return false;
       }
     }
-    return list.every(el => !!el);
+    return true;
   }
 
-  static toUsuallyDateFormat(date = new Date()) {
+  static extractDateFromTIME_ZONE(date = new Date()) {
     return new Date(date).toISOString().substr(0, 10);
   }
 
@@ -96,16 +91,16 @@ export class AppUtils {
     return new Date(date).getTime();
   }
 
-  static isEllipsisActive(element: HTMLElement) {
+  static isEllipsisActivated(element: HTMLElement) {
     const tolerance = 2;
     return element.offsetWidth + tolerance < element.scrollWidth;
   }
 
-  static replaceLineBrecks(text: string) {
+  static replaceLineBrecksWithHTMLTag(text: string) {
     return text.replace(/\r?\n/g, '<br />');
   }
 
-  static strictText(text, count, insertDots = true) {
+  static strictText(text: string, count: number, insertDots = true) {
     return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApplicationHelpers, AppUtils } from '@core/helpers';
+import { ApplicationConstants, AppUtils } from '@core/helpers';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 export class IndexDBService {
     private storage: typeof indexedDB = null;
 
-    private databaseName = ApplicationHelpers.APPLICATION_NAME;
+    private databaseName = ApplicationConstants.APPLICATION_NAME;
     private version = 4;
 
     private database: IDBDatabase = null;

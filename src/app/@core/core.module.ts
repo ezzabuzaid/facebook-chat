@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -8,6 +8,8 @@ import { PopupModule } from '@widget/popup';
 import { SnackbarModule } from '@widget/snackbar';
 import { RequestInterceptor } from './interceptors/request.interceptor';
 import { LanguageLoader } from './helpers';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { GlobalErrorHandler } from './helpers/error-handler.service';
 
 @NgModule({
   declarations: [],
@@ -24,6 +26,10 @@ import { LanguageLoader } from './helpers';
     {
       provide: HttpClient,
       useClass: HttpService
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -59,7 +65,11 @@ import { LanguageLoader } from './helpers';
       provide: HTTP_INTERCEPTORS,
       useClass: HeadersInterceptor,
       multi: true
-    },
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ],
 })
 export class CoreModule { }

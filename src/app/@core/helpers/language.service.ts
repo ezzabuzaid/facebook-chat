@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, of } from 'rxjs';
-import { ApplicationHelpers } from './helpers.service';
+import { ApplicationConstants } from './helpers.service';
 import { environment } from '@environments/environment';
 import { Logger } from '../utils/logger/logger.service';
 import { DOCUMENT } from '@angular/common';
@@ -65,11 +65,11 @@ export class LanguageService {
   }
 
   set language(language: Language) {
-    this.localStorage.set(ApplicationHelpers.LANGUAGE_KEY, language);
+    this.localStorage.set(ApplicationConstants.LANGUAGE_KEY, language);
   }
 
   get language() {
-    return (this.localStorage.get(ApplicationHelpers.LANGUAGE_KEY) || this.defaultLanguage) as Language;
+    return (this.localStorage.get(ApplicationConstants.LANGUAGE_KEY) || this.defaultLanguage) as Language;
   }
 
   get direction(): Direction {

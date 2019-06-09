@@ -8,7 +8,9 @@ const log = new Logger('URL AUTH');
 
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
+
   constructor() { }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let url = environment.endpointUrl + req.url;
     log.warn(req.headers);

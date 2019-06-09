@@ -1,8 +1,4 @@
 TODO
-6_ toolbar spinner to run on resolvers and module loading
-9_ routing animation
-12_ (!important) { authChange strategies }
-13_ analytic service
 
 SECTION Navbar
 1_ only one navbar item should be collapsed

@@ -21,7 +21,9 @@ export class UiInterceptor implements HttpInterceptor {
     private translateService: TranslateService,
     private formWidgetService: FormWidgetService
   ) { }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // TODO add a progress bar on top of `toolbar`
 
     if (JSON.parse(req.headers.get(CustomHttpHeaders.DISABLE_SNACKBAR))) {
       this.showSnackbar = false;
@@ -41,7 +43,7 @@ export class UiInterceptor implements HttpInterceptor {
     return next.handle(req.clone())
       .pipe(
         tap(
-          (event: HttpEvent<any>) => {
+          event => {
             if (event instanceof HttpResponse) {
               this.message = event.body.message;
             }
