@@ -96,7 +96,8 @@ export class Logger {
   }
 
   constructor(private source?: string) {
-    this.log(console.log, LogLevel.Info, [source]);
+    // objects = objects.map(value => [`${colors.FgBlue}`, value]);
+    // this.log(console.log, LogLevel.Info, [source]);
   }
 
   /**
@@ -104,6 +105,7 @@ export class Logger {
    * Works the same as console.log().
    */
   debug(...objects: any[]) {
+    objects = objects.map(value => [`${colors.FgBlue}`, value]);
     this.log(console.log, LogLevel.Debug, objects);
   }
 
@@ -112,15 +114,17 @@ export class Logger {
    * Works the same as console.log().
    */
   info(...objects: any[]) {
+    objects = objects.map(value => [`${colors.FgBlue}`, value]);
+
     this.log(console.log, LogLevel.Info, objects);
   }
 
   /**
    * Logs messages or objects  with the warning level.
-   * Works the same as console.log().
+   * Works the same as console.log().%c
    */
   warn(...objects: any[]) {
-    this.log(console.warn, LogLevel.Warning, objects);
+    this.log(console.warn, LogLevel.Warning, objects, false);
   }
 
   /**
@@ -128,18 +132,20 @@ export class Logger {
    * Works the same as console.log().
    */
   error(...objects: any[]) {
-    this.log(console.error, LogLevel.Error, objects);
+    this.log(console.error, LogLevel.Error, objects, false);
   }
 
-  private log(func: () => void, level: LogLevel, objects: any[]) {
+  private log(func: () => void, level: LogLevel, objects: any[], colorize = true) {
     if (level <= Logger.level) {
-      const log = this.source ? ['[' + this.source + ']'].concat(objects) : objects;
-      func.apply(console, log);
-      Logger.outputs.forEach(output => output.apply(output, [this.source, level].concat(objects)));
+      let flating = [];
+      if (colorize) {
+        objects.forEach(list => flating.push(...list));
+      } else {
+        flating = objects;
+      }
+      const log = this.source ? ['[' + this.source + ']'].concat(flating) : objects;
+      func.call(console, log.join(' '));
     }
   }
 }
 
-
-// console.log('\x1b[33m%s\x1b[0m' , 'I Am Using Yellow');
-// console.log(`${colors.BgGreen}%s\x1b[0m' , 'Background Color Is Blue');

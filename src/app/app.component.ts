@@ -7,8 +7,11 @@ import { LanguageService, Language } from '@core/helpers';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { IndexDBService } from '@shared/services/indexdb.service';
 import { ServiceWorkerUtils } from '@shared/services/service-worker-update.service';
-declare const ga: (...args: any[]) => void;
+import { SeoService } from '@shared/services';
+import { SwUpdate } from '@angular/service-worker';
 
+declare const ga: (...args: any[]) => void;
+const log = new Logger('AppComponent');
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,44 +25,53 @@ export class AppComponent implements OnInit {
     private translateService: TranslateService,
     private languageService: LanguageService,
     private renderer: Renderer2,
-    // private seoService: SeoService,
+    private seoService: SeoService,
     private indexDBService: IndexDBService,
+    private serviceWorkerUtils: ServiceWorkerUtils,
+    private sw: SwUpdate,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
-    private serviceWorkerUtils: ServiceWorkerUtils
   ) {
     if (this.isBrowser) {
       this.languageService.populate(Language.EN);
       this.indexDBService.populate({ name: 'test', version: 4 })
         .onUpgrade
         .subscribe(database => {
-          console.log(database);
+          log.debug('Database =>', database);
         });
       this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
 
-      // Detects if device is on iOS
-      const isIos = () => {
-        const userAgent = window.navigator.userAgent.toLowerCase();
-        return /iphone|ipad|ipod/.test(userAgent);
-      };
-
+      // TODO PWA Checks if should display install popup notification:
+      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-      // https://www.netguru.com/codestories/few-tips-that-will-make-your-pwa-on-ios-feel-like-native (PWA ON IOS)
-      // Checks if should display install popup notification:
       if (isIos() && !isInStandaloneMode()) { }
+
     }
     this.renderer.addClass(this.document.body, 'default-theme');
-    // this.seoService.populate({
-    //   title: 'Angular starter',
-    //   description: 'Angular made easy',
-    //   image: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg',
-    //   keywords: 'backbone'
-    // });
-    this.serviceWorkerUtils.checkEveryHour(0.00001);
-    this.serviceWorkerUtils.updateAvailable.subscribe(console.log);
-    this.serviceWorkerUtils.updateActivated.subscribe(console.log);
+    this.seoService.populate({
+      title: 'Angular Buildozer Boilerplate',
+      description: 'Angular made easy',
+      image: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg',
+      keywords: ['angular', 'backbone', 'ezzabuzaid', 'buildozer', 'boilerplate', 'starter', 'seed', 'angular seed'].join(',')
+    });
+
+    this.serviceWorkerUtils.checkEveryHour(.01);
+    this.sw.available.subscribe((update) => {
+      log.debug('this.sw.available => ', update);
+    });
+    this.sw.activated.subscribe((update) => {
+      log.debug('this.sw.activated => ', update);
+    });
+    this.serviceWorkerUtils.updateAvailable.subscribe((update) => {
+      log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
+    });
+
+    this.serviceWorkerUtils.updateActivated.subscribe((update) => {
+      log.debug('this.serviceWorkerUtils.updateActivated => ', update);
+    });
 
   }
+
   ngOnInit() {
     if (environment.production) {
       Logger.enableProductionMode();

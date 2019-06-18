@@ -10,7 +10,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     constructor(private injector: Injector) { }
 
     handleError(error: Error | HttpErrorResponse) {
-
         // const notifier = this.injector.get(NotificationService);
 
         if (error instanceof HttpErrorResponse) {
@@ -20,7 +19,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         }
         // TODO Connect sentry
         // TODO Send error to slack
-        log.info('Error reporter', error);
+        // log.info('Error reporter', error);
         log.error(error);
     }
 }
