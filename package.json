@@ -101,6 +101,10 @@
     "webpack-cli": "^3.1.0"
   },
   "name": "angular-buildozer",
+  "bugs": {
+    "email": "ezzabuzaid@hotmail.com",
+    "url": "https://github.com/ezzabuzaid/angular-buildozer/issues"
+  },
   "version": "0.0.0",
   "description": "Boilerplate for Angular project",
   "keywords": [
