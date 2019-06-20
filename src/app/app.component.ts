@@ -44,15 +44,17 @@ export class AppComponent implements OnInit {
       // TODO PWA Checks if should display install popup notification:
       const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-      if (isIos() && !isInStandaloneMode()) { }
+      if (isIos() && !isInStandaloneMode()) {
+        // Popup function!!
+      }
 
     }
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({
       title: 'Angular Buildozer Boilerplate',
       description: 'Angular made easy',
-      image: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg',
-      keywords: ['angular', 'backbone', 'ezzabuzaid', 'buildozer', 'boilerplate', 'starter', 'seed', 'angular seed'].join(',')
+      image: 'https://www.archer.ie/wp-content/uploads/2019/05/Angular_2.jpg',
+      keywords: ['angular', 'backbone', 'ezzabuzaid', 'buildozer', 'boilerplate', 'angular starter', 'seed', 'angular seed'].join(',')
     });
 
     this.serviceWorkerUtils.checkEveryHour(.01);
@@ -76,6 +78,7 @@ export class AppComponent implements OnInit {
     if (environment.production) {
       Logger.enableProductionMode();
     }
+
     this.router.events.forEach((event: RouterEvent) => {
       if (this.isBrowser && environment.production && event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);
