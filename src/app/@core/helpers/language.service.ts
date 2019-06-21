@@ -1,13 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ApplicationConstants } from './constants';
 import { environment } from '@environments/environment';
-import { Logger } from './logger/logger.service';
 import { DOCUMENT } from '@angular/common';
 import { LocalStorage } from '@shared/services';
-
-const log = new Logger('LanguageService');
 
 export enum Direction {
   LTR = 'ltr',

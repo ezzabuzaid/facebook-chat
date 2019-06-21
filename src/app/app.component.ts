@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID, Renderer2, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Logger } from '@core/helpers';
+import { Logger } from '@core/helpers/logger';
 import { NavigationEnd, ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '@core/helpers';

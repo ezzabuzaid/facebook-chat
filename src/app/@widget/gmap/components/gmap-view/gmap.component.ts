@@ -14,7 +14,7 @@ import { GoogleMapService } from '../../lib/gmap.service';
 import { GmapModel, Google } from '../../gmap.model';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { GoogleMap } from '../../lib/gmap.main';
-import { Logger } from '@core/helpers';
+import { Logger } from '@core/helpers/logger';
 
 const log = new Logger('GmapComponent');
 

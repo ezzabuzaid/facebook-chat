@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ApplicationConstants, AppUtils } from '@core/helpers';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { ApplicationConstants } from '@core/helpers/constants';
 
 /**
- * This servic consume indexedDB which build on events, this will remove asap to be built upon promises using "idb" library
+ * This servic consume indexedDB which build on events, this will be removed asap to be built upon promises using "idb" library
  */
-
-
 
 @Injectable({
     providedIn: 'root'

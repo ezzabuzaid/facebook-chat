@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Logger } from '@core/helpers';
+import { Logger } from '@core/helpers/logger';
 const log = new Logger('INTERCEPTOR LOGGER');
 
 @Injectable({

@@ -2,7 +2,7 @@ import { ApplicationRef, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { first, mergeMap, tap } from 'rxjs/operators';
 import { interval, concat } from 'rxjs';
-import { Logger } from '@core/helpers';
+import { Logger } from '@core/helpers/logger';
 
 const log = new Logger('ServiceWorkerUtils');
 @Injectable({
