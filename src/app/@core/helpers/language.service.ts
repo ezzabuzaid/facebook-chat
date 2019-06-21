@@ -5,7 +5,7 @@ import { ApplicationConstants } from './constants';
 import { environment } from '@environments/environment';
 import { Logger } from './logger/logger.service';
 import { DOCUMENT } from '@angular/common';
-import { LocalStorage } from '../../@shared/services/localstorage/localstorage.service';
+import { LocalStorage } from '@shared/services';
 
 const log = new Logger('LanguageService');
 

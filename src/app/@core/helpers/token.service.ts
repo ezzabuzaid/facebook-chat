@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ApplicationConstants } from './constants';
-import { LocalStorage } from '../../@shared/services/localstorage/localstorage.service';
+import { LocalStorage } from '@shared/services';
 
 const helper = new JwtHelperService();
 
