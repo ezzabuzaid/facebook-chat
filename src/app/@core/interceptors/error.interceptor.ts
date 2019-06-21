@@ -1,12 +1,10 @@
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, retryWhen, catchError } from 'rxjs/operators';
-import { Logger } from '@core/utils';
 import { TokenService, ApplicationConstants, RoutingConstants } from '@core/helpers';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
 
-const log = new Logger('ErrorInterceptor');
 
 export class ErrorInterceptor implements HttpInterceptor {
 

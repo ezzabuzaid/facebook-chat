@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { LocalStorage } from '../localstorage/localstorage.service';
+import { LocalStorage } from '@shared/services';
 
 interface Cache {
     lastUpdate: number;

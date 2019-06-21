@@ -1,12 +1,11 @@
 import { Component, OnInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input, HostBinding, Inject } from '@angular/core';
-import { Logger } from '@core/utils';
 import { Subject } from 'rxjs';
 import { SidebarService } from './sidebar.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { takeUntil, skip } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
-import { BREACKPOINTS } from '@shared/common';
-const log = new Logger('SidebarComponent');
+import { MEDIA_BEAKPOINTS } from '@shared/common';
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -20,7 +19,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   // onFold = new Subject<boolean>();
   // foldeable = true;
   // @HostBinding('class.folded') folded = false;
-  @HostBinding('class.mobile') mobile = this.breakpointObserver.isMatched(BREACKPOINTS.TABLET);
+  @HostBinding('class.mobile') mobile = this.breakpointObserver.isMatched(MEDIA_BEAKPOINTS.DOWN('md'));
   @HostBinding('class.toggled') toggled = false;
   private IsMobile = false;
   constructor(
@@ -32,7 +31,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
-    this.breakpointObserver.observe(BREACKPOINTS.TABLET)
+    this.breakpointObserver.observe(MEDIA_BEAKPOINTS.DOWN('md'))
       .pipe(
         takeUntil(this.subscribtion),
         skip(1)

@@ -1,11 +1,11 @@
 import { Component, Inject, PLATFORM_ID, Renderer2, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Logger } from '@core/utils';
+import { Logger } from '@core/helpers';
 import { NavigationEnd, ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '@core/helpers';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { IndexDBService } from '@shared/services/indexdb.service';
+import { IndexDBService } from '@shared/services';
 import { ServiceWorkerUtils } from '@shared/services/service-worker-update.service';
 import { SeoService } from '@shared/services';
 import { SwUpdate } from '@angular/service-worker';

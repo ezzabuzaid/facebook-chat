@@ -1,4 +1,5 @@
 @import "@layout/layout.theme";
+@import "@features/portal/portal.theme";
 @import "~assets/scss/utils/functions";
 @import "~assets/scss/utils/variables";
 @import "~@angular/material/theming";
@@ -9,6 +10,7 @@
   @include angular-material-theme($theme);
   @include theme_classes($theme);
   @include layout_theme($theme);
+  @include portal_theme($theme);
 }
 
 .default-theme {

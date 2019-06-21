@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { FormWidgetService } from './form.service';
-import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form',
@@ -18,7 +17,6 @@ export class FormWidgetComponent implements OnInit {
 
   ngOnInit() {
     this.showSpinner.subscribe(show => {
-      console.log(show);
       this.loading = show;
     });
   }

@@ -1,9 +1,7 @@
-// TODO replace the file name with appropriate one
-
 export class ApplicationConstants {
   static readonly LANGUAGE_KEY = 'language';
   static readonly TOKEN_KEY = 'token';
-  static readonly APPLICATION_NAME = 'buildozer';
+  static readonly APPLICATION_NAME = 'Angular buildozer';
 }
 export class RoutingConstants {
   static readonly LOGIN = 'portal/login';

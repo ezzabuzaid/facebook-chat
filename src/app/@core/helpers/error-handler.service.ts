@@ -1,6 +1,6 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Logger } from '@core/utils';
+import { Logger } from './logger/logger.service';
 
 const log = new Logger('GlobalErrorHandler');
 

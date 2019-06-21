@@ -1,11 +1,11 @@
 import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject, of } from 'rxjs';
-import { ApplicationConstants } from './helpers.service';
+import { ApplicationConstants } from './constants';
 import { environment } from '@environments/environment';
-import { Logger } from '../utils/logger/logger.service';
+import { Logger } from './logger/logger.service';
 import { DOCUMENT } from '@angular/common';
-import { LocalStorage } from './localstorage/localstorage.service';
+import { LocalStorage } from '../../@shared/services/localstorage/localstorage.service';
 
 const log = new Logger('LanguageService');
 

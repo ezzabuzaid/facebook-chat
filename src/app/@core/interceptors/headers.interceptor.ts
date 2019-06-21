@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { LanguageService, TokenService, CustomHttpHeaders } from '@core/helpers';
-import { Logger } from '@core/utils';
-import { switchMap } from 'rxjs/operators';
-const log = new Logger('INTERCEPTOR HEADERS');
 
 @Injectable()
 export class HeadersInterceptor implements HttpInterceptor {

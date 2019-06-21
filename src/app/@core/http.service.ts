@@ -1,10 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHandler, HTTP_INTERCEPTORS, HttpInterceptor, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Logger } from '@core/utils';
 import { RequestInterceptor } from './interceptors';
 import { MutateRequest } from './helpers';
-
-const log = new Logger('HttpService');
 
 @Injectable()
 export class HttpService extends HttpClient {

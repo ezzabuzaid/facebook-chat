@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Logger } from '@core/utils';
 import { CustomHttpHeaders, MutateRequest } from '@core/helpers';
-const log = new Logger('REQUREST AUTH');
 
 
 interface HttpRequestInterceptor extends HttpInterceptor {
