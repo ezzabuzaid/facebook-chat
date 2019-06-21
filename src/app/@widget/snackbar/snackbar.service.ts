@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material';
 import { SnackbarViewComponent } from './snackbar.component';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class SnackbarService<T= any> {
   currentlyOpenReference: MatSnackBarRef<SnackbarViewComponent> = null;
   constructor(

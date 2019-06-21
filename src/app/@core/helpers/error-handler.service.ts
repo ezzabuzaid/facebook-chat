@@ -20,6 +20,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         // TODO Connect sentry
         // TODO Send error to slack
         // log.info('Error reporter', error);
-        log.error(error);
+        // log.error(error);
+        throw error;
     }
 }

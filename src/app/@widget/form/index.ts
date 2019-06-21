@@ -23,3 +23,9 @@ export class CrudUtils<T> {
     }
 
 }
+
+// TODO find a way to get the type of the formControl value
+export type FormValue<T> = {
+    [P in keyof T]?: any;
+};
+

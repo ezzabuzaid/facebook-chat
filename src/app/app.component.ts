@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute,
     private translateService: TranslateService,
     private languageService: LanguageService,
     private renderer: Renderer2,
@@ -67,7 +67,6 @@ export class AppComponent implements OnInit {
     this.serviceWorkerUtils.updateAvailable.subscribe((update) => {
       log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
     });
-
     this.serviceWorkerUtils.updateActivated.subscribe((update) => {
       log.debug('this.serviceWorkerUtils.updateActivated => ', update);
     });

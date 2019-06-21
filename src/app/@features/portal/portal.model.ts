@@ -13,5 +13,4 @@ export namespace PortalModel {
         email = new FormControl(null, [Validators.required, ...FieldValidation.EMAIL]);
         password = new FormControl(null, [Validators.required, ...FieldValidation.PASSWORD]);
     }
-
 }

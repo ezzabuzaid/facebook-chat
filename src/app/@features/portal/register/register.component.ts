@@ -2,8 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { PortalModel } from '@features/portal/portal.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CrudUtils } from '@widget/form';
+import { DatabaseService } from '@shared/services/database/database.service';
+import { PortalService } from '../portal.service';
+import { MatSnackBar } from '@angular/material';
+import { SnackbarService } from '@widget/snackbar';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +16,11 @@ import { CrudUtils } from '@widget/form';
 })
 export class RegisterComponent extends CrudUtils<PortalModel.RegisterPost> implements OnInit {
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private portalService: PortalService,
+    private snackbar: MatSnackBar,
+    private snackbarService:SnackbarService
   ) {
     super(new PortalModel.RegisterPost());
   }
@@ -20,8 +28,18 @@ export class RegisterComponent extends CrudUtils<PortalModel.RegisterPost> imple
   ngOnInit() { }
 
   register() {
-    if (this.Form.valid) { }
-    // this.router.navigate(['/portal/register']);
+    const { valid, value } = this.Form;
+    if (valid) {
+      this.portalService.register(value)
+        .subscribe(
+          data => {
+            this.router.navigate(['../', 'login'], { relativeTo: this.route });
+          },
+          error => {
+            this.snackbar.open(error.message);
+          }
+        );
+    }
   }
 
 }
