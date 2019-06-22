@@ -20,14 +20,15 @@ import { GmapModule } from '@widget/gmap';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    CoreModule,
-    LayoutModule, BrowserAnimationsModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useClass: LanguageLoader
       }
     }),
+    CoreModule,
+    LayoutModule,
     GmapModule
   ],
   providers: [],

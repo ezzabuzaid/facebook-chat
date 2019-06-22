@@ -1,4 +1,5 @@
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
+@import "~bootstrap/scss/bootstrap-grid";
 
 @mixin placeholder {
   &::-webkit-input-placeholder {

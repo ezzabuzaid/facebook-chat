@@ -1,25 +1,25 @@
-type DIR = 'up' | 'down';
 type SIZE = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+const UNIT = 'px';
 export const MEDIA_BEAKPOINTS = {
   DOWN(size: Exclude<SIZE, 'xs'>) {
-    return `(max-width: ${getSize(size)})`;
+    return `(max-width: ${getSize(size)}${UNIT})`;
   },
   UP(size: SIZE) {
-    return `(min-width: ${getSize(size)})`;
+    return `(min-width: ${getSize(size)}${UNIT})`;
   }
 };
 
 function getSize(size: SIZE) {
   switch (size) {
     case 'xs':
-      return '0px';
+      return 0;
     case 'sm':
-      return '576px';
+      return 576;
     case 'md':
-      return '768px';
+      return 768;
     case 'lg':
-      return '992px';
+      return 992;
     case 'xl':
-      return '1200px';
+      return 1200;
   }
 }

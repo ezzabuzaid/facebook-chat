@@ -1,13 +1,11 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AuthInterceptor, CacheInterceptor, LoggerInterceptor, UiInterceptor, HeadersInterceptor, UrlInterceptor } from './interceptors';
 import { HttpService } from './http.service';
 import { PopupModule } from '@widget/popup';
 import { SnackbarModule } from '@widget/snackbar';
 import { RequestInterceptor } from './interceptors/request.interceptor';
-import { LanguageLoader } from './helpers';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { GlobalErrorHandler } from './helpers/error-handler.service';
 

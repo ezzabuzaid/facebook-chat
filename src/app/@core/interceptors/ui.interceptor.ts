@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, finalize, delay } from 'rxjs/operators';
+import { tap, finalize } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBarRef } from '@angular/material';
-import { Logger } from '@core/utils';
 import { _extract } from '@shared/common';
-import { CustomHttpHeaders } from '@core/helpers';
+import { CustomHttpHeaders } from '@core/helpers/constants';
 import { FormWidgetService } from '@widget/form';
 import { SnackbarService, SnackbarViewComponent } from '@widget/snackbar';
-const log = new Logger('INTERCEPTOR UI');
 
 @Injectable()
 export class UiInterceptor implements HttpInterceptor {

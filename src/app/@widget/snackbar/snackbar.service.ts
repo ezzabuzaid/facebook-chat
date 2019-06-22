@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material';
 import { SnackbarViewComponent } from './snackbar.component';
 
-@Injectable({
-  providedIn: 'root'
-})
+/**
+ * FIXME remove this component and use the one from material with global default options unless you need a custom snackbar
+ */
+
+
+@Injectable()
 export class SnackbarService<T= any> {
   currentlyOpenReference: MatSnackBarRef<SnackbarViewComponent> = null;
   constructor(

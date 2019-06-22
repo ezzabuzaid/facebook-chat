@@ -31,7 +31,10 @@ import {
     MatSortModule,
     MatPaginatorModule,
     MatBadgeModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MAT_LABEL_GLOBAL_OPTIONS,
+    MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -78,5 +81,9 @@ const materialImports = [
 @NgModule({
     imports: materialImports,
     exports: materialImports,
+    providers: [
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } },
+        { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3000 } }
+    ]
 })
 export class MaterialModule { }

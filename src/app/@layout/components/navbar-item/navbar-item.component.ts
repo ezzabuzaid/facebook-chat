@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BREACKPOINTS } from '@shared/common';
-import { LocalStorage } from '@core/helpers';
+import { MEDIA_BEAKPOINTS } from '@shared/common';
 import { LayoutNavigation } from '@layout/navbar/navigation';
+import { LocalStorage } from '@shared/services';
 
 @Component({
   selector: 'app-navbar-item',
@@ -26,7 +26,7 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.breakpointObserver.observe(BREACKPOINTS.TABLET)
+    this.breakpointObserver.observe(MEDIA_BEAKPOINTS.DOWN('md'))
       .pipe(takeUntil(this._subscribtion))
       .subscribe(({ matches }) => {
         this.isTable = matches;

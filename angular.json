@@ -10,7 +10,13 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "spec": true,
+          "viewEncapsulation": "ShadowDom"
+        },
+        "@schematics/angular:module": {
+          "routing": true,
+          "routingScope": "Child"
         }
       },
       "architect": {

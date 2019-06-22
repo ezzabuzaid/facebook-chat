@@ -3,9 +3,7 @@ import { AppUtils } from '@core/helpers';
 import { LanguageService } from '@core/helpers';
 import { NavbarComponent } from '@layout/navbar/navbar.component';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
-import { Logger } from '@core/utils';
 
-const log = new Logger('ToolbarComponent');
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -14,7 +12,6 @@ const log = new Logger('ToolbarComponent');
 export class ToolbarComponent implements OnInit {
 
   constructor(
-    @Inject(NavbarComponent) private navbarComponent: NavbarComponent,
     private languageService: LanguageService,
     private sidebarService: SidebarService,
   ) { }

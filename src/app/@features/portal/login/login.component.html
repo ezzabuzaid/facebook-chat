@@ -1,0 +1,37 @@
+<div class="container h-100">
+  <div class="row align-items-center justify-content-center h-100">
+    <div class="col-12 col-md-8 col-lg-5">
+      <mat-card>
+        <mat-card-header class="justify-content-center">
+          <mat-card-title class="text-center">
+            <h5>Login in to continue</h5>
+            <p class="font-weight-bold">Ligadata</p>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="Form">
+            <mat-form-field>
+              <mat-label>{{ 'placeholder_username' | translate }}</mat-label>
+              <input type="text" [formControlName]="getName('email')" matInput autocomplete="email">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{ 'placeholder_passowrd' | translate}}</mat-label>
+              <input type="password" [formControlName]="getName('password')" matInput>
+            </mat-form-field>
+            <section>
+              <div class="text-right my-3">
+                <button (click)="login()" mat-flat-button color="primary"
+                  class="text-white text-center w-100">{{ 'button_login' | translate }}</button>
+              </div>
+            </section>
+          </form>
+        </mat-card-content>
+        <mat-card-actions>
+          <a mat-button class="text-nounderline" [routerLink]="['../', 'register']">
+            <small class="text--accent">{{ 'button_signup_for_an_account' | translate }}</small>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

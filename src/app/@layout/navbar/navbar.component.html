@@ -3,18 +3,13 @@
     <header #header>
       <app-navbar-header class="p-3"></app-navbar-header>
     </header>
-    <div [style.height.px]="perfectScrollBarHeight(header)">
+    <div>
       <perfect-scrollbar class="position-relative" [config]="{ suppressScrollX: true}">
         <ng-container *ngFor="let item of navigationMenu">
           <app-navbar-item *ngIf="item.type === 'item'" [item]="item"></app-navbar-item>
           <app-navbar-collapse *ngIf="item.type === 'collapse'" [item]="item"></app-navbar-collapse>
         </ng-container>
       </perfect-scrollbar>
-    </div>
-    <div class="center-absolute" style="left: 100%;" id="nabvar-controller">
-      <button class="btn bg--primary">
-        <mat-icon>last_page</mat-icon>
-      </button>
     </div>
   </div>
   <div sidebar-container>
