@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CustomHttpHeaders,MutateRequest } from '@core/helpers/constants';
+import { CustomHttpHeaders, MutateRequest } from '@core/helpers/constants';
 
 
 interface HttpRequestInterceptor extends HttpInterceptor {
