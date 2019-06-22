@@ -20,12 +20,6 @@ export class IndexDBService {
 
     public onUpgrade = new Subject<IDBDatabase>();
     constructor() {
-        // <meta property="description" content="">
-        // <meta property="keywords" content="">
-        // <meta property="og:description" content="">
-        // <meta property="og:title" content="">
-        // <meta property="og:image" content="">
-        // <meta property="og:image:url" content="">
         try {
             // Workaround for service worker
             const $window = (window as any);
