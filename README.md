@@ -8,4 +8,4 @@ Hello, this repo present boilerplate for latest angular version, It's ready for 
 [DEMO here](https://ezzabuzaid.github.io/angular-buildozer/)
 ### Feel free to try it
 
-after installing the project run `npm install && ng serve -o`
+After downloading the project run `npm install && ng serve -o`
