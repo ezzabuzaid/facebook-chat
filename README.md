@@ -4,3 +4,10 @@ Hello, this repo present boilerplate for latest angular version, It's ready for 
 # A better docs will be available soon, with inclusive demonstrations about the folder structure and the constraint that built upon
 
 # I'll be gald for any help
+
+
+(Demo)[https://ezzabuzaid.github.io/angular-buildozer]
+
+### Feel free to try it
+
+after installing the project run `npm install && ng serve -o`
