@@ -5,9 +5,7 @@ Hello, this repo present boilerplate for latest angular version, It's ready for 
 
 # I'll be gald for any help
 
-
-(https://ezzabuzaid.github.io/angular-buildozer)[Demo]
-
+[DEMO here](https://ezzabuzaid.github.io/angular-buildozer/)
 ### Feel free to try it
 
 after installing the project run `npm install && ng serve -o`
