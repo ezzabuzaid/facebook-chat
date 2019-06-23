@@ -6,7 +6,7 @@ Hello, this repo present boilerplate for latest angular version, It's ready for 
 # I'll be gald for any help
 
 
-(Demo)[https://ezzabuzaid.github.io/angular-buildozer]
+(https://ezzabuzaid.github.io/angular-buildozer)[Demo]
 
 ### Feel free to try it
 
