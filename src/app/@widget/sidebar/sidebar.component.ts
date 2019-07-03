@@ -1,73 +1,37 @@
-import { Component, OnInit, ElementRef, Renderer2, ViewChild, OnDestroy, Input, HostBinding, Inject } from '@angular/core';
-import { Logger } from '@core/utils';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, Input, HostBinding } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SidebarService } from './sidebar.service';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { takeUntil, skip } from 'rxjs/operators';
-import { DOCUMENT } from '@angular/common';
-import { BREACKPOINTS } from '@shared/common';
-const log = new Logger('SidebarComponent');
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  @ViewChild('panel', { static: false }) drawer: ElementRef<HTMLElement>;
-  @Input() name = '';
-  private subscribtion = new Subject();
-  onToggle = new Subject<ISidebarToggle>();
-  // onFold = new Subject<boolean>();
-  // foldeable = true;
-  // @HostBinding('class.folded') folded = false;
-  @HostBinding('class.mobile') mobile = this.breakpointObserver.isMatched(BREACKPOINTS.TABLET);
-  @HostBinding('class.toggled') toggled = false;
-  private IsMobile = false;
+  @ViewChild('panel', { static: false }) public drawer: ElementRef<HTMLElement>;
+  @Input() public name = '';
+  public onToggle = new Subject<ISidebarToggle>();
+  private _subscribtion = new Subject();
+  @HostBinding('class.toggled') public toggled = false;
   constructor(
-    private renderer: Renderer2,
     private sidebarService: SidebarService,
-    private breakpointObserver: BreakpointObserver,
-    @Inject(DOCUMENT) private document: Document
   ) { }
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
-    this.breakpointObserver.observe(BREACKPOINTS.TABLET)
-      .pipe(
-        takeUntil(this.subscribtion),
-        skip(1)
-      )
-      .subscribe(({ matches }) => {
-        // this.foldeable = !matches;
-        this.IsMobile = matches;
-        if (matches) {
-          this.mobile = !this.mobile;
-        }
-      });
   }
 
 
   toggleSidebar() {
-    // const klass = this.foldeable ? 'folded' : 'mobile';
-
-    // if (klass === 'folded') {
-    // this.onFold.next(this.toggled = !this.toggled);
-    // this.folded = !this.fold/ed;
-    // } else {
-    // this.mobile = !this.mobile;
-    // }
-    console.log('cloc');
     this.toggled = !this.toggled;
-    this.onToggle.next({ toggle: this.toggled, mobile: this.IsMobile });
   }
 
   ngOnDestroy() {
-    this.subscribtion.next();
-    this.subscribtion.complete();
+    this._subscribtion.next();
+    this._subscribtion.complete();
   }
 
 }
 interface ISidebarToggle {
   toggle: boolean;
-  mobile: boolean;
 }

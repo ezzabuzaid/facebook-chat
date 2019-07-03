@@ -12,4 +12,4 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule.forChild()
   ]
 })
-export class PagesModule { }
+export class StaticPagesModule { }

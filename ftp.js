@@ -6,9 +6,9 @@ const program = require('commander');
 const client = new Client();
 
 client.connect({
-  user: "noventapp",
-  password: "N0v3nt@pp",
-  host: '43.255.154.28',
+  user: "",
+  password: "",
+  host: '',
 });
 
 function upload(files, from, to) {

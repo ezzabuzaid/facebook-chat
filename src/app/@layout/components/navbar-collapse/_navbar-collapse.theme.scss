@@ -1,4 +1,4 @@
-@import "~assets/scss/utils/functions";
+@import "functions";
 @mixin navbar_collapse($theme) {
   app-navbar-collapse {
     app-navbar-item {

@@ -57,7 +57,6 @@ export default [
     type: 'collapse',
     children: [
       { icon: '', title: _extract('navbar.shelfs'), routerLink: '' },
-      // { icon: 'access_time', title: 'time_slot', routerLink: '/shipment-configuration/timeslot' },
       { icon: '', title: _extract('navbar.reasons'), routerLink: '' },
     ]
   }, {

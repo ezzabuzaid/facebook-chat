@@ -1,8 +1,8 @@
-@import "utils/variables";
-@import "utils/mixins";
+@import "variables";
+@import "mixins";
 @import "~@angular/material/theming";
 $transition-timing: ease-in-out;
-$transition-duration: 0.0.5s;
+$transition-duration: 0.15s;
 :host {
   display: block;
   --width: 100%;

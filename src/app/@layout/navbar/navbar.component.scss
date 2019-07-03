@@ -1,12 +1,12 @@
-@import "~assets/scss/utils/variables";
-@import "~assets/scss/utils/mixins";
-@import "~assets/scss/utils/functions";
-@import "~bootstrap/scss/bootstrap-grid";
+@import "variables";
+@import "mixins";
+@import "functions";
 
 $navbar-width: map-deep-get($layout_dimensions, "navbar-width", xLarge);
 $navbar-folded-width: map-deep-get($layout_dimensions, "navbar-width", folded);
 $navbar-mobile-width: map-deep-get($layout_dimensions, "navbar-width", small);
-@debug $navbar-folded-width;
+$toolbar-height: map-deep-get($layout_dimensions, "toolbar-height");
+
 :host {
   app-sidebar {
     .sidebar-drawer {
@@ -16,16 +16,20 @@ $navbar-mobile-width: map-deep-get($layout_dimensions, "navbar-width", small);
     &.toggled {
       --width: #{$navbar-folded-width};
       ::ng-deep {
-        .drawer-invisible {
-          transition: visibility 0s linear 0.2s;
-          visibility: hidden;
+        @include media-breakpoint-up(lg) {
+          .drawer-invisible {
+            transition: visibility 0s linear 0.2s;
+            visibility: hidden;
+          }
         }
       }
     }
-    &.mobile {
-      --width: 0;
+    @include media-breakpoint-down(md) {
       &.toggled {
         --width: #{$navbar-mobile-width};
+        .sidebar-drawer {
+          margin-top: #{$toolbar-height} !important;
+        }
       }
     }
   }

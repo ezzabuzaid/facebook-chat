@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
       keywords: ['angular', 'backbone', 'ezzabuzaid', 'buildozer', 'boilerplate', 'angular starter', 'seed', 'angular seed'].join(',')
     });
 
-    this.serviceWorkerUtils.checkEveryHour(.01);
+    this.serviceWorkerUtils.checkEveryHour(1);
     this.sw.available.subscribe((update) => {
       log.debug('this.sw.available => ', update);
     });

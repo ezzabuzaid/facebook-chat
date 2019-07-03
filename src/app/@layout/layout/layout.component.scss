@@ -1,9 +1,6 @@
-@import "~assets/scss/utils/variables";
-@import "~assets/scss/utils/mixins";
-@mixin content_margin($side_width) {
-  width: calc(100% - #{$side_width});
-  margin-left: $side_width;
-}
+@import "variables";
+@import "mixins";
+
 app-layout {
   nav {
     @include fixed_bar(absolute);
