@@ -1,2 +1,2 @@
-export * from './validation.service';
+export * from './validators';
 export * from './validation-password-equivalent';
