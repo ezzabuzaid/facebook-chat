@@ -1,4 +1,4 @@
-@import "~assets/scss/utils/functions";
+@import "functions";
 @mixin login_theme($theme) {
     app-login{
         background-color: get_color_from_theme(primary, $theme);

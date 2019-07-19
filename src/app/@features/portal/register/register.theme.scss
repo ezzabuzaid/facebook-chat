@@ -1,4 +1,4 @@
-@import "~assets/scss/utils/functions";
+@import "functions";
 @mixin register_theme($theme) {
   app-register {
     background-color: get_color_from_theme(primary, $theme);
