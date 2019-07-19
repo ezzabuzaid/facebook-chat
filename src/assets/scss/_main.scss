@@ -23,6 +23,9 @@ body {
 .text-underline {
   text-decoration: underline;
 }
+.text-nounderline {
+  text-decoration: none;
+}
 .overflow-auto {
   overflow: auto;
 }
@@ -55,9 +58,4 @@ mat-form-field {
       }
     }
   }
-}
-// TODO remove it
-semi-table-actions {
-  display: block;
-  @extend .center-flex;
 }

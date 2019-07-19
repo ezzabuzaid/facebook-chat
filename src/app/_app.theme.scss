@@ -1,4 +1,6 @@
 @import "@layout/layout.theme";
+@import "@features/portal/portal.theme";
+@import "@widget/upload-picture/upload-picture.theme";
 @import "~@angular/material/theming";
 @import "functions";
 @import "variables";
@@ -9,6 +11,8 @@
   @include angular-material-theme($theme);
   @include theme_classes($theme);
   @include layout_theme($theme);
+  @include portal_theme($theme);
+  @include upload_picture($theme);
 }
 
 .default-theme {

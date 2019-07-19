@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -27,7 +26,11 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+<<<<<<< HEAD
     this.breakpointObserver.observe(MEDIA_BREAKPOINTS.DOWN('md'))
+=======
+    this.breakpointObserver.observe(MEDIA_BEAKPOINTS.DOWN('md'))
+>>>>>>> dd4a445653d6399de285c158a71709e42460d200
       .pipe(takeUntil(this._subscribtion))
       .subscribe(({ matches }) => {
         this.isTable = matches;

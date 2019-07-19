@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApplicationConstants, AppUtils } from '@core/helpers';
 import { Observable, Observer, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-
+import { Constants } from '@core/helpers/constants';
 /**
- * This servic consume indexedDB which build on events, this will remove asap to be built upon promises using "idb" library
+ * This servic consume indexedDB which build on events, this will be removed asap to be built upon promises using "idb" library
  */
-
-
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class IndexDBService {
     private storage: typeof indexedDB = null;
 
-    private databaseName = ApplicationConstants.APPLICATION_NAME;
+    private databaseName = Constants.Application.APPLICATION_NAME;
     private version = 4;
 
     private database: IDBDatabase = null;
@@ -24,12 +20,6 @@ export class IndexDBService {
 
     public onUpgrade = new Subject<IDBDatabase>();
     constructor() {
-        // <meta property="description" content="">
-        // <meta property="keywords" content="">
-        // <meta property="og:description" content="">
-        // <meta property="og:title" content="">
-        // <meta property="og:image" content="">
-        // <meta property="og:image:url" content="">
         try {
             // Workaround for service worker
             const $window = (window as any);

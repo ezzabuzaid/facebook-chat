@@ -1,10 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, OnDestroy, Inject, AfterViewInit } from '@angular/core';
 import { Subject, fromEventPattern, concat } from 'rxjs';
 import { GoogleMapService } from '@widget/gmap/lib/gmap.service';
-import { Logger } from '@core/utils';
 import { GmapComponent } from '../gmap-view/gmap.component';
 import { takeUntil, skip } from 'rxjs/operators';
-const log = new Logger('GmapAutoCompleteComponent');
 
 @Component({
   selector: 'app-gmap-autocomplete',

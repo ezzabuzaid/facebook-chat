@@ -1,6 +1,6 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Logger } from '@core/utils';
+import { Logger } from './logger/logger.service';
 
 const log = new Logger('GlobalErrorHandler');
 
@@ -20,6 +20,7 @@ export class GlobalErrorHandler implements ErrorHandler {
         // TODO Connect sentry
         // TODO Send error to slack
         // log.info('Error reporter', error);
-        log.error(error);
+        // log.error(error);
+        throw error;
     }
 }

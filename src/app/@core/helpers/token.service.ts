@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { ApplicationConstants } from './helpers.service';
-import { LocalStorage } from './localstorage/localstorage.service';
+import { LocalStorage } from '@shared/services';
+import { Constants } from './constants';
 
 const helper = new JwtHelperService();
 
@@ -18,7 +18,7 @@ export class TokenService {
    * encoded token, that was saved before in localstorage
    */
   get token() {
-    return this.localStorage.get<string>(ApplicationConstants.TOKEN_KEY);
+    return this.localStorage.get<string>(Constants.Application.TOKEN_KEY);
   }
   /**
    *
@@ -26,7 +26,7 @@ export class TokenService {
    * use this method to directly set the token in localsorage
    */
   set token(value: string) {
-    this.localStorage.set(ApplicationConstants.TOKEN_KEY, value);
+    this.localStorage.set(Constants.Application.TOKEN_KEY, value);
   }
 
   /**
@@ -34,7 +34,7 @@ export class TokenService {
    * remove the token from storage
    */
   deleteToken() {
-    this.localStorage.remove(ApplicationConstants.TOKEN_KEY);
+    this.localStorage.remove(Constants.Application.TOKEN_KEY);
   }
   /**
    *

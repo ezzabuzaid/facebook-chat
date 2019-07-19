@@ -1,13 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject, of } from 'rxjs';
-import { ApplicationConstants } from './helpers.service';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '@environments/environment';
-import { Logger } from '../utils/logger/logger.service';
 import { DOCUMENT } from '@angular/common';
-import { LocalStorage } from './localstorage/localstorage.service';
-
-const log = new Logger('LanguageService');
+import { LocalStorage } from '@shared/services';
+import { Constants } from './constants';
 
 export enum Direction {
   LTR = 'ltr',
@@ -65,11 +62,11 @@ export class LanguageService {
   }
 
   set language(language: Language) {
-    this.localStorage.set(ApplicationConstants.LANGUAGE_KEY, language);
+    this.localStorage.set(Constants.Application.LANGUAGE_KEY, language);
   }
 
   get language() {
-    return (this.localStorage.get(ApplicationConstants.LANGUAGE_KEY) || this.defaultLanguage) as Language;
+    return (this.localStorage.get(Constants.Application.LANGUAGE_KEY) || this.defaultLanguage) as Language;
   }
 
   get direction(): Direction {

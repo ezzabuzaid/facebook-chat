@@ -29,6 +29,8 @@ import { GmapModule } from '@widget/gmap';
         useClass: LanguageLoader
       }
     }),
+    CoreModule,
+    LayoutModule,
     GmapModule
   ],
   providers: [],

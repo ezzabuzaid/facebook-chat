@@ -1,6 +1,6 @@
 // TODO move the utils file to utils folder and add testing
 
-import { Observable, of, EMPTY } from 'rxjs';
+import { Observable, of, EMPTY, throwError } from 'rxjs';
 export class AppUtils {
 
   /**
@@ -160,4 +160,14 @@ export class AppUtils {
     };
   }
 
+}
+
+
+export function tryOrThrow<T>(cb: (...args: any) => T) {
+  try {
+    const x = (cb as any)();
+    return of(x as ReturnType<typeof cb>);
+  } catch (error) {
+    return throwError(error);
+  }
 }

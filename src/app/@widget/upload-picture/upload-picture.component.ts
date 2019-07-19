@@ -4,6 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { UploadPictureService } from './upload-picture.service';
 import { Observable, Observer } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd4a445653d6399de285c158a71709e42460d200
 
 @Component({
   selector: 'app-upload-picture',
@@ -20,10 +24,17 @@ import { MatSnackBar } from '@angular/material';
 export class UploadPictureComponent implements OnInit, ControlValueAccessor {
   private static howMuchInstance = -1;
   public label = UploadPictureComponent.howMuchInstance;
+<<<<<<< HEAD
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
 
+=======
+
+  @Input() private size = 4;
+  @Input() private supported = ['jpeg', 'png'];
+
+>>>>>>> dd4a445653d6399de285c158a71709e42460d200
   changeValue: (value) => void;
 
   value = null;
@@ -80,6 +91,10 @@ export class UploadPictureComponent implements OnInit, ControlValueAccessor {
       reader.addEventListener('abort', (error) => observer.error(error));
       reader.addEventListener('error', (error) => observer.error(error));
       reader.addEventListener('progress', console.log);
+<<<<<<< HEAD
+=======
+      // reader.addEventListener('load', (e) => observer.next(reader.result as string));
+>>>>>>> dd4a445653d6399de285c158a71709e42460d200
       reader.addEventListener('loadend', (e) => observer.next(reader.result));
       reader.readAsDataURL(file);
     });
@@ -87,10 +102,17 @@ export class UploadPictureComponent implements OnInit, ControlValueAccessor {
 
   uploadPicture({ files: [file] }) {
     if (this.allowedToUpload(file)) {
+<<<<<<< HEAD
       // NOTE send it to the server before convert it
       this.readFile(file)
         .subscribe(
           (value) => {
+=======
+      this.readFile(file)
+        .subscribe(
+          (value) => {
+            console.log(value);
+>>>>>>> dd4a445653d6399de285c158a71709e42460d200
             this.successCB(value);
           },
           () => this.errorCB('image_upload_error')

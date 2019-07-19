@@ -3,7 +3,7 @@
     <header #header>
       <app-navbar-header class="p-3"></app-navbar-header>
     </header>
-    <div [style.height.px]="perfectScrollBarHeight(header)">
+    <div>
       <perfect-scrollbar class="position-relative" [config]="{ suppressScrollX: true}">
         <ng-container *ngFor="let item of navigationMenu">
           <app-navbar-item *ngIf="item.type === 'item'" [item]="item"></app-navbar-item>

@@ -47,7 +47,6 @@ export class SeoService {
       property: 'og:image',
       content: meta.image,
     });
-    // required
     this.metaService.updateTag({
       property: 'og:image:url',
       content: meta.image

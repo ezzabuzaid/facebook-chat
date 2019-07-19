@@ -3,7 +3,7 @@ import { FieldValidation, ValidationPattern } from '@shared/validation';
 
 export namespace PortalModel {
     export class LoginPost {
-        email = new FormControl(null, [Validators.required, ...FieldValidation.EMAIL]);
+        email = new FormControl(null, Validators.required);
         password = new FormControl(null, Validators.required);
     }
 
