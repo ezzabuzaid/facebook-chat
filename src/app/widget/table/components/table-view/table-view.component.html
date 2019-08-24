@@ -1,0 +1,48 @@
+<table [class]="classes">
+  <thead>
+    <tr>
+      <ng-content select="semi-table-head"></ng-content>
+    </tr>
+    <tr *ngIf="actionsComponent || columns.length">
+      <ng-container *ngIf="actionsComponent && actionsComponent?.position === 'start'">
+        <ng-container *ngTemplateOutlet="tableActions"></ng-container>        
+      </ng-container>
+
+      <ng-container *ngFor="let column of columns">
+
+        <ng-container *ngIf="column; else noFilter">
+
+          <th>
+            <input [semiTableFilter]="[column]" type="text">
+          </th>
+
+        </ng-container>
+
+        <ng-template #noFilter>
+
+          <th style="width: 1% !important"></th>
+
+        </ng-template>
+
+      </ng-container>
+
+      <ng-container *ngIf="actionsComponent && actionsComponent?.position === 'end'">
+        <ng-container *ngTemplateOutlet="tableActions"></ng-container>        
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of dataSource; trackBy: trackByFn">
+      <tr>
+        <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: item }"></ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+
+<ng-template #tableActions>
+  <th>
+    <ng-content select="semi-table-actions"></ng-content>
+  </th>
+</ng-template>
