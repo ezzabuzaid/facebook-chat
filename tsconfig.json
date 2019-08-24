@@ -18,22 +18,22 @@
     ],
     "paths": {
       "@core/*": [
-        "app/@core/*"
+        "app/core/*"
       ],
       "@shared/*": [
-        "app/@shared/*"
+        "app/shared/*"
       ],
       "@features/*": [
-        "app/@features/*"
+        "app/features/*"
       ],
       "@widget/*": [
-        "app/@widget/*"
+        "app/widget/*"
       ],
       "@partials/*": [
-        "app/@partials/*"
+        "app/partials/*"
       ],
       "@layout/*": [
-        "app/@layout/*"
+        "app/layout/*"
       ],
       "@environments/*": [
         "environments/*"

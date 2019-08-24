@@ -5,8 +5,8 @@ import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 import { RouterModule, Routes } from '@angular/router';
-import { AppShellLoaderModule } from './@widget/app-shell-loader/app-shell-loader.module';
-import { AppShellLoaderComponent } from './@widget/app-shell-loader/app-shell-loader.component';
+import { AppShellLoaderModule } from './widget/app-shell-loader/app-shell-loader.module';
+import { AppShellLoaderComponent } from './widget/app-shell-loader/app-shell-loader.component';
 
 const routes: Routes = [{ path: 'shell', component: AppShellLoaderComponent }];
 

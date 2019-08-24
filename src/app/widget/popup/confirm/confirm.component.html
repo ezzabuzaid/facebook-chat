@@ -1,0 +1,22 @@
+<mat-card class="mat-elevation-z0">
+  <mat-card-header class="justify-content-between align-items-center">
+    <mat-card-title class="mb-0">
+      {{ data?.title || 'confirmition' }}
+    </mat-card-title>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content class="my-3">
+    <div>
+      <p>{{ data?.description }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="d-flex">
+      <button mat-flat-button color="primary" (click)="onNoClick(true)"
+        cdkFocusInitial>{{ data.confirm || 'Confirm' }}</button>
+      <button mat-flat-button (click)="onNoClick(false)">{{ data.close || 'Close' }}</button>
+    </div>
+  </mat-card-actions>
+</mat-card>

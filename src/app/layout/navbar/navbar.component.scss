@@ -1,0 +1,37 @@
+@import 'variables';
+@import 'mixins';
+@import 'functions';
+
+$navbar-width: map-deep-get($layout_dimensions, 'navbar-width', xLarge);
+$navbar-folded-width: map-deep-get($layout_dimensions, 'navbar-width', folded);
+$navbar-mobile-width: map-deep-get($layout_dimensions, 'navbar-width', small);
+$toolbar-height: map-deep-get($layout_dimensions, 'toolbar-height');
+@debug $navbar-folded-width;
+:host {
+  app-sidebar {
+    .sidebar-drawer {
+      background-color: #262f3d;
+    }
+    --width: #{$navbar-width};
+    &.toggled {
+      --width: #{$navbar-folded-width};
+      ::ng-deep {
+        @include media-breakpoint-up(lg) {
+          .drawer-invisible {
+            transition: visibility 0s linear 0.2s;
+            visibility: hidden;
+          }
+        }
+      }
+    }
+    @include media-breakpoint-down(md) {
+      --width: 0;
+      &.toggled {
+        --width: #{$navbar-mobile-width};
+        .sidebar-drawer {
+          margin-top: #{$toolbar-height} !important;
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,9 @@
-@import "@layout/layout.theme";
-@import "@features/portal/portal.theme";
-@import "@widget/upload-picture/upload-picture.theme";
-@import "~@angular/material/theming";
-@import "functions";
-@import "variables";
+@import '~@angular/material/theming';
+@import 'functions';
+@import 'variables';
+@import 'layout/layout.theme';
+@import 'pages/portal/portal.theme';
+@import 'widget/upload-picture/upload-picture.theme';
 
 @include mat-core();
 

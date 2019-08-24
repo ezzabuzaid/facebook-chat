@@ -1,0 +1,6 @@
+@import './components/navbar-collapse/navbar-collapse.theme';
+@import './components/navbar-item/navbar-item.theme';
+@mixin layout_theme($theme) {
+  @include navbar_collapse($theme);
+  @include navbar-item($theme);
+}

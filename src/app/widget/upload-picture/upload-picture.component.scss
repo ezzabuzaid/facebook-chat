@@ -1,0 +1,26 @@
+@import 'functions';
+@import 'variables';
+
+.wrapper {
+  .file-upload {
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    border: 1px dashed #0177bd;
+    overflow: hidden;
+    background-size: 100% 200%;
+    transition: background-position 0.35s;
+    &:hover {
+      background-position: 0 100%;
+      mat-icon {
+        color: #fff;
+      }
+    }
+    &.uploaded {
+      z-index: 1;
+      img {
+        z-index: -1;
+      }
+    }
+  }
+}

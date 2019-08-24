@@ -3,12 +3,12 @@ import { environment } from '@environments/environment';
 import { Logger } from '@core/helpers/logger';
 import { NavigationEnd, ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService, Language } from '@core/helpers';
+import { LanguageService, Language } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { IndexDBService } from '@shared/services';
-import { ServiceWorkerUtils } from '@shared/services/service-worker-update.service';
-import { SeoService } from '@shared/services';
+import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SwUpdate } from '@angular/service-worker';
+// import { IndexDBService } from '@shared/services';
+import { SeoService } from '@core/helpers/seo/seo.service';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private renderer: Renderer2,
     private seoService: SeoService,
-    private indexDBService: IndexDBService,
+    // private indexDBService: IndexDBService,
     private serviceWorkerUtils: ServiceWorkerUtils,
     private sw: SwUpdate,
     @Inject(DOCUMENT) private document: Document,
@@ -34,12 +34,12 @@ export class AppComponent implements OnInit {
   ) {
     if (this.isBrowser) {
       this.languageService.populate(Language.EN);
-      this.indexDBService.populate({ name: 'test', version: 4 })
-        .onUpgrade
-        .subscribe(database => {
-          log.debug('Database =>', database);
-        });
-      this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
+      // this.indexDBService.populate({ name: 'test', version: 4 })
+      //   .onUpgrade
+      //   .subscribe(database => {
+      //     log.debug('Database =>', database);
+      //   });
+      // this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
 
       // TODO PWA Checks if should display install popup notification:
       const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());

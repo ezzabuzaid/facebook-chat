@@ -9,8 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '@core/core.module';
 import { LayoutModule } from '@layout/layout.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { LanguageLoader } from '@core/helpers';
-import { GmapModule } from '@widget/gmap';
+import { LanguageLoader } from '@core/helpers/language';
 
 @NgModule({
   declarations: [
@@ -28,10 +27,7 @@ import { GmapModule } from '@widget/gmap';
         provide: TranslateLoader,
         useClass: LanguageLoader
       }
-    }),
-    CoreModule,
-    LayoutModule,
-    GmapModule
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

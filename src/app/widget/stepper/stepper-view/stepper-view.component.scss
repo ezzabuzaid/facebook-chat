@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+.step-navigation-bar {
+  button {
+    transition: transform 0.25s ease-in 0.15s, background-color 0.1s ease-out;
+    // @include mat-elevation-transition;
+    transform: scale(1);
+    // z-index: 1;
+    &.active {
+      @include mat-elevation(5);
+      transform: scale(1.02);
+    }
+  }
+}

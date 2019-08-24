@@ -1,0 +1,4 @@
+<section class="w-100" infiniteScroll [infiniteScrollUpDistance]="5" [infiniteScrollThrottle]="10"
+  [infiniteScrollContainer]="scrollContainerSelector" [fromRoot]="true" (scrolled)="scrolledDown.emit()" (scrolledUp)="scrolledUp.emit()">
+  <ng-content></ng-content>
+</section>

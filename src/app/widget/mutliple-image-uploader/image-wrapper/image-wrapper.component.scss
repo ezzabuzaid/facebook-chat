@@ -1,0 +1,10 @@
+$upload_wrapper_height: 300px;
+.drag-zone {
+    height: $upload_wrapper_height;
+    border: 2px dashed gray;
+}
+
+.overflow-container {
+    overflow: auto;
+    height: $upload_wrapper_height;
+}

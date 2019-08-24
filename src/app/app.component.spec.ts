@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { LanguageLoader } from '@core/helpers';
+import { LanguageLoader } from '@core/helpers/language';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from '@core/core.module';
 

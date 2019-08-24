@@ -1,0 +1,61 @@
+@import 'variables';
+@import 'mixins';
+@import '~@angular/material/theming';
+$transition-timing: ease-in-out;
+$transition-duration: 0.15s;
+:host {
+  display: block;
+  --width: 100%;
+  ::ng-deep {
+    > div {
+      &:first-child {
+        // overflow: hidden;
+        position: fixed;
+        height: 100%;
+        transform: translateX(0%);
+        will-change: width, transform;
+        transition: width $transition-duration $transition-timing, transform $transition-duration $transition-timing;
+        width: var(--width);
+      }
+      &:last-child {
+        position: relative;
+        transition: width $transition-duration $transition-timing;
+        width: calc(100% - var(--width));
+        @include direction(ltr) {
+          margin-left: auto;
+        }
+        @include direction(rtl) {
+          margin-right: auto;
+        }
+        // ::ng-deep {
+        //   @include direction(ltr) {
+        //     margin-left: auto;
+        //   }
+        //   @include direction(rtl) {
+        //     margin-right: auto;
+        //   }
+        // }
+      }
+    }
+  }
+  @include media-breakpoint-down(md) {
+    ::ng-deep {
+      > div {
+        &:first-child {
+          z-index: 100;
+          transform: translateX(-100%);
+        }
+        &:last-child {
+          width: 100% !important;
+        }
+      }
+    }
+    &.toggled {
+      ::ng-deep {
+        > div:first-child {
+          transform: translateX(0%);
+        }
+      }
+    }
+  }
+}

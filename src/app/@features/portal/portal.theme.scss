@@ -1,6 +1,0 @@
-@import "./login/login.theme.scss";
-@import "./register/register.theme.scss";
-@mixin portal_theme($theme) {
-    @include login_theme($theme);
-    @include register_theme($theme);
-}
