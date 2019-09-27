@@ -6,18 +6,12 @@ jobs:
             - image: circleci/node:lts
         steps:
             - checkout
-            - run:
-                name: Show current branch
-                command: echo ${CIRCLE_BRANCH}
-            - run:
-                name: pwa command used to show the current directory use pwd -L to present the full path from ./root
-                command: pwd
+            - run: echo ${CIRCLE_BRANCH}
+            - run: pwd
             - restore_cache:
                 keys:
                     - npm-dependencies-{{ checksum "package.json" }}
-            - run:
-                name: Install application dependencies
-                command: npm install
+            - run: npm install
             - save_cache:
                 key: npm-dependencies-{{ checksum "package.json" }}
                 paths:
@@ -28,25 +22,15 @@ jobs:
             - image: circleci/node:lts
         steps:
             - checkout
-            - run:
-                name: Show current branch
-                command: echo ${CIRCLE_BRANCH}
+            - run: echo ${CIRCLE_BRANCH}
             - restore_cache:
                 keys:
                     - npm-dependencies-{{ checksum "package.json" }}
-            - run:
-                name: Install angular cli github pages
-                command: sudo npm install -g angular-cli-ghpages
-            - run:
-                name: Install angular cli
-                command: sudo npm install -g @angular/cli@7.3.9
+            - run: sudo npm install -g angular-cli-ghpages
+            - run: sudo npm install -g @angular/cli
             - run: sudo npm install @angular-devkit/build-angular
-            - run:
-                name: Building
-                command: npm run deploy
-            - run:
-                name: Deploy Master to Github pages
-                command: ngh dir "./dist/browser" --token "$GITHUB_TOKEN"
+            - run: npm run deploy
+            - run: ngh dir "./dist/browser" --token "$GITHUB_TOKEN"
 
 workflows:
     version: 2

@@ -1,0 +1,50 @@
+<table [class]="nativeTableClass">
+  <thead>
+    <tr>
+      <ng-content select="semi-table-head"></ng-content>
+    </tr>
+    <tr *ngIf="actionsComponent || filterableColumns.length">
+      <ng-container *ngIf="actionsComponent && actionsComponent?.position === 'start'">
+        <ng-container *ngTemplateOutlet="tableActions"></ng-container>
+      </ng-container>
+      <ng-container *ngFor="let column of filterableColumns">
+        <ng-container *ngIf="column; else noFilter">
+          <th>
+            <ng-container *ngIf="column.type === 'text'">
+              <input [semiTableFilter]="column.key" type="text">
+            </ng-container>
+            <ng-container *ngIf="column.type === 'date'">
+              <input [semiTableFilter]="column.key" id="date" type="date">
+            </ng-container>
+            <ng-container *ngIf="column.type === 'select'">
+              <select [semiTableFilter]="column.key" [type]="column.type">
+                <ng-container *ngFor="let item of column.list">
+                  <option value="item.value">{{ item.name }}</option>
+                </ng-container>
+              </select>
+            </ng-container>
+          </th>
+        </ng-container>
+        <ng-template #noFilter>
+          <th style="width: 1% !important"></th>
+        </ng-template>
+      </ng-container>
+      <ng-container *ngIf="actionsComponent && actionsComponent?.position === 'end'">
+        <ng-container *ngTemplateOutlet="tableActions"></ng-container>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of dataSource; trackBy: trackByFn">
+      <tr>
+        <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: item }"></ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<ng-template #tableActions>
+  <th>
+    <ng-content select="semi-table-actions"></ng-content>
+  </th>
+</ng-template>

@@ -11,7 +11,6 @@
             <mat-label>{{ 'placeholder_data' | translate }}</mat-label>
             <input [formControlName]="getName('data')" matInput>
           </mat-form-field>
-          <angular-editor [formControlName]="getName('content')"></angular-editor>
           <div class="mb-3"></div>
           <app-upload-picture size="4" [supported]="['png', 'jpeg']" [formControlName]="getName('image')"></app-upload-picture>
         </section>

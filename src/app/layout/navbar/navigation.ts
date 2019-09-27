@@ -1,4 +1,5 @@
 import { _extract } from '@shared/common';
+import { Constants } from '@core/constants';
 export interface LayoutNavigation {
   type: LayoutNavigationType;
   title: string;
@@ -10,9 +11,9 @@ export interface LayoutNavigation {
 export type LayoutNavigationType = 'item' | 'collapse';
 export default [
   {
-    routerLink: '/articles',
-    icon: 'paper',
-    title: _extract('navbar.article'),
+    routerLink: Constants.Routing.Users,
+    icon: 'person',
+    title: _extract('navbar.users'),
     type: 'item'
   }, {
     icon: 'settings',

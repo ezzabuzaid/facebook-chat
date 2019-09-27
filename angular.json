@@ -11,8 +11,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "spec": true,
-          "viewEncapsulation": "ShadowDom"
+          "spec": true
         },
         "@schematics/angular:module": {
           "routing": true,

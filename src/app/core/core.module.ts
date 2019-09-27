@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { HttpService } from './http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   LoggerInterceptor,
   HeadersInterceptor,
@@ -12,7 +11,7 @@ import {
 } from './interceptors';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { PopupModule } from '@widget/popup';
-import { StaticPagesModule } from 'app/pages/static-pages/static-pages.module';
+import { StaticPagesModule } from 'app/pages/static/static-pages.module';
 
 
 @NgModule({
@@ -22,10 +21,6 @@ import { StaticPagesModule } from 'app/pages/static-pages/static-pages.module';
     StaticPagesModule
   ],
   providers: [
-    {
-      provide: HttpClient,
-      useClass: HttpService
-    },
     // { TODO use sentry for now
     //   provide: ErrorHandler,
     //   useClass: GlobalErrorHandler

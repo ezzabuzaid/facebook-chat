@@ -1,5 +1,5 @@
 import { Directive, OnInit, Input, Inject, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { TableComponent } from '../components/table-view/table-view.component';
+import { TableComponent } from '../table-view/table-view.component';
 
 @Directive({
   // tslint:disable-next-line:directive-selector
@@ -8,12 +8,25 @@ import { TableComponent } from '../components/table-view/table-view.component';
 
 export class FilterableDirective implements OnInit {
   @Input() filterable: string = null;
+  @Input() list: any[] = [];
+  _type: string = null;
+  @Input()
+  get type() {
+    return this._type;
+  }
+  set type(value) {
+    this._type = value || 'text';
+  }
   constructor(
     @Inject(TableComponent) private tableComponent: TableComponent,
   ) { }
 
   ngOnInit() {
-    this.tableComponent.registerColumn(this.filterable);
+    this.tableComponent.registerColumn({
+      key: this.filterable,
+      type: this.type || 'text',
+      list: this.list
+    });
   }
 
 }

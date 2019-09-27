@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableFilterDirective } from './directive/filter.directive';
-import { TableComponent } from './components/table-view/table-view.component';
+import { TableComponent } from './table-view/table-view.component';
 import { FilterableDirective } from './directive/filterable.directive';
-import { TableHeadComponent } from './components/table-actions/table-head.component';
-import { TableActionsComponent } from './components/table-actions/table-actions.component';
 import { TableSortDirective } from './directive/sort.directive';
+import { TableHeadComponent } from './table-actions/table-head.component';
+import { TableActionsComponent } from './table-actions/table-actions.component';
 
 @NgModule({
     declarations: [

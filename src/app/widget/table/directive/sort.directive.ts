@@ -59,7 +59,8 @@ export class TableSortDirective implements OnInit {
   }
 
   get dataSource() {
-    return this.tableService.dataSource;
+    // return this.tableService.dataSource;
+    return [];
   }
 
   compare(a, b, isAsc) {
@@ -75,7 +76,6 @@ export class TableSortDirective implements OnInit {
       // bollean, for asc and desc | false mean desc | true asc
       return this.compare(a[key], b[key], isAsc);
     });
-    this.tableService.nextData(this.data);
   }
 
 }

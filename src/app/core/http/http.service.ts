@@ -6,7 +6,10 @@ import { MutateRequest, ModifiableInterceptor } from './http.model';
  * Author: ezzabuzaid@hotmail.com
  * Date: 2018/05
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+  useClass: HttpClient
+})
 export class HttpService extends HttpClient {
   constructor(
     httpHandler: HttpHandler,

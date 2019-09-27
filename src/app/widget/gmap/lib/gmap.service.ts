@@ -89,7 +89,7 @@ export class GoogleMapService {
     ) {
         // !Disable autocomplete submit event
         google.maps.event.addDomListener(input, 'keydown', (event) => {
-            if (event.keyCode === 13) {
+            if (event['keyCode'] === 13) {
                 event.preventDefault();
             }
         });

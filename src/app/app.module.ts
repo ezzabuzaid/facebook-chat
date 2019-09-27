@@ -10,6 +10,7 @@ import { CoreModule } from '@core/core.module';
 import { LayoutModule } from '@layout/layout.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { LanguageLoader } from '@core/helpers/language';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LanguageLoader } from '@core/helpers/language';
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
+    HttpClientModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     CoreModule,

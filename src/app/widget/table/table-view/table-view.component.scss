@@ -22,44 +22,45 @@ table {
           font-size: 12px;
         }
         th {
-          vertical-align: top;
           font-weight: 500;
           color: rgba(0, 0, 0, 0.54);
-          // font-size: 12px;
         }
 
         td {
           vertical-align: middle;
-          // font-size: 14px;
         }
       }
     }
     thead {
       tr {
+        th {
+          vertical-align: middle;
+        }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        &:first-child {
+          height: 40px;
+        }
         &:last-child {
+          height: 50px;
           th {
-            padding: 0 0.5rem 0.5rem;
-            vertical-align: bottom;
-            input {
+            padding: 0 1.5rem;
+            input,
+            select {
               border-radius: 4px;
+              background-color: white;
               border: 1px solid #ccc;
               width: 100%;
               padding: 0.25rem 0;
               text-indent: 8px;
             }
           }
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
         }
       }
     }
     tbody {
       tr {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        ::ng-deep {
-          td {
-            padding: 0 .25rem;
-          }
-        }
+        height: 40px;
       }
     }
   }

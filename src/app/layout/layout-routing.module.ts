@@ -3,15 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { ContainerComponent } from '@layout/container/container.component';
 import { AppGuard } from '@core/guards';
 
-const FEATURES_PATH = '.././@features/';
-
 const routes: Routes = [
   {
     path: '',
     component: ContainerComponent,
-    canActivate: [AppGuard],
+    // canActivate: [AppGuard],
     children: [
-      { path: 'articles', loadChildren: () => import('../pages/articles/articles.module').then(e => e.ArticlesModule) },
+      { path: 'users', loadChildren: () => import('../pages/users/users.module').then(e => e.UsersModule) },
     ]
   }
 ];
