@@ -3,6 +3,7 @@ import { TableService } from '../table.service';
 
 
 @Directive({
+  // tslint:disable-next-line: directive-selector
   selector: '[semiTableSort]'
 })
 export class TableSortDirective implements OnInit {

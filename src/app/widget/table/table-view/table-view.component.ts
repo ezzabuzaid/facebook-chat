@@ -16,6 +16,7 @@ import { Subject } from 'rxjs';
 import { TableFilterDirective } from '../directive/filter.directive';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'semi-table',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],

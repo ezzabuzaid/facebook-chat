@@ -1,7 +1,8 @@
-import { Directive, HostListener, OnInit, Input, Host, Attribute, Inject, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, OnInit, Input, Host, ElementRef, Renderer2 } from '@angular/core';
 import { TableService } from '../table.service';
 
 @Directive({
+  // tslint:disable-next-line: directive-selector
   selector: '[semiTableFilter]'
 })
 

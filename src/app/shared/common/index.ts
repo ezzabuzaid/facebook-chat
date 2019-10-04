@@ -5,7 +5,6 @@ export * from './breakpoints';
 export * from './ng-smart-table';
 export * from './extract';
 
-
 export enum EFieldType {
     TEXT,
     TEXTAREA,
@@ -19,6 +18,11 @@ export enum EFieldType {
     RADIO,
     NUMBER,
     TEL,
+}
+
+export interface ISelectOption {
+    label: string;
+    value: string;
 }
 
 export class Field extends FormControl {
@@ -47,19 +51,14 @@ export class Field extends FormControl {
         this.label = label;
     }
 
-    public typeOf(type: EFieldType) {
+    public typeOFieldf(type: EFieldType) {
         return this.type === type;
     }
 
 }
 
-interface IOption {
-    label: string;
-    value: string;
-}
-
 export class SelectField<T> extends Field {
-    public options: IOption[] = [];
+    public options: ISelectOption[] = [];
     public value: T = null;
     constructor(
         public name: string,
@@ -73,7 +72,7 @@ export class SelectField<T> extends Field {
 
 export class Form extends FormGroup {
     constructor(
-        public fields: Field[],
+        public fields: (Field | SelectField<any>)[],
         validation?: AbstractControlOptions,
     ) {
         super({}, validation);
@@ -82,4 +81,3 @@ export class Form extends FormGroup {
         });
     }
 }
-

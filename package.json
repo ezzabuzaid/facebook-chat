@@ -89,8 +89,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run build:ssr && git add .",
-      "pre-push": "npm run build:ssr"
+      "pre-commit": "npm run lint && npm run build:ssr && git add ."
     }
   },
   "name": "angular-buildozer",

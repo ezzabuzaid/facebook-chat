@@ -9,7 +9,7 @@ import { CrudUtils } from '@widget/form';
   styleUrls: ['./users-create.component.scss']
 })
 export class UsersCreateComponent implements OnInit {
-  fields: Field[] | SelectField<any>[] = [
+  fields: (Field | SelectField<any>)[] = [
     new Field('fname', {
       validation: {},
       value: null,
