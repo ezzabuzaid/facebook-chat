@@ -18,6 +18,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DirectivesModule } from '@shared/directives';
 import { AppShellLoaderModule } from 'app/widget/app-shell-loader/app-shell-loader.module';
 
+import { GravatarModule } from  'ngx-gravatar';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import { AppShellLoaderModule } from 'app/widget/app-shell-loader/app-shell-load
     PerfectScrollbarModule,
     ScrollingModule,
     DirectivesModule,
-    AppShellLoaderModule
+    AppShellLoaderModule,
+    GravatarModule
   ],
   declarations: [
     ToolbarComponent,
