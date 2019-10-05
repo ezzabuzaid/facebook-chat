@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "npm install"
 
 npm install
