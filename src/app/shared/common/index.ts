@@ -25,7 +25,7 @@ export interface ISelectOption {
     value: string;
 }
 
-export class Field extends FormControl {
+export class Field<Tname> extends FormControl {
     public type: EFieldType = null;
     public label: string = null;
     public value: any = null;
@@ -36,14 +36,14 @@ export class Field extends FormControl {
         updateOn: 'change'
     };
     constructor(
-        public name: string,
+        public name: Tname,
         {
             validation,
             value,
             type,
             label,
             section
-        }: Partial<Field>
+        }: Partial<Field<Tname>>
     ) {
         super(value, validation);
         this.type = type;
@@ -51,28 +51,29 @@ export class Field extends FormControl {
         this.label = label;
     }
 
-    public typeOFieldf(type: EFieldType) {
+    public typeOf(type: EFieldType) {
         return this.type === type;
     }
 
 }
 
-export class SelectField<T> extends Field {
+export class SelectField<Tname, T = string | string[]> extends Field<Tname> {
     public options: ISelectOption[] = [];
     public value: T = null;
     constructor(
-        public name: string,
-        option: Partial<SelectField<T>>
+        public name: Tname,
+        option: Partial<SelectField<Tname, T>>
     ) {
-        super(name as any, option);
+        super(name, option);
         this.options = option.options;
         this.value = option.value as any;
     }
 }
 
-export class Form extends FormGroup {
+export class Form<T = any> extends FormGroup {
+    // TODO: Check if two fields has the same name
     constructor(
-        public fields: (Field | SelectField<any>)[],
+        public fields: (SelectField<any, keyof T> | Field<keyof T> | any)[],
         validation?: AbstractControlOptions,
     ) {
         super({}, validation);
@@ -81,3 +82,22 @@ export class Form extends FormGroup {
         });
     }
 }
+
+interface vf {
+    lname: string;
+}
+const fil = new Field('fname', {
+    validation: {},
+    value: null,
+    type: EFieldType.TEXT,
+    label: 'First Name',
+    section: 'name',
+});
+
+const f = new Form<vf>([fil]);
+
+class A<b> {
+    constructor(name: b) { }
+}
+
+const a = new A<'ezz'>('ezz');

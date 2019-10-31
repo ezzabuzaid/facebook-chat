@@ -9,7 +9,6 @@ import { UsersCreateComponent } from './users-create/users-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CrudModule } from 'app/partial/crud/crud.module';
 
-
 @NgModule({
   declarations: [
     UsersListComponent,

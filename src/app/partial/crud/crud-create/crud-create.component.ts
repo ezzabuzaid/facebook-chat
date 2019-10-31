@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { EFieldType, SelectField, Field, Form } from '@shared/common';
-import { Validators } from '@angular/forms';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { EFieldType, Form } from '@shared/common';
 
 @Component({
   selector: 'app-crud-create',
@@ -11,10 +10,14 @@ export class CrudCreateComponent implements OnInit {
   @Input() form: Form = null;
   types = EFieldType;
 
+  @Output() submit = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() { }
 
-  create() { }
+  create() {
+    this.submit.emit();
+  }
 
 }
