@@ -41,7 +41,7 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
 
   private authenticate() {
     if (!this.tokenService.isAuthenticated()) {
-      this.router.navigateByUrl(Constants.Routing.LOGIN);
+      this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
       return false;
     }
     return true;

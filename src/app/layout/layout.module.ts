@@ -17,8 +17,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DirectivesModule } from '@shared/directives';
 import { AppShellLoaderModule } from 'app/widget/app-shell-loader/app-shell-loader.module';
-
-import { GravatarModule } from  'ngx-gravatar';
+import { GravatarModule } from 'ngx-gravatar';
 
 
 @NgModule({

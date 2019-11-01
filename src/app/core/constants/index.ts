@@ -6,9 +6,19 @@ export namespace Constants {
   }
 
   export class Routing {
-    static readonly LOGIN = '/portal/login';
-    static readonly ADMINS = '/admins';
-    static readonly Users = '/users';
+    static readonly LOGIN = {
+      withSlash: '/portal/login',
+      withoutSlash: 'login'
+    };
+    static readonly Users = {
+      withSlash: '/users',
+      withoutSlash: 'users'
+    };
+    static readonly Todos = {
+      withSlash: '/todos',
+      withoutSlash: 'todos'
+    };
+
 
     // FIXME NOT_IMPLEMENTED
     static readonly SERVER_ERROR = 'error500';
@@ -16,6 +26,6 @@ export namespace Constants {
     static readonly FOEBIDDEN = 'error403';
   }
 
-  export class API {  }
+  export class API { }
 
 }

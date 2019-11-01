@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import {
   LoggerInterceptor,
   HeadersInterceptor,
@@ -12,6 +12,7 @@ import {
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { PopupModule } from '@widget/popup';
 import { StaticPagesModule } from 'app/pages/static/static-pages.module';
+import { HttpService } from './http';
 
 
 @NgModule({
@@ -25,6 +26,10 @@ import { StaticPagesModule } from 'app/pages/static/static-pages.module';
     //   provide: ErrorHandler,
     //   useClass: GlobalErrorHandler
     // },
+    {
+      provide: HttpClient,
+      useClass: HttpService
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoggerInterceptor,

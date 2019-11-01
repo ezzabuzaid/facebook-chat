@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ContainerComponent,
     // canActivate: [AppGuard],
     children: [
-      { path: 'users', loadChildren: () => import('../pages/users/users.module').then(e => e.UsersModule) },
+      { path: ':moduleName', loadChildren: () => import('../pages/generic-crud/generic-crud.module').then(e => e.GenericCrudModule) },
     ]
   }
 ];

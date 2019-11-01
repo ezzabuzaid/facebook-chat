@@ -73,31 +73,12 @@ export class SelectField<Tname, T = string | string[]> extends Field<Tname> {
 export class Form<T = any> extends FormGroup {
     // TODO: Check if two fields has the same name
     constructor(
-        public fields: (SelectField<any, keyof T> | Field<keyof T> | any)[],
+        public fields: (SelectField<keyof T> | Field<keyof T>)[],
         validation?: AbstractControlOptions,
     ) {
         super({}, validation);
         this.fields.forEach((field) => {
-            this.addControl(field.name, field);
+            this.addControl(field.name as any, field);
         });
     }
 }
-
-interface vf {
-    lname: string;
-}
-const fil = new Field('fname', {
-    validation: {},
-    value: null,
-    type: EFieldType.TEXT,
-    label: 'First Name',
-    section: 'name',
-});
-
-const f = new Form<vf>([fil]);
-
-class A<b> {
-    constructor(name: b) { }
-}
-
-const a = new A<'ezz'>('ezz');

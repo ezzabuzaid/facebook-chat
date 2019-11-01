@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UsersListComponent } from './users-list.component';
+import { GenericReadComponent } from './generic-read.component';
 
-describe('UsersListComponent', () => {
-  let component: UsersListComponent;
-  let fixture: ComponentFixture<UsersListComponent>;
+describe('GenericReadComponent', () => {
+  let component: GenericReadComponent;
+  let fixture: ComponentFixture<GenericReadComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsersListComponent ]
+      declarations: [ GenericReadComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsersListComponent);
+    fixture = TestBed.createComponent(GenericReadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

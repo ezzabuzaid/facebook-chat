@@ -25,7 +25,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             switch (event.status) {
               case 401:
                 this.userService.logout();
-                this.router.navigateByUrl(Constants.Routing.LOGIN);
                 break;
               case 500:
                 this.snackbar.open(`An error occurred to the server, please contact the maintenance`);

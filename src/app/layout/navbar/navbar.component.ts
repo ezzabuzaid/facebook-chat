@@ -1,9 +1,9 @@
-import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import navigation from './navigation';
 import { DOCUMENT } from '@angular/common';
-import { Constants } from '@core/helpers/constants';
 import { LocalStorage } from '@core/helpers/localstorage';
+import { Constants } from '@core/constants';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +20,7 @@ export class NavbarComponent {
   ) { }
 
   logout() {
-    this.router.navigate([`/${Constants.Routing.LOGIN}`]);
+    this.router.navigate([Constants.Routing.LOGIN.withSlash]);
     this.localStorage.clear();
   }
 

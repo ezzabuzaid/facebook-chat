@@ -1,0 +1,20 @@
+<ng-container *ngIf="currentModule">
+    <div class="mt-5"></div>
+    <ng-container *ngIf="operation === EOperations.CREATE">
+        <div class="container">
+            <app-generic-write [module]="currentModule.create" [endpoint]="currentModule.endpoint">
+            </app-generic-write>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="operation === EOperations.UPDATE">
+        <div class="container">
+            <app-generic-write [module]="currentModule.update" [endpoint]="currentModule.endpoint">
+            </app-generic-write>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="operation === EOperations.READ">
+        <app-generic-read [module]="currentModule.read" [endpoint]="currentModule.endpoint"></app-generic-read>
+    </ng-container>
+</ng-container>

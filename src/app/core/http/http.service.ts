@@ -2,14 +2,8 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHandler, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 import { SetupInterceptor } from '../interceptors';
 import { MutateRequest, ModifiableInterceptor } from './http.model';
-/**
- * Author: ezzabuzaid@hotmail.com
- * Date: 2018/05
- */
-@Injectable({
-  providedIn: 'root',
-  useClass: HttpClient
-})
+
+@Injectable()
 export class HttpService extends HttpClient {
   constructor(
     httpHandler: HttpHandler,
