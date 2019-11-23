@@ -6,7 +6,7 @@
           <mat-card-title>Register in our system</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <form [formGroup]="Form">
+          <form [formGroup]="form">
             <mat-form-field>
               <mat-label>{{ 'placeholder_firstname' | translate }}</mat-label>
               <input type="text" [formControlName]="getName('firstName')" autocomplete="given-name" matInput>

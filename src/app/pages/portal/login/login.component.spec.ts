@@ -11,6 +11,7 @@ import { UserService } from '@shared/user';
 import { TranslateTestingModule } from 'test/mocks';
 import { asyncData } from 'test/test.utils';
 import { UserModel } from '@shared/user/user.model';
+import { FormModule } from '@partials/form';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -30,7 +31,7 @@ describe('LoginComponent', () => {
                 BrowserAnimationsModule,
                 MaterialModule,
                 RouterTestingModule.withRoutes([]),
-                ReactiveFormsModule,
+                FormModule,
                 TranslateTestingModule
             ],
             providers: [
@@ -59,16 +60,16 @@ describe('LoginComponent', () => {
         });
 
         it('form should be valid when enter all requried field', (() => {
-            component.Form.setValue(fakeCreds);
-            expect(component.Form.valid).toBeTruthy();
+            component.form.setValue(fakeCreds);
+            expect(component.form.valid).toBeTruthy();
         }));
 
         it('form should be invalid if username or password is missing', (() => {
             component.getControl('password').setValue(fakeCreds.password);
-            expect(component.Form.invalid).toBeTruthy();
+            expect(component.form.invalid).toBeTruthy();
             component.getControl('password').setValue(null);
             component.getControl('username').setValue(fakeCreds.username);
-            expect(component.Form.invalid).toBeTruthy();
+            expect(component.form.invalid).toBeTruthy();
         }));
 
     });
@@ -92,8 +93,8 @@ describe('LoginComponent', () => {
             // TODO: Check if it has a forgot password button
             // TODO: Check if it has a register button
             // TODO: Check if it has a remember me checkbox
-            expect(byQuerySelector('#usernameWrapper', byQuerySelector('form'))).toBeDefined();
-            expect(byQuerySelector('#passwordWrapper', byQuerySelector('form'))).toBeDefined();
+            expect(byQuerySelector(`#${component.getControl('username').id}`, byQuerySelector('form'))).toBeDefined();
+            expect(byQuerySelector(`#${component.getControl('password').id}`, byQuerySelector('form'))).toBeDefined();
         });
 
         // TODO: move this test case to form widget component
@@ -114,7 +115,7 @@ describe('LoginComponent', () => {
             fixture.detectChanges();
             byQuerySelector('#submitButton').click();
             expect(portalServiceSpy.login).toHaveBeenCalledTimes(1);
-            expect(portalServiceSpy.login).toHaveBeenCalledWith(component.Form.value);
+            expect(portalServiceSpy.login).toHaveBeenCalledWith(component.form.value);
         }));
 
         it('should redirect to app entry page after successed login', fakeAsync(() => {

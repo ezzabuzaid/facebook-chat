@@ -1,50 +1,50 @@
 <ng-container *ngIf="field.typeOf(types.TEXT)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="text" matInput [formControlName]="field.name">
+        <input type="text" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.PASSWORD)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="password" autocomplete="new-password" matInput [formControlName]="field.name">
+        <input type="password" autocomplete="new-password" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.TEXTAREA)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <textarea matInput [formControlName]="field.name"></textarea>
+        <textarea matInput [formControl]="field"></textarea>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.EMAIL)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="email" matInput autocomplete="email" [formControlName]="field.name">
+        <input type="email" matInput autocomplete="email" [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.NUMBER)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="number" matInput [formControlName]="field.name">
+        <input type="number" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.DATE)">
     <mat-form-field>
         <mat-label>{{ field.label }}</mat-label>
         <input matInput #date [max]="field.max" [min]="field.min" (focus)="date.open()" [matDatepicker]="datePicker"
-            [formControlName]="field.name">
+            [formControl]="field">
         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.CHECKBOX)">
     <mat-label>{{field.label}}</mat-label>
-    <mat-checkbox [formControlName]="field.name"></mat-checkbox>
+    <mat-checkbox [formControl]="field"></mat-checkbox>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.SELECT)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <mat-select [formControlName]="field.name">
+        <mat-select [formControl]="field">
             <mat-option *ngFor="let option of field.options" [value]="option.value">
                 {{option.label}}
             </mat-option>
@@ -54,7 +54,7 @@
 <ng-container *ngIf="field.typeOf(types.MULTIPLE)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <mat-select [formControlName]="field.name" [multiple]="true">
+        <mat-select [formControl]="field" [multiple]="true">
             <mat-option *ngFor="let option of field.options" [value]="option.value">
                 {{option.label}}
             </mat-option>

@@ -1,5 +1,10 @@
 import { Listener } from '@core/helpers/listener';
+import { Injectable } from '@angular/core';
+import { Form, IField } from '@shared/common';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class FormWidgetManager extends Listener<boolean> {
     constructor() {
         super();
@@ -7,30 +12,24 @@ export class FormWidgetManager extends Listener<boolean> {
 }
 
 
-import { FormGroup, FormControl, AbstractControlOptions } from '@angular/forms';
-
-
 export class FormUtils<T> {
-    public Form: FormGroup;
 
-    constructor(schema: { [key in keyof T]: FormControl }, options: AbstractControlOptions = {}) {
-        this.Form = new FormGroup(schema, options);
-    }
+    constructor(public form: Form<T>) { }
 
     getName(name: keyof T) {
         return name;
     }
 
     getError(fieldName: string, errorName: string) {
-        return this.Form.get(fieldName).hasError(errorName);
+        return this.form.get(fieldName).hasError(errorName);
     }
 
     getControl(name: keyof T) {
-        return this.Form.get(name as any);
+        return this.form.get(name as any) as unknown as IField<any>;
     }
 
     getControlValue<Y>(name: keyof T, defaultValue?: Y) {
-        return (this.Form.value[name] || defaultValue) as Y;
+        return (this.form.value[name] || defaultValue) as Y;
     }
 
 }
@@ -38,6 +37,3 @@ export class FormUtils<T> {
 export type FormValue<T> = {
     [P in keyof T]: any;
 };
-
-
-// TODO: combine this with crud module, this should be the template and the utils for the crud and any another standalone form;

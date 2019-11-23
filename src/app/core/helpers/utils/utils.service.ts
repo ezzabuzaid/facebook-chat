@@ -1,7 +1,24 @@
 import { Observable, of, EMPTY, throwError } from 'rxjs';
 import { Route } from '@angular/router';
 export class AppUtils {
+    static randomString(length: number) {
+        let string = '';
+        const randomchar = () => {
+            const number = Math.floor(Math.random() * 62);
+            if (number < 10) {
+                return number;
+            }
+            if (number < 36) {
+                return String.fromCharCode(number + 55);
+            }
+            return String.fromCharCode(number + 61);
+        };
 
+        while (string.length < length) {
+            string += randomchar();
+        }
+        return string;
+    }
 
     static prepareQueryParams(obj) {
         return Object.keys(obj).reduce((acc, curr) => {

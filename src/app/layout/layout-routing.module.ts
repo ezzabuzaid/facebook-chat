@@ -10,10 +10,6 @@ const routes: Routes = [
     component: ContainerComponent,
     // canActivate: [AppGuard],
     children: [
-      {
-        path: Constants.Routing.Portal.withoutSlash,
-        loadChildren: () => import('../pages/portal/portal.module').then(e => e.PortalModule)
-      },
       { path: ':moduleName', loadChildren: () => import('../pages/generic-crud/generic-crud.module').then(e => e.GenericCrudModule) },
     ]
   }

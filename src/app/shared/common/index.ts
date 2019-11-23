@@ -1,4 +1,5 @@
 import { Validators, AbstractControl, ValidatorFn, FormControl, AsyncValidatorFn, AbstractControlOptions, FormGroup } from '@angular/forms';
+import { AppUtils } from '@core/helpers/utils';
 
 export * from './material.module';
 export * from './breakpoints';
@@ -26,6 +27,7 @@ export interface ISelectOption {
 }
 
 export interface IField<Tname, T = any> extends FormControl {
+    id: string;
     name: Tname;
     type: EFieldType;
     label: string;
@@ -38,11 +40,12 @@ export interface IField<Tname, T = any> extends FormControl {
     typeOf(type: EFieldType): boolean;
 }
 
-export class Field<Tname> extends FormControl implements IField<Tname> {
+export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
     public type: EFieldType = null;
-    public label: string = null;
-    public value: any = null;
     public section: string = null;
+    public label: string = null;
+    public value: T = null;
+    public id = null;
     public validation: AbstractControlOptions = {
         validators: [],
         asyncValidators: [],
@@ -51,17 +54,19 @@ export class Field<Tname> extends FormControl implements IField<Tname> {
     constructor(
         public name: Tname,
         {
-            validation,
-            value,
+            validation = null,
+            value = null,
             type,
             label,
-            section
-        }: Partial<Field<Tname>>
+            section,
+            id
+        }: Partial<Field<Tname, T>> = {}
     ) {
         super(value, validation);
-        this.type = type;
+        this.type = type || EFieldType.TEXT;
         this.section = section;
         this.label = label;
+        this.id = id || AppUtils.randomString(10);
     }
 
     public typeOf(type: EFieldType) {
@@ -70,7 +75,7 @@ export class Field<Tname> extends FormControl implements IField<Tname> {
 
 }
 
-export class SelectField<Tname, T = string | string[]> extends Field<Tname> implements IField<Tname, T> {
+export class SelectField<Tname, T = string | string[]> extends Field<Tname, T> implements IField<Tname, T> {
     public options: ISelectOption[] = [];
     public value: T = null;
     constructor(
@@ -82,7 +87,7 @@ export class SelectField<Tname, T = string | string[]> extends Field<Tname> impl
         this.value = option.value as any;
     }
 }
-export class DateField<Tname> extends Field<Tname> implements IField<Tname, Date> {
+export class DateField<Tname> extends Field<Tname, Date> implements IField<Tname, Date> {
     public min: Date;
     public max: Date;
     public value: Date = null;
