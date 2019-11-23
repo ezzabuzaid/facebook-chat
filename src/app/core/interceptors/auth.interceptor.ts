@@ -8,8 +8,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   constructor() { }
 
-  // TODO setup your own custom role or use nebular security module
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req.clone())
       .pipe(

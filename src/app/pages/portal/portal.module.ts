@@ -5,9 +5,9 @@ import { PortalRoutingModule } from './portal-routing.module';
 import { MaterialModule } from '@shared/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { PortalService } from './portal.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { FormModule } from '@partials/form';
 
 @NgModule({
   declarations: [
@@ -18,11 +18,8 @@ import { RegisterComponent } from './register/register.component';
     CommonModule,
     PortalRoutingModule,
     MaterialModule,
-    ReactiveFormsModule,
+    FormModule,
     TranslateModule.forChild(),
-  ],
-  providers: [
-    PortalService
   ]
 })
 export class PortalModule { }

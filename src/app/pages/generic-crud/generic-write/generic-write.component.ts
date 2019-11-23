@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { GenericCrudModel } from '../generic-crud.model';
 import { HttpClient } from '@angular/common/http';
-import { Module } from '@shared/models/generic-module';
+import { IModule } from '@shared/models/generic-module';
+import { PickAttr } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-generic-write',
@@ -10,7 +11,7 @@ import { Module } from '@shared/models/generic-module';
 })
 export class GenericWriteComponent implements OnInit {
   @Input() endpoint = '';
-  @Input() module = null;
+  @Input() module: PickAttr<IModule<any, any, any>, 'update'> = null;
 
   constructor(
     private http: HttpClient
@@ -28,7 +29,7 @@ export class GenericWriteComponent implements OnInit {
     // TODO: preValidation
     if (valid) {
       // TODO: preSubmittion
-      this.http.post(this.module.url || this.endpoint, value)
+      this.http.post(this.module.endpoint || this.endpoint, value)
         .subscribe((res) => {
           console.log(res);
           // TODO: postSubmittion

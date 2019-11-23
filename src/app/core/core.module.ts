@@ -22,7 +22,8 @@ import { HttpService } from './http';
     StaticPagesModule
   ],
   providers: [
-    // { TODO use sentry for now
+    // {
+    // TODO use sentry
     //   provide: ErrorHandler,
     //   useClass: GlobalErrorHandler
     // },

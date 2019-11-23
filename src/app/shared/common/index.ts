@@ -25,7 +25,20 @@ export interface ISelectOption {
     value: string;
 }
 
-export class Field<Tname> extends FormControl {
+export interface IField<Tname, T = any> extends FormControl {
+    name: Tname;
+    type: EFieldType;
+    label: string;
+    value: T;
+    section: string;
+    validation: AbstractControlOptions;
+    options?: ISelectOption[];
+    min?: T;
+    max?: T;
+    typeOf(type: EFieldType): boolean;
+}
+
+export class Field<Tname> extends FormControl implements IField<Tname> {
     public type: EFieldType = null;
     public label: string = null;
     public value: any = null;
@@ -57,7 +70,7 @@ export class Field<Tname> extends FormControl {
 
 }
 
-export class SelectField<Tname, T = string | string[]> extends Field<Tname> {
+export class SelectField<Tname, T = string | string[]> extends Field<Tname> implements IField<Tname, T> {
     public options: ISelectOption[] = [];
     public value: T = null;
     constructor(
@@ -69,11 +82,23 @@ export class SelectField<Tname, T = string | string[]> extends Field<Tname> {
         this.value = option.value as any;
     }
 }
+export class DateField<Tname> extends Field<Tname> implements IField<Tname, Date> {
+    public min: Date;
+    public max: Date;
+    public value: Date = null;
+    constructor(
+        public name: Tname,
+        option: Partial<DateField<Tname>>
+    ) {
+        super(name, option);
+        this.value = option.value;
+    }
+}
 
 export class Form<T = any> extends FormGroup {
     // TODO: Check if two fields has the same name
     constructor(
-        public fields: (SelectField<keyof T> | Field<keyof T>)[],
+        public fields: IField<keyof T>[],
         validation?: AbstractControlOptions,
     ) {
         super({}, validation);

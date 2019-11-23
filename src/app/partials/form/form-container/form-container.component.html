@@ -1,10 +1,10 @@
-<ng-container *ngIf="showSpinner | async">
+<ng-container *ngIf="progressListener | async">
     <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
 </ng-container>
 
-<mat-card [class]="cardClasses">
+<mat-card>
     <mat-card-header class="py-3 text-uppercase">
-        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-title>{{ title}}</mat-card-title>
         <ng-content select="[form-header]"></ng-content>
     </mat-card-header>
     <mat-card-content>
@@ -12,8 +12,7 @@
     </mat-card-content>
     <mat-card-actions>
         <div class="text-center">
-            <button color="primary" (click)="submit.emit(null)" mat-raised-button
-                class="text-white w-25">{{ submitTitle || 'Submit' }}</button>
+            <button color="primary" (click)="submit()" mat-raised-button>Submit</button>
         </div>
         <ng-content select="[form-footer]"></ng-content>
     </mat-card-actions>

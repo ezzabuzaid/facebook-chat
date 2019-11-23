@@ -6,7 +6,6 @@ import { CustomHttpHeaders, ISetupInterceptor, ModifiableInterceptor, MutateRequ
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {
-
     name = SetupInterceptor.name;
     constructor() {
         this.defaultState();

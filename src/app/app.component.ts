@@ -7,7 +7,6 @@ import { LanguageService, Language } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SwUpdate } from '@angular/service-worker';
-// import { IndexDBService } from '@shared/services';
 import { SeoService } from '@core/helpers/seo/seo.service';
 
 declare const ga: (...args: any[]) => void;
@@ -26,7 +25,6 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private renderer: Renderer2,
     private seoService: SeoService,
-    // private indexDBService: IndexDBService,
     private serviceWorkerUtils: ServiceWorkerUtils,
     private sw: SwUpdate,
     @Inject(DOCUMENT) private document: Document,
@@ -34,20 +32,12 @@ export class AppComponent implements OnInit {
   ) {
     if (this.isBrowser) {
       this.languageService.populate(Language.EN);
-      // this.indexDBService.populate({ name: 'test', version: 4 })
-      //   .onUpgrade
-      //   .subscribe(database => {
-      //     log.debug('Database =>', database);
-      //   });
-      // this.indexDBService.objectStore('testObjectStore').subscribe(console.log);
-
-      // TODO PWA Checks if should display install popup notification:
+      // TODO PWA Checks if install popup should be appear
       const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
       if (isIos() && !isInStandaloneMode()) {
         // Popup function!!
       }
-
     }
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({

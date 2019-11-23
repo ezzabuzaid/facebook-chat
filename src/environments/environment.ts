@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   supportedLanguages: ['ar', 'en'],
   defaultLanguage: 'en',
-  endpointUrl: '',
+  endpointUrl: 'http://localhost:8080/api/',
   firebase: {
     apiKey: 'AIzaSyBZtOQcwlZZYu7IEmuDnS2i_ziyVa2a5bo',
     authDomain: 'chatbase-ebaa0.firebaseapp.com',

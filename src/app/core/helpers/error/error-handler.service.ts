@@ -17,8 +17,6 @@ export class GlobalErrorHandler implements ErrorHandler {
         } else {
 
         }
-        // TODO Connect sentry
-        // TODO Send error to slack
         // log.info('Error reporter', error);
         // log.error(error);
         throw error;

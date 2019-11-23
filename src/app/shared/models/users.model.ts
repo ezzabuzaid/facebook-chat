@@ -1,4 +1,4 @@
-import { Module } from './generic-module';
+import { IModule } from './generic-module';
 import { Constants } from '@core/constants';
 import { Field, Form, EFieldType, SelectField, ngTableSetting } from '@shared/common';
 import { Validators } from '@angular/forms';
@@ -67,7 +67,7 @@ export namespace UsersModel {
     }
 
 
-    export const MODULE: Module<IUser, IUser, IUser> = {
+    export const MODULE: IModule<IUser, IUser, IUser> = {
         name: Constants.Routing.Users.withoutSlash,
         endpoint: 'https://jsonplaceholder.typicode.com/users',
         httpConfigure: {

@@ -1,0 +1,78 @@
+<ng-container *ngIf="field.typeOf(types.TEXT)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <input type="text" matInput [formControlName]="field.name">
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.PASSWORD)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <input type="password" autocomplete="new-password" matInput [formControlName]="field.name">
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.TEXTAREA)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <textarea matInput [formControlName]="field.name"></textarea>
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.EMAIL)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <input type="email" matInput autocomplete="email" [formControlName]="field.name">
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.NUMBER)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <input type="number" matInput [formControlName]="field.name">
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.DATE)">
+    <mat-form-field>
+        <mat-label>{{ field.label }}</mat-label>
+        <input matInput #date [max]="field.max" [min]="field.min" (focus)="date.open()" [matDatepicker]="datePicker"
+            [formControlName]="field.name">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.CHECKBOX)">
+    <mat-label>{{field.label}}</mat-label>
+    <mat-checkbox [formControlName]="field.name"></mat-checkbox>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.SELECT)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <mat-select [formControlName]="field.name">
+            <mat-option *ngFor="let option of field.options" [value]="option.value">
+                {{option.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.MULTIPLE)">
+    <mat-form-field>
+        <mat-label>{{field.label}}</mat-label>
+        <mat-select [formControlName]="field.name" [multiple]="true">
+            <mat-option *ngFor="let option of field.options" [value]="option.value">
+                {{option.label}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-container>
+<ng-container *ngIf="field.typeOf(types.RADIO)">
+    <mat-label>{{field.label}}</mat-label>
+    <mat-radio-group class="d-flex flex-column">
+        <mat-radio-button *ngFor="let option of field.options" [value]="option.value">
+            {{option.label}}
+        </mat-radio-button>
+    </mat-radio-group>
+</ng-container>
+<!-- <app-mobile-control
+        [dialCode]="data.phoneNumberCountryCode"
+        [formControlName]="filed.name">
+    </app-mobile-control> -->
+<!-- <app-country-control [formControlName]="getName('countryCode')"></app-country-control> -->
+<!-- TODO: Setup mobile(TEL) type -->
+<!-- TODO: Setup datetime type -->

@@ -16,7 +16,7 @@ export class HeadersInterceptor implements HttpInterceptor {
             .set('cccept', 'application/json')
             .set('content-type', 'application/json');
 
-        if (this.tokenService.isLogged && !this.tokenService.isExpired()) {
+        if (this.tokenService.isLogged && !this.tokenService.isExpired) {
             headers = headers.set('Authorization', `Bearer ${this.tokenService.token}`);
         }
 

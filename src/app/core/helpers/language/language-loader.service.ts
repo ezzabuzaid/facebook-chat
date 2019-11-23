@@ -10,6 +10,6 @@ export class LanguageLoader implements TranslateLoader {
     getTranslation() {
         const http = this.injector.get(HttpClient);
         const languageService = this.injector.get(LanguageService);
-        return http.get(`assets/languages/${languageService.language}.json`);
+        return http.get(`assets/i18n/${languageService.language}.json`);
     }
 }

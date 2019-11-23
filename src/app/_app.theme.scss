@@ -28,5 +28,3 @@
   $theme: mat-light-theme($primary, $accent);
   @include application_theme($theme);
 }
-
-// TODO Uitlity function to get the current theme that applied to application wide

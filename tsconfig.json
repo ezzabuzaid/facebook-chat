@@ -45,7 +45,10 @@
     ]
   },
   "include": [
-    "src"
+    "src",
+  ],
+  "exclude": [
+    "src/test/*/**"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": false,

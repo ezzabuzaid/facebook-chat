@@ -1,3 +1,7 @@
-<app-crud-create (submit)="onSubmit()" [form]="module?.form">
-    <span crud-title>{{module?.title}}</span>
-</app-crud-create>
+<app-form-container (onSubmit)="onSubmit()" [title]="module?.title">
+    <section form-body>
+        <ng-container *ngFor="let field of module?.form.fields">
+            <app-form-factory [field]="field"></app-form-factory>
+        </ng-container>
+    </section>
+</app-form-container>

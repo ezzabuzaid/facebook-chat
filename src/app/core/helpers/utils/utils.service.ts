@@ -3,58 +3,11 @@ import { Route } from '@angular/router';
 export class AppUtils {
 
 
-    // FIXME consider using `timeago` lib instead of the below two functions
-    /**
-     *
-     * @param time Take a time with diffrent format and seperate it in 5 type { second, minutes, hour, days, weeks }
-     */
-    // static computeElapsedTime(time) {
-    //     const second = Math.floor((Date.now() - new Date(time).getTime()) / 1000);
-    //     const minutes = Math.floor(second / 60);
-    //     const hour = Math.floor(minutes / 60);
-    //     const days = Math.floor(hour / 24);
-    //     const weeks = Math.floor(days / 7);
-    //     return { second, minutes, hour, days, weeks };
-    // }
-    /**
-     *
-     * @param time Take a time with diffrent format and return the elapsed time relative to the current date
-     * @returns observalbe that hold the computed time and the type { second, minutes, hour, days, weeks }
-     */
-    // static dateToPresent(time): Observable<{ time, type }> {
-    //     const elapsed = AppUtils.computeElapsedTime(time);
-    //     const times = Object.keys(elapsed);
-    //     for (let i = times.length - 1; i; i--) {
-    //         const type = times[i];
-    //         const timeType = elapsed[type];
-    //         if (timeType) {
-    //             return of({ time: timeType, type });
-    //         }
-    //     }
-    //     return EMPTY;
-    // }
-
     static prepareQueryParams(obj) {
         return Object.keys(obj).reduce((acc, curr) => {
             if (!obj[curr]) { return acc; }
             return acc += `${curr}=${obj[curr]}&`;
         }, '');
-    }
-    /**
-     *
-     * @param functions Accept array of function to invoke in inverse order,
-     *  so that each function will accept tha value from last invoked function as argument
-     */
-    static compose(...functions) {
-        return (args) => functions.reduceRight((arg, fn) => fn(arg), args);
-    }
-    /**
-     *
-     * @param functions Accept array of function to invoke in order,
-     * so that each function will accept tha value of last invoked function as argument
-     */
-    static pipe(...functions) {
-        return (args) => functions.reduce((arg, fn) => fn(arg), args);
     }
 
     // NOTE merge and return unique list from two lists
@@ -62,7 +15,74 @@ export class AppUtils {
         return concatTo.concat(filterFrom.filter(one => !concatTo.find(two => two[key] === one[key])));
     }
 
-    static excludeEmptyKeys(toCheckObject: { [key: string]: string }, withEmptyString = false) {
+    static isAllKeyEmpty(object: { [key: string]: string }) {
+        for (const key in object) {
+            // NOTE add support for checking objects and arrays
+            if (!!object[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static strictText(text: string, count: number, insertDots = true) {
+        return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
+    }
+
+    static flatArray(data: any[]) {
+        return data.reduce((a, b) => a.concat(b), []);
+    }
+
+    /**
+     *
+     * @param value check if the value is Null or Undeifned
+     */
+    static isNullorUndefined(value: any) {
+        return value === null || value === undefined;
+    }
+
+    /**
+     *
+     * @param list check if the list has at least an item
+     */
+    static hasItemWithin(list: any[]) {
+        return Array.isArray(list) && !!list.length;
+    }
+
+    /**
+     * convert an object with key:value to query param string
+     * all falsy values will be avoided
+     */
+    static convertObjectToQueryParams(obj) {
+        return Object.keys(obj).reduce((acc, curr) => {
+            if (this.not(obj[curr])) { return acc; }
+            return acc += `${curr}=${obj[curr]}&`;
+        }, '');
+    }
+
+    /**
+     *
+     * @param functions Accept array of function to invoke in inverse order,
+     *  so that each function will accept tha value from last invoked function as argument
+     */
+    static compose<T, Y>(...functions: ((arg: T | Y) => T)[]) {
+        return (args: T | Y) => functions.reduceRight((acc, fn) => fn(acc), args);
+    }
+    /**
+     *
+     * @param functions Accept array of function to invoke in order,
+     * so that each function will accept tha value of last invoked function as argument
+     */
+    static pipe<T, Y>(...functions: ((arg: T | Y) => T)[]) {
+        return (args: T | Y) => functions.reduce((acc, fn) => fn(acc), args);
+    }
+
+
+    /**
+     * remove all falsy props from an object expect empty string
+     * @param withEmptyString to indicate of the empty values should be removed
+     */
+    static excludeEmptyKeys(fromObject: { [key: string]: string }, withEmptyString = false) {
         function replaceUndefinedOrNull(key: string, value: any) {
             if (withEmptyString) {
                 return !value ? undefined : value;
@@ -70,12 +90,15 @@ export class AppUtils {
                 return value !== '' && !value ? undefined : value;
             }
         }
-        return JSON.parse(JSON.stringify(toCheckObject, replaceUndefinedOrNull));
+        return JSON.parse(JSON.stringify(fromObject, replaceUndefinedOrNull));
     }
 
-    static isAllKeyEmpty(object: { [key: string]: string }) {
+    /**
+     * check if all values inside an object is a falsy type,
+     * NOTE: no deep check
+     */
+    static isAllObjectKeysEmpty(object: { [key: string]: any }) {
         for (const key in object) {
-            // NOTE add support for checking objects and arrays
             if (!!object[key]) {
                 return false;
             }
@@ -100,10 +123,11 @@ export class AppUtils {
         return text.replace(/\r?\n/g, '<br />');
     }
 
-    static strictText(text: string, count: number, insertDots = true) {
+    static stripText(text: string, count: number, insertDots = true) {
         return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
     }
 
+    // TODO: Move this function to independnt widget
     static fullScreen() {
         const doc = window.document;
         const docEl = doc.documentElement;
@@ -129,45 +153,62 @@ export class AppUtils {
             '<': '&lt;',
             '>': '&gt;',
             '"': '&quot;',
-            // tslint:disable-next-line:quotemark
-            "'": '&#39;',
+            '\'': '&#39;',
             '/': '&#x2F;'
         };
-        return String(text).replace(/[&<>"'\/]/g, (s) => {
-            return entityMap[s];
-        });
+        return String(text).replace(/[&<>"'\/]/g, (s) => entityMap[s]);
     }
-    static refactorTime(value: string) {
-        const timeSwitcher = t => t < 10 ? `0${t}` : t;
-        let time = value;
-        const timePares = time.split(':');
-        let hours: string | number = +(timePares[0]);
-        let minutes: string | number = +(timePares[1]);
-        let interval = 'PM';
-        if (hours >= 13) {
-            hours -= 12;
-        } else if (hours < 12) {
-            interval = 'AM';
-        }
-        hours = timeSwitcher(hours);
-        minutes = timeSwitcher(minutes);
-        time = `${hours}:${minutes} ${interval}`;
-        return {
-            timePares,
-            time,
-            hours,
-            minutes
-        };
+
+    static capitalizeFirstLetter(name: string) {
+        return name.replace(/^\w/, c => c.toUpperCase());
     }
+
+    static removeLastChar(name: string) {
+        return name.substring(name.length - 1, 0);
+    }
+
+    /**
+     * get the value of inner object
+     * @param key one.two
+     * @param obj one:{two:'value'}
+     */
+    static getDottedProperty(key: string, obj: object) {
+        return key.split('.').reduce((acc, curr) => (acc || {})[curr], obj);
+    }
+
+    /**
+     * check if the value is falsy type
+     */
+    static not(value: any) {
+        return !!!value;
+    }
+
 
 }
 
 
 export function tryOrThrow<T>(cb: (...args: any) => T) {
     try {
-        const x = (cb as any)();
-        return of(x as ReturnType<typeof cb>);
+        const test = (cb as any)();
+        return of(test as ReturnType<typeof cb>);
     } catch (error) {
         return throwError(error);
     }
+}
+
+export function tryOrComplete<T>(
+    condition: boolean,
+    observable: Observable<T> | Promise<T>,
+    defaultValue: T = null
+) {
+    if (condition) {
+        return observable;
+    }
+    return of(defaultValue);
+}
+
+export type PickAttr<T, P extends keyof T> = T[P];
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export interface KeyPairs<T> {
+    [key: string]: T;
 }

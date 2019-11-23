@@ -1,7 +1,7 @@
 import { Form, Field, EFieldType, SelectField, ngTableSetting, ISetting } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { Constants } from '@core/constants';
-import { Module } from './generic-module';
+import { IModule } from './generic-module';
 
 const writeForm = new Form<TodosModel.ITodo>([
     new Field('title', {
@@ -35,7 +35,7 @@ export namespace TodosModel {
         completed: boolean;
     }
 
-    export const MODULE: Module<ITodo, ITodo, ITodo> = {
+    export const MODULE: IModule<ITodo, ITodo, ITodo> = {
         name: Constants.Routing.Todos.withoutSlash,
         httpConfigure: {
             disableDefaultUrl: true,

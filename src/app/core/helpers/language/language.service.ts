@@ -21,7 +21,6 @@ export interface LanguageChange {
   dir: Direction;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })

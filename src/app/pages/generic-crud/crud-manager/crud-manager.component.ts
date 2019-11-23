@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GenericCrudModel } from '../generic-crud.model';
 import { TodosModel, UsersModel } from '@shared/models';
-import { Module } from '@shared/models/generic-module';
+import { IModule } from '@shared/models/generic-module';
 import { delay, tap } from 'rxjs/operators';
+import { AppUtils } from '@core/helpers/utils';
+import { Constants } from '@core/constants';
 
 
 @Component({
@@ -17,17 +19,17 @@ export class CrudManagerComponent implements OnInit {
     UsersModel.MODULE,
   ];
 
-  public currentModule: Module<any, any, any> = null;
+  public currentModule: IModule<any, any, any> = null;
   public EOperations = GenericCrudModel.EOperations;
 
   public operation = null;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    // TODO: if the module is undefined redirect to 404 page
     this.route.params
       .pipe(
         tap(() => {
@@ -39,6 +41,9 @@ export class CrudManagerComponent implements OnInit {
         console.log(this.modules, moduleName);
         this.operation = operation;
         this.currentModule = this.modules.find(module => module.name === moduleName);
+        if (AppUtils.not(this.currentModule)) {
+          this.router.navigateByUrl(Constants.Routing.NOT_FOUND.withSlash);
+        }
       });
   }
 

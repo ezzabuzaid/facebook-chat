@@ -3,8 +3,8 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 import { MatSnackBarRef, MatSnackBar } from '@angular/material';
-import { FormWidgetService } from '@widget/form';
 import { CustomHttpHeaders } from '../http/http.model';
+import { FormWidgetManager } from '@partials/form';
 
 @Injectable()
 export class ProgressInterceptor implements HttpInterceptor {
@@ -12,7 +12,7 @@ export class ProgressInterceptor implements HttpInterceptor {
     formUi = false;
     constructor(
         private snackbar: MatSnackBar,
-        private formWidgetService: FormWidgetService
+        private formWidgetService: FormWidgetManager
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -24,7 +24,7 @@ export class ProgressInterceptor implements HttpInterceptor {
 
         if (JSON.parse(req.headers.get(CustomHttpHeaders.ENABLE_FORM_UI))) {
             this.formUi = true;
-            this.formWidgetService.progressBar = true;
+            this.formWidgetService.notify(true);
         }
 
         const method = req.method;
@@ -64,7 +64,7 @@ export class ProgressInterceptor implements HttpInterceptor {
                     }
 
                     if (this.formUi) {
-                        this.formWidgetService.progressBar = false;
+                        this.formWidgetService.notify(false);
                         this.formUi = false;
                     }
                 }),
