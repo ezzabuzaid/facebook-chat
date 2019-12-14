@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MEDIA_BREAKPOINTS } from '@shared/common';
 import { LayoutNavigation } from '@layout/navbar/navigation';
-import { LocalStorage } from '@core/helpers/localstorage';
+import { LocalStorage } from '@ezzabuzaid/document-storage';
 
 @Component({
   selector: 'app-navbar-item',
@@ -18,6 +18,7 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   private _subscribtion = new Subject();
 
   private isTable = false;
+
   constructor(
     private sidebarService: SidebarService,
     private breakpointObserver: BreakpointObserver
@@ -49,7 +50,6 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
 
 
 class ShortcutService {
-
 
   constructor(
     private localstorage: LocalStorage

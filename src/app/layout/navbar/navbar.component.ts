@@ -1,9 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 import navigation from './navigation';
 import { DOCUMENT } from '@angular/common';
-import { LocalStorage } from '@core/helpers/localstorage';
-import { Constants } from '@core/constants';
+import { UserService } from '@shared/user';
 
 @Component({
   selector: 'app-navbar',
@@ -14,14 +12,12 @@ export class NavbarComponent {
   public navigationMenu = navigation;
 
   constructor(
-    private router: Router,
     @Inject(DOCUMENT) private document: Document,
-    private localStorage: LocalStorage
+    private userService: UserService
   ) { }
 
   logout() {
-    this.router.navigate([Constants.Routing.LOGIN.withSlash]);
-    this.localStorage.clear();
+    this.userService.logout();
   }
 
   perfectScrollBarHeight(header: HTMLElement) {

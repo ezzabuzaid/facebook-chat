@@ -3,8 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '@environments/environment';
 import { DOCUMENT } from '@angular/common';
-import { LocalStorage } from '../localstorage';
 import { Constants } from '@core/constants';
+import { LocalStorage } from '@ezzabuzaid/document-storage';
 
 export enum Direction {
   LTR = 'ltr',

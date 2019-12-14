@@ -1,4 +1,4 @@
-import { HttpInterceptor } from '@angular/common/http';
+import { HttpInterceptor, HttpHeaders } from '@angular/common/http';
 
 // HttpClient is declared in a re-exported module, so we have to extend the original module to make it work properly
 // (see https://github.com/Microsoft/TypeScript/issues/13897)
@@ -11,28 +11,45 @@ declare module '@angular/common/http/http' {
          * Configure request object.
          * @return The new instance.
          */
-        configure(obj: MutateRequest): HttpClient;
+        configure(obj: Partial<CustomHeaders>): HttpClient;
 
     }
 
 }
 
-
 export interface ISetupInterceptor extends HttpInterceptor {
-    configure: (obj: MutateRequest) => void;
+    configure: (obj: CustomHeaders) => void;
 }
 
 export interface ModifiableInterceptor {
     name: string;
 }
-
-export enum CustomHttpHeaders {
-    DISABLE_DEFAULT_URL = 'disableDefaultUrl',
-    USE_LOCAL_CACHE = 'localCache',
-    DISABLE_SNACKBAR = 'disableSnackbar',
-    ENABLE_FORM_UI = 'enableFormUi',
-    ENABLE_FORM_TOAST = 'enableFormToast',
-    RETURN_FULL_BODY = 'full_body'
+export enum ECustomHeaders {
+    DEFAULT_URL = 'DEFAULT_URL',
+    SNACKBAR = 'SNACKBAR',
+    LOCAL_CACHE = 'LOCAL_CACHE',
+    CACHE_CATEGORY = 'CACHE_CATEGORY',
+    FULL_RESPONSE = 'FULL_RESPONSE',
+    FORM_PROGRESS = 'FORM_PROGRESS',
+}
+export class CustomHeaders {
+    [ECustomHeaders.DEFAULT_URL] = true;
+    [ECustomHeaders.SNACKBAR] = true;
+    [ECustomHeaders.LOCAL_CACHE] = false;
+    [ECustomHeaders.FULL_RESPONSE] = false;
+    [ECustomHeaders.FORM_PROGRESS] = false;
+    [ECustomHeaders.CACHE_CATEGORY] = 'local_cache';
 }
 
-export type MutateRequest = { [T in CustomHttpHeaders]?: boolean };
+export enum HttpMethod {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
+    HEAD = 'HEAD',
+    OPTIONS = 'OPTIONS',
+}
+
+export function getHeader<T = boolean>(headers: HttpHeaders, name: ECustomHeaders): T {
+    return JSON.parse(headers.get(name));
+}

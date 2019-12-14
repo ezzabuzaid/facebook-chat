@@ -1,9 +1,8 @@
-
 import { Injectable } from '@angular/core';
-import { LocalStorage } from '../localstorage';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Constants } from '@core/constants';
 import { UserModel } from '@shared/user/user.model';
+import { LocalStorage } from '@ezzabuzaid/document-storage';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = Constants.Application.TOKEN_KEY;
@@ -35,7 +34,7 @@ export class TokenService {
   }
 
   deleteToken() {
-    this.localStorage.remove(TOKEN_KEY);
+    this.localStorage.delete(TOKEN_KEY);
   }
 
   get decodedToken(): UserModel.ITokenClaim {
@@ -52,10 +51,6 @@ export class TokenService {
 
   get isLogged(): boolean {
     return !!this.token;
-  }
-
-  isAuthenticated() {
-    return this.isLogged && !this.isExpired;
   }
 
 }

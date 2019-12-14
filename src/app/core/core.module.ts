@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   LoggerInterceptor,
-  HeadersInterceptor,
   UrlInterceptor,
-  AuthInterceptor,
   ProgressInterceptor,
   SetupInterceptor,
+  TeardownInterceptor,
+  CacheInterceptor
 } from './interceptors';
-import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { PopupModule } from '@widget/popup';
 import { StaticPagesModule } from 'app/pages/static/static-pages.module';
-import { HttpService } from './http';
 
 
 @NgModule({
@@ -27,18 +25,15 @@ import { HttpService } from './http';
     //   provide: ErrorHandler,
     //   useClass: GlobalErrorHandler
     // },
-    {
-      provide: HttpClient,
-      useClass: HttpService
-    },
+
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoggerInterceptor,
+      useClass: SetupInterceptor,
       multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: SetupInterceptor,
+      useClass: LoggerInterceptor,
       multi: true
     },
     {
@@ -48,23 +43,19 @@ import { HttpService } from './http';
     },
     {
       provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: ProgressInterceptor,
       multi: true
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: TeardownInterceptor,
       multi: true
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HeadersInterceptor,
-      multi: true
-    }, {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    }
   ]
 })
 export class CoreModule { }

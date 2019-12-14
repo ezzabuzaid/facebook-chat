@@ -1,6 +1,17 @@
 import { Observable, of, EMPTY, throwError } from 'rxjs';
-import { Route } from '@angular/router';
 export class AppUtils {
+
+    static daysToSeconds(days: number) {
+        const d = new Date();
+        const a = new Date();
+        a.setDate(a.getDate() + days);
+        return a.getTime() - d.getTime();
+    }
+
+    static isDateElapsed(lastUpdate: number, maxAge: number) {
+        return lastUpdate < Date.now() - maxAge;
+    }
+
     static randomString(length: number) {
         let string = '';
         const randomchar = () => {
@@ -202,7 +213,6 @@ export class AppUtils {
 
 
 }
-
 
 export function tryOrThrow<T>(cb: (...args: any) => T) {
     try {

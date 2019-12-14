@@ -12,6 +12,7 @@ import {
 import { Observable } from 'rxjs';
 import { Constants } from '../constants';
 import { TokenService } from '@core/helpers/token';
+import { UserService } from '@shared/user';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ import { TokenService } from '@core/helpers/token';
 export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   constructor(
     private router: Router,
-    private tokenService: TokenService
+    private userService: UserService
   ) { }
 
   canActivate(
@@ -40,7 +41,7 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
 
 
   private authenticate() {
-    if (!this.tokenService.isAuthenticated()) {
+    if (!this.userService.isAuthenticated) {
       this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
       return false;
     }

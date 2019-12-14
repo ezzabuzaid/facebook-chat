@@ -114,8 +114,7 @@ export class Logger {
    * Works the same as console.log().
    */
   info(...objects: any[]) {
-    objects = objects.map(value => [`${colors.FgBlue}`, value]);
-
+    objects = objects.map(value => [`${colors.FgGreen}`, value]);
     this.log(console.log, LogLevel.Info, objects);
   }
 
@@ -124,6 +123,7 @@ export class Logger {
    * Works the same as console.log().%c
    */
   warn(...objects: any[]) {
+    objects = objects.map(value => [`${colors.BgYellow}`, value]);
     this.log(console.warn, LogLevel.Warning, objects, false);
   }
 

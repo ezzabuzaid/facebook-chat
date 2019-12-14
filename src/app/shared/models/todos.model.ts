@@ -37,8 +37,8 @@ export namespace TodosModel {
 
     export const MODULE: IModule<ITodo, ITodo, ITodo> = {
         name: Constants.Routing.Todos.withoutSlash,
-        httpConfigure: {
-            disableDefaultUrl: true,
+        httpConfiguration: {
+            DEFAULT_URL: false,
         },
         endpoint: 'https://jsonplaceholder.typicode.com/todos',
         create: {

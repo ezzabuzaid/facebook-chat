@@ -4,7 +4,6 @@ import { PortalModel } from '../portal.model';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 // TODO: replace it with @document strategy
-import { LocalStorage } from '@core/helpers/localstorage';
 import { UserService } from '@shared/user';
 import { FormUtils } from '@partials/form';
 import { Field, EFieldType, Form } from '@shared/common';

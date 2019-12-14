@@ -3,13 +3,13 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 import { MatSnackBarRef, MatSnackBar } from '@angular/material';
-import { CustomHttpHeaders } from '../http/http.model';
+import { ECustomHeaders, getHeader, HttpMethod } from '../http/http.model';
 import { FormWidgetManager } from '@partials/form';
 
 @Injectable()
 export class ProgressInterceptor implements HttpInterceptor {
     showSnackbar = true;
-    formUi = false;
+    formPorgress = false;
     constructor(
         private snackbar: MatSnackBar,
         private formWidgetService: FormWidgetManager
@@ -17,35 +17,24 @@ export class ProgressInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // TODO add a progress bar on top of `toolbar`
+        this.showSnackbar = getHeader(req.headers, ECustomHeaders.SNACKBAR) && req.method !== HttpMethod.GET;
+        let snackbarRef: MatSnackBarRef<any> = null;
 
-        if (JSON.parse(req.headers.get(CustomHttpHeaders.DISABLE_SNACKBAR))) {
-            this.showSnackbar = false;
-        }
-
-        if (JSON.parse(req.headers.get(CustomHttpHeaders.ENABLE_FORM_UI))) {
-            this.formUi = true;
+        if (getHeader(req.headers, ECustomHeaders.FORM_PROGRESS)) {
+            this.formPorgress = true;
             this.formWidgetService.notify(true);
         }
 
-        const method = req.method;
-        let snackbarRef: MatSnackBarRef<any> = null;
-        if (this.showSnackbar && (method === 'POST' || method === 'PUT' || method === 'DELETE')) {
+        if (this.showSnackbar) {
             Promise.resolve(null).then(() => snackbarRef = this.snackbar.open('Please wait', '', { duration: 500000 }));
         }
         return next.handle(req.clone())
             .pipe(
                 tap(
+                    event => { },
                     event => {
-                        if (event instanceof HttpResponse) {
-                            //   this.message = event.body.message;
-                        }
-                    },
-                    event => {
-                        if (event.errorMessages) {
-                            this.snackbar.open(event.errorMessages[0]);
-                        }
-                        if (event instanceof HttpErrorResponse) {
-                            // TODO show `errorMessages` instead
+                        if (event.message) {
+                            this.snackbar.open(event.message);
                         }
                     }),
                 finalize(() => {
@@ -55,7 +44,7 @@ export class ProgressInterceptor implements HttpInterceptor {
                         }, 500);
                     }
 
-                    if (JSON.parse(req.headers.get(CustomHttpHeaders.ENABLE_FORM_TOAST))) {
+                    if (this.showSnackbar) {
                         let text = 'Updated';
                         if (req.method === 'POST') {
                             text = 'Created';
@@ -63,9 +52,9 @@ export class ProgressInterceptor implements HttpInterceptor {
                         this.snackbar.open(text);
                     }
 
-                    if (this.formUi) {
+                    if (this.formPorgress) {
                         this.formWidgetService.notify(false);
-                        this.formUi = false;
+                        this.formPorgress = false;
                     }
                 }),
             );

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { UserModel } from './user.model';
+import { AppUtils } from '@core/helpers/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class UserService {
   }
 
   public get isAuthenticated() {
-    return this.tokenService.isAuthenticated();
+    return this.tokenService.isLogged && AppUtils.not(this.tokenService.isExpired);
   }
 
   public stateChanged() {

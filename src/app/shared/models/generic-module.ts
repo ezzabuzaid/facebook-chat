@@ -1,10 +1,9 @@
 import { ISetting, Form } from '@shared/common';
-import { MutateRequest } from '@core/http';
+import { CustomHeaders } from '@core/http';
 
 export interface IModule<Tread, Tcreate, Tupdate> {
     name: string;
-    httpConfigure?: MutateRequest;
-    // http configure options
+    httpConfiguration?: Partial<CustomHeaders>;
     endpoint: string;
     create: {
         // TODO: an option for dialog

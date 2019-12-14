@@ -10,7 +10,9 @@ import { CoreModule } from '@core/core.module';
 import { LayoutModule } from '@layout/layout.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { LanguageLoader } from '@core/helpers/language';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpService } from '@core/http';
+import { LocalStorage } from '@ezzabuzaid/document-storage';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,16 @@ import { HttpClientModule } from '@angular/common/http';
       }
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HttpClient,
+      useClass: HttpService
+    },
+    {
+      provide: LocalStorage,
+      useValue: new LocalStorage()
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

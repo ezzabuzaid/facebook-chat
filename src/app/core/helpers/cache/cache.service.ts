@@ -1,63 +1,52 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { LocalStorage } from '../localstorage';
+import { HttpResponse } from '@angular/common/http';
+import { AsyncDatabase, AsyncCollection, IndexedDB } from '@ezzabuzaid/document-storage';
+import { AppUtils } from '../utils';
 
-interface Cache {
+interface ICacheEntry {
     lastUpdate: number;
     url: string;
-    response: Request;
+    response: HttpResponse<any>;
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class CacheService {
-    maxAge = this.daysToSeconds();
-    cache = null;
+    private storage = new AsyncDatabase(new IndexedDB('cache'));
+    public collection: AsyncCollection<ICacheEntry> = null;
 
-    daysToSeconds(days = 2) {
-        const d = new Date();
-        const a = new Date();
-        a.setDate(a.getDate() + days);
-        return a.getTime() - d.getTime();
+
+    public populate(name: string) {
+        this.collection = this.storage.collection<ICacheEntry & any>(name);
     }
 
-    isExpired(lastUpdate, maxAge = this.maxAge) {
-        const expired = Date.now() - maxAge;
-        return lastUpdate < expired;
+    constructor() {
+        this.collection.getAll()
+            .then(entries => {
+                const maxAge = AppUtils.daysToSeconds(1);
+                entries.forEach(({ lastUpdate, id }) => {
+                    if (AppUtils.isDateElapsed(lastUpdate, maxAge)) {
+                        this.collection.delete(id);
+                    }
+                });
+            });
     }
 
-    constructor(
-        private localStorage: LocalStorage
-    ) {
-        // this.localStorage.getItem(CacheService.name)
-        //     .pipe(map(data => {
-        //         return ((data && new Map<string, Cache>(data as any)) || new Map) as Map<string, Cache>;
-        //     }))
-        //     .subscribe(data => {
-        //         data.forEach(({ lastUpdate, url }) => {
-        //             if (this.isExpired(lastUpdate)) {
-        //                 this.cache.delete(url);
-        //             }
-        //         });
-        //     });
-    }
-
-    get(req: HttpRequest<any>): HttpResponse<any> | undefined {
-        const url = req.urlWithParams;
-        const cached = this.cache.get(url);
-
-        if (!cached) {
-            return undefined;
+    public async get(url: string) {
+        const entity = await this.collection.get((object) => object.url === url);
+        if (entity) {
+            entity.response = JSON.parse(entity.response as any);
+            return entity;
         }
-
-        return cached.response;
+        throw new Error();
     }
 
-    put(req: HttpRequest<any>, response: HttpResponse<any>): void {
-        const url = req.urlWithParams;
-        const entry = { url, response, lastRead: Date.now() };
-        this.cache.set(url, entry);
-
+    public set(url: string, response: HttpResponse<any>) {
+        return this.collection.set({
+            url,
+            response: JSON.stringify(response) as any,
+            lastUpdate: Date.now()
+        });
     }
 }

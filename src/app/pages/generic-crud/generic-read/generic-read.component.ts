@@ -31,7 +31,6 @@ export class GenericReadComponent implements OnInit, OnDestroy {
 
   fetchData() {
     return this.http
-      .configure({ disableDefaultUrl: true })
       .get<any[]>(this.endpoint || this.module.endpoint)
       .pipe(
         tap((response) => {

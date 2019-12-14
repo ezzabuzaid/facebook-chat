@@ -70,8 +70,8 @@ export namespace UsersModel {
     export const MODULE: IModule<IUser, IUser, IUser> = {
         name: Constants.Routing.Users.withoutSlash,
         endpoint: 'https://jsonplaceholder.typicode.com/users',
-        httpConfigure: {
-            disableDefaultUrl: true,
+        httpConfiguration: {
+            DEFAULT_URL: false
         },
         create: {
             title: 'Create User',

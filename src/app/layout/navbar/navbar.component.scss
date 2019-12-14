@@ -6,7 +6,7 @@ $navbar-width: map-deep-get($layout_dimensions, 'navbar-width', xLarge);
 $navbar-folded-width: map-deep-get($layout_dimensions, 'navbar-width', folded);
 $navbar-mobile-width: map-deep-get($layout_dimensions, 'navbar-width', small);
 $toolbar-height: map-deep-get($layout_dimensions, 'toolbar-height');
-@debug $navbar-folded-width;
+
 :host {
   app-sidebar {
     .sidebar-drawer {

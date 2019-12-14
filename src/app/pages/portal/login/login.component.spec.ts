@@ -130,6 +130,5 @@ describe('LoginComponent', () => {
             expect(navigateSpy).toHaveBeenCalledWith(Constants.Routing.Users.withSlash);
         }));
         // TODO: should verify that the localstorage has the token
-        // TODO: move the user service from crm and mallak and compare them
     });
 });
