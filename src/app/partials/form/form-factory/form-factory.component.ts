@@ -12,6 +12,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     multi: true
   }]
 })
+// TODO: rename it to field factory
 export class FormFactoryComponent implements OnInit {
   @Input() field: IField<any>;
   types = EFieldType;

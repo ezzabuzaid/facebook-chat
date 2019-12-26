@@ -31,10 +31,19 @@ export class ProgressInterceptor implements HttpInterceptor {
         return next.handle(req.clone())
             .pipe(
                 tap(
-                    event => { },
-                    event => {
-                        if (event.message) {
-                            this.snackbar.open(event.message);
+                    (response) => {
+                        if (this.showSnackbar) {
+                            let text = 'Updated';
+                            if (req.method === 'POST') {
+                                text = 'Created';
+                            }
+                            this.snackbar.open(text);
+                        }
+
+                    },
+                    (error) => {
+                        if (error.message) {
+                            this.snackbar.open(error.message);
                         }
                     }),
                 finalize(() => {
@@ -42,14 +51,6 @@ export class ProgressInterceptor implements HttpInterceptor {
                         setTimeout(() => {
                             snackbarRef.dismiss();
                         }, 500);
-                    }
-
-                    if (this.showSnackbar) {
-                        let text = 'Updated';
-                        if (req.method === 'POST') {
-                            text = 'Created';
-                        }
-                        this.snackbar.open(text);
                     }
 
                     if (this.formPorgress) {

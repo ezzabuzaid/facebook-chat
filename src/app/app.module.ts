@@ -13,6 +13,8 @@ import { LanguageLoader } from '@core/helpers/language';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpService } from '@core/http';
 import { LocalStorage } from '@ezzabuzaid/document-storage';
+import { StaticPagesModule } from './pages/static/static-pages.module';
+import { PopupModule } from '@widget/popup';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { LocalStorage } from '@ezzabuzaid/document-storage';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     CoreModule,
     LayoutModule,
+    PopupModule,
+    StaticPagesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

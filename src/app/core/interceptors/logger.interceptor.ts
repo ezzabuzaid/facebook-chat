@@ -15,7 +15,7 @@ export class LoggerInterceptor implements HttpInterceptor {
         tap(event => {
           if (event instanceof HttpResponse) {
             const elapsed = Date.now() - started;
-            log.info(`${req.method} Request for ${req.urlWithParams} took ${elapsed} ms.`);
+            log.info(`${req.method} Request for ${req.urlWithParams} took ${elapsed} ms. and the body is`, req.body);
           }
         })
       );

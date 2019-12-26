@@ -15,6 +15,7 @@
             <ng-container *ngFor="let field of form.fields">
               <app-form-factory [field]="field"></app-form-factory>
             </ng-container>
+            <mat-checkbox #rememberMeCheckBox>Remember me!</mat-checkbox>
             <!-- <mat-form-field id="usernameWrapper">
               <mat-label>{{ 'placeholder_username' | translate }}</mat-label>
               <input type="text" [formControlName]="getName('username')" matInput autocomplete="username">
@@ -25,7 +26,7 @@
             </mat-form-field> -->
             <section>
               <div class="text-right my-3">
-                <button id="submitButton" [disabled]="!form.valid" (click)="login()" mat-flat-button color="primary"
+                <button id="submitButton" [disabled]="!form.valid" (click)="login(rememberMeCheckBox)" mat-flat-button color="primary"
                   class="text-white text-center w-100">{{ 'button_login' | translate }}</button>
               </div>
             </section>

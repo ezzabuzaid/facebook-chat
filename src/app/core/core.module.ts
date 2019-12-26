@@ -9,23 +9,13 @@ import {
   TeardownInterceptor,
   CacheInterceptor
 } from './interceptors';
-import { PopupModule } from '@widget/popup';
-import { StaticPagesModule } from 'app/pages/static/static-pages.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    PopupModule,
-    StaticPagesModule
   ],
   providers: [
-    // {
-    // TODO use sentry
-    //   provide: ErrorHandler,
-    //   useClass: GlobalErrorHandler
-    // },
-
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SetupInterceptor,
@@ -41,11 +31,11 @@ import { StaticPagesModule } from 'app/pages/static/static-pages.module';
       useClass: UrlInterceptor,
       multi: true
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: CacheInterceptor,
-      multi: true
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: CacheInterceptor,
+    //   multi: true
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ProgressInterceptor,

@@ -1,7 +1,6 @@
 import { LoginComponent } from './login.component';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { MaterialModule } from '@shared/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from '../register/register.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,17 +8,16 @@ import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 import { UserService } from '@shared/user';
 import { TranslateTestingModule } from 'test/mocks';
-import { asyncData } from 'test/test.utils';
+import { asyncData, getService } from 'test/test.utils';
 import { UserModel } from '@shared/user/user.model';
 import { FormModule } from '@partials/form';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
-    let fakeCreds = {} as any;
+    const fakeCreds = { password: '123456789', username: 'ezzabuzaid' };
 
     beforeEach(async(() => {
-        fakeCreds = { password: '123456789', username: 'ezzabuzaid' };
         const stubUserService = jasmine.createSpyObj<UserService>('PortalService', ['login']);
 
         TestBed.configureTestingModule({
@@ -52,7 +50,7 @@ describe('LoginComponent', () => {
         // it.todo("Verify the ‘Remember Me’ functionality.")
         // it.todo("Verify if a user is able to login with a new password only after he/she has changed the password.")
         // it.todo("Verify if the ‘Enter’ key of the keyboard is working correctly on the login page.")
-        it('should have password and Username initial state as undefined with required as error', () => {
+        it('form should have password and username initial state as undefined with required as error', () => {
             expect(component.getControlValue('password')).toBeUndefined();
             expect(component.getControlValue('username')).toBeUndefined();
             expect(component.getControl('username').errors).toEqual({ required: true });
@@ -64,25 +62,19 @@ describe('LoginComponent', () => {
             expect(component.form.valid).toBeTruthy();
         }));
 
-        it('form should be invalid if username or password is missing', (() => {
-            component.getControl('password').setValue(fakeCreds.password);
-            expect(component.form.invalid).toBeTruthy();
-            component.getControl('password').setValue(null);
+        it('form should be invalid if password is missing', (() => {
             component.getControl('username').setValue(fakeCreds.username);
             expect(component.form.invalid).toBeTruthy();
         }));
 
+        it('form should be invalid if username missing', (() => {
+            component.getControl('password').setValue(fakeCreds.password);
+            expect(component.form.invalid).toBeTruthy();
+        }));
+
     });
-    function byQuerySelector<T = HTMLElement>(selector: string, parent = fixture.debugElement.nativeElement): T {
-        return parent.querySelector(selector);
-    }
 
     describe('[SHALLOW]', () => {
-
-        function advance() {
-            tick();
-            fixture.detectChanges();
-        }
 
         it('should create', () => {
             expect(component).toBeDefined();
@@ -109,13 +101,13 @@ describe('LoginComponent', () => {
 
     describe('[INTEGRATE]', () => {
         it('should call login method in portal service after submitting the form', fakeAsync(() => {
-            const portalServiceSpy = TestBed.get(UserService) as UserService;
+            const userService = getService<UserService>(UserService);
             component.getControl('username').setValue(fakeCreds.username);
             component.getControl('password').setValue(fakeCreds.password);
             fixture.detectChanges();
             byQuerySelector('#submitButton').click();
-            expect(portalServiceSpy.login).toHaveBeenCalledTimes(1);
-            expect(portalServiceSpy.login).toHaveBeenCalledWith(component.form.value);
+            expect(userService.login).toHaveBeenCalledTimes(1);
+            expect(userService.login).toHaveBeenCalledWith(component.form.value);
         }));
 
         it('should redirect to app entry page after successed login', fakeAsync(() => {
@@ -131,4 +123,10 @@ describe('LoginComponent', () => {
         }));
         // TODO: should verify that the localstorage has the token
     });
+
+
+    function byQuerySelector<T = HTMLElement>(selector: string, parent = fixture.debugElement.nativeElement): T {
+        return parent.querySelector(selector);
+    }
+
 });

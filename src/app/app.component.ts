@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     private seoService: SeoService,
     private serviceWorkerUtils: ServiceWorkerUtils,
-    private sw: SwUpdate,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
@@ -48,12 +47,7 @@ export class AppComponent implements OnInit {
     });
 
     this.serviceWorkerUtils.checkEveryHour(1);
-    this.sw.available.subscribe((update) => {
-      log.debug('this.sw.available => ', update);
-    });
-    this.sw.activated.subscribe((update) => {
-      log.debug('this.sw.activated => ', update);
-    });
+
     this.serviceWorkerUtils.updateAvailable.subscribe((update) => {
       log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
     });

@@ -2,12 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PortalModel } from '../portal.model';
 import { Router } from '@angular/router';
-import { Constants } from '@core/constants';
-// TODO: replace it with @document strategy
 import { UserService } from '@shared/user';
 import { FormUtils } from '@partials/form';
-import { Field, EFieldType, Form } from '@shared/common';
+import { Field, Form } from '@shared/common';
 import { Validators } from '@angular/forms';
+import { MatCheckbox } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -40,13 +39,16 @@ export class LoginComponent extends FormUtils<PortalModel.ILogin> implements OnI
 
   ngOnInit() { }
 
-  login() {
+  login(rememberMeCheckBox: MatCheckbox) {
     const { valid, value } = this.form;
     if (valid) {
       this.portalService.login(value)
         .subscribe(data => {
+          if (rememberMeCheckBox.checked) {
+            // TODO save the token
+          }
           console.log('Component data', data);
-          this.router.navigateByUrl(Constants.Routing.Users.withSlash);
+          // this.router.navigateByUrl(Constants.Routing.Users.withSlash);
         });
     }
   }
