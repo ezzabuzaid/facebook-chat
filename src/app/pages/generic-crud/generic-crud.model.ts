@@ -1,7 +1,7 @@
 export namespace GenericCrudModel {
-    export enum EOperations {
-        CREATE = 'create',
-        UPDATE = 'update',
-        READ = 'read',
+    export class Operations {
+        static CREATE = 'create';
+        static UPDATE = 'update';
+        static READ = 'read';
     }
 }

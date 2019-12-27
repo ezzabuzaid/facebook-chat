@@ -2,74 +2,51 @@ import { IModule } from './generic-module';
 import { Constants } from '@core/constants';
 import { Field, Form, EFieldType, SelectField, ngTableSetting } from '@shared/common';
 import { Validators } from '@angular/forms';
+import { PortalModel } from '@shared/models/portal.model';
+import { AppUtils } from '@core/helpers/utils';
+// TODO: create user profile page
 const writeForm = new Form<UsersModel.IUser>([
-    new Field('name', {
-        validation: { validators: [Validators.required] },
-        value: null,
-        type: EFieldType.TEXT,
-        label: 'Name',
-        section: 'name',
-    }),
     new Field('username', {
         validation: {
             validators: [Validators.required]
         },
         value: null,
         type: EFieldType.TEXT,
-        label: 'Username',
+        label: 'placeholder_username',
     }),
     new Field('email', {
-        value: false,
         type: EFieldType.EMAIL,
-        label: 'Email',
+        validation: {
+            validators: [Validators.required, Validators.email]
+        },
+        label: 'placeholder_email',
     }),
-    new Field('phone', {
-        value: false,
+    new Field('mobile', {
         type: EFieldType.TEL,
-        label: 'Phone',
+        label: 'placeholder_mobile',
     }),
-    new Field('website', {
-        value: false,
+    new SelectField('role', {
         type: EFieldType.TEXT,
-        label: 'Website',
+        label: 'Role',
     })
 ]);
 export namespace UsersModel {
 
     export interface IUser {
-        id: number;
-        name: string;
+        _id: string;
+        verified: boolean;
         username: string;
         email: string;
-        address: Address;
-        phone: string;
-        website: string;
-        company: Company;
-    }
-
-    interface Company {
-        name: string;
-        catchPhrase: string;
-        bs: string;
-    }
-
-    interface Address {
-        street: string;
-        suite: string;
-        city: string;
-        zipcode: string;
-        geo: Geo;
-    }
-
-    interface Geo {
-        lat: string;
-        lng: string;
+        password: string;
+        mobile: string;
+        role: number;
+        createdAt: string;
+        updatedAt: string;
     }
 
 
     export const MODULE: IModule<IUser, IUser, IUser> = {
         name: Constants.Routing.Users.withoutSlash,
-        endpoint: 'https://jsonplaceholder.typicode.com/users',
         httpConfiguration: {
             DEFAULT_URL: false
         },
@@ -78,24 +55,16 @@ export namespace UsersModel {
             form: writeForm,
         },
         update: {
-            // TODO: an option for dialog
             title: 'Update User',
             form: writeForm
         },
         read: {
             title: 'Users list',
+            endpoint: Constants.API.users,
             settings: ngTableSetting<IUser>({
                 columns: {
-                    id: {
+                    _id: {
                         title: 'Id',
-                        type: 'string',
-                    },
-                    name: {
-                        title: 'Name',
-                        type: 'string',
-                    },
-                    website: {
-                        title: 'Website',
                         type: 'string',
                     },
                     username: {
@@ -103,12 +72,24 @@ export namespace UsersModel {
                         type: 'string',
                     },
                     email: {
-                        title: 'Username',
+                        title: 'Email',
                         type: 'string',
                     },
-                    phone: {
-                        title: 'Phone',
+                    mobile: {
+                        title: 'Mobile',
                         type: 'string',
+                    },
+                    role: {
+                        title: 'Role',
+                        type: 'string',
+                        filter: {
+                            config: {
+                                list: AppUtils.mapEnumToValueAnd(PortalModel.ERoles),
+                            },
+                        },
+                        valuePrepareFunction(column, row) {
+                            return PortalModel.ERoles[column];
+                        }
                     },
                 },
             }),

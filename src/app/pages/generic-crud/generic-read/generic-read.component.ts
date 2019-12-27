@@ -31,6 +31,9 @@ export class GenericReadComponent implements OnInit, OnDestroy {
 
   fetchData() {
     return this.http
+      .configure({
+        DEFAULT_URL: AppUtils.not(AppUtils.isNullorUndefined(this.module.endpoint))
+      })
       .get<any[]>(this.endpoint || this.module.endpoint)
       .pipe(
         tap((response) => {
@@ -52,7 +55,7 @@ export class GenericReadComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    this.router.navigate(['../', GenericCrudModel.EOperations.CREATE], {
+    this.router.navigate(['../', GenericCrudModel.Operations.CREATE], {
       relativeTo: this.route
     });
     // this.dialog.open(SettingCreateComponent)
@@ -68,7 +71,7 @@ export class GenericReadComponent implements OnInit, OnDestroy {
   }
 
   edit({ data }) {
-    this.router.navigate(['../', GenericCrudModel.EOperations.UPDATE, data.id], {
+    this.router.navigate(['../', GenericCrudModel.Operations.UPDATE, data.id], {
       relativeTo: this.route
     });
     // this.dialog.open<SettingUpdateComponent, SettingModel.ISetting, SettingModel.ISetting>(SettingUpdateComponent, { data })

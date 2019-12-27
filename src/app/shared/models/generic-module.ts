@@ -4,17 +4,18 @@ import { CustomHeaders } from '@core/http';
 export interface IModule<Tread, Tcreate, Tupdate> {
     name: string;
     httpConfiguration?: Partial<CustomHeaders>;
-    endpoint: string;
+    endpoint?: string;
     create: {
-        // TODO: an option for dialog
         endpoint?: string;
         title: string;
         form: Form<Tcreate>;
+        dialog?: boolean
     };
     update: {
         endpoint?: string;
         title: string;
         form: Form<Tupdate>;
+        dialog?: boolean
     };
     read: {
         endpoint?: string;

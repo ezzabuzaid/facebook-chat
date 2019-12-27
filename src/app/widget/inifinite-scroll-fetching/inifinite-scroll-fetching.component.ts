@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ListEntityQuery } from '@shared/models';
+import { ListEntityQuery, ListEntityRes } from '@shared/models';
 import { Observable } from 'rxjs';
 import { map, tap, filter } from 'rxjs/operators';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-inifinite-scroll-fetching',
@@ -10,19 +11,22 @@ import { map, tap, filter } from 'rxjs/operators';
 })
 export class InifiniteScrollFetchingComponent implements OnInit {
   private isLastFetchDone = false;
-  private lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
   private currentLength = -1;
-  @Output() private dataChange = new EventEmitter();
-  @Input() private provider: (query: ListEntityQuery) => Observable<any>;
-  @Input() scrollContainerSelector;
+  @Output() public dataChange = new EventEmitter();
+  @Input() public provider: (query: ListEntityQuery) => Observable<ListEntityRes<any>>;
+  @Input() public scrollContainerSelector;
+  @Input() public enable = true;
+  @Input() public fetchOnInit = true;
+  // tslint:disable-next-line: no-input-rename
+  @Input('query') public lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
+  @Input() public direction: 'up' | 'down' = 'down';
 
   constructor() { }
 
-  public fetchUsers() {
+  private fetchItems() {
     this.provider(this.lastQuery)
       .pipe(
         map(({ items }) => items),
-        filter((items) => (this.currentLength !== items.length)),
         tap((items) => {
           this.currentLength = items.length;
           this.lastQuery.Page += 1;
@@ -35,16 +39,33 @@ export class InifiniteScrollFetchingComponent implements OnInit {
       });
   }
 
-  public scrolledDown() {
-    if (this.isLastFetchDone) {
+  public populateItems() {
+    if (this.enable && this.isLastFetchDone) {
       this.isLastFetchDone = false;
-      this.fetchUsers();
+      this.fetchItems();
+    }
+  }
+
+
+  onScroll(direction) {
+    console.log(direction);
+    if (this.direction === direction) {
+      this.populateItems();
     }
   }
 
   ngOnInit() {
-    this.fetchUsers();
+    if (this.fetchOnInit) {
+      this.fetchItems();
+    } else {
+      this.isLastFetchDone = true;
+    }
   }
 
+  restart() {
+    this.isLastFetchDone = false;
+    this.lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
+    this.currentLength = -1;
+  }
 }
 

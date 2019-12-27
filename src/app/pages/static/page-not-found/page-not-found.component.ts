@@ -14,7 +14,7 @@ export class PageNotFoundComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.navigate([Constants.Routing.LOGIN.withSlash]);
+    // this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
   }
 
 }

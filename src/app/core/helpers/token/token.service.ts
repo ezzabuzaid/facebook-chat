@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Constants } from '@core/constants';
 import { UserModel } from '@shared/user/user.model';
-import { LocalStorage } from '@ezzabuzaid/document-storage';
+import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
+import { AppUtils } from '../utils';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = Constants.Application.TOKEN_KEY;
@@ -13,28 +14,36 @@ const REFRESH_TOKEN_KEY = Constants.Application.REFRESH_TOKEN_KEY;
 })
 
 export class TokenService {
+
+  private get storage() {
+    return AppUtils.isNullorUndefined(this.sessionStorage.get(TOKEN_KEY)) ? this.localStorage : this.sessionStorage;
+  }
+
   constructor(
     private localStorage: LocalStorage,
+    private sessionStorage: SessionStorage,
   ) { }
 
   get token() {
-    return this.localStorage.get<string>(TOKEN_KEY);
-  }
-
-  set token(value: string) {
-    this.localStorage.set(TOKEN_KEY, value);
+    return this.storage.get<string>(TOKEN_KEY);
   }
 
   get refreshToken() {
-    return this.localStorage.get<string>(REFRESH_TOKEN_KEY);
+    return this.storage.get<string>(REFRESH_TOKEN_KEY);
   }
 
-  set refreshToken(value: string) {
-    this.localStorage.set(REFRESH_TOKEN_KEY, value);
+  setToken(rememberMe: boolean, token: string, refreshToken: any) {
+    if (AppUtils.not(rememberMe)) {
+      // NOTE: this way we can tell that the storage is session
+      this.sessionStorage.set(TOKEN_KEY, 'token');
+    }
+    this.storage.set(REFRESH_TOKEN_KEY, refreshToken);
+    this.storage.set(TOKEN_KEY, token);
   }
 
   deleteToken() {
-    this.localStorage.delete(TOKEN_KEY);
+    this.storage.delete(TOKEN_KEY);
+    this.storage.delete(REFRESH_TOKEN_KEY);
   }
 
   get decodedToken(): UserModel.ITokenClaim {
@@ -50,7 +59,7 @@ export class TokenService {
   }
 
   get isLogged(): boolean {
-    return !!this.token;
+    return AppUtils.not(AppUtils.isNullorUndefined(this.token));
   }
 
 }

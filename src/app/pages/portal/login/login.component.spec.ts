@@ -16,9 +16,9 @@ describe('LoginComponent', () => {
     let component: LoginComponent;
     let fixture: ComponentFixture<LoginComponent>;
     const fakeCreds = { password: '123456789', username: 'ezzabuzaid' };
+    const spyUserService = jasmine.createSpyObj<UserService>('UserService', ['login']);
 
     beforeEach(async(() => {
-        const stubUserService = jasmine.createSpyObj<UserService>('PortalService', ['login']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -33,7 +33,7 @@ describe('LoginComponent', () => {
                 TranslateTestingModule
             ],
             providers: [
-                { provide: UserService, useValue: stubUserService }
+                { provide: UserService, useValue: spyUserService }
             ]
         }).compileComponents();
         fixture = TestBed.createComponent(LoginComponent);
@@ -75,18 +75,27 @@ describe('LoginComponent', () => {
     });
 
     describe('[SHALLOW]', () => {
+        const formElement = byQuerySelector('form');
+        const usernameField = byQuerySelector<HTMLInputElement>(`#${component.getControl('username').id}`, byQuerySelector('form'));
+        const passwordField = byQuerySelector<HTMLInputElement>(`#${component.getControl('password').id}`, byQuerySelector('form'));
+        const rememberMeCheckbox = byQuerySelector<HTMLInputElement>(`#rememberMe`, byQuerySelector('form'));
+        const registerButton = byQuerySelector(`#registerButton`);
+
 
         it('should create', () => {
             expect(component).toBeDefined();
         });
 
         it('should have a form widget associated with username and password inputs', () => {
-            // TODO: Check if it has a form widget
-            // TODO: Check if it has a forgot password button
-            // TODO: Check if it has a register button
-            // TODO: Check if it has a remember me checkbox
-            expect(byQuerySelector(`#${component.getControl('username').id}`, byQuerySelector('form'))).toBeDefined();
-            expect(byQuerySelector(`#${component.getControl('password').id}`, byQuerySelector('form'))).toBeDefined();
+            expect(formElement).toBeDefined();
+            expect(usernameField).toBeDefined();
+            expect(passwordField).toBeDefined();
+            expect(rememberMeCheckbox).toBeDefined();
+            expect(registerButton).toBeDefined();
+        });
+
+        it('have passowrd as obsecure type', () => {
+            expect(passwordField.type).toMatch('password');
         });
 
         // TODO: move this test case to form widget component
@@ -112,8 +121,7 @@ describe('LoginComponent', () => {
 
         it('should redirect to app entry page after successed login', fakeAsync(() => {
             const navigateSpy = spyOn(TestBed.get(Router), 'navigateByUrl');
-            const portalServiceSpy = TestBed.get(UserService);
-            portalServiceSpy.login.and.returnValue(asyncData<Partial<UserModel.ILogin>>({ token: 'fakeJWTToken' }));
+            spyUserService.login.and.returnValue(asyncData<UserModel.ILogin>({ token: 'fakeJWTToken' } as any));
             component.getControl('username').setValue(fakeCreds.username);
             component.getControl('password').setValue(fakeCreds.password);
             fixture.detectChanges();

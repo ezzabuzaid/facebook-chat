@@ -1,25 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormFactoryComponent } from './form-factory/form-factory.component';
+import { FieldFactoryComponent } from './form-factory/form-factory.component';
 import { FormContainerComponent } from './form-container/form-container.component';
 import { MaterialModule } from '@shared/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MobileControlModule } from '@widget/mobile-control';
 
 
 @NgModule({
   declarations: [
-    FormFactoryComponent,
+    FieldFactoryComponent,
     FormContainerComponent
   ],
   exports: [
-    FormFactoryComponent,
+    FieldFactoryComponent,
     FormContainerComponent,
     ReactiveFormsModule
   ],
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MobileControlModule
   ],
 })
 export class FormModule { }

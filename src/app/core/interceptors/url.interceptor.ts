@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { getHeader, ECustomHeaders } from '../http/http.model';
+import { AppUtils } from '@core/helpers/utils';
 
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
@@ -11,7 +12,7 @@ export class UrlInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let url = environment.endpointUrl + req.url;
-    if (!getHeader(req.headers, ECustomHeaders.DEFAULT_URL)) {
+    if (AppUtils.not(getHeader(req.headers, ECustomHeaders.DEFAULT_URL))) {
       url = req.url;
     }
     return next.handle(req.clone({ url }));

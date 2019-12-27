@@ -3,6 +3,7 @@ import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/comm
 import { Observable } from 'rxjs';
 import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECustomHeaders } from '../http/http.model';
 import { map } from 'rxjs/operators';
+import { AppUtils } from '@core/helpers/utils';
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {
@@ -18,7 +19,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         return next.handle(req.clone({ headers }))
             .pipe(map(
                 (response: HttpResponse<any>) => {
-                    if (response instanceof HttpResponse && getHeader(req.headers, ECustomHeaders.FULL_RESPONSE)) {
+                    if (response instanceof HttpResponse && AppUtils.not(getHeader(headers, ECustomHeaders.FULL_RESPONSE))) {
                         return response.clone({ body: response.body.data });
                     }
                     return response;

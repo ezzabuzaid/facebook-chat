@@ -20,16 +20,15 @@ export class CrudManagerComponent implements OnInit {
   ];
 
   public currentModule: IModule<any, any, any> = null;
-  public EOperations = GenericCrudModel.EOperations;
+  public EOperations = GenericCrudModel.Operations;
 
   public operation = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router
-  ) { }
-
-  ngOnInit() {
+  ) {
+    console.log(this.modules);
     this.route.params
       .pipe(
         tap(() => {
@@ -42,9 +41,12 @@ export class CrudManagerComponent implements OnInit {
         this.operation = operation;
         this.currentModule = this.modules.find(module => module.name === moduleName);
         if (AppUtils.not(this.currentModule)) {
-          this.router.navigateByUrl(Constants.Routing.NOT_FOUND.withSlash);
+          // this.router.navigateByUrl(Constants.Routing.NOT_FOUND.withSlash);
         }
       });
+  }
+
+  ngOnInit() {
   }
 
 }

@@ -11,6 +11,12 @@ export namespace Constants {
       withSlash: '/portal/login',
       withoutSlash: 'login'
     };
+
+    static readonly REGISTER = {
+      withSlash: '/portal/login',
+      withoutSlash: 'register'
+    };
+
     static readonly Users = {
       withSlash: '/users',
       withoutSlash: 'users'
@@ -38,7 +44,8 @@ export namespace Constants {
   }
 
   export class API {
-    static readonly LOGIN = '/portal/login';
+    static readonly LOGIN = 'portal/login';
+    static readonly users = 'users';
   }
 
 }

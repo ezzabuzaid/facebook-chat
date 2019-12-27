@@ -7,28 +7,7 @@
         </mat-card-header>
         <mat-card-content>
           <form [formGroup]="form">
-            <mat-form-field>
-              <mat-label>{{ 'placeholder_firstname' | translate }}</mat-label>
-              <input type="text" [formControlName]="getName('firstName')" autocomplete="given-name" matInput>
-              <mat-error *ngIf="getError('firstName', 'pattern')">Special chars are forbidden</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{ 'placeholder_lastname' | translate }}</mat-label>
-              <input type="text" [formControlName]="getName('lastName')" matInput autocomplete="family-name">
-              <mat-error *ngIf="getError('lastName', 'pattern')">Special chars are forbidden</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{ 'placeholder_email' | translate }}</mat-label>
-              <input type="email" [formControlName]="getName('email')" matInput autocomplete="email">
-              <mat-error *ngIf="getError('email', 'email')">Please enter valid email</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{ 'placeholder_passowrd' | translate}}</mat-label>
-              <input type="password" [formControlName]="getName('password')" matInput>
-              <mat-error *ngIf="getError('password', 'minlength') || getError('password', 'maxlength')">
-                The length of password must be between 8 and 16
-              </mat-error>
-            </mat-form-field>
+            <app-field-factory *ngFor="let field of form.fields" [field]="field"></app-field-factory>
             <section>
               <div class="text-right my-3">
                 <button (click)="register()" mat-flat-button color="primary"

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { GenericCrudModel } from '../generic-crud.model';
 import { HttpClient } from '@angular/common/http';
 import { IModule } from '@shared/models/generic-module';
-import { PickAttr } from '@core/helpers/utils';
+import { PickAttr, AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-generic-write',
@@ -15,11 +15,10 @@ export class GenericWriteComponent implements OnInit {
 
   constructor(
     private http: HttpClient
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
-    if (GenericCrudModel.EOperations.UPDATE) {
+    if (GenericCrudModel.Operations.UPDATE) {
       this.module.form.patchValue({});
     }
   }
@@ -29,7 +28,11 @@ export class GenericWriteComponent implements OnInit {
     // TODO: preValidation
     if (valid) {
       // TODO: preSubmittion
-      this.http.post(this.module.endpoint || this.endpoint, value)
+      this.http
+        .configure({
+          DEFAULT_URL: AppUtils.not(AppUtils.isNullorUndefined(this.module.endpoint))
+        })
+        .post(this.module.endpoint || this.endpoint, value)
         .subscribe((res) => {
           console.log(res);
           // TODO: postSubmittion

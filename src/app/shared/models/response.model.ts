@@ -1,14 +1,10 @@
 import { AppUtils } from '@core/helpers/utils';
 
 export interface ResponseModel<T> {
-    succeeded: boolean;
-    errorMessages: any[];
     name: string;
     message: string;
     code: number;
     data: T;
-    status: string;
-    token: string;
 }
 
 

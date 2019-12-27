@@ -10,6 +10,7 @@ import * as express from 'express';
 import { join } from 'path';
 
 const localStorage = {};
+const sessionStorage = {};
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();

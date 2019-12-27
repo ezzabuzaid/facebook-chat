@@ -22,7 +22,7 @@ export enum EFieldType {
 }
 
 export interface ISelectOption {
-    label: string;
+    title: string;
     value: string;
 }
 
@@ -66,7 +66,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         this.type = type || EFieldType.TEXT;
         this.section = section;
         this.label = label;
-        this.id = id || AppUtils.randomString(10);
+        this.id = id || AppUtils.generateRandomString(10);
     }
 
     public typeOf(type: EFieldType) {

@@ -18,7 +18,7 @@ const writeForm = new Form<TodosModel.ITodo>([
         value: null,
         type: EFieldType.SELECT,
         label: 'Users',
-        options: [{ label: 'User 1', value: 'option' }]
+        options: [{ title: 'User 1', value: 'option' }]
     }),
     new Field('completed', {
         value: false,

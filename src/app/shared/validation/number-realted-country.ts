@@ -1,5 +1,6 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 const _window = window as any;
+
 /**
  *
  * @param id The id refer to input id

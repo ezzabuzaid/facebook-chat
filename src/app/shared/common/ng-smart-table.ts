@@ -20,7 +20,7 @@ interface IFilter {
     type?: string;
     component?: string;
     config: {
-        selectText: string,
+        selectText?: string,
         list: { title: string, value: string }[]
     };
 }

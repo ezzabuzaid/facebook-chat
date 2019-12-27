@@ -17,12 +17,11 @@ export class TeardownInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()));
-        headers = headers
-            .set('cccept', 'application/json')
-            .set('content-type', 'application/json');
+        console.log(this.userService);
         if (this.userService.isAuthenticated) {
-            headers = headers.set('Authorization', `Bearer ${this.tokenService.token}`);
+            headers = headers.set('Authorization', `${this.tokenService.token}`);
         }
+
         return next.handle(req.clone({ headers }))
             .pipe(
                 // retry(3),

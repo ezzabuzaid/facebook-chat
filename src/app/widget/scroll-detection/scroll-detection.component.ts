@@ -6,13 +6,14 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./scroll-detection.component.scss']
 })
 export class ScrollDetectionComponent implements OnInit {
-  @Output() public scrolledUp = new EventEmitter();
-  @Output() public scrolledDown = new EventEmitter();
+  @Output() public onScroll = new EventEmitter();
   @Input() public scrollContainerSelector: string;
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  scroll(direction: 'up' | 'down') {
+    this.onScroll.emit(direction);
+  }
 
 }

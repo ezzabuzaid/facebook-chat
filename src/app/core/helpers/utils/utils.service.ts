@@ -1,5 +1,13 @@
 import { Observable, of, EMPTY, throwError } from 'rxjs';
 export class AppUtils {
+    static mapEnumToValueAnd(enumObject): { title: string, value: any }[] {
+        return Object.keys(enumObject)
+            .filter(item => isNaN(+item))
+            .reduce((acc, curr) => {
+                acc.push({ title: curr, value: enumObject[curr] });
+                return acc;
+            }, []);
+    }
 
     static daysToSeconds(days: number) {
         const d = new Date();
@@ -12,7 +20,7 @@ export class AppUtils {
         return lastUpdate < Date.now() - maxAge;
     }
 
-    static randomString(length: number) {
+    static generateRandomString(length: number) {
         let string = '';
         const randomchar = () => {
             const number = Math.floor(Math.random() * 62);

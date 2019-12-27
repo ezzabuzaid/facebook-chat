@@ -1,0 +1,6 @@
+<mat-form-field [floatLabel]="floatType">
+    <mat-label>Phonenumber</mat-label>
+    <input matInput autocomplete="tel" [formControl]="control" [autofocus]="true" #phoneField id="{{id}}-phonenumber"
+        (input)="updateModel(phoneField?.value)">
+    <mat-error *ngIf="control.hasError('not_associated')">The number is not valid</mat-error>
+</mat-form-field>
