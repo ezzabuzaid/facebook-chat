@@ -1,4 +1,5 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AppUtils } from '@core/helpers/utils';
 const _window = window as any;
 
 /**
@@ -11,7 +12,7 @@ export function PhoneNumberShouldBeAssociatedWithCountry(id: string): ValidatorF
       if (input) {
          const inst = _window.intlTelInputGlobals.getInstance(input);
          if (inst) {
-            return !inst.isValidNumber() ? { not_associated: true } : null;
+            return AppUtils.not(inst.isValidNumber()) ? { not_associated: true } : null;
          }
       }
       return null;

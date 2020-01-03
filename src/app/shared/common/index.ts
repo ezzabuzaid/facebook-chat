@@ -1,5 +1,6 @@
 import { Validators, AbstractControl, ValidatorFn, FormControl, AsyncValidatorFn, AbstractControlOptions, FormGroup } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
+import { Type } from '@angular/core';
 
 export * from './material.module';
 export * from './breakpoints';
@@ -111,6 +112,14 @@ export class Form<T = any> extends FormGroup {
             this.addControl(field.name as any, field);
         });
     }
+
+    getComponent<T>(component: Type<T>): T {
+        return null as T;
+    }
+}
+
+export interface IComponentField {
+    field: Field<any, any>;
 }
 
 // TODO: export this file as library

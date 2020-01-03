@@ -1,5 +1,10 @@
 import { Observable, of, EMPTY, throwError } from 'rxjs';
 export class AppUtils {
+
+    static equals<T>(...values: T[]) {
+        return values.every((val, i, arr) => val === arr[0]);
+    }
+
     static mapEnumToValueAnd(enumObject): { title: string, value: any }[] {
         return Object.keys(enumObject)
             .filter(item => isNaN(+item))

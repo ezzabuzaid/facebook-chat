@@ -19,7 +19,10 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         return next.handle(req.clone({ headers }))
             .pipe(map(
                 (response: HttpResponse<any>) => {
-                    if (response instanceof HttpResponse && AppUtils.not(getHeader(headers, ECustomHeaders.FULL_RESPONSE))) {
+                    const notFullResponse = AppUtils.not(getHeader(headers, ECustomHeaders.FULL_RESPONSE));
+                    const defaultUrl = getHeader(headers, ECustomHeaders.DEFAULT_URL);
+
+                    if (response instanceof HttpResponse && defaultUrl && notFullResponse) {
                         return response.clone({ body: response.body.data });
                     }
                     return response;

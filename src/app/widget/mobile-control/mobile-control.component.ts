@@ -1,13 +1,17 @@
-import { Component, OnInit, ViewChild, ElementRef, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component, OnInit, ViewChild, ElementRef, forwardRef,
+  Input, OnChanges, SimpleChanges, ChangeDetectionStrategy
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, } from '@angular/forms';
 import { PhoneNumberShouldBeAssociatedWithCountry } from '@shared/validation';
-import { FloatLabelType } from '@angular/material';
 import { AppUtils } from '@core/helpers/utils';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mobile-control',
   templateUrl: './mobile-control.component.html',
   styleUrls: ['./mobile-control.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => MobileControlComponent),
@@ -18,14 +22,13 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   public id = AppUtils.generateRandomString(5);
   public intlTelInstance = null;
   private _value: any;
+  // TODO: remove this after bind the field
   public control = new FormControl(null, PhoneNumberShouldBeAssociatedWithCountry(this.id));
 
-  @Input() private dialCode: number = null;
-  @ViewChild('phoneField', { static: true }) private phoneField: ElementRef<HTMLElement>;
+  @Input() private code: string = null;
+  @Input() private autoDetectCountry = true;
 
-  get floatType(): FloatLabelType {
-    return this.value ? 'always' : 'never';
-  }
+  @ViewChild('phoneField', { static: true }) private phoneField: ElementRef<HTMLElement>;
 
   set value(value: any) {
     this._value = value;
@@ -33,17 +36,19 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   get value() {
-
     return this._value;
   }
+
   onChange: (value) => {};
   onTouched: () => {};
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.dialCode && this.intlTelInstance) {
-      const country = (window as any).intlTelInputGlobals.getCountryData().find(el => el.dialCode === String(this.dialCode));
+    if (this.code && this.intlTelInstance) {
+      const country = this.getCountry();
       this.intlTelInstance.setCountry(country.iso2);
     }
   }
@@ -51,7 +56,15 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   ngOnInit() {
     try {
       this.intlTelInstance = (window as any).intlTelInput(this.phoneField.nativeElement);
-      this.ngOnChanges(null);
+      if (this.autoDetectCountry) {
+        this.getUserCountry()
+          .subscribe(({ country_code }) => {
+            this.code = country_code.toLowerCase();
+            this.ngOnChanges(null);
+          });
+      } else {
+        this.ngOnChanges(null);
+      }
     } catch (error) {
     }
   }
@@ -62,6 +75,7 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
 
   notifyValueChange(): void {
     if (this.onChange) {
+      String();
       this.onChange(this.value);
     }
   }
@@ -80,6 +94,22 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  getUserCountry() {
+    return this.http
+      .configure({ DEFAULT_URL: false })
+      .get<any>('https://json.geoiplookup.io');
+  }
+
+  getCountry(code = this.code) {
+    return (window as any).intlTelInputGlobals.getCountryData()
+      .find(country => {
+        const dialCode = country.dialCode.toLowerCase();
+        const isoCode = country.iso2.toLowerCase();
+        const inputCode = String(code).toLowerCase();
+        return AppUtils.equals(dialCode, inputCode) || AppUtils.equals(isoCode, inputCode);
+      });
   }
 
 }
