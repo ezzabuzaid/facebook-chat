@@ -1,6 +1,6 @@
-export * from './validation-password-equivalent';
-export * from './number-only';
-export * from './number-realted-country';
+export * from './equal.validator';
+export * from './number-only.validator';
+export * from './is-number-realted-country.validator';
 
 import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 

@@ -113,8 +113,8 @@ export class Form<T = any> extends FormGroup {
         });
     }
 
-    getComponent<T>(component: Type<T>): T {
-        return null as T;
+    getComponent<Y>(component: Type<Y>): Y {
+        return null as Y;
     }
 }
 

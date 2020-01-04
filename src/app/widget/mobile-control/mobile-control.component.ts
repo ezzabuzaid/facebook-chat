@@ -3,7 +3,7 @@ import {
   Input, OnChanges, SimpleChanges, ChangeDetectionStrategy
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, } from '@angular/forms';
-import { PhoneNumberShouldBeAssociatedWithCountry } from '@shared/validation';
+import { PhoneNumberShouldBeAssociatedWithCountry } from '@shared/validators';
 import { AppUtils } from '@core/helpers/utils';
 import { HttpClient } from '@angular/common/http';
 

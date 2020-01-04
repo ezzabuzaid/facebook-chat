@@ -7,7 +7,7 @@ import { LanguageService, Language } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SwUpdate } from '@angular/service-worker';
-import { SeoService } from '@core/helpers/seo/seo.service';
+import { SeoService } from '@shared/services/seo/seo.service';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
