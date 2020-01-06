@@ -3,6 +3,12 @@
   .text-wrapper {
     white-space: nowrap;
   }
+  .toggle-icon {
+    transform: scale(0.5);
+    &.active {
+      transform: scale(0.5) rotateZ(180deg);
+    }
+  }
   .avatar {
     width: 40px;
     min-width: 40px;

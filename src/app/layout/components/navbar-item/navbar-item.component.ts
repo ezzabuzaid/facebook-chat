@@ -17,27 +17,23 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   @Input() public collapse = false;
   private _subscribtion = new Subject();
 
-  private isTable = false;
-
   constructor(
     private sidebarService: SidebarService,
     private breakpointObserver: BreakpointObserver
   ) { }
 
-  ngOnInit() {
-    this.breakpointObserver.observe(MEDIA_BREAKPOINTS.DOWN('md'))
-      .pipe(takeUntil(this._subscribtion))
-      .subscribe(({ matches }) => {
-        this.isTable = matches;
-      });
+  ngOnInit() { }
+
+  public get toggled() {
+    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggled;
   }
 
   // TODO shortcuts service
   addShortcut() { }
 
   toggleNavbar() {
-    if (this.isTable && !this.collapse) {
-      this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggleSidebar();
+    if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md')) && !this.collapse) {
+      this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
     }
   }
 

@@ -1,13 +1,12 @@
+@import "functions";
 @mixin navbar_item($theme) {
   app-navbar-item {
-    $color: #98979d;
+    $color: #000;
     .navbar-item {
-      // TODO get color from material theme
-      // color: get_color_from_platte($mat-gray, 50);
       color: $color;
       &.active {
-        $color: #fff;
-        background-color: #1e202d;
+        $color: get_color_from_theme(primary, $theme);
+        background-color: #f9f9f9;
         color: $color;
         border-left: 2px solid $color;
       }

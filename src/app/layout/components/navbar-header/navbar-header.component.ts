@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 
 @Component({
   selector: 'app-navbar-header',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar-header.component.scss']
 })
 export class NavbarHeaderComponent implements OnInit {
+  constructor(
+    private sidebarService: SidebarService
+  ) { }
 
-  constructor() { }
-
+  public get toggled() {
+    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggled;
+  }
 
   ngOnInit() { }
+
+  toggleSidebar() {
+    this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
+  }
 
 }
