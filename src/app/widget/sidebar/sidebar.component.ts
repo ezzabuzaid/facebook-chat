@@ -10,7 +10,7 @@ import { SidebarService } from './sidebar.service';
 export class SidebarComponent implements OnInit, OnDestroy {
   @ViewChild('panel', { static: false }) public drawer: ElementRef<HTMLElement>;
   @Input() public name = '';
-  public onToggle = new Subject<ISidebarToggle>();
+  private onToggle = new Subject<ISidebarToggle>();
   private _subscribtion = new Subject();
   @HostBinding('class.toggled') public toggled = false;
   constructor(
@@ -22,8 +22,21 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
 
-  toggleSidebar() {
-    this.toggled = !this.toggled;
+  toggle(value = !this.toggled) {
+    this.toggled = value;
+    this.onToggle.next({ toggle: this.toggled });
+  }
+
+  open() {
+    this.toggle(false);
+  }
+
+  close() {
+    this.toggle(true);
+  }
+
+  listen() {
+    return this.onToggle.asObservable();
   }
 
   ngOnDestroy() {

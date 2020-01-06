@@ -1,15 +1,16 @@
-@import 'variables';
-@import 'mixins';
-@import '~@angular/material/theming';
+@import "variables";
+@import "mixins";
+@import "~@angular/material/theming";
 $transition-timing: ease-in-out;
-$transition-duration: 0.15s;
+$transition-duration: 0.25s;
 :host {
   display: block;
   --width: 100%;
   ::ng-deep {
     > div {
       &:first-child {
-        // overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         position: fixed;
         height: 100%;
         transform: translateX(0%);
