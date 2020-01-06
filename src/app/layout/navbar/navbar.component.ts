@@ -20,9 +20,6 @@ export class NavbarComponent {
     this.userService.logout();
   }
 
-  perfectScrollBarHeight(header: HTMLElement) {
-    return this.document.documentElement.clientHeight - header.clientHeight;
-  }
 }
 
 //   ngAfterViewInit() {

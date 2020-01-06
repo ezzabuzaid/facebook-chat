@@ -1,8 +1,8 @@
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 
-app-layout {
-  nav {
+:host {
+  app-toolbar {
     @include fixed_bar(absolute);
   }
 
@@ -11,10 +11,6 @@ app-layout {
       $map: $layout_dimensions,
       $key: toolbar-height
     );
-    margin-top: calc(#{$height} * 2);
-    // .container-fluid,
-    // .container {
-      // @include container-height(0);
-    // }
+    margin-top: calc(#{$height} * 1);
   }
 }

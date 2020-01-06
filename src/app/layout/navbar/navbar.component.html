@@ -1,10 +1,10 @@
 <app-sidebar #sidebar name="navbar">
-  <div sidebar-drawer class="sidebar-drawer">
+  <div sidebar-drawer class="sidebar-drawer mat-elevation-z1">
     <header #header>
-      <app-navbar-header class="p-3 mat-elevation-z5"></app-navbar-header>
+      <app-navbar-header class="p-3"></app-navbar-header>
     </header>
     <div>
-      <perfect-scrollbar class="position-relative" [config]="{ suppressScrollX: true}">
+      <perfect-scrollbar class="position-relative" [config]="{ suppressScrollX: true }">
         <ng-container *ngFor="let item of navigationMenu">
           <app-navbar-item *ngIf="item.type === 'item'" [item]="item"></app-navbar-item>
           <app-navbar-collapse *ngIf="item.type === 'collapse'" [item]="item"></app-navbar-collapse>
@@ -13,8 +13,6 @@
     </div>
   </div>
   <div sidebar-container>
-    <article>
-      <ng-content></ng-content>
-    </article>
+    <ng-content></ng-content>
   </div>
 </app-sidebar>
