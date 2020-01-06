@@ -1,7 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
-import { LanguageService } from '@core/helpers/language';
-import { SidebarService, RegisterdSidebar } from 'app/widget/sidebar';
+import { LanguageService, Language } from '@core/helpers/language';
+import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
+import { UserService } from '@shared/user';
+import { TokenService } from '@core/helpers/token';
+import { Router } from '@angular/router';
+import { Constants } from '@core/constants';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,27 +13,33 @@ import { SidebarService, RegisterdSidebar } from 'app/widget/sidebar';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-
+  public user = this.tokenService.decodedToken;
+  routes = Constants.Routing;
   constructor(
     private languageService: LanguageService,
     private sidebarService: SidebarService,
+    private tokenService: TokenService,
+    private router: Router,
+    private userService: UserService
   ) { }
 
   ngOnInit() { }
 
-  changeLanguage(language) {
+  changeLanguage(language: Language) {
     this.languageService.changeLanguage(language);
   }
 
   toggleFullScreen() {
+    // TODO: Create full screen directive
     AppUtils.fullScreen();
   }
 
   toggleSidebar() {
-    // NOTE Remove the explict inject of navbar component and use create method in sidebar service to handle the close
-    // NOTE this used to trigger that the navbar closed from the humburger icon.
-    this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggleSidebar();
-    // this.navbarComponent.folded = false;
+    this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
+  }
+
+  logout() {
+    this.userService.logout().subscribe();
   }
 
 }

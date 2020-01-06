@@ -1,10 +1,10 @@
-<app-navbar-item (click)="expand()" [item]="item" [collapse]="true">
+<app-navbar-item (click)="$event.stopPropagation(); expand()" [item]="item" [collapse]="true">
   <ng-content></ng-content>
   <span class="d-flex align-items-center">
     <mat-icon class="drawer-invisible">keyboard_arrow_down</mat-icon>
   </span>
 </app-navbar-item>
-<div class="droplist">
+<div class="droplist ml-2">
   <ng-container *ngFor="let childItem of item?.children">
     <div class="d-flex align-items-center">
       <app-navbar-item class="w-100" [item]="childItem"></app-navbar-item>

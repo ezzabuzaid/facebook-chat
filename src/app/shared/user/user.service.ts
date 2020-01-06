@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
@@ -40,6 +41,8 @@ export class UserService extends Listener<boolean> {
     this.state.next(this.isAuthenticated);
     this.tokenService.deleteToken();
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
+    // TODO: Implement logout endpoing
+    return of();
   }
 
   public get isAuthenticated() {
