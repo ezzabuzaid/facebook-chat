@@ -14,10 +14,9 @@ export class InifiniteScrollFetchingComponent implements OnInit {
   private currentLength = -1;
   @Output() public dataChange = new EventEmitter();
   @Input() public provider: (query: ListEntityQuery) => Observable<ListEntityRes<any>>;
-  @Input() public scrollContainerSelector;
+  @Input() public scrollContainerSelector: string = null;
   @Input() public enable = true;
   @Input() public fetchOnInit = true;
-  // tslint:disable-next-line: no-input-rename
   @Input('query') public lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
   @Input() public direction: 'up' | 'down' = 'down';
 

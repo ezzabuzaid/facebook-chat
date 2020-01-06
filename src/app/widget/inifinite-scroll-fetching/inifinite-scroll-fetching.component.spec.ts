@@ -8,9 +8,9 @@ describe('InifiniteScrollFetchingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InifiniteScrollFetchingComponent ]
+      declarations: [InifiniteScrollFetchingComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
