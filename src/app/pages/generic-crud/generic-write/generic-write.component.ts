@@ -40,4 +40,8 @@ export class GenericWriteComponent implements OnInit {
     }
   }
 
+  log(e) {
+    console.log(e);
+  }
+
 }

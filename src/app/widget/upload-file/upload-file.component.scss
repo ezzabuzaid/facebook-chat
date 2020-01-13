@@ -7,6 +7,11 @@
   align-items: center;
   justify-content: center;
   height: 200px;
+  will-change: filter;
+  transition: 0.25s filter cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &.drag-over {
+    filter: opacity(0.5);
+  }
   .file-upload {
     width: 100%;
     height: 100%;

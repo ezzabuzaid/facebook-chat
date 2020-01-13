@@ -1,9 +1,10 @@
-import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, HostListener, HostBinding } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Observer } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { UploadFileService } from '@shared/services/upload';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-upload-file',
@@ -18,22 +19,43 @@ import { UploadFileService } from '@shared/services/upload';
   ]
 })
 export class UploadFileComponent implements OnInit, ControlValueAccessor {
-  private static howMuchInstance = -1;
-  public label = UploadFileComponent.howMuchInstance;
+  public id = AppUtils.generateAlphabeticString();
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
+  @HostBinding('class.drag-over') dragOverClass = false;
 
+  @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
+    AppUtils.preventBubblingAndCapturing(event);
+    this.dragOverClass = true;
+  }
+
+
+  @HostListener('dragleave', ['$event']) onDragLeave(event: DragEvent) {
+    AppUtils.preventBubblingAndCapturing(event);
+    this.dragOverClass = false;
+  }
+
+
+  @HostListener('drop', ['$event']) ondrop(event) {
+    AppUtils.preventBubblingAndCapturing(event);
+    this.dragOverClass = false;
+    const files = [...event.dataTransfer.files];
+
+    if (AppUtils.isTrue(files.length)) {
+      [...files].forEach((file: File) => {
+        this.uploadFile(file);
+      });
+    }
+  }
   changeValue: (value) => void;
 
   value = null;
   constructor(
-    private uploadPictureService: UploadFileService,
+    private uploadFileService: UploadFileService,
     private snackBar: MatSnackBar,
     private translateService: TranslateService
-  ) {
-    UploadFileComponent.howMuchInstance++;
-  }
+  ) { }
 
   writeValue(value) {
     this.value = value;
@@ -61,7 +83,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     this.openSnackBar(this.getTranslate(message));
   }
 
-  removePicture() {
+  removeFile() {
     this.changeValue(null);
   }
 
@@ -74,20 +96,9 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     return this.supported.some(el => `image/${el}` === file.type) && size < this.size;
   }
 
-  readFile(file: File) {
-    return new Observable((observer: Observer<string | ArrayBuffer>) => {
-      const reader = new FileReader();
-      reader.addEventListener('abort', (error) => observer.error(error));
-      reader.addEventListener('error', (error) => observer.error(error));
-      reader.addEventListener('progress', console.log);
-      reader.addEventListener('loadend', (e) => observer.next(reader.result));
-      reader.readAsDataURL(file);
-    });
-  }
-
-  uploadPicture({ files: [file] }) {
+  uploadFile(file: File) {
     if (this.allowedToUpload(file)) {
-      this.readFile(file)
+      AppUtils.readFile(file)
         .subscribe(
           (value) => {
             console.log(value);
@@ -98,6 +109,10 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     } else {
       this.onError('image_not_allowed');
     }
+  }
+
+  openBrowserSelectWindow(fileInput: HTMLInputElement) {
+    fileInput.click();
   }
 
 }

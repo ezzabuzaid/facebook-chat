@@ -1,5 +1,33 @@
-import { Observable, of, EMPTY, throwError } from 'rxjs';
+import { Observable, of, EMPTY, throwError, Observer } from 'rxjs';
 export class AppUtils {
+
+    static generateAlphabeticString(stringLength = 5) {
+        let randomString = '';
+        let randomAscii: number;
+        const asciiLow = 65;
+        const asciiHigh = 90;
+        for (let i = 0; i < stringLength; i++) {
+            randomAscii = Math.floor((Math.random() * (asciiHigh - asciiLow)) + asciiLow);
+            randomString += String.fromCharCode(randomAscii);
+        }
+        return randomString;
+    }
+
+
+    static isTrue(value: any) {
+        return !!value;
+    }
+
+    static readFile(file: File) {
+        return new Observable((observer: Observer<string | ArrayBuffer>) => {
+            const reader = new FileReader();
+            reader.addEventListener('abort', (error) => observer.error(error));
+            reader.addEventListener('error', (error) => observer.error(error));
+            reader.addEventListener('progress', console.log);
+            reader.addEventListener('loadend', (e) => observer.next(reader.result));
+            reader.readAsDataURL(file);
+        });
+    }
 
     static preventBubblingAndCapturing(event: Event) {
         event.preventDefault();

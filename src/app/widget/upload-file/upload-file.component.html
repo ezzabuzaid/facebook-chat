@@ -1,12 +1,12 @@
 <label
   class="file-upload position-relative flex-column d-flex align-items-center justify-content-center bg--primary pointer"
-  for="pricure-{{label}}" [class.uploaded]="value">
-  <input id="pricure-{{label}}" accept="image/*" #imageInput (change)="uploadPicture(imageInput)" hidden type="file" />
+  [for]="id" [class.uploaded]="value">
+  <input [id]="id" accept="image/*" #fileInput (change)="uploadFile(fileInput?.files?.file)" hidden type="file" />
   <!-- <mat-icon class="text--primary">{{value ? 'delete' : 'cloud_upload'}}</mat-icon> -->
   <mat-icon class="upload-icon text--primary mb-3">cloud_upload</mat-icon>
   <h6>Drag and drop files here</h6>
   <span class="mb-3">or</span>
-  <button mat-stroked-button color="primary">Select a file</button>
+  <button (click)="openBrowserSelectWindow(fileInput)" mat-stroked-button color="primary">Select a file</button>
   <ng-container *ngIf="value">
     <img [src]="value | safe:'url'" class="position-absolute w-100 h-100" alt="avatar">
   </ng-container>
