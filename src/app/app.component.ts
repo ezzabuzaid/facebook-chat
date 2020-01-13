@@ -3,7 +3,7 @@ import { environment } from '@environments/environment';
 import { Logger } from '@core/helpers/logger';
 import { NavigationEnd, ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { LanguageService, Language } from '@core/helpers/language';
+import { LanguageService, ELanguage } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SwUpdate } from '@angular/service-worker';
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
     if (this.isBrowser) {
-      this.languageService.populate(Language.EN);
+      this.languageService.populate(ELanguage.EN);
       // TODO PWA Checks if install popup should be appear
       const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);

@@ -9,7 +9,6 @@ import { Constants } from '@core/constants';
 import { UserService } from '@shared/user';
 import { TranslateTestingModule } from 'test/mocks';
 import { asyncData, getService } from 'test/test.utils';
-import { UserModel } from '@shared/user/user.model';
 import { FormModule } from '@partials/form';
 
 describe('LoginComponent', () => {
@@ -121,7 +120,7 @@ describe('LoginComponent', () => {
 
         it('should redirect to app entry page after successed login', fakeAsync(() => {
             const navigateSpy = spyOn(TestBed.get(Router), 'navigateByUrl');
-            spyUserService.login.and.returnValue(asyncData<UserModel.ILogin>({ token: 'fakeJWTToken' } as any));
+            spyUserService.login.and.returnValue(asyncData({ token: 'fakeJWTToken' } as any));
             component.getControl('username').setValue(fakeCreds.username);
             component.getControl('password').setValue(fakeCreds.password);
             fixture.detectChanges();

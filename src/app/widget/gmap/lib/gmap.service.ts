@@ -40,7 +40,7 @@ export class GoogleMapService {
     static geocode(options: google.maps.GeocoderRequest): Observable<google.maps.GeocoderResult[]> {
         const observable = new Observable((observer: Observer<google.maps.GeocoderResult[]>) => {
             new google.maps.Geocoder().geocode(options, (results, status) => {
-                if (status === 2) {
+                if (status === google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
                         observer.next(results);
                         observer.complete();
