@@ -1,7 +1,12 @@
 <app-form-container (onSubmit)="onSubmit()" [title]="module?.title">
     <section form-body>
-        <ng-container *ngFor="let field of module?.form.fields">
+        <div class="row">
+            <div class="col-4">
+                <app-upload-file></app-upload-file>
+            </div>
+        </div>
+        <!-- <ng-container *ngFor="let field of module?.form.fields">
             <app-field-factory [field]="field"></app-field-factory>
-        </ng-container>
+        </ng-container> -->
     </section>
 </app-form-container>

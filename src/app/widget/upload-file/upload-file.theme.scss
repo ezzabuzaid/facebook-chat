@@ -1,6 +1,6 @@
 @import 'functions';
 
-@mixin upload_picture($theme) {
+@mixin upload_file($theme) {
   .file-upload {
     background-image: linear-gradient(to bottom, #ffffff 50%, get_color_from_theme(primary, $theme) 50%);
   }

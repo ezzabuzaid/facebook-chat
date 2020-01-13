@@ -5,7 +5,7 @@ import { map, filter } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class UploadPictureService {
+export class UploadFileService {
     constructor(private http: HttpClient) { }
 
     uploadImage(file) {

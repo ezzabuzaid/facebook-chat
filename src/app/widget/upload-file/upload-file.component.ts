@@ -1,25 +1,25 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { UploadPictureService } from './upload-picture.service';
 import { Observable, Observer } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { UploadFileService } from '@shared/services/upload';
 
 @Component({
-  selector: 'app-upload-picture',
-  templateUrl: './upload-picture.component.html',
-  styleUrls: ['./upload-picture.component.scss'],
+  selector: 'app-upload-file',
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UploadPictureComponent),
+      useExisting: forwardRef(() => UploadFileComponent),
       multi: true
     }
   ]
 })
-export class UploadPictureComponent implements OnInit, ControlValueAccessor {
+export class UploadFileComponent implements OnInit, ControlValueAccessor {
   private static howMuchInstance = -1;
-  public label = UploadPictureComponent.howMuchInstance;
+  public label = UploadFileComponent.howMuchInstance;
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
@@ -28,11 +28,11 @@ export class UploadPictureComponent implements OnInit, ControlValueAccessor {
 
   value = null;
   constructor(
-    private uploadPictureService: UploadPictureService,
+    private uploadPictureService: UploadFileService,
     private snackBar: MatSnackBar,
     private translateService: TranslateService
   ) {
-    UploadPictureComponent.howMuchInstance++;
+    UploadFileComponent.howMuchInstance++;
   }
 
   writeValue(value) {
@@ -51,13 +51,13 @@ export class UploadPictureComponent implements OnInit, ControlValueAccessor {
     return this.translateService.instant(key);
   }
 
-  private successCB(value) {
+  private onSuccess(value) {
     this.changeValue(value);
     this.value = value;
     this.openSnackBar(this.getTranslate('image_upload_success'));
   }
 
-  private errorCB(message) {
+  private onError(message) {
     this.openSnackBar(this.getTranslate(message));
   }
 
@@ -80,7 +80,6 @@ export class UploadPictureComponent implements OnInit, ControlValueAccessor {
       reader.addEventListener('abort', (error) => observer.error(error));
       reader.addEventListener('error', (error) => observer.error(error));
       reader.addEventListener('progress', console.log);
-      // reader.addEventListener('load', (e) => observer.next(reader.result as string));
       reader.addEventListener('loadend', (e) => observer.next(reader.result));
       reader.readAsDataURL(file);
     });
@@ -92,12 +91,12 @@ export class UploadPictureComponent implements OnInit, ControlValueAccessor {
         .subscribe(
           (value) => {
             console.log(value);
-            this.successCB(value);
+            this.onSuccess(value);
           },
-          () => this.errorCB('image_upload_error')
+          () => this.onError('image_upload_error')
         );
     } else {
-      this.errorCB('image_not_allowed');
+      this.onError('image_not_allowed');
     }
   }
 

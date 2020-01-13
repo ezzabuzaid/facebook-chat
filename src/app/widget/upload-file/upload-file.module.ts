@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '@shared/common';
-import { UploadPictureComponent } from './upload-picture.component';
+import { UploadFileComponent } from './upload-file.component';
 import { PipesModule } from '@shared/pipes/pipes.module';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { PipesModule } from '@shared/pipes/pipes.module';
     MaterialModule,
     PipesModule
   ],
-  declarations: [UploadPictureComponent],
-  exports: [UploadPictureComponent]
+  declarations: [UploadFileComponent],
+  exports: [UploadFileComponent]
 })
-export class UploadPictureModule { }
+export class UploadFileModule { }

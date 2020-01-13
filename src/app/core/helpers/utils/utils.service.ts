@@ -1,8 +1,13 @@
 import { Observable, of, EMPTY, throwError } from 'rxjs';
 export class AppUtils {
 
+    static preventBubblingAndCapturing(event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
     static equals<T>(...values: T[]) {
-        return values.every((val, i, arr) => val === arr[0]);
+        return values.every((val, i, arr) => JSON.stringify(val) === JSON.stringify(arr[0]));
     }
 
     static mapEnumToValueAnd(enumObject): { title: string, value: any }[] {
