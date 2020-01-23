@@ -1,7 +1,7 @@
 <label
   class="file-upload position-relative flex-column d-flex align-items-center justify-content-center bg--primary pointer"
   [for]="id" [class.uploaded]="value">
-  <input [id]="id" accept="image/*" #fileInput (change)="uploadFile(fileInput?.files?.file)" hidden type="file" />
+  <input [id]="id" accept="image/*" #fileInput (change)="uploadFile(fileInput?.files[0])" hidden type="file" />
   <!-- <mat-icon class="text--primary">{{value ? 'delete' : 'cloud_upload'}}</mat-icon> -->
   <mat-icon class="upload-icon text--primary mb-3">cloud_upload</mat-icon>
   <h6>Drag and drop files here</h6>

@@ -19,11 +19,19 @@ import { AppUtils } from '@core/helpers/utils';
   ]
 })
 export class UploadFileComponent implements OnInit, ControlValueAccessor {
+  constructor(
+    private uploadFileService: UploadFileService,
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService
+  ) { }
   public id = AppUtils.generateAlphabeticString();
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
   @HostBinding('class.drag-over') dragOverClass = false;
+  changeValue: (value: string) => void;
+
+  value = null;
 
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     AppUtils.preventBubblingAndCapturing(event);
@@ -36,7 +44,6 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     this.dragOverClass = false;
   }
 
-
   @HostListener('drop', ['$event']) ondrop(event) {
     AppUtils.preventBubblingAndCapturing(event);
     this.dragOverClass = false;
@@ -48,14 +55,6 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
       });
     }
   }
-  changeValue: (value) => void;
-
-  value = null;
-  constructor(
-    private uploadFileService: UploadFileService,
-    private snackBar: MatSnackBar,
-    private translateService: TranslateService
-  ) { }
 
   writeValue(value) {
     this.value = value;
