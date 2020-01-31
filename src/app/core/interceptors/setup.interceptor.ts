@@ -1,32 +1,44 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECustomHeaders } from '../http/http.model';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
+import { connectivity } from '@shared/common';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {
     public name = SetupInterceptor.name;
     private defaultSetting = new CustomHeaders();
-    constructor() {
+
+    constructor(
+        private snackbar: MatSnackBar
+    ) {
         this.configure(this.defaultSetting);
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const headers = this.setCustomHeaders(req.headers);
         this.configure(this.defaultSetting);
-        return next.handle(req.clone({ headers }))
-            .pipe(map(
-                (response: HttpResponse<any>) => {
-                    const notFullResponse = AppUtils.not(getHeader(headers, ECustomHeaders.FULL_RESPONSE));
-                    const defaultUrl = getHeader(headers, ECustomHeaders.DEFAULT_URL);
 
-                    if (response instanceof HttpResponse && defaultUrl && notFullResponse) {
-                        return response.clone({ body: response.body.data });
-                    }
-                    return response;
-                })
+        if (AppUtils.not(connectivity.isOnline)) {
+            this.snackbar.open('The internet connection is not active, please check your connection');
+            return of();
+        }
+
+        return next.handle(req.clone({ headers }))
+            .pipe(
+                map(
+                    (response: HttpResponse<any>) => {
+                        const notFullResponse = AppUtils.not(getHeader(headers, ECustomHeaders.FULL_RESPONSE));
+                        const defaultUrl = getHeader(headers, ECustomHeaders.DEFAULT_URL);
+
+                        if (response instanceof HttpResponse && defaultUrl && notFullResponse) {
+                            return response.clone({ body: response.body.data });
+                        }
+                        return response;
+                    })
             );
     }
 

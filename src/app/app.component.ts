@@ -6,8 +6,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { LanguageService, ELanguage } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
-import { SwUpdate } from '@angular/service-worker';
 import { SeoService } from '@shared/services/seo/seo.service';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { switchMap } from 'rxjs/operators';
+import { connectivity } from '@shared/common';
+import { AppUtils } from '@core/helpers/utils';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
@@ -25,6 +28,7 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private renderer: Renderer2,
     private seoService: SeoService,
+    private snackbar: MatSnackBar,
     private serviceWorkerUtils: ServiceWorkerUtils,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
@@ -46,15 +50,6 @@ export class AppComponent implements OnInit {
       keywords: ['angular', 'backbone', 'ezzabuzaid', 'buildozer', 'boilerplate', 'angular starter', 'seed', 'angular seed'].join(',')
     });
 
-    this.serviceWorkerUtils.checkEveryHour(1);
-
-    this.serviceWorkerUtils.updateAvailable.subscribe((update) => {
-      log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
-    });
-    this.serviceWorkerUtils.updateActivated.subscribe((update) => {
-      log.debug('this.serviceWorkerUtils.updateActivated => ', update);
-    });
-
   }
 
   ngOnInit() {
@@ -68,6 +63,37 @@ export class AppComponent implements OnInit {
         ga('send', 'pageview');
       }
     });
+
+    this.serviceWorkerUtils.checkEveryHour(1);
+    this.serviceWorkerUtils.updateAvailable
+      .pipe(switchMap((update) => {
+        log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
+        return this.snackbar.open('An update is available', 'Activate!').onAction()
+      }))
+      .subscribe((update) => {
+        location.reload();
+      });
+    this.serviceWorkerUtils.updateActivated
+      .subscribe((update) => {
+        log.debug('this.serviceWorkerUtils.updateActivated => ', update);
+        this.snackbar.open('The application has been updated');
+      });
+
+    connectivity.observe
+      .subscribe(status => {
+        let snackBarRef: MatSnackBarRef<any> = null;
+        if (AppUtils.not(status)) {
+          this.renderer.addClass(this.document.body, 'no-connection');
+          snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
+            duration: 1000 * 1000
+          });
+        } else {
+          if (AppUtils.isTrue(snackBarRef)) {
+            snackBarRef.dismiss();
+          }
+          this.renderer.removeClass(this.document.body, 'no-connection');
+        }
+      });
   }
 
   get isBrowser() {
