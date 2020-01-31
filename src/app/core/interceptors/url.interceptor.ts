@@ -12,7 +12,7 @@ export class UrlInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let url = environment.endpointUrl + req.url;
-    if (AppUtils.not(getHeader(req.headers, ECustomHeaders.DEFAULT_URL))) {
+    if (AppUtils.isFalsy(getHeader(req.headers, ECustomHeaders.DEFAULT_URL))) {
       url = req.url;
     }
     return next.handle(req.clone({ url }));

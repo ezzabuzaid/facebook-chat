@@ -30,7 +30,7 @@ export class GenericWriteComponent implements OnInit {
       // TODO: preSubmittion
       this.http
         .configure({
-          DEFAULT_URL: AppUtils.not(AppUtils.isNullorUndefined(this.module.endpoint))
+          DEFAULT_URL: AppUtils.isFalsy(AppUtils.isNullorUndefined(this.module.endpoint))
         })
         .post(this.module.endpoint || this.endpoint, value)
         .subscribe((res) => {

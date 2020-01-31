@@ -46,7 +46,7 @@ export class UserService extends Listener<boolean> {
   }
 
   public get isAuthenticated() {
-    return this.tokenService.isLogged && AppUtils.not(this.tokenService.isExpired);
+    return this.tokenService.isLogged && AppUtils.isFalsy(this.tokenService.isExpired);
   }
 
 }

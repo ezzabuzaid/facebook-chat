@@ -22,7 +22,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         const headers = this.setCustomHeaders(req.headers);
         this.configure(this.defaultSetting);
 
-        if (AppUtils.not(connectivity.isOnline)) {
+        if (AppUtils.isFalsy(connectivity.isOnline)) {
             this.snackbar.open('The internet connection is not active, please check your connection');
             return of();
         }
@@ -31,7 +31,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
             .pipe(
                 map(
                     (response: HttpResponse<any>) => {
-                        const notFullResponse = AppUtils.not(getHeader(headers, ECustomHeaders.FULL_RESPONSE));
+                        const notFullResponse = AppUtils.isFalsy(getHeader(headers, ECustomHeaders.FULL_RESPONSE));
                         const defaultUrl = getHeader(headers, ECustomHeaders.DEFAULT_URL);
 
                         if (response instanceof HttpResponse && defaultUrl && notFullResponse) {

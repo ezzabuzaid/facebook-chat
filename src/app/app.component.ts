@@ -82,13 +82,13 @@ export class AppComponent implements OnInit {
     connectivity.observe
       .subscribe(status => {
         let snackBarRef: MatSnackBarRef<any> = null;
-        if (AppUtils.not(status)) {
+        if (AppUtils.isFalsy(status)) {
           this.renderer.addClass(this.document.body, 'no-connection');
           snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
             duration: 1000 * 1000
           });
         } else {
-          if (AppUtils.isTrue(snackBarRef)) {
+          if (AppUtils.isTruthy(snackBarRef)) {
             snackBarRef.dismiss();
           }
           this.renderer.removeClass(this.document.body, 'no-connection');

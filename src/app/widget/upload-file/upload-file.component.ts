@@ -49,7 +49,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     this.dragOverClass = false;
     const files = [...event.dataTransfer.files];
 
-    if (AppUtils.isTrue(files.length)) {
+    if (AppUtils.isTruthy(files.length)) {
       [...files].forEach((file: File) => {
         this.uploadFile(file);
       });

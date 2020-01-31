@@ -32,7 +32,7 @@ export class GenericReadComponent implements OnInit, OnDestroy {
   fetchData() {
     return this.http
       .configure({
-        DEFAULT_URL: AppUtils.not(AppUtils.isNullorUndefined(this.module.endpoint))
+        DEFAULT_URL: AppUtils.isFalsy(AppUtils.isNullorUndefined(this.module.endpoint))
       })
       .get<any[]>(this.endpoint || this.module.endpoint)
       .pipe(

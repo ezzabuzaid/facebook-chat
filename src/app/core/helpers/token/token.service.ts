@@ -33,7 +33,7 @@ export class TokenService {
   }
 
   setToken(rememberMe: boolean, token: string, refreshToken: any) {
-    if (AppUtils.not(rememberMe)) {
+    if (AppUtils.isFalsy(rememberMe)) {
       // NOTE: this way we can tell that the storage is session
       this.session.set(TOKEN_KEY, 'token');
     }
@@ -59,7 +59,7 @@ export class TokenService {
   }
 
   get isLogged(): boolean {
-    return AppUtils.not(AppUtils.isNullorUndefined(this.token));
+    return AppUtils.isFalsy(AppUtils.isNullorUndefined(this.token));
   }
 
 }

@@ -13,11 +13,6 @@ export class AppUtils {
         return randomString;
     }
 
-
-    static isTrue(value: any) {
-        return !!value;
-    }
-
     static readFile(file: File) {
         return new Observable((observer: Observer<string | ArrayBuffer>) => {
             const reader = new FileReader();
@@ -32,10 +27,6 @@ export class AppUtils {
     static preventBubblingAndCapturing(event: Event) {
         event.preventDefault();
         event.stopPropagation();
-    }
-
-    static equals<T>(...values: T[]) {
-        return values.every((val, i, arr) => JSON.stringify(val) === JSON.stringify(arr[0]));
     }
 
     static mapEnumToValueAnd(enumObject): { title: string, value: any }[] {
@@ -109,14 +100,6 @@ export class AppUtils {
 
     /**
      *
-     * @param value check if the value is Null or Undeifned
-     */
-    static isNullorUndefined(value: any) {
-        return value === null || value === undefined;
-    }
-
-    /**
-     *
      * @param list check if the list has at least an item
      */
     static hasItemWithin(list: any[]) {
@@ -129,7 +112,7 @@ export class AppUtils {
      */
     static convertObjectToQueryParams(obj) {
         return Object.keys(obj).reduce((acc, curr) => {
-            if (this.not(obj[curr])) { return acc; }
+            if (this.isFalsy(obj[curr])) { return acc; }
             return acc += `${curr}=${obj[curr]}&`;
         }, '');
     }
@@ -253,10 +236,25 @@ export class AppUtils {
     /**
      * check if the value is falsy type
      */
-    static not(value: any) {
+    static isFalsy(value: any) {
         return !!!value;
     }
 
+    static isTruthy(value: any) {
+        return !!value;
+    }
+
+    /**
+     *
+     * @param value check if the value is Null or Undeifned
+     */
+    static isNullorUndefined(value: any) {
+        return value === null || value === undefined;
+    }
+
+    static equals<T>(...values: T[]) {
+        return values.every((val, i, arr) => JSON.stringify(val) === JSON.stringify(arr[0]));
+    }
 
 }
 
