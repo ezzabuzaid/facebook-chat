@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
+import { DeviceUUID } from 'device-uuid';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
@@ -17,9 +18,9 @@ export class TeardownInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()));
-        console.log(this.userService);
         if (this.userService.isAuthenticated) {
             headers = headers.set('Authorization', `${this.tokenService.token}`);
+            headers = headers.set('x-device-uuid', `${new DeviceUUID().get()}`);
         }
 
         return next.handle(req.clone({ headers }))

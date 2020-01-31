@@ -9,7 +9,6 @@ import { Validators } from '@angular/forms';
 import { MatCheckbox } from '@angular/material';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
-import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-login',
