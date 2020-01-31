@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { CustomHeaders } from '../http';
 import { MatSnackBar } from '@angular/material';
-import { catchError } from 'rxjs/operators';
+import { catchError, retryWhen, delay, mergeMap } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
 import { DeviceUUID } from 'device-uuid';
@@ -22,10 +22,17 @@ export class TeardownInterceptor implements HttpInterceptor {
             headers = headers.set('Authorization', `${this.tokenService.token}`);
             headers = headers.set('x-device-uuid', `${new DeviceUUID().get()}`);
         }
-
+        let retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(
-                // retry(3),
+                // retryWhen((source) => {
+                // NOTE: this is a special case where retry will depend on the business rule,
+                // so it's vary from application to another
+                //     return source.pipe(
+                //         delay(1000),
+                //         mergeMap((error)=> retryCount > 3 ? throwError(error) : of(error) )
+                //     );
+                // }),
                 catchError((event: HttpErrorResponse) => {
                     if (event instanceof HttpErrorResponse) {
                         switch (event.status) {
