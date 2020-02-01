@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
     this.serviceWorkerUtils.updateAvailable
       .pipe(switchMap((update) => {
         log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
-        return this.snackbar.open('An update is available', 'Activate!').onAction()
+        return this.snackbar.open('An update is available', 'Activate!').onAction();
       }))
       .subscribe((update) => {
         location.reload();

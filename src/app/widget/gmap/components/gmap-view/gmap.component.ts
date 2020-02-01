@@ -4,15 +4,13 @@ import {
   ElementRef,
   Input,
   OnDestroy,
-  Output, EventEmitter,
   ChangeDetectionStrategy,
-  OnChanges, SimpleChanges, forwardRef
+  OnChanges, SimpleChanges,
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil, map, share, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { GoogleMapService } from '../../lib/gmap.service';
-import { GmapModel, Google } from '../../gmap.model';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Google } from '../../gmap.model';
 import { GoogleMap } from '../../lib/gmap.main';
 import { Logger } from '@core/helpers/logger';
 
@@ -46,14 +44,18 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
     // TODO exception if both of position and currentPosition
     log.warn(value);
     if (value) {
-      GoogleMapService.getCurrentLocation(35, 35)
-        .pipe(tap(console.log))
-        .pipe(map(cords => cords.toJSON()))
-        .subscribe(position => {
-          if (!this.latitude || !this.longitude) {
-            this.refreshPosition(position);
-          }
-        });
+      try {
+        GoogleMapService.getCurrentLocation(35, 35)
+          .pipe(tap(console.log))
+          .pipe(map(cords => cords.toJSON()))
+          .subscribe(position => {
+            if (!this.latitude || !this.longitude) {
+              this.refreshPosition(position);
+            }
+          });
+      } catch (error) {
+
+      }
     }
   }
 

@@ -22,7 +22,7 @@ export class TeardownInterceptor implements HttpInterceptor {
             headers = headers.set('Authorization', `${this.tokenService.token}`);
             headers = headers.set('x-device-uuid', `${new DeviceUUID().get()}`);
         }
-        let retryCount = 0;
+        const retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(
                 // retryWhen((source) => {

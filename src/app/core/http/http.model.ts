@@ -28,14 +28,16 @@ export enum ECustomHeaders {
     LOCAL_CACHE = 'LOCAL_CACHE',
     CACHE_CATEGORY = 'CACHE_CATEGORY',
     FULL_RESPONSE = 'FULL_RESPONSE',
-    FORM_PROGRESS = 'FORM_PROGRESS',
+    FORM_PROGRESS_BAR = 'FORM_PROGRESS',
+    PROGRESS_BAR = 'PROGRESS_BAR'
 }
 export class CustomHeaders {
     [ECustomHeaders.DEFAULT_URL] = true;
     [ECustomHeaders.SNACKBAR] = true;
+    [ECustomHeaders.PROGRESS_BAR] = true;
+    [ECustomHeaders.FORM_PROGRESS_BAR] = false;
     [ECustomHeaders.LOCAL_CACHE] = false;
     [ECustomHeaders.FULL_RESPONSE] = false;
-    [ECustomHeaders.FORM_PROGRESS] = false;
     [ECustomHeaders.CACHE_CATEGORY] = 'local_cache';
 }
 

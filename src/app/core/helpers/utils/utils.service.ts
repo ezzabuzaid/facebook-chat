@@ -184,7 +184,6 @@ export class AppUtils {
         return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
     }
 
-    // TODO: Move this function to independnt widget
     static fullScreen() {
         const doc = window.document;
         const docEl = doc.documentElement;
@@ -233,9 +232,6 @@ export class AppUtils {
         return key.split('.').reduce((acc, curr) => (acc || {})[curr], obj);
     }
 
-    /**
-     * check if the value is falsy type
-     */
     static isFalsy(value: any) {
         return !!!value;
     }
@@ -244,10 +240,6 @@ export class AppUtils {
         return !!value;
     }
 
-    /**
-     *
-     * @param value check if the value is Null or Undeifned
-     */
     static isNullorUndefined(value: any) {
         return value === null || value === undefined;
     }
