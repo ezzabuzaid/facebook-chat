@@ -33,9 +33,9 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
 
   @Input() nativeTableClass: string = null;
 
-  @ContentChild(TemplateRef, { static: false }) tableBody;
+  @ContentChild(TemplateRef) tableBody;
 
-  @ContentChild(TableActionsComponent, { read: TableActionsComponent, static: false }) actionsComponent: TableActionsComponent;
+  @ContentChild(TableActionsComponent, { read: TableActionsComponent }) actionsComponent: TableActionsComponent;
   @ViewChildren(TableFilterDirective) tableFilterDirective: QueryList<TableFilterDirective>;
 
   @Input()

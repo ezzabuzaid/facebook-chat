@@ -8,7 +8,7 @@ import { SidebarService } from './sidebar.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  @ViewChild('panel', { static: false }) public drawer: ElementRef<HTMLElement>;
+  @ViewChild('panel') public drawer: ElementRef<HTMLElement>;
   @Input() public name = '';
   private onToggle = new Subject<ISidebarToggle>();
   private _subscribtion = new Subject();

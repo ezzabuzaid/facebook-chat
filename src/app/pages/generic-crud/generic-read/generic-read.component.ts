@@ -5,7 +5,6 @@ import { AppUtils } from '@core/helpers/utils';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { LocalDataSource, } from 'ng2-smart-table';
 import { tap, takeUntil, map, switchMap, filter } from 'rxjs/operators';
 import { GenericCrudModel } from '../generic-crud.model';
 
@@ -17,7 +16,6 @@ import { GenericCrudModel } from '../generic-crud.model';
 export class GenericReadComponent implements OnInit, OnDestroy {
   @Input() public module = null;
   @Input() public endpoint = null;
-  public source = new LocalDataSource();
   @ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator;
 
   private _subscribtion = new Subject();
@@ -38,7 +36,6 @@ export class GenericReadComponent implements OnInit, OnDestroy {
       .pipe(
         tap((response) => {
           this.paginator.length = response.length;
-          this.source.load(response);
         })
       );
   }
