@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { UsersModel } from '@shared/models';
 
 @Component({
   selector: 'app-container',
@@ -7,6 +8,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit {
+
   constructor() { }
 
   ngOnInit() { }

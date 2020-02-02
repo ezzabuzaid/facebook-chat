@@ -1,16 +1,13 @@
-@import 'variables';
-@import 'mixins';
-@import 'functions';
+@import "variables";
+@import "mixins";
+@import "functions";
 
-$navbar-width: map-deep-get($layout_dimensions, 'navbar-width', xLarge);
-$navbar-folded-width: map-deep-get($layout_dimensions, 'navbar-width', folded);
-$navbar-mobile-width: map-deep-get($layout_dimensions, 'navbar-width', small);
-$toolbar-height: map-deep-get($layout_dimensions, 'toolbar-height');
+$navbar-width: map-deep-get($layout_dimensions, "navbar-width", xLarge);
+$navbar-folded-width: map-deep-get($layout_dimensions, "navbar-width", folded);
+$navbar-mobile-width: map-deep-get($layout_dimensions, "navbar-width", small);
+$toolbar-height: map-deep-get($layout_dimensions, "toolbar-height");
 :host {
   app-sidebar {
-    .sidebar-drawer {
-      background-color: #fff;
-    }
     --width: #{$navbar-width};
     &.toggled {
       --width: #{$navbar-folded-width};

@@ -8,11 +8,13 @@ import { SidebarService } from './sidebar.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
+  @HostBinding('class.toggled') public toggled = false;
   @ViewChild('panel') public drawer: ElementRef<HTMLElement>;
   @Input() public name = '';
+
   private onToggle = new Subject<ISidebarToggle>();
   private _subscribtion = new Subject();
-  @HostBinding('class.toggled') public toggled = false;
+
   constructor(
     private sidebarService: SidebarService,
   ) { }

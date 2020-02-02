@@ -1,5 +1,7 @@
-@import 'variables';
-@import 'mixins';
+@import "functions";
+@import "mixins";
+@import "variables";
+@import "~@angular/material/theming";
 
 :host {
   app-toolbar {
@@ -12,5 +14,17 @@
       $key: toolbar-height
     );
     margin-top: calc(#{$height} * 1);
+  }
+  app-sidebar {
+    --width: 230px;
+    [sidebar-drawer] {
+      background-color: get_color_from_platte($mat-gray, 50);
+      mat-list {
+        img {
+          width: 30px !important;
+          height: 30px !important;
+        }
+      }
+    }
   }
 }

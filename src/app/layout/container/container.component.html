@@ -3,7 +3,20 @@
     <main class="flex-fill d-flex flex-column h-100">
       <app-toolbar class="w-100 d-flex justify-content-end align-items-center bg-white mat-elevation-z1"></app-toolbar>
       <section class="position-relative router-container h-100">
-        <router-outlet></router-outlet>
+        <app-sidebar name="chat_bar" class="right">
+          <div sidebar-drawer class="border-left">
+            <mat-list dense>
+              <mat-list-item *ngFor="let user of [1, 2, 3, 4, 5, 6]">
+                <img matListAvatar ngxGravatar email="ezzabuzaid@hotmail.com" fallback="identicon">
+                <p matLine> ezzabuzaid-{{user}} </p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div sidebar-container>
+            <h1>Angular Buildozer</h1>
+            <!-- <router-outlet></router-outlet> -->
+          </div>
+        </app-sidebar>
       </section>
       <app-footer class="p-3"> </app-footer>
     </main>
