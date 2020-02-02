@@ -1,8 +1,5 @@
 // The primary purpose of this file export functions and maps and all other scss utility
-// !don't but mixins here
-
-// @import '~@angular/material/theming';
-// @include mat-core();
+// don't but mixins here
 
 // Author:: ezzabuzaid
 // Date:: 15 / 1 / 2019
@@ -54,7 +51,7 @@
 }
 @function map-deep-get($map, $keys...) {
   @each $key in $keys {
-      $map: map-get($map, $key);
+    $map: map-get($map, $key);
   }
   @return $map;
 }

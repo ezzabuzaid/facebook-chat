@@ -8,7 +8,8 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import * as express from 'express';
 import { join } from 'path';
-
+import { readFileSync } from 'fs';
+import * as domino from 'domino';
 const localStorage = {};
 const sessionStorage = {};
 
@@ -20,6 +21,15 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 const DIST_FOLDER = join(process.cwd(), 'dist/browser');
+
+
+const template = readFileSync(join(DIST_FOLDER, 'index.html')).toString();
+const win = domino.createWindow(template);
+
+global['window'] = win;
+global['navigator'] = win.navigator;
+global['document'] = win.document;
+
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');

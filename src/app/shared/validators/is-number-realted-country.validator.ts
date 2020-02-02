@@ -12,7 +12,7 @@ export function PhoneNumberShouldBeAssociatedWithCountry(id: string): ValidatorF
       if (input) {
          const inst = _window.intlTelInputGlobals.getInstance(input);
          if (inst) {
-            return AppUtils.not(inst.isValidNumber()) ? { not_associated: true } : null;
+            return AppUtils.isFalsy(inst.isValidNumber()) ? { not_associated: true } : null;
          }
       }
       return null;

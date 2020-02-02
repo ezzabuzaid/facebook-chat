@@ -1,7 +1,5 @@
 import { HttpInterceptor, HttpHeaders } from '@angular/common/http';
 
-// HttpClient is declared in a re-exported module, so we have to extend the original module to make it work properly
-// (see https://github.com/Microsoft/TypeScript/issues/13897)
 declare module '@angular/common/http/http' {
 
     // Augment HttpClient with the added configuration methods from HttpService, to allow in-place replacement of
@@ -30,14 +28,16 @@ export enum ECustomHeaders {
     LOCAL_CACHE = 'LOCAL_CACHE',
     CACHE_CATEGORY = 'CACHE_CATEGORY',
     FULL_RESPONSE = 'FULL_RESPONSE',
-    FORM_PROGRESS = 'FORM_PROGRESS',
+    FORM_PROGRESS_BAR = 'FORM_PROGRESS',
+    PROGRESS_BAR = 'PROGRESS_BAR'
 }
 export class CustomHeaders {
     [ECustomHeaders.DEFAULT_URL] = true;
     [ECustomHeaders.SNACKBAR] = true;
+    [ECustomHeaders.PROGRESS_BAR] = true;
+    [ECustomHeaders.FORM_PROGRESS_BAR] = false;
     [ECustomHeaders.LOCAL_CACHE] = false;
     [ECustomHeaders.FULL_RESPONSE] = false;
-    [ECustomHeaders.FORM_PROGRESS] = false;
     [ECustomHeaders.CACHE_CATEGORY] = 'local_cache';
 }
 

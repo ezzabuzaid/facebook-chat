@@ -59,7 +59,7 @@ export interface ISetting<T> {
     rowClassFunction?: (row: { data: T }) => string;
 }
 export function ngTableSetting<T>(setting: ISetting<T>) {
-    return {
+    const config = {
         mode: 'external',
         actions: {
             add: true,
@@ -83,6 +83,7 @@ export function ngTableSetting<T>(setting: ISetting<T>) {
         },
         ...setting
     } as ISetting<T>;
+    return config;
 }
 
 export function listFilter({ placeholder = 'Select', list = [{ title: '', value: null }] }) {

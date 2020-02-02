@@ -1,4 +1,4 @@
-@import "functions";
+@import 'functions';
 @mixin navbar_item($theme) {
   app-navbar-item {
     $color: #000;

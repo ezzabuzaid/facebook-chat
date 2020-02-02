@@ -11,7 +11,6 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Constants } from '../constants';
-import { TokenService } from '@core/helpers/token';
 import { UserService } from '@shared/user';
 
 @Injectable({
@@ -43,7 +42,7 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   private authenticate() {
     if (!this.userService.isAuthenticated) {
       this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
-      return false;
+      return true;
     }
     return true;
   }

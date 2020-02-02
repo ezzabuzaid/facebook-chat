@@ -15,6 +15,7 @@ import { HttpService } from '@core/http';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { StaticPagesModule } from './pages/static/static-pages.module';
 import { PopupModule } from '@widget/popup';
+import { ProgressBarModule } from '@widget/progress-bar';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { PopupModule } from '@widget/popup';
     LayoutModule,
     PopupModule,
     StaticPagesModule,
+    ProgressBarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

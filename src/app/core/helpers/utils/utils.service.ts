@@ -1,8 +1,32 @@
-import { Observable, of, EMPTY, throwError } from 'rxjs';
+import { Observable, of, EMPTY, throwError, Observer } from 'rxjs';
 export class AppUtils {
 
-    static equals<T>(...values: T[]) {
-        return values.every((val, i, arr) => val === arr[0]);
+    static generateAlphabeticString(stringLength = 5) {
+        let randomString = '';
+        let randomAscii: number;
+        const asciiLow = 65;
+        const asciiHigh = 90;
+        for (let i = 0; i < stringLength; i++) {
+            randomAscii = Math.floor((Math.random() * (asciiHigh - asciiLow)) + asciiLow);
+            randomString += String.fromCharCode(randomAscii);
+        }
+        return randomString;
+    }
+
+    static readFile(file: File) {
+        return new Observable((observer: Observer<string | ArrayBuffer>) => {
+            const reader = new FileReader();
+            reader.addEventListener('abort', (error) => observer.error(error));
+            reader.addEventListener('error', (error) => observer.error(error));
+            reader.addEventListener('progress', console.log);
+            reader.addEventListener('loadend', (e) => observer.next(reader.result));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    static preventBubblingAndCapturing(event: Event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
 
     static mapEnumToValueAnd(enumObject): { title: string, value: any }[] {
@@ -76,14 +100,6 @@ export class AppUtils {
 
     /**
      *
-     * @param value check if the value is Null or Undeifned
-     */
-    static isNullorUndefined(value: any) {
-        return value === null || value === undefined;
-    }
-
-    /**
-     *
      * @param list check if the list has at least an item
      */
     static hasItemWithin(list: any[]) {
@@ -96,7 +112,7 @@ export class AppUtils {
      */
     static convertObjectToQueryParams(obj) {
         return Object.keys(obj).reduce((acc, curr) => {
-            if (this.not(obj[curr])) { return acc; }
+            if (this.isFalsy(obj[curr])) { return acc; }
             return acc += `${curr}=${obj[curr]}&`;
         }, '');
     }
@@ -168,7 +184,6 @@ export class AppUtils {
         return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
     }
 
-    // TODO: Move this function to independnt widget
     static fullScreen() {
         const doc = window.document;
         const docEl = doc.documentElement;
@@ -217,13 +232,21 @@ export class AppUtils {
         return key.split('.').reduce((acc, curr) => (acc || {})[curr], obj);
     }
 
-    /**
-     * check if the value is falsy type
-     */
-    static not(value: any) {
+    static isFalsy(value: any) {
         return !!!value;
     }
 
+    static isTruthy(value: any) {
+        return !!value;
+    }
+
+    static isNullorUndefined(value: any) {
+        return value === null || value === undefined;
+    }
+
+    static equals<T>(...values: T[]) {
+        return values.every((val, i, arr) => JSON.stringify(val) === JSON.stringify(arr[0]));
+    }
 
 }
 

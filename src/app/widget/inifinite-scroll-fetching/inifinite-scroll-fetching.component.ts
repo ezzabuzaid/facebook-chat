@@ -18,6 +18,7 @@ export class InifiniteScrollFetchingComponent implements OnInit {
   @Input() public enable = true;
   @Input() public fetchOnInit = true;
   @Input('query') public lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
+
   @Input() public direction: 'up' | 'down' = 'down';
 
   constructor() { }

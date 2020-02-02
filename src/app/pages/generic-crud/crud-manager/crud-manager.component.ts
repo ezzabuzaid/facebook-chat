@@ -40,7 +40,7 @@ export class CrudManagerComponent implements OnInit {
         console.log(this.modules, moduleName);
         this.operation = operation;
         this.currentModule = this.modules.find(module => module.name === moduleName);
-        if (AppUtils.not(this.currentModule)) {
+        if (AppUtils.isFalsy(this.currentModule)) {
           // this.router.navigateByUrl(Constants.Routing.NOT_FOUND.withSlash);
         }
       });

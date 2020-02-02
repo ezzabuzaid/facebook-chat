@@ -1,0 +1,25 @@
+:host {
+  position: fixed;
+  height: 400px;
+  width: 300px;
+  bottom: 0;
+  textarea.mat-input-element.cdk-textarea-autosize {
+    box-sizing: content-box;
+  }
+  img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  $right-top-radius: 35px;
+  mat-card {
+    border-top-right-radius: $right-top-radius;
+    mat-card-header {
+      border-top-right-radius: $right-top-radius;
+    }
+    mat-card-content {
+      textarea {
+        font-size: 14px;
+      }
+    }
+  }
+}

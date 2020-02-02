@@ -24,10 +24,11 @@ export class ServiceWorkerUtils {
       );
     const $interval = interval(hour * 60 * 60);
     log.debug('will check every', hour * 60 * 60);
-    concat($appIsStable, $interval).pipe(mergeMap((data) => {
-      log.debug('this.updates.checkForUpdate => ', data);
-      return this.updates.checkForUpdate();
-    }));
+    concat($appIsStable, $interval)
+      .pipe(mergeMap((data) => {
+        log.debug('this.updates.checkForUpdate => ', data);
+        return this.updates.checkForUpdate();
+      }));
   }
 
 }

@@ -1,7 +1,7 @@
 import { Injectable, NgModule, Pipe, PipeTransform } from '@angular/core';
 import { TranslateLoader, TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
-import { Language } from '@core/helpers/language';
+import { ELanguage } from '@core/helpers/language';
 
 // https://github.com/ngx-translate/example/blob/master/src/app/app.component.spec.ts
 
@@ -9,8 +9,8 @@ import * as TRANSLATIONS_EN from '../../assets/i18n/en.json';
 import * as TRANSLATIONS_AR from '../../assets/i18n/ar.json';
 
 export class FakeLoader implements TranslateLoader {
-    getTranslation(lang: Language): Observable<any> {
-        return of(lang === Language.AR ? TRANSLATIONS_AR : TRANSLATIONS_EN);
+    getTranslation(lang: ELanguage): Observable<any> {
+        return of(lang === ELanguage.AR ? TRANSLATIONS_AR : TRANSLATIONS_EN);
     }
 }
 

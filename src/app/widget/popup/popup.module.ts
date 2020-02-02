@@ -6,6 +6,7 @@ import { PromptComponent } from './prompt/prompt.component';
 import { MaterialModule } from '@shared/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { PopupManager } from './popup.manager';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,9 @@ import { TranslateModule } from '@ngx-translate/core';
     AlertComponent,
     ConfirmComponent,
     PromptComponent,
+  ],
+  providers: [
+    PopupManager
   ]
 })
 export class PopupModule { }

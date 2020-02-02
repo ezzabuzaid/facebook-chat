@@ -3,7 +3,7 @@
 @import 'variables';
 @import 'layout/layout.theme';
 @import 'pages/portal/portal.theme';
-@import 'widget/upload-picture/upload-picture.theme';
+@import 'widget/upload-file/upload-file.theme';
 
 @include mat-core();
 
@@ -12,7 +12,7 @@
   @include theme_classes($theme);
   @include layout_theme($theme);
   @include portal_theme($theme);
-  @include upload_picture($theme);
+  @include upload_file($theme);
 }
 
 .default-theme {

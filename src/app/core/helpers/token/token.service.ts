@@ -16,12 +16,12 @@ const REFRESH_TOKEN_KEY = Constants.Application.REFRESH_TOKEN_KEY;
 export class TokenService {
 
   private get storage() {
-    return AppUtils.isNullorUndefined(this.sessionStorage.get(TOKEN_KEY)) ? this.localStorage : this.sessionStorage;
+    return AppUtils.isNullorUndefined(this.session.get(TOKEN_KEY)) ? this.local : this.session;
   }
 
   constructor(
-    private localStorage: LocalStorage,
-    private sessionStorage: SessionStorage,
+    private local: LocalStorage,
+    private session: SessionStorage,
   ) { }
 
   get token() {
@@ -33,9 +33,9 @@ export class TokenService {
   }
 
   setToken(rememberMe: boolean, token: string, refreshToken: any) {
-    if (AppUtils.not(rememberMe)) {
+    if (AppUtils.isFalsy(rememberMe)) {
       // NOTE: this way we can tell that the storage is session
-      this.sessionStorage.set(TOKEN_KEY, 'token');
+      this.session.set(TOKEN_KEY, 'token');
     }
     this.storage.set(REFRESH_TOKEN_KEY, refreshToken);
     this.storage.set(TOKEN_KEY, token);
@@ -59,7 +59,7 @@ export class TokenService {
   }
 
   get isLogged(): boolean {
-    return AppUtils.not(AppUtils.isNullorUndefined(this.token));
+    return AppUtils.isFalsy(AppUtils.isNullorUndefined(this.token));
   }
 
 }

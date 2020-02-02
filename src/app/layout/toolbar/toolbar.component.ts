@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
-import { LanguageService, Language } from '@core/helpers/language';
+import { LanguageService, ELanguage } from '@core/helpers/language';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
@@ -15,17 +15,17 @@ import { Constants } from '@core/constants';
 export class ToolbarComponent implements OnInit {
   public user = this.tokenService.decodedToken;
   routes = Constants.Routing;
+  languageEnum = ELanguage;
   constructor(
     private languageService: LanguageService,
     private sidebarService: SidebarService,
     private tokenService: TokenService,
-    private router: Router,
     private userService: UserService
   ) { }
 
   ngOnInit() { }
 
-  changeLanguage(language: Language) {
+  changeLanguage(language: ELanguage) {
     this.languageService.changeLanguage(language);
   }
 

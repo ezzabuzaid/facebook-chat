@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { IConfirmPopup } from '../popup.service';
+import { IConfirmPopup } from '../popup.manager';
 
 @Component({
   selector: 'app-confirm',
@@ -9,8 +9,9 @@ import { IConfirmPopup } from '../popup.service';
 })
 export class ConfirmComponent implements OnInit {
   result = null;
+  public data: IConfirmPopup;
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: IConfirmPopup,
     public dialogRef: MatDialogRef<ConfirmComponent>,
   ) { }
 
