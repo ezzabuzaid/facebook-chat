@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
-import { environment } from '@environments/environment';
 import { DOCUMENT } from '@angular/common';
 import { Constants } from '@core/constants';
 import { LocalStorage } from '@ezzabuzaid/document-storage';
@@ -16,18 +15,21 @@ export enum ELanguage {
   AR = 'ar'
 }
 
-export interface LanguageChange {
-  lang: ELanguage;
-  dir: Direction;
+export class LanguageChange {
+  constructor(
+    public lang: ELanguage,
+    public dir: Direction
+  ) { }
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguageService {
-  private directionSubject = new Subject<LanguageChange>();
-  private supportedLanguage = environment.supportedLanguages;
-  private defaultLanguage = environment.defaultLanguage as ELanguage;
+  private directionChange = new Subject<LanguageChange>();
+  private supportedLanguage: ELanguage[] = [ELanguage.EN, ELanguage.AR];
+  private defaultLanguage: ELanguage = ELanguage.EN;
+
   constructor(
     private translateService: TranslateService,
     private localStorage: LocalStorage,
@@ -51,13 +53,13 @@ export class LanguageService {
     this.translateService.use(language);
     this.document.dir = this.direction;
     this.document.body.dir = this.direction;
-    const returnValue = { dir: this.direction, lang: language };
-    this.directionSubject.next(returnValue);
-    return returnValue;
+    const languageChange = new LanguageChange(language, this.direction);
+    this.directionChange.next(languageChange);
+    return languageChange;
   }
 
   onChange(): Observable<LanguageChange> {
-    return this.directionSubject.asObservable();
+    return this.directionChange.asObservable();
   }
 
   set language(language: ELanguage) {
@@ -65,7 +67,7 @@ export class LanguageService {
   }
 
   get language() {
-    return (this.localStorage.get(Constants.Application.LANGUAGE_KEY) || this.defaultLanguage) as ELanguage;
+    return this.localStorage.get<ELanguage>(Constants.Application.LANGUAGE_KEY) || this.defaultLanguage;
   }
 
   get direction(): Direction {

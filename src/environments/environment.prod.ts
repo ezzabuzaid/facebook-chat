@@ -1,8 +1,6 @@
 export const environment = {
   production: true,
-  defaultLanguage: 'en',
-  supportedLanguages: ['ar', 'en'],
-  endpointUrl: '',
+  endpointUrl: 'https://node-buildozer.herokuapp.com/',
   firebase: {
     apiKey: 'AIzaSyBZtOQcwlZZYu7IEmuDnS2i_ziyVa2a5bo',
     authDomain: 'chatbase-ebaa0.firebaseapp.com',
