@@ -20,6 +20,7 @@ import { AppShellLoaderModule } from '@widget/app-shell-loader';
 import { PopupModule } from '@widget/popup';
 
 import { GravatarModule } from 'ngx-gravatar';
+import { ChatCardModule } from '@partials/chat-card';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { GravatarModule } from 'ngx-gravatar';
     DirectivesModule,
     AppShellLoaderModule,
     GravatarModule,
-    PopupModule
+    PopupModule,
+    ChatCardModule
   ],
   declarations: [
     ToolbarComponent,

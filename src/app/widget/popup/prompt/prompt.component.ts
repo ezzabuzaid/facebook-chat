@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { IPromptPopup } from '../popup.service';
+import { Component, OnInit } from '@angular/core';
+import { IPromptPopup } from '../popup.manager';
 
 @Component({
   selector: 'app-prompt',
@@ -11,7 +10,6 @@ export class PromptComponent implements OnInit {
   public result = '';
   public data: IPromptPopup = null;
   constructor(
-    // @Inject(MAT_DIALOG_DATA) public data: IPromptPopup
   ) { }
 
   ngOnInit() { }

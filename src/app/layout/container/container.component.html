@@ -6,7 +6,7 @@
         <app-sidebar name="chat_bar" class="right">
           <div sidebar-drawer class="border-left">
             <mat-nav-list dense>
-              <mat-list-item *ngFor="let user of ($users | async)" (click)="openPrompt()">
+              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
                 <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
                 <p matLine> {{user.username}} </p>
               </mat-list-item>

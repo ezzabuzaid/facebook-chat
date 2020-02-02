@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UsersModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { PopupService } from '@widget/popup';
+import { ChatCardManager } from '@partials/chat-card';
+import { map } from 'rxjs/operators';
+import { TokenService } from '@core/helpers/token';
 
 @Component({
   selector: 'app-container',
@@ -10,11 +12,13 @@ import { PopupService } from '@widget/popup';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit {
-  public $users = this.usersService.getUsers();
+  public $users = this.usersService.getUsers()
+    .pipe(map(list => list.filter(user => user._id !== this.tokenService.decodedToken.id)));
 
   constructor(
     private usersService: UsersService,
-    private popupService: PopupService
+    private chatCardManager: ChatCardManager,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() { }
@@ -27,16 +31,8 @@ export class ContainerComponent implements OnInit {
     return outlet && outlet.activatedRouteData.state;
   }
 
-  openPrompt(user: UsersModel.IUser) {
-    this.popupService.prompt({
-      data: {
-        title: 'Send message'
-      }
-    })
-      .afterClosed()
-      .subscribe((result) => {
-        console.log('Result => ', result);
-      });
+  openChatCard(user: UsersModel.IUser) {
+    this.chatCardManager.createComponent(user);
   }
 
 }

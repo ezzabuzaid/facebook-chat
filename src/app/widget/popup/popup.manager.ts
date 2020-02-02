@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from './alert/alert.component';
 import { PromptComponent } from './prompt/prompt.component';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class PopupService {
+@Injectable()
+export class PopupManager {
   private defaultConfig: MatDialogConfig<any> = { width: '300px' };
   constructor(
     private dialog: MatDialog
