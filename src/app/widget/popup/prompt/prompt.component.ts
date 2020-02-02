@@ -8,12 +8,12 @@ import { IPromptPopup } from '../popup.service';
   styleUrls: ['./prompt.component.scss']
 })
 export class PromptComponent implements OnInit {
-  result = '';
+  public result = '';
+  public data: IPromptPopup = null;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: IPromptPopup
+    // @Inject(MAT_DIALOG_DATA) public data: IPromptPopup
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

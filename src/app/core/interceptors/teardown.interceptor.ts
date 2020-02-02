@@ -20,8 +20,8 @@ export class TeardownInterceptor implements HttpInterceptor {
         let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()));
         if (this.userService.isAuthenticated) {
             headers = headers.set('Authorization', `${this.tokenService.token}`);
-            headers = headers.set('x-device-uuid', `${new DeviceUUID().get()}`);
         }
+        headers = headers.set('x-device-uuid', `${new DeviceUUID().get()}`);
         const retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(

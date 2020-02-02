@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UsersModel } from '@shared/models';
+import { UsersService } from '@shared/services/users';
+import { PopupService } from '@widget/popup';
 
 @Component({
   selector: 'app-container',
@@ -8,8 +10,12 @@ import { UsersModel } from '@shared/models';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit {
+  public $users = this.usersService.getUsers();
 
-  constructor() { }
+  constructor(
+    private usersService: UsersService,
+    private popupService: PopupService
+  ) { }
 
   ngOnInit() { }
 
@@ -20,4 +26,17 @@ export class ContainerComponent implements OnInit {
   getState(outlet) {
     return outlet && outlet.activatedRouteData.state;
   }
+
+  openPrompt(user: UsersModel.IUser) {
+    this.popupService.prompt({
+      data: {
+        title: 'Send message'
+      }
+    })
+      .afterClosed()
+      .subscribe((result) => {
+        console.log('Result => ', result);
+      });
+  }
+
 }

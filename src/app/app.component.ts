@@ -11,6 +11,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 import { switchMap } from 'rxjs/operators';
 import { connectivity } from '@shared/common';
 import { AppUtils } from '@core/helpers/utils';
+import * as io from 'socket.io-client';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
@@ -94,6 +95,33 @@ export class AppComponent implements OnInit {
           this.renderer.removeClass(this.document.body, 'no-connection');
         }
       });
+    // let message = {};
+    // let room = {};
+    // var socket = io(environment.serverOrigin);
+    // const eventName = (sender, recipient) => message.sender_id + message.recipient_id;
+    // socket.on('connect', () => {
+    //   console.log('connected');
+    //   socket.on('activated', (data) => {
+    //     room = data;
+    //     message = {
+    //       ...room,
+    //       message: `Hello! From ${room.sender_id}`
+    //     };
+    //     console.log(room);
+    //   });
+
+    //   socket.on('Message', (message) => {
+    //     console.log('message => ', message);
+    //   });
+    // });
+
+    // function sendMessage() {
+    //   socket.emit('JoinRoom', room);
+
+    //   socket.emit('SendMessage', room, () => {
+    //     socket.emit(eventName(room.sender_id, room.recipient_id), message);
+    //   });
+    // }
   }
 
   get isBrowser() {

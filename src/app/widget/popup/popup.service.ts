@@ -1,9 +1,8 @@
-import { Injectable, Type, ComponentRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AlertComponent } from './alert/alert.component';
 import { PromptComponent } from './prompt/prompt.component';
 import { ConfirmComponent } from './confirm/confirm.component';
-import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,7 @@ export class PopupService {
 
   prompt(config: MatDialogConfig<PopupData> = {}) {
     const componentRef = this.dialog.open<PromptComponent, PopupData, boolean>(PromptComponent, this.populateDialogConfig(config));
+    componentRef.componentInstance.data = config.data;
     return componentRef;
   }
 
@@ -34,8 +34,8 @@ export class PopupService {
 }
 
 export interface PopupData {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 
@@ -45,6 +45,5 @@ export interface IConfirmPopup extends PopupData {
 }
 
 export interface IPromptPopup extends PopupData {
-  close?: string;
   confirm?: string;
 }

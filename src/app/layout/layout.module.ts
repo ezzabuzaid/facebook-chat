@@ -16,9 +16,10 @@ import { NavbarHeaderComponent } from './components/navbar-header/navbar-header.
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DirectivesModule } from '@shared/directives';
-import { AppShellLoaderModule } from 'app/widget/app-shell-loader/app-shell-loader.module';
-import { GravatarModule } from 'ngx-gravatar';
+import { AppShellLoaderModule } from '@widget/app-shell-loader';
+import { PopupModule } from '@widget/popup';
 
+import { GravatarModule } from 'ngx-gravatar';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { GravatarModule } from 'ngx-gravatar';
     ScrollingModule,
     DirectivesModule,
     AppShellLoaderModule,
-    GravatarModule
+    GravatarModule,
+    PopupModule
   ],
   declarations: [
     ToolbarComponent,
