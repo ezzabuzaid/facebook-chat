@@ -119,7 +119,7 @@ describe('LoginComponent', () => {
         }));
 
         it('should redirect to app entry page after successed login', fakeAsync(() => {
-            const navigateSpy = spyOn(TestBed.get(Router), 'navigateByUrl');
+            const navigateSpy = spyOn(getService<Router>(Router), 'navigateByUrl');
             spyUserService.login.and.returnValue(asyncData({ token: 'fakeJWTToken' } as any));
             component.getControl('username').setValue(fakeCreds.username);
             component.getControl('password').setValue(fakeCreds.password);

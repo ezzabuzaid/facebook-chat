@@ -16,5 +16,5 @@ export function asyncError<T>(errorObject: any) {
 }
 
 export function getService<T>(service): T {
-    return TestBed.get(service);
+    return TestBed.inject(service);
 }
