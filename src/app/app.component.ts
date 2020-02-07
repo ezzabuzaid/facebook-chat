@@ -33,6 +33,50 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
+
+    // STUB if requestSubscription reject the subscribeToPushNotification result must be false
+    // STUB if requestSubscription reject the pushNotificationService.subscribe must not be called
+
+    // STUB if requestSubscription success the subscribeToPushNotification result must be true
+    // STUB if requestSubscription success the pushNotificationService.subscribe must be called
+
+    // const subscribeToPushNotification = () => from(this.serviceWorkerPushService.requestSubscription({ serverPublicKey: environment.vapidPublicKey }))
+    //     .pipe(
+    //         tap((subscription) => {
+    //             console.log('Subscription => ', subscription);
+    //         }),
+    //         switchMap((subscription) => this.pushNotificationService.subscribe(subscription)),
+    //         mapTo(true),
+    //         catchError(() => of(false)),
+    //     );
+
+    // STUB if requestSubscription reject the subscribeToPushNotification result must be false
+    // STUB if requestSubscription reject the pushNotificationService.subscribe must not be called
+
+    // STUB if requestSubscription success the subscribeToPushNotification result must be true
+    // STUB if requestSubscription success the pushNotificationService.subscribe must be called
+
+    // this.serviceWorkerPushService.subscription
+    //     .pipe(
+    //         takeUntil(this._unsubscribeAll),
+    //         switchMap((subscription) => {
+    //             console.log('Subscription => ', subscription);
+    //             return tryOrComplete<any>(
+    //                 AppplicationUtils.isNullorUndefined(subscription),
+    //                 () => subscribeToPushNotification(),
+    //                 true
+    //             );
+    //         }),
+    //         tap((notificationEnabled) => console.log('notificationEnabled', notificationEnabled)),
+    //         filter((notificationEnabled) => notificationEnabled),
+    //         switchMap(() => this.serviceWorkerPushService.messages)
+    //     )
+    //     .subscribe((message) => {
+    //         console.log('Message from SWpush => ', message);
+    //         // the service worker should focus the opened if it was in foreground
+    //         // after that sh
+    //     });
+
     if (this.isBrowser) {
       this.languageService.populate(ELanguage.EN);
       // TODO PWA Checks if install popup should be appear
