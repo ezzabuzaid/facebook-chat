@@ -23,7 +23,7 @@ export function asyncError<T>(errorObject: any) {
 }
 
 export function getService<T>(token): T {
-    return TestBed.get(token);
+    return TestBed.inject(token);
 }
 
 export function apiUrl(path: string) {

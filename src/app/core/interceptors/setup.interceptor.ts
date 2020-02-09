@@ -5,7 +5,7 @@ import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECu
 import { map, switchMap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { connectivity } from '@shared/common';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {

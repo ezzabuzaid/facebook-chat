@@ -1,8 +1,7 @@
 import { Component, OnInit, forwardRef, Input, HostListener, HostBinding } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Observer } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UploadFileService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 

@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { UsersModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
 import { ChatCardManager, GroupChatCreateComponent } from '@partials/chat-card';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-container',

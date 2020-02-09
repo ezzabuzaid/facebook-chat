@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
-import { MatSnackBarRef, MatSnackBar } from '@angular/material';
+import { MatSnackBarRef, MatSnackBar } from '@angular/material/snack-bar';
 import { ECustomHeaders, getHeader, HttpMethod } from '../http/http.model';
 import { FormWidgetManager } from '@partials/form';
 import { ProgressBarManager } from '@widget/progress-bar';
