@@ -5,12 +5,31 @@
       <section class="position-relative router-container h-100">
         <app-sidebar name="chat_bar" class="right">
           <div sidebar-drawer class="border-left">
-            <mat-nav-list dense>
-              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
-                <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
-                <p matLine> {{user.username}} </p>
-              </mat-list-item>
-            </mat-nav-list>
+            <!-- <mat-card-header></mat-card-header> -->
+            <mat-card-content>
+              <mat-nav-list dense>
+                <div class="px-3">
+                  <p>Users</p>
+                </div>
+                <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
+                  <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
+                  <p matLine> {{user.username}} </p>
+                </mat-list-item>
+                <div class="px-3">
+                  <p>Groups</p>
+                </div>
+                <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
+                  <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
+                  <p matLine> {{user.username}} </p>
+                </mat-list-item>
+              </mat-nav-list>
+            </mat-card-content>
+            <mat-divider></mat-divider>
+            <mat-card-footer>
+              <button mat-button (click)="openCreateGroup()">
+                <mat-icon class="text-muted">group_add</mat-icon>
+              </button>
+            </mat-card-footer>
           </div>
           <div sidebar-container>
             <h1>Angular Buildozer</h1>
@@ -18,7 +37,7 @@
           </div>
         </app-sidebar>
       </section>
-      <app-footer class="p-3"> </app-footer>
+      <!-- <app-footer class="p-3"> </app-footer> -->
     </main>
   </app-content>
 </app-navbar>

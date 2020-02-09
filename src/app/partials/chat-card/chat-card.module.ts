@@ -1,18 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChatCardComponent } from './chat-card.component';
 import { MaterialModule } from '@shared/common';
 import { GravatarModule } from 'ngx-gravatar';
 import { ChatCardManager } from './chat-card.manager';
+import { UserCardComponent } from './user-card/user-card.component';
+import { GroupCharCardComponent } from './group-chat-card/group-chat-card.component';
+import { GroupChatCreateComponent } from './group-chat-create/group-chat-create.component';
+import { FormModule } from '@partials/form';
 
 
 @NgModule({
-  declarations: [ChatCardComponent],
-  exports: [ChatCardComponent],
+  declarations: [
+    UserCardComponent,
+    GroupCharCardComponent,
+    GroupChatCreateComponent
+  ],
+  exports: [
+    UserCardComponent,
+    GroupCharCardComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,
-    GravatarModule
+    GravatarModule,
+    FormModule
   ],
   providers: [
     ChatCardManager

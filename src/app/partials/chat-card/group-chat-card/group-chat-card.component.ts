@@ -18,11 +18,11 @@ class Message {
 }
 
 @Component({
-  selector: 'app-chat-card',
-  templateUrl: './chat-card.component.html',
-  styleUrls: ['./chat-card.component.scss']
+  selector: 'app-group-chat-card',
+  templateUrl: './group-chat-card.component.html',
+  styleUrls: ['./group-chat-card.component.scss']
 })
-export class ChatCardComponent implements OnInit {
+export class GroupCharCardComponent implements OnInit {
   public id: string;
   public user: UsersModel.IUser;
   public socket = io(environment.serverOrigin);

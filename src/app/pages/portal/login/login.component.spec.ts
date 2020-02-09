@@ -108,12 +108,12 @@ describe('LoginComponent', () => {
     });
 
     describe('[INTEGRATE]', () => {
-        it('should call login method in portal service after submitting the form', fakeAsync(() => {
+        it('should call login method in userService after submitting the form', fakeAsync(() => {
             const userService = getService<UserService>(UserService);
             component.getControl('username').setValue(fakeCreds.username);
             component.getControl('password').setValue(fakeCreds.password);
             fixture.detectChanges();
-            byQuerySelector('#submitButton').click();
+            byQuerySelector('#submitButtons').click();
             expect(userService.login).toHaveBeenCalledTimes(1);
             expect(userService.login).toHaveBeenCalledWith(component.form.value);
         }));

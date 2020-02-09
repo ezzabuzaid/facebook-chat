@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UsersModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { ChatCardManager } from '@partials/chat-card';
-import { map } from 'rxjs/operators';
-import { TokenService } from '@core/helpers/token';
+import { ChatCardManager, GroupChatCreateComponent } from '@partials/chat-card';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-container',
@@ -12,13 +11,12 @@ import { TokenService } from '@core/helpers/token';
   styleUrls: ['./container.component.scss'],
 })
 export class ContainerComponent implements OnInit {
-  public $users = this.usersService.getUsers()
-    .pipe(map(list => list.filter(user => user._id !== this.tokenService.decodedToken.id)));
+  public $users = this.usersService.getUsersWithoutMe();
 
   constructor(
     private usersService: UsersService,
     private chatCardManager: ChatCardManager,
-    private tokenService: TokenService
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() { }
@@ -32,7 +30,15 @@ export class ContainerComponent implements OnInit {
   }
 
   openChatCard(user: UsersModel.IUser) {
-    this.chatCardManager.createComponent(user);
+    this.chatCardManager.open(user);
+  }
+
+  openGroupChatCard(user: UsersModel.IUser) {
+    this.chatCardManager.open(user);
+  }
+
+  openCreateGroup() {
+    this.dialog.open(GroupChatCreateComponent);
   }
 
 }

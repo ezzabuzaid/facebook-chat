@@ -13,14 +13,14 @@
             </ng-container>
         </div>
         <div>
-            b<mat-divider></mat-divider>
+            <mat-divider></mat-divider>
             <mat-form-field appearance="none">
                 <textarea placeholder="Write a message" matInput #messageInput cdkTextareaAutosize
                     #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
             </mat-form-field>
         </div>
     </mat-card-content>
-    <mat-card-footer class="m-0">
+    <mat-card-footer class="m-0 d-flex align-items-center">
         <button mat-icon-button>
             <mat-icon class="text-muted">more_vert</mat-icon>
         </button>
@@ -30,8 +30,8 @@
         <button mat-icon-button>
             <mat-icon class="text-muted">emoji_emotions</mat-icon>
         </button>
-        <button mat-icon-button (click)="sendMessage(messageInput?.value)">
-            <mat-icon>send</mat-icon>
+        <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput?.value)">
+            <mat-icon class="text-muted">send</mat-icon>
         </button>
     </mat-card-footer>
 </mat-card>
