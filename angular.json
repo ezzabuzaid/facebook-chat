@@ -201,7 +201,7 @@
             "browserTarget": "buildozer:build:production",
             "serverTarget": "buildozer:server:production",
             "routes": [
-              "/"
+              "/portal"
             ]
           },
           "configurations": {

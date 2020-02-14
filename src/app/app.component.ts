@@ -78,15 +78,6 @@ export class AppComponent implements OnInit {
     //         // after that sh
     //     });
 
-    if (this.isBrowser) {
-      this.languageService.populate(ELanguage.EN);
-      // TODO PWA Checks if install popup should be appear
-      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-      if (isIos() && !isInStandaloneMode()) {
-        // Popup function!!
-      }
-    }
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({
       title: 'Angular Buildozer Boilerplate',
@@ -102,6 +93,31 @@ export class AppComponent implements OnInit {
       Logger.enableProductionMode();
     }
 
+    if (this.isBrowser) {
+      this.languageService.populate(ELanguage.EN);
+      // TODO PWA Checks if install popup should be appear
+      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      if (isIos() && !isInStandaloneMode()) {
+        // Popup function!!
+      }
+
+      connectivity.observe
+        .subscribe(status => {
+          let snackBarRef: MatSnackBarRef<any> = null;
+          if (AppUtils.isFalsy(status)) {
+            this.renderer.addClass(this.document.body, 'no-connection');
+            snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
+              duration: 1000 * 1000
+            });
+          } else {
+            if (AppUtils.isTruthy(snackBarRef)) {
+              snackBarRef.dismiss();
+            }
+            this.renderer.removeClass(this.document.body, 'no-connection');
+          }
+        });
+    }
     this.router.events.forEach((event: RouterEvent) => {
       if (this.isBrowser && environment.production && event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);
@@ -124,21 +140,6 @@ export class AppComponent implements OnInit {
         this.snackbar.open('The application has been updated');
       });
 
-    connectivity.observe
-      .subscribe(status => {
-        let snackBarRef: MatSnackBarRef<any> = null;
-        if (AppUtils.isFalsy(status)) {
-          this.renderer.addClass(this.document.body, 'no-connection');
-          snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
-            duration: 1000 * 1000
-          });
-        } else {
-          if (AppUtils.isTruthy(snackBarRef)) {
-            snackBarRef.dismiss();
-          }
-          this.renderer.removeClass(this.document.body, 'no-connection');
-        }
-      });
   }
 
   get isBrowser() {

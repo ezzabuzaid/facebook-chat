@@ -1,7 +1,6 @@
 {
   "scripts": {
-    "deploy": "ng build --prod --base-href 'https://ezzabuzaid.github.io/angular-buildozer/'",
-    "test:coverage": "rimraf coverage && npm run test -- --code-coverage",
+    "test:coverage": "rimraf coverage && npm run test --code-coverage",
     "pre-e2e": "webdriver-manager update --standalone false --gecko false",
     "docs": "compodoc -p src/tsconfig.app.json -d docs",
     "docs:serve": "compodoc -p src/tsconfig.app.json -d docs -s",
@@ -11,7 +10,6 @@
     "ng": "ng",
     "e2e": "ng e2e",
     "start": "ng serve",
-    "start:ssr": "node dist/server",
     "test": "clear && ng test --browsers=ChromeHeadless",
     "lint": "npm run lint:ts && npm run lint:style",
     "lint:ts": "ng lint --fix",
@@ -19,8 +17,6 @@
     "build": "ng build --prod",
     "build:stats": "ng build --stats-json",
     "build:app-shell": "ng run buildozer:app-shell:production",
-    "compile:server_bak": "webpack --config webpack.server.config.js --progress --colors",
-    "build:ssr_bak": "npm run build:app-shell && npm run compile:server",
     "dev:ssr": "ng run buildozer:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "build:ssr": "ng build --prod && ng run buildozer:server:production",
