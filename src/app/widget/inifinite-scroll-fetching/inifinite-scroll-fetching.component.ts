@@ -17,7 +17,7 @@ export class InifiniteScrollFetchingComponent implements OnInit {
   @Input() public scrollContainerSelector: string = null;
   @Input() public enable = true;
   @Input() public fetchOnInit = true;
-  @Input('query') public lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
+  @Input('query') public lastQuery = new ListEntityQuery({ page: 10, size: 1 });
 
   @Input() public direction: 'up' | 'down' = 'down';
 
@@ -29,7 +29,7 @@ export class InifiniteScrollFetchingComponent implements OnInit {
         map(({ items }) => items),
         tap((items) => {
           this.currentLength = items.length;
-          this.lastQuery.Page += 1;
+          this.lastQuery.size += 1;
           this.isLastFetchDone = true;
           console.log(items);
         }),
@@ -64,7 +64,7 @@ export class InifiniteScrollFetchingComponent implements OnInit {
 
   restart() {
     this.isLastFetchDone = false;
-    this.lastQuery = new ListEntityQuery({ ItemsPerPage: 10, Page: 1 });
+    this.lastQuery = new ListEntityQuery({ page: 10, size: 1 });
     this.currentLength = -1;
   }
 }

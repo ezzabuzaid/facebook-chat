@@ -8,7 +8,7 @@ import { map, filter } from 'rxjs/operators';
 export class UploadFileService {
     constructor(private http: HttpClient) { }
 
-    uploadImage(file) {
+    uploadImage(file: File) {
         const fd = new FormData();
         fd.append('image', file);
         return this.http.post(`images`, fd, { reportProgress: true })

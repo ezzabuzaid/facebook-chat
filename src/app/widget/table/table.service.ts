@@ -6,7 +6,7 @@ export class TableService {
   private readonly _search: Subject<any> = new Subject();
   constructor() { }
 
-  search(token) {
+  search(token: any) {
     this._search.next(token);
   }
 

@@ -1,9 +1,8 @@
 import { Directive, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
 import { TableService } from '../table.service';
 
-
+// tslint:disable
 @Directive({
-  // tslint:disable-next-line: directive-selector
   selector: '[semiTableSort]'
 })
 export class TableSortDirective implements OnInit {

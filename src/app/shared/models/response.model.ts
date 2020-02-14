@@ -5,6 +5,7 @@ export interface ResponseModel<T> {
     message: string;
     code: number;
     data: T;
+    status: string;
 }
 
 
@@ -14,21 +15,21 @@ export interface ListEntityRes<T> {
     pagesCount: number;
 }
 
-export class PlainQuery<T> {
+export class PlainQuery<T extends { [key: string]: string | number }> {
     asString: string;
     queryObject: T;
     constructor(queryObject: T) {
         this.queryObject = queryObject;
-        this.asString = AppUtils.prepareQueryParams(queryObject);
+        this.asString = AppUtils.convertObjectToQueryParams(queryObject);
     }
 
 }
 export class ListEntityQuery {
-    ItemsPerPage: number;
-    Page: number;
+    page: number;
+    size: number;
 
     constructor(obj: ListEntityQuery) {
-        this.ItemsPerPage = obj.ItemsPerPage || 10;
-        this.Page = obj.Page || 1;
+        this.page = obj.page || 10;
+        this.size = obj.size || 1;
     }
 }

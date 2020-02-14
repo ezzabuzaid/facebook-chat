@@ -43,7 +43,7 @@
 <ng-container *ngIf="field.typeOf(types.DATE)">
     <mat-form-field>
         <mat-label>{{ field.label }}</mat-label>
-        <input matInput #date [max]="field.max" [min]="field.min" (focus)="date.open()" [matDatepicker]="datePicker"
+        <input matInput [max]="field.max" [min]="field.min" (focus)="datePicker.open()" [matDatepicker]="datePicker"
             [formControl]="field">
         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>

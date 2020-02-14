@@ -28,9 +28,9 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
   @HostBinding('class.drag-over') dragOverClass = false;
-  changeValue: (value: string) => void;
+  changeValue: (value: string) => void = null;
 
-  value = null;
+  value: string = null;
 
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     AppUtils.preventBubblingAndCapturing(event);
@@ -43,23 +43,24 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     this.dragOverClass = false;
   }
 
-  @HostListener('drop', ['$event']) ondrop(event) {
+  @HostListener('drop', ['$event']) ondrop(event: DragEvent) {
     AppUtils.preventBubblingAndCapturing(event);
     this.dragOverClass = false;
-    const files = [...event.dataTransfer.files];
+    const files = event.dataTransfer.files;
 
     if (AppUtils.isTruthy(files.length)) {
-      [...files].forEach((file: File) => {
+      for (let index = 0; index < files.length; index++) {
+        const file: File = files[index];
         this.uploadFile(file);
-      });
+      }
     }
   }
 
-  writeValue(value) {
+  writeValue(value: string) {
     this.value = value;
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: () => void) {
     this.changeValue = fn;
   }
 
@@ -67,17 +68,17 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() { }
 
-  private getTranslate(key) {
+  private getTranslate(key: string) {
     return this.translateService.instant(key);
   }
 
-  private onSuccess(value) {
+  private onSuccess(value: string) {
     this.changeValue(value);
     this.value = value;
     this.openSnackBar(this.getTranslate('image_upload_success'));
   }
 
-  private onError(message) {
+  private onError(message: string) {
     this.openSnackBar(this.getTranslate(message));
   }
 
@@ -98,7 +99,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     if (this.allowedToUpload(file)) {
       AppUtils.readFile(file)
         .subscribe(
-          (value) => {
+          (value: string) => {
             console.log(value);
             this.onSuccess(value);
           },

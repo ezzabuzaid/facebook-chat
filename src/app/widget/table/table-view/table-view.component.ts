@@ -14,6 +14,7 @@ import { TableService } from '../table.service';
 import { TableActionsComponent } from '../table-actions/table-actions.component';
 import { Subject } from 'rxjs';
 import { TableFilterDirective } from '../directive/filter.directive';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -23,8 +24,8 @@ import { TableFilterDirective } from '../directive/filter.directive';
   viewProviders: [TableService]
 })
 export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
-  private _dataSource = [];
-  private _tempDataSource = [];
+  private _dataSource: any[] = [];
+  private _tempDataSource: any[] = [];
   private locked = false;
 
   public filterableColumns: { key: string, type: string, list: { name: string, value: string }[] }[] = [];
@@ -33,7 +34,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
 
   @Input() nativeTableClass: string = null;
 
-  @ContentChild(TemplateRef) tableBody;
+  @ContentChild(TemplateRef) tableBody: any;
 
   @ContentChild(TableActionsComponent, { read: TableActionsComponent }) actionsComponent: TableActionsComponent;
   @ViewChildren(TableFilterDirective) tableFilterDirective: QueryList<TableFilterDirective>;
@@ -49,7 +50,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     }
   }
 
-  registerColumn(columnSetting) {
+  registerColumn(columnSetting: any) {
     if (!this.locked) {
       this.filterableColumns.push(columnSetting);
     }
@@ -60,7 +61,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    const toLowerCase = value => String(value).toLowerCase();
+    const toLowerCase = (value: string) => String(value).toLowerCase();
     this.tableService.onSearch()
       .subscribe(() => {
         const tokens = this.tableFilterDirective
@@ -69,10 +70,10 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
             acc[field.getKey()] = field.getValue();
             return acc;
           }, {});
-        if (!this.isObjectEmpty(tokens)) {
+        if (!AppUtils.isObjectEmpty(tokens)) {
           this._dataSource = this._tempDataSource.filter((row) => {
             return Object.keys(tokens)
-              .every(column => toLowerCase(this.getDottedValue(column, row)).includes(toLowerCase(tokens[column])));
+              .every(column => toLowerCase(AppUtils.getDottedProperty(column, row)).includes(toLowerCase(tokens[column])));
           });
         } else {
           this._dataSource = this._tempDataSource;
@@ -89,7 +90,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     }
   }
 
-  trackByFn(index, item) {
+  trackByFn(index: number, item: any) {
     const by = item.id || item.name || Object.keys(this.dataSource)[0] || item || index;
     return by;
   }
@@ -99,10 +100,6 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-
-  isObjectEmpty(obj) {
-    return Object.keys(obj).length === 0;
-  }
   // search(value, keys) {
   //   if (value.length && this.dataSource.length) {
   //     const filterdData = [];
@@ -123,8 +120,5 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   //   }
   // }
 
-  getDottedValue(name, obj) {
-    return name.split('.').reduce((a, v) => a[v], obj);
-  }
 
 }
