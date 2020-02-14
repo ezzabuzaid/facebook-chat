@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECustomHeaders } from '../http/http.model';
 import { map, switchMap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
-import { connectivity } from '@shared/common';
+// import { connectivity } from '@shared/common';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material';
 
 @Injectable()
@@ -22,10 +22,10 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         const headers = this.setCustomHeaders(req.headers);
         this.configure(this.defaultSetting);
 
-        if (AppUtils.isFalsy(connectivity.isOnline)) {
-            this.snackbar.open('The internet connection is not active, please check your connection');
-            return of();
-        }
+        // if (AppUtils.isFalsy(connectivity.isOnline)) {
+        //     this.snackbar.open('The internet connection is not active, please check your connection');
+        //     return of();
+        // }
 
         return next.handle(req.clone({ headers }))
             .pipe(
