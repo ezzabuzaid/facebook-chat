@@ -1,5 +1,5 @@
-@import 'functions';
-@import 'variables';
+@import "functions";
+@import "variables";
 
 :host {
   display: block;
@@ -25,17 +25,17 @@
       width: 45px;
       height: 45px;
     }
-    // &:hover {
-    // TODO: enable then on upload to measure the progress
+    // TODO: to measure the progress
     //   background-position: 0 100%;
     //   mat-icon {
     //     color: #fff;
     //   }
-    // }
+
     &.uploaded {
-      z-index: 1;
-      img {
-        z-index: -1;
+      &:not(.custom):hover {
+        will-change: filter;
+        transition: 0.25s filter;
+        filter: opacity(0.8) blur(1px);
       }
     }
   }

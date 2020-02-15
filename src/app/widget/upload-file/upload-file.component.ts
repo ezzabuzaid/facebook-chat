@@ -23,14 +23,18 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     private snackBar: MatSnackBar,
     private translateService: TranslateService
   ) { }
+
   public id = AppUtils.generateAlphabeticString();
+  public value: string = null;
+
+
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
   @HostBinding('class.drag-over') dragOverClass = false;
+
   changeValue: (value: string) => void = null;
 
-  value: string = null;
 
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     AppUtils.preventBubblingAndCapturing(event);
@@ -73,7 +77,6 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   }
 
   private onSuccess(value: string) {
-    this.changeValue(value);
     this.value = value;
     this.openSnackBar(this.getTranslate('image_upload_success'));
   }
@@ -102,6 +105,8 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
           (value: string) => {
             console.log(value);
             this.onSuccess(value);
+            // changeValue should be inputed with url from the server
+            this.changeValue(value);
           },
           () => this.onError('image_upload_error')
         );
