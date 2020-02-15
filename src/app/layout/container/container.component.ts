@@ -38,7 +38,10 @@ export class ContainerComponent implements OnInit {
   }
 
   openCreateGroup() {
-    this.dialog.open(GroupChatCreateComponent);
+    const dialogRef = this.dialog.open(GroupChatCreateComponent, {
+      width: '600px'
+    });
+    dialogRef.disableClose = true;
   }
 
 }

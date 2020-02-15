@@ -7,6 +7,7 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { GroupCharCardComponent } from './group-chat-card/group-chat-card.component';
 import { GroupChatCreateComponent } from './group-chat-create/group-chat-create.component';
 import { FormModule } from '@partials/form';
+import { UploadFileModule } from '@widget/upload-file';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FormModule } from '@partials/form';
     CommonModule,
     MaterialModule,
     GravatarModule,
-    FormModule
+    FormModule,
+    UploadFileModule
   ],
   providers: [
     ChatCardManager

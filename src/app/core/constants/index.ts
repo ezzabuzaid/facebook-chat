@@ -46,6 +46,7 @@ export namespace Constants {
   export class API {
     static readonly LOGIN = 'portal/login';
     static readonly users = 'users';
+    static CHAT_GROUPS = 'groups';
   }
 
 }

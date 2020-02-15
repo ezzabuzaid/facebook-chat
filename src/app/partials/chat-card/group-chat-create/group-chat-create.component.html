@@ -1,13 +1,25 @@
 <h1 mat-dialog-title>Create group</h1>
 <div mat-dialog-content>
-    <mat-selection-list #users>
-        <mat-list-option *ngFor="let user of ($users | async)">
-            <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
-            <p matLine> {{user.username}} </p>
-        </mat-list-option>
-    </mat-selection-list>
+    <ng-container [formGroup]="form">
+        <div class="d-flex">
+            <app-upload-file class="w-100" [formControlName]="getName('logo')">
+                <ng-template #content>
+                    <mat-icon>add</mat-icon>
+                </ng-template>
+            </app-upload-file>
+            <mat-form-field>
+                <input matInput [formControlName]="getName('title')">
+            </mat-form-field>
+        </div>
+        <mat-selection-list #users [formControlName]="getName('members')">
+            <mat-list-option *ngFor="let user of ($users | async)" [value]="user._id">
+                <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
+                <p matLine> {{user.username}} </p>
+            </mat-list-option>
+        </mat-selection-list>
+    </ng-container>
 </div>
 <div mat-dialog-actions>
     <button mat-button mat-dialog-close>No Thanks</button>
-    <button mat-button (click)="closeDialog()" cdkFocusInitial>Ok</button>
+    <button mat-button (click)="createGroup()" cdkFocusInitial>Ok</button>
 </div>
