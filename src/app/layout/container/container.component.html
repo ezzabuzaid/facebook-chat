@@ -18,9 +18,9 @@
                 <div class="px-3">
                   <p>Groups</p>
                 </div>
-                <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
-                  <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
-                  <p matLine> {{user.username}} </p>
+                <mat-list-item *ngFor="let group of ($groups | async)" (click)="openChatCard(group)">
+                  <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
+                  <p matLine> {{group.title}} </p>
                 </mat-list-item>
               </mat-nav-list>
             </mat-card-content>

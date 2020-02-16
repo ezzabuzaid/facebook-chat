@@ -4,6 +4,7 @@ import { UsersModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
 import { ChatCardManager, GroupChatCreateComponent } from '@partials/chat-card';
 import { MatDialog } from '@angular/material/dialog';
+import { ChatService } from '@shared/services/chat';
 
 @Component({
   selector: 'app-container',
@@ -12,10 +13,12 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ContainerComponent implements OnInit {
   public $users = this.usersService.getUsersWithoutMe();
+  public $groups = this.chatService.getGroups();
 
   constructor(
     private usersService: UsersService,
     private chatCardManager: ChatCardManager,
+    private chatService: ChatService,
     private dialog: MatDialog
   ) { }
 
