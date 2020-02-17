@@ -15,9 +15,9 @@ import { TableActionComponent } from '../table-actions/table-actions.component';
 import { Subject } from 'rxjs';
 import { TableFilterDirective } from '../directive/filter.directive';
 import { AppUtils } from '@core/helpers/utils';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  // tslint:disable-next-line: component-selector
   selector: 'semi-table',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
@@ -28,11 +28,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   private _tempDataSource: any[] = [];
   private locked = false;
 
-  public filterableColumns: {
-    key: string;
-    type: string;
-    list: Array<{ name: string; value: string; }>
-  }[] = [];
+  public filterableColumns: IColumnSetting[] = [];
 
   private _unsubscribe = new Subject();
 
@@ -67,6 +63,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnInit() {
     const toLowerCase = (value: string) => String(value).toLowerCase();
     this.tableManager.onSearch()
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe(() => {
         const tokens = this.tableFilterDirective
           .filter(token => !!token.getValue())

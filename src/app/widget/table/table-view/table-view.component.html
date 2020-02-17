@@ -10,19 +10,27 @@
       <ng-container *ngFor="let column of filterableColumns">
         <ng-container *ngIf="column; else noFilter">
           <th>
-            <ng-container *ngIf="column.type === 'text'">
-              <input [semiTableFilter]="column.key" type="text">
+            <ng-container *ngIf="column.template; else normalTemplate;">
+              <ng-template [ngTemplateOutlet]="column.template"></ng-template>
             </ng-container>
-            <ng-container *ngIf="column.type === 'date'">
-              <input [semiTableFilter]="column.key" id="date" type="date">
-            </ng-container>
-            <ng-container *ngIf="column.type === 'select'">
-              <select [semiTableFilter]="column.key" [type]="column.type">
-                <ng-container *ngFor="let item of column.list">
-                  <option value="item.value">{{ item.name }}</option>
-                </ng-container>
-              </select>
-            </ng-container>
+            <ng-template #normalTemplate>
+              <ng-container *ngIf="column.type === 'text'">
+                <input [semiTableFilter]="column.key" type="text">
+              </ng-container>
+              <ng-container *ngIf="column.type === 'checkbox'">
+                <input [semiTableFilter]="column.key" type="checkbox">
+              </ng-container>
+              <ng-container *ngIf="column.type === 'date'">
+                <input [semiTableFilter]="column.key" id="date" type="date">
+              </ng-container>
+              <ng-container *ngIf="column.type === 'select'">
+                <select [semiTableFilter]="column.key" [type]="column.type">
+                  <ng-container *ngFor="let item of column.list">
+                    <option value="item.value">{{ item.name }}</option>
+                  </ng-container>
+                </select>
+              </ng-container>
+            </ng-template>
           </th>
         </ng-container>
         <ng-template #noFilter>

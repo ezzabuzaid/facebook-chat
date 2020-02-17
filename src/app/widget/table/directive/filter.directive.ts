@@ -8,6 +8,7 @@ import { TableManager } from '../table.service';
 export class TableFilterDirective implements OnInit {
   @Input() semiTableFilter: string;
   @Input() type: string = null;
+
   constructor(
     @Host() private tableService: TableManager,
     public elRef: ElementRef<HTMLInputElement>,
@@ -23,10 +24,9 @@ export class TableFilterDirective implements OnInit {
   }
 
   filter({ target }) {
-    const value = String(target.value).toLowerCase();
     this.tableService.search({
       key: this.semiTableFilter,
-      token: value
+      value: String(target.value).toLowerCase()
     });
   }
 
