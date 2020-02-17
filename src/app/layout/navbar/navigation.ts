@@ -26,7 +26,7 @@ export default [
   }),
   new NavigationItem({
     routerLink: `${Constants.Routing.SESSIONS.withSlash}`,
-    icon: 'session',
+    icon: 'assistant',
     title: _extract('navbar_sessions'),
     type: 'item'
   })

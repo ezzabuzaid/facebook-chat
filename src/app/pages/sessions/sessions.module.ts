@@ -5,6 +5,7 @@ import { SessionsRoutingModule } from './sessions-routing.module';
 import { SessionsComponent } from './sessions.component';
 import { TableModule } from '@widget/table/table.module';
 import { MaterialModule } from '@shared/common';
+import { PageWrapperModule } from '@partials/page-wrapper';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { MaterialModule } from '@shared/common';
   imports: [
     CommonModule,
     TableModule,
+    PageWrapperModule,
     MaterialModule,
     SessionsRoutingModule
   ]
