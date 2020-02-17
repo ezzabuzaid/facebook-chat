@@ -3,6 +3,7 @@
         <mat-card-content>
             <semi-table [dataSource]="$sessions | async">
                 <semi-table-head>
+                    <th>Actions</th>
                     <th>User</th>
                     <th>Device</th>
                     <th>Active</th>
@@ -22,9 +23,6 @@
                     <td>{{ data.active }}</td>
                     <td>{{ data.createdAt | date }}</td>
                 </ng-template>
-                <semi-table-actions>
-                    <button color="primary" mat-raised-button class="mt-2">Actions</button>
-                </semi-table-actions>
             </semi-table>
         </mat-card-content>
     </mat-card>

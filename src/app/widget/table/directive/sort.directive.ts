@@ -1,5 +1,5 @@
 import { Directive, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
-import { TableService } from '../table.service';
+import { TableManager } from '../table.service';
 
 // tslint:disable
 @Directive({
@@ -36,7 +36,7 @@ export class TableSortDirective implements OnInit {
   constructor(
     private elRef: ElementRef<HTMLElement>,
     private render: Renderer2,
-    private tableService: TableService
+    private tableService: TableManager
   ) {
     const el = this.elRef.nativeElement;
     this.render.addClass(el, 'pointer');

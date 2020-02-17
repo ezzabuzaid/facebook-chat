@@ -10,8 +10,8 @@ import {
   ViewChildren,
   QueryList,
 } from '@angular/core';
-import { TableService } from '../table.service';
-import { TableActionsComponent } from '../table-actions/table-actions.component';
+import { TableManager, IColumnSetting } from '../table.service';
+import { TableActionComponent } from '../table-actions/table-actions.component';
 import { Subject } from 'rxjs';
 import { TableFilterDirective } from '../directive/filter.directive';
 import { AppUtils } from '@core/helpers/utils';
@@ -21,14 +21,18 @@ import { AppUtils } from '@core/helpers/utils';
   selector: 'semi-table',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
-  viewProviders: [TableService]
+  viewProviders: [TableManager]
 })
 export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   private _dataSource: any[] = [];
   private _tempDataSource: any[] = [];
   private locked = false;
 
-  public filterableColumns: { key: string, type: string, list: { name: string, value: string }[] }[] = [];
+  public filterableColumns: {
+    key: string;
+    type: string;
+    list: Array<{ name: string; value: string; }>
+  }[] = [];
 
   private _unsubscribe = new Subject();
 
@@ -36,7 +40,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
 
   @ContentChild(TemplateRef) tableBody: any;
 
-  @ContentChild(TableActionsComponent, { read: TableActionsComponent }) actionsComponent: TableActionsComponent;
+  @ContentChild(TableActionComponent, { read: TableActionComponent }) public actionComponent: TableActionComponent;
   @ViewChildren(TableFilterDirective) tableFilterDirective: QueryList<TableFilterDirective>;
 
   @Input()
@@ -44,26 +48,25 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     return this._dataSource;
   }
   set dataSource(list) {
-    console.log('dataSource => ', list);
     if (Array.isArray(list)) {
       this._tempDataSource = list;
       this._dataSource = list;
     }
   }
 
-  registerColumn(columnSetting: any) {
+  registerColumn(columnSetting: IColumnSetting) {
     if (!this.locked) {
       this.filterableColumns.push(columnSetting);
     }
   }
 
   constructor(
-    private tableService: TableService,
+    private tableManager: TableManager,
   ) { }
 
   ngOnInit() {
     const toLowerCase = (value: string) => String(value).toLowerCase();
-    this.tableService.onSearch()
+    this.tableManager.onSearch()
       .subscribe(() => {
         const tokens = this.tableFilterDirective
           .filter(token => !!token.getValue())
@@ -84,16 +87,15 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
 
   ngAfterContentInit() {
     this.locked = true;
-    if (this.actionsComponent) {
-      if (this.actionsComponent.position === 'start') {
+    if (this.actionComponent) {
+      if (this.actionComponent.position === 'start') {
         this.filterableColumns.shift();
       }
     }
   }
 
   trackByFn(index: number, item: any) {
-    const by = item.id || item._id || item.name || Object.keys(this.dataSource[0])[0] || item || index;
-    return by;
+    return item.id || item._id || item.name || Object.keys(this.dataSource[0])[0] || item || index;
   }
 
   ngOnDestroy() {

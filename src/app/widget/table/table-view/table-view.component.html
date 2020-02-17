@@ -3,8 +3,8 @@
     <tr>
       <ng-content select="semi-table-head"></ng-content>
     </tr>
-    <tr *ngIf="actionsComponent || filterableColumns.length">
-      <ng-container *ngIf="actionsComponent && actionsComponent?.position === 'start'">
+    <tr *ngIf="actionComponent || filterableColumns.length">
+      <ng-container *ngIf="actionComponent && actionComponent?.position === 'start'">
         <ng-container *ngTemplateOutlet="tableActions"></ng-container>
       </ng-container>
       <ng-container *ngFor="let column of filterableColumns">
@@ -29,7 +29,7 @@
           <th style="width: 1% !important"></th>
         </ng-template>
       </ng-container>
-      <ng-container *ngIf="actionsComponent && actionsComponent?.position === 'end'">
+      <ng-container *ngIf="actionComponent && actionComponent?.position === 'end'">
         <ng-container *ngTemplateOutlet="tableActions"></ng-container>
       </ng-container>
     </tr>

@@ -5,21 +5,21 @@ import { TableComponent } from './table-view/table-view.component';
 import { FilterableDirective } from './directive/filterable.directive';
 import { TableSortDirective } from './directive/sort.directive';
 import { TableHeadComponent } from './table-actions/table-head.component';
-import { TableActionsComponent } from './table-actions/table-actions.component';
+import { TableActionComponent } from './table-actions/table-actions.component';
 
 @NgModule({
     declarations: [
         TableFilterDirective,
         FilterableDirective,
         TableComponent,
-        TableActionsComponent,
+        TableActionComponent,
         TableHeadComponent,
         TableSortDirective
     ],
     exports: [
         TableComponent,
         FilterableDirective,
-        TableActionsComponent,
+        TableActionComponent,
         TableHeadComponent
     ],
     providers: [],
