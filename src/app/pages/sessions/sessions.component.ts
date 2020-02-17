@@ -21,7 +21,10 @@ export class SessionsComponent implements OnInit {
       session_id: session._id,
       user_id: session.user_id
     })
-      .subscribe();
+      .subscribe(() => {
+        session.active = false;
+        session.updatedAt = new Date().toISOString();
+      });
   }
 
 }

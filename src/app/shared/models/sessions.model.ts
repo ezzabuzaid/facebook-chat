@@ -2,7 +2,7 @@ import { IModel } from './response.model';
 
 export namespace SessionsModel {
     export interface ISession extends IModel {
-        active: string;
+        active: boolean;
         user_id: string;
         device_uuid: string;
     }
