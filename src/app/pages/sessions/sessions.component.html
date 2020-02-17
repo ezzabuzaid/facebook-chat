@@ -18,7 +18,7 @@
                     <td>{{ data.user_id }}</td>
                     <td>{{ data.device_uuid }}</td>
                     <td>
-                        <mat-checkbox [disabled]="true">{{ data.active }}</mat-checkbox>
+                        <mat-checkbox [disabled]="true" [checked]="data.active"></mat-checkbox>
                     </td>
                     <td>{{ data.createdAt | date }}</td>
                 </ng-template>

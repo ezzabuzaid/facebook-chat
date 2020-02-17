@@ -15,13 +15,11 @@ export class FilterableDirective implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.filterable) {
-      this.tableComponent.registerColumn({
-        key: this.filterable,
-        type: this.type || 'text',
-        list: this.list
-      });
-    }
+    this.tableComponent.registerColumn({
+      key: this.filterable,
+      type: this.type || 'text',
+      list: this.list
+    });
   }
 
 }

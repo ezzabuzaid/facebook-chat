@@ -2,11 +2,11 @@ import { Directive, OnInit, Input, Host, ElementRef, Renderer2 } from '@angular/
 import { TableManager } from '../table.service';
 
 @Directive({
-  selector: '[semiTableFilter]'
+  selector: '[tableFilter]'
 })
 
 export class TableFilterDirective implements OnInit {
-  @Input() semiTableFilter: string;
+  @Input() tableFilter: string;
   @Input() type: string = null;
 
   constructor(
@@ -25,17 +25,23 @@ export class TableFilterDirective implements OnInit {
 
   filter({ target }) {
     this.tableService.search({
-      key: this.semiTableFilter,
+      key: this.tableFilter,
       value: String(target.value).toLowerCase()
     });
   }
 
   getValue() {
-    return this.elRef.nativeElement.value;
+    const element = this.elRef.nativeElement;
+    switch (this.type) {
+      case 'checkbox':
+        return element.checked;
+      default:
+        return element.value;
+    }
   }
 
   getKey() {
-    return this.semiTableFilter;
+    return this.tableFilter;
   }
 
 }

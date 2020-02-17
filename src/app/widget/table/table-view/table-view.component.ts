@@ -52,7 +52,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
 
   registerColumn(columnSetting: IColumnSetting) {
     if (!this.locked) {
-      this.filterableColumns.push(columnSetting);
+      this.filterableColumns.push(columnSetting.key ? columnSetting : null);
     }
   }
 
@@ -66,7 +66,10 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe))
       .subscribe(() => {
         const tokens = this.tableFilterDirective
-          .filter(token => !!token.getValue())
+          .filter(token => {
+            const value = token.getValue();
+            return value !== '' || value !== null || value !== undefined;
+          })
           .reduce((acc, field) => {
             acc[field.getKey()] = field.getValue();
             return acc;
