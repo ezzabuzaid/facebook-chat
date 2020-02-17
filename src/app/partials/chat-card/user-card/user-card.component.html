@@ -1,0 +1,37 @@
+<mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z1 p-0">
+    <mat-card-header class="mat-elevation-z3 px-3 py-1 align-items-center bg-warning">
+        <img mat-card-avatar ngxGravatar [email]="user.email" fallback="identicon">
+        <mat-card-title class="mb-1">
+            <small class="text-white">{{user.username}}</small>
+        </mat-card-title>
+        <mat-card-subtitle class="mb-0">Teacher</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="d-flex flex-column justify-content-between h-100 mb-0 px-3 pt-3">
+        <div>
+            <ng-container *ngFor="let message of messages">
+                <p>{{message.message}}</p>
+            </ng-container>
+        </div>
+        <div>
+            <mat-divider></mat-divider>
+            <mat-form-field [appearance]="$any('none')">
+                <textarea placeholder="Write a message" matInput #messageInput cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+            </mat-form-field>
+        </div>
+    </mat-card-content>
+    <mat-card-footer class="m-0 d-flex align-items-center">
+        <button mat-icon-button>
+            <mat-icon class="text-muted">more_vert</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="text-muted">attach_file</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon class="text-muted">emoji_emotions</mat-icon>
+        </button>
+        <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput?.value)">
+            <mat-icon class="text-muted">send</mat-icon>
+        </button>
+    </mat-card-footer>
+</mat-card>

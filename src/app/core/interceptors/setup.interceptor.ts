@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECustomHeaders } from '../http/http.model';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { connectivity } from '@shared/common';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {

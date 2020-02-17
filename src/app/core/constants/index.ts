@@ -37,15 +37,23 @@ export namespace Constants {
       withSlash: '/portal',
       withoutSlash: 'portal',
     };
+    static SESSIONS = {
+      withSlash: '/sessions',
+      withoutSlash: 'sessions',
+    };
 
-    // FIXME NOT_IMPLEMENTED
-    static readonly SERVER_ERROR = 'error500';
-    static readonly FOEBIDDEN = 'error403';
   }
 
   export class API {
     static readonly LOGIN = 'portal/login';
     static readonly users = 'users';
+    static readonly CHAT_GROUPS = 'groups';
+    static readonly SESSIONS = {
+      base: 'sessions',
+      get deactivate() {
+        return this.base + '/deactivate';
+      }
+    };
   }
 
 }

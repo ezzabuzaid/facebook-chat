@@ -1,5 +1,5 @@
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
-@import '~bootstrap/scss/bootstrap-grid';
+@import "~bootstrap/scss/bootstrap-grid";
 
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -52,45 +52,33 @@
   align-items: center;
 }
 
-@mixin container-height($height: map-get($map: $layout_dimension, $key: toolbar_height)) {
-  // after layout configuration file remove @container-height mixin
-  min-height: calc(100vh - #{$height}) !important;
-  display: flex;
-  flex-direction: column !important;
-}
-
-@mixin scrollbar-theme($width: 12px, $height: 12px, $border-color: #fff, $background-color: $colors(primary)) {
-  // Refactor
+@mixin scrollbar_theme($width: 10px, $height: 10px) {
+  $border-color: #fff;
   ::-webkit-scrollbar {
     -webkit-appearance: none;
   }
   ::-webkit-scrollbar:vertical {
-    width: 12px;
+    width: $width;
   }
   ::-webkit-scrollbar:horizontal {
-    height: 12px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: $background-color;
-    border-radius: 10px;
-    border: 2px solid $border-color;
+    height: $height;
   }
   ::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: $border-color;
   }
   ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: $width;
+    height: $height;
     background-color: rgba(0, 0, 0, 0);
   }
   ::-webkit-scrollbar:hover {
     background-color: rgba(0, 0, 0, 0.12);
   }
   ::-webkit-scrollbar-thumb {
-    border: 2px solid transparent;
-    box-shadow: inset 0 0 0 24px rgba(0, 0, 0, 0.37);
-    border-radius: 24px;
+    background-color: gray;
+    border-radius: 10px;
+    border: 2px solid $border-color;
   }
   ::-webkit-scrollbar-thumb:active {
     box-shadow: inset 0 0 0 24px rgba(0, 0, 0, 0.54);
@@ -140,7 +128,7 @@
     height: 100%;
     background-color: $color;
     z-index: 999;
-    content: '';
+    content: "";
   }
 }
 
@@ -187,8 +175,8 @@
 }
 
 @mixin direction($dir) {
-  body[dir='#{$dir}'] &,
-  html[dir='#{$dir}'] & {
+  body[dir="#{$dir}"] &,
+  html[dir="#{$dir}"] & {
     @content;
   }
 }

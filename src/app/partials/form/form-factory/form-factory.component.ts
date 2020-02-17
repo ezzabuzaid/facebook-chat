@@ -14,7 +14,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 
 export class FieldFactoryComponent implements OnInit {
-  @Input() field: IField<any>;
+  @Input() field: IField<any, any>;
   types = EFieldType;
 
   constructor() { }

@@ -1,6 +1,6 @@
-@import 'variables';
-@import 'mixins';
-@import '~@angular/material/theming';
+@import "variables";
+@import "mixins";
+@import "~@angular/material/theming";
 $transition-timing: ease-in-out;
 $transition-duration: 0.25s;
 :host {
@@ -44,12 +44,14 @@ $transition-duration: 0.25s;
   }
   &.right {
     ::ng-deep {
-      &:first-child {
-        right: 0;
-      }
-      &:last-child {
-        text-align: left;
-        margin-left: unset !important;
+      > div {
+        &:first-child {
+          right: 0;
+        }
+        &:last-child {
+          text-align: left;
+          margin-left: unset !important;
+        }
       }
     }
   }

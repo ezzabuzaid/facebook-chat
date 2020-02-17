@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { CustomHeaders } from '../http';
-import { MatSnackBar } from '@angular/material';
-import { catchError, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
 import { DeviceUUID } from 'device-uuid';

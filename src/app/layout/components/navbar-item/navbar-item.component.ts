@@ -2,9 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SidebarService, RegisterdSidebar } from 'app/widget/sidebar';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { MEDIA_BREAKPOINTS } from '@shared/common';
-import { LayoutNavigation } from '@layout/navbar/navigation';
+import { NavigationItem } from '@layout/navbar/navigation';
 import { LocalStorage } from '@ezzabuzaid/document-storage';
 
 @Component({
@@ -13,7 +12,7 @@ import { LocalStorage } from '@ezzabuzaid/document-storage';
   styleUrls: ['./navbar-item.component.scss']
 })
 export class NavbarItemComponent implements OnInit, OnDestroy {
-  @Input() public item: LayoutNavigation;
+  @Input() public item: NavigationItem;
   @Input() public collapse = false;
   private _subscribtion = new Subject();
 
@@ -53,8 +52,8 @@ class ShortcutService {
 
   }
 
-  addShortcut(item: LayoutNavigation) {
-    const shortcuts = this.localstorage.get<LayoutNavigation[]>('shortcuts') || [];
+  addShortcut(item: NavigationItem) {
+    const shortcuts = this.localstorage.get<NavigationItem[]>('shortcuts') || [];
     shortcuts.push(item);
     this.localstorage.set('shortcuts', shortcuts);
   }

@@ -6,8 +6,8 @@
     <div>
       <perfect-scrollbar class="position-relative" [config]="{ suppressScrollX: true }">
         <ng-container *ngFor="let item of navigationMenu">
-          <app-navbar-item *ngIf="item.type === 'item'" [item]="item"></app-navbar-item>
-          <app-navbar-collapse *ngIf="item.type === 'collapse'" [item]="item"></app-navbar-collapse>
+          <app-navbar-item *ngIf="$any(item.type) === 'item'" [item]="item"></app-navbar-item>
+          <app-navbar-collapse *ngIf="$any(item.type) === 'collapse'" [item]="item"></app-navbar-collapse>
         </ng-container>
       </perfect-scrollbar>
     </div>

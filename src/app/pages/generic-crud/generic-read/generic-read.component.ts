@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
-import { MatPaginator, MatDialog } from '@angular/material';
-import { ngTableSetting, listFilter } from '@shared/common';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { AppUtils } from '@core/helpers/utils';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { tap, takeUntil, map, switchMap, filter } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { GenericCrudModel } from '../generic-crud.model';
 
 @Component({
@@ -21,7 +21,6 @@ export class GenericReadComponent implements OnInit, OnDestroy {
   private _subscribtion = new Subject();
 
   constructor(
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient

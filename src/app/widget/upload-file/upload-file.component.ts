@@ -1,8 +1,7 @@
 import { Component, OnInit, forwardRef, Input, HostListener, HostBinding } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Observer } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UploadFileService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 
@@ -24,14 +23,18 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     private snackBar: MatSnackBar,
     private translateService: TranslateService
   ) { }
+
   public id = AppUtils.generateAlphabeticString();
+  public value: string = null;
+
+
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
   @HostBinding('class.drag-over') dragOverClass = false;
-  changeValue: (value: string) => void;
 
-  value = null;
+  changeValue: (value: string) => void = null;
+
 
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {
     AppUtils.preventBubblingAndCapturing(event);
@@ -44,23 +47,24 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     this.dragOverClass = false;
   }
 
-  @HostListener('drop', ['$event']) ondrop(event) {
+  @HostListener('drop', ['$event']) ondrop(event: DragEvent) {
     AppUtils.preventBubblingAndCapturing(event);
     this.dragOverClass = false;
-    const files = [...event.dataTransfer.files];
+    const files = event.dataTransfer.files;
 
     if (AppUtils.isTruthy(files.length)) {
-      [...files].forEach((file: File) => {
+      for (let index = 0; index < files.length; index++) {
+        const file: File = files[index];
         this.uploadFile(file);
-      });
+      }
     }
   }
 
-  writeValue(value) {
+  writeValue(value: string) {
     this.value = value;
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: () => void) {
     this.changeValue = fn;
   }
 
@@ -68,17 +72,16 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() { }
 
-  private getTranslate(key) {
+  private getTranslate(key: string) {
     return this.translateService.instant(key);
   }
 
-  private onSuccess(value) {
-    this.changeValue(value);
+  private onSuccess(value: string) {
     this.value = value;
     this.openSnackBar(this.getTranslate('image_upload_success'));
   }
 
-  private onError(message) {
+  private onError(message: string) {
     this.openSnackBar(this.getTranslate(message));
   }
 
@@ -99,9 +102,11 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
     if (this.allowedToUpload(file)) {
       AppUtils.readFile(file)
         .subscribe(
-          (value) => {
+          (value: string) => {
             console.log(value);
             this.onSuccess(value);
+            // changeValue should be inputed with url from the server
+            this.changeValue(value);
           },
           () => this.onError('image_upload_error')
         );

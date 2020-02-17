@@ -11,7 +11,6 @@ export class FormWidgetManager extends Listener<boolean> {
     }
 }
 
-
 export class FormUtils<T> {
 
     constructor(public form: Form<T>) { }
@@ -20,20 +19,16 @@ export class FormUtils<T> {
         return name;
     }
 
-    getError(fieldName: string, errorName: string) {
-        return this.form.get(fieldName).hasError(errorName);
+    getError(name: keyof T, errorName: string) {
+        return this.getControl(name).hasError(errorName);
     }
 
     getControl(name: keyof T) {
-        return this.form.get(name as any) as unknown as IField<any>;
+        return this.form.get(name as any) as IField<keyof T, T[keyof T]>;
     }
 
-    getControlValue<Y>(name: keyof T, defaultValue?: Y) {
-        return (this.form.value[name] || defaultValue) as Y;
+    getControlValue(name: keyof T, defaultValue?: T[keyof T]) {
+        return this.getControl(name).value || defaultValue;
     }
 
 }
-
-export type FormValue<T> = {
-    [P in keyof T]: any;
-};

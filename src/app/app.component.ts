@@ -7,7 +7,7 @@ import { LanguageService, ELanguage } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SeoService } from '@shared/services/seo/seo.service';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs/operators';
 import { connectivity } from '@shared/common';
 import { AppUtils } from '@core/helpers/utils';
@@ -33,15 +33,51 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
-    if (this.isBrowser) {
-      this.languageService.populate(ELanguage.EN);
-      // TODO PWA Checks if install popup should be appear
-      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-      if (isIos() && !isInStandaloneMode()) {
-        // Popup function!!
-      }
-    }
+
+    // STUB if requestSubscription reject the subscribeToPushNotification result must be false
+    // STUB if requestSubscription reject the pushNotificationService.subscribe must not be called
+
+    // STUB if requestSubscription success the subscribeToPushNotification result must be true
+    // STUB if requestSubscription success the pushNotificationService.subscribe must be called
+
+    // const subscribeToPushNotification = () => from(this.serviceWorkerPushService
+    // .requestSubscription({ serverPublicKey: environment.vapidPublicKey }))
+    //     .pipe(
+    //         tap((subscription) => {
+    //             console.log('Subscription => ', subscription);
+    //         }),
+    //         switchMap((subscription) => this.pushNotificationService.subscribe(subscription)),
+    //         mapTo(true),
+    //         catchError(() => of(false)),
+    //     );
+
+    // STUB if requestSubscription reject the subscribeToPushNotification result must be false
+    // STUB if requestSubscription reject the pushNotificationService.subscribe must not be called
+
+    // STUB if requestSubscription success the subscribeToPushNotification result must be true
+    // STUB if requestSubscription success the pushNotificationService.subscribe must be called
+
+    // this.serviceWorkerPushService.subscription
+    //     .pipe(
+    //         takeUntil(this._unsubscribeAll),
+    //         switchMap((subscription) => {
+    //             console.log('Subscription => ', subscription);
+    //             return tryOrComplete<any>(
+    //                 AppplicationUtils.isNullorUndefined(subscription),
+    //                 () => subscribeToPushNotification(),
+    //                 true
+    //             );
+    //         }),
+    //         tap((notificationEnabled) => console.log('notificationEnabled', notificationEnabled)),
+    //         filter((notificationEnabled) => notificationEnabled),
+    //         switchMap(() => this.serviceWorkerPushService.messages)
+    //     )
+    //     .subscribe((message) => {
+    //         console.log('Message from SWpush => ', message);
+    //         // the service worker should focus the opened if it was in foreground
+    //         // after that sh
+    //     });
+
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({
       title: 'Angular Buildozer Boilerplate',
@@ -57,6 +93,31 @@ export class AppComponent implements OnInit {
       Logger.enableProductionMode();
     }
 
+    if (this.isBrowser) {
+      this.languageService.populate(ELanguage.EN);
+      // TODO PWA Checks if install popup should be appear
+      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      if (isIos() && !isInStandaloneMode()) {
+        // Popup function!!
+      }
+
+      connectivity.observe
+        .subscribe(status => {
+          let snackBarRef: MatSnackBarRef<any> = null;
+          if (AppUtils.isFalsy(status)) {
+            this.renderer.addClass(this.document.body, 'no-connection');
+            snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
+              duration: 1000 * 1000
+            });
+          } else {
+            if (AppUtils.isTruthy(snackBarRef)) {
+              snackBarRef.dismiss();
+            }
+            this.renderer.removeClass(this.document.body, 'no-connection');
+          }
+        });
+    }
     this.router.events.forEach((event: RouterEvent) => {
       if (this.isBrowser && environment.production && event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);
@@ -79,21 +140,6 @@ export class AppComponent implements OnInit {
         this.snackbar.open('The application has been updated');
       });
 
-    connectivity.observe
-      .subscribe(status => {
-        let snackBarRef: MatSnackBarRef<any> = null;
-        if (AppUtils.isFalsy(status)) {
-          this.renderer.addClass(this.document.body, 'no-connection');
-          snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
-            duration: 1000 * 1000
-          });
-        } else {
-          if (AppUtils.isTruthy(snackBarRef)) {
-            snackBarRef.dismiss();
-          }
-          this.renderer.removeClass(this.document.body, 'no-connection');
-        }
-      });
   }
 
   get isBrowser() {

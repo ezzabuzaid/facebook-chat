@@ -6,7 +6,7 @@ import { UserService } from '@shared/user';
 import { FormUtils } from '@partials/form';
 import { Field, Form, EFieldType } from '@shared/common';
 import { Validators } from '@angular/forms';
-import { MatCheckbox } from '@angular/material';
+import { MatCheckbox } from '@angular/material/checkbox';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 
