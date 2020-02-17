@@ -44,6 +44,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     return this._dataSource;
   }
   set dataSource(list) {
+    console.log('dataSource => ', list);
     if (Array.isArray(list)) {
       this._tempDataSource = list;
       this._dataSource = list;
@@ -91,7 +92,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   trackByFn(index: number, item: any) {
-    const by = item.id || item.name || Object.keys(this.dataSource)[0] || item || index;
+    const by = item.id || item._id || item.name || Object.keys(this.dataSource[0])[0] || item || index;
     return by;
   }
 

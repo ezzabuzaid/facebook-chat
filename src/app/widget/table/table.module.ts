@@ -27,4 +27,4 @@ import { TableActionsComponent } from './table-actions/table-actions.component';
         CommonModule,
     ]
 })
-export class SemiTableModule { }
+export class TableModule { }

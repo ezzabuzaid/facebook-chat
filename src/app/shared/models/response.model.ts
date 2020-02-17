@@ -8,6 +8,12 @@ export interface ResponseModel<T> {
     status: string;
 }
 
+export interface IModel {
+    _id: string;
+    updatedAt: string;
+    createdAt: string;
+}
+
 
 export interface ListEntityRes<T> {
     items: T[];

@@ -19,15 +19,15 @@ export class NavigationItem {
 
 export default [
   new NavigationItem({
-    routerLink: `${Constants.Routing.Users.withSlash}/${GenericCrudModel.Operations.READ}`,
+    routerLink: `${Constants.Routing.Users.withSlash}`,
     icon: 'person',
     title: _extract('navbar_users'),
     type: 'item'
   }),
   new NavigationItem({
-    routerLink: `${Constants.Routing.Todos.withSlash}/${GenericCrudModel.Operations.READ}`,
-    icon: 'fastfood',
-    title: _extract('navbar_todos'),
+    routerLink: `${Constants.Routing.SESSIONS.withSlash}`,
+    icon: 'session',
+    title: _extract('navbar_sessions'),
     type: 'item'
   })
 ];

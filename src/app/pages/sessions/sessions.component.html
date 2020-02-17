@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <mat-card>
+        <mat-card-content>
+            <semi-table [dataSource]="$sessions | async">
+                <semi-table-head>
+                    <th>User</th>
+                    <th>Device</th>
+                    <th>Active</th>
+                    <th>Created at</th>
+                </semi-table-head>
+                <ng-template let-data>
+                    <td>
+                        <button color="accent" mat-icon-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button color="warn" mat-icon-button>
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.device_uuid }}</td>
+                    <td>{{ data.active }}</td>
+                    <td>{{ data.createdAt | date }}</td>
+                </ng-template>
+                <semi-table-actions>
+                    <button color="primary" mat-raised-button class="mt-2">Actions</button>
+                </semi-table-actions>
+            </semi-table>
+        </mat-card-content>
+    </mat-card>
+</div>

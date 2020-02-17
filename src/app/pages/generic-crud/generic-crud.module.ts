@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { GenericCrudRoutingModule } from './generic-crud-routing.module';
 import { GenericWriteComponent } from './generic-write/generic-write.component';
 import { CrudManagerComponent } from './crud-manager/crud-manager.component';
-import { SemiTableModule } from '@widget/table/table.module';
+import { TableModule } from '@widget/table/table.module';
 import { MaterialModule } from '@shared/common';
 import { GenericReadComponent } from './generic-read/generic-read.component';
 import { FormModule } from '@partials/form';
@@ -24,7 +24,7 @@ import { DirectivesModule } from '@shared/directives';
   imports: [
     CommonModule,
     GenericCrudRoutingModule,
-    SemiTableModule,
+    TableModule,
     FormModule,
     MaterialModule,
     // Ng2SmartTableModule,

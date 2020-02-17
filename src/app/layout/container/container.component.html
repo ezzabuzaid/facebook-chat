@@ -18,7 +18,7 @@
                 <div class="px-3">
                   <p>Groups</p>
                 </div>
-                <mat-list-item *ngFor="let group of ($groups | async)" (click)="openChatCard(group)">
+                <mat-list-item *ngFor="let group of ($groups | async)" (click)="openChatCard($any(group))">
                   <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
                   <p matLine> {{group.title}} </p>
                 </mat-list-item>
@@ -32,8 +32,7 @@
             </mat-card-footer>
           </div>
           <div sidebar-container>
-            <h1>Angular Buildozer</h1>
-            <!-- <router-outlet></router-outlet> -->
+            <router-outlet></router-outlet>
           </div>
         </app-sidebar>
       </section>
