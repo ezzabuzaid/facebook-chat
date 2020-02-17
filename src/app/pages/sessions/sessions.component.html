@@ -11,7 +11,7 @@
                 </semi-table-head>
                 <ng-template let-data>
                     <td>
-                        <button color="accent" mat-icon-button>
+                        <button color="accent" mat-icon-button (click)="deactivateSession(data)">
                             <mat-icon>block</mat-icon>
                         </button>
                     </td>

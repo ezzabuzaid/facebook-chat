@@ -12,12 +12,15 @@ export class SessionsService {
         private http: HttpClient,
     ) { }
 
-    public deactiveSession(payload: SessionsModel.ISession) {
-        return this.http.post(Constants.API.SESSIONS, payload);
+    public deactiveSession(payload: {
+        session_id: string;
+        user_id: string;
+    }) {
+        return this.http.patch(`${Constants.API.SESSIONS.deactivate}`, payload);
     }
 
     public getSessions() {
-        return this.http.get<SessionsModel.ISession[]>(Constants.API.SESSIONS);
+        return this.http.get<SessionsModel.ISession[]>(Constants.API.SESSIONS.base);
     }
 
 }

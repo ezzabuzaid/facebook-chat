@@ -48,7 +48,12 @@ export namespace Constants {
     static readonly LOGIN = 'portal/login';
     static readonly users = 'users';
     static readonly CHAT_GROUPS = 'groups';
-    static readonly SESSIONS = 'sessions';
+    static readonly SESSIONS = {
+      base: 'sessions',
+      get deactivate() {
+        return this.base + '/deactivate';
+      }
+    };
   }
 
 }

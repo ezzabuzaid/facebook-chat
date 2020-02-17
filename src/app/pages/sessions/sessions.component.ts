@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SessionsService } from '@shared/services/sessions';
+import { SessionsModel } from '@shared/models';
 
 @Component({
   selector: 'app-sessions',
@@ -14,5 +15,13 @@ export class SessionsComponent implements OnInit {
   ) { }
 
   ngOnInit() { }
+
+  deactivateSession(session: SessionsModel.ISession) {
+    this.sessionsService.deactiveSession({
+      session_id: session._id,
+      user_id: session.user_id
+    })
+      .subscribe();
+  }
 
 }
