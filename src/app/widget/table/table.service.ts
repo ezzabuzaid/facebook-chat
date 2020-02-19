@@ -1,17 +1,29 @@
 import { Subject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 
 @Injectable()
-export class TableService {
-  private readonly _search: Subject<any> = new Subject();
+export class TableManager {
+  private readonly _searchSubject: Subject<any> = new Subject();
   constructor() { }
 
-  search(token) {
-    this._search.next(token);
+  search(token: IColumnFilter) {
+    this._searchSubject.next(token);
   }
 
   onSearch() {
-    return this._search.asObservable();
+    return this._searchSubject.asObservable();
   }
 
+}
+
+export interface IColumnSetting {
+  type: string;
+  key: string;
+  list?: any[];
+  template?: TemplateRef<any>
+}
+
+export interface IColumnFilter {
+  key: string;
+  value: string;
 }

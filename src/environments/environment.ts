@@ -5,15 +5,7 @@
 export const environment = {
   production: false,
   endpointUrl: 'http://localhost:8080/api/',
-  serverOrigin: 'http://localhost:8080',
-  firebase: {
-    apiKey: 'AIzaSyBZtOQcwlZZYu7IEmuDnS2i_ziyVa2a5bo',
-    authDomain: 'chatbase-ebaa0.firebaseapp.com',
-    databaseURL: 'https://chatbase-ebaa0.firebaseio.com',
-    projectId: 'chatbase-ebaa0',
-    storageBucket: 'chatbase-ebaa0.appspot.com',
-    messagingSenderId: '483016343062'
-  }
+  serverOrigin: 'http://localhost:8080'
 };
 
 

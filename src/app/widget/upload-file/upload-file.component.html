@@ -1,13 +1,14 @@
-<label
-  class="file-upload position-relative flex-column d-flex align-items-center justify-content-center bg--primary pointer"
-  [for]="id" [class.uploaded]="value">
+<label class="file-upload position-relative pointer" [for]="id" [class.uploaded]="value">
   <input [id]="id" accept="image/*" #fileInput (change)="uploadFile(fileInput?.files[0])" hidden type="file" />
-  <!-- <mat-icon class="text--primary">{{value ? 'delete' : 'cloud_upload'}}</mat-icon> -->
-  <mat-icon class="upload-icon text--primary mb-3">cloud_upload</mat-icon>
-  <h6>Drag and drop files here</h6>
-  <span class="mb-3">or</span>
-  <button (click)="openBrowserSelectWindow(fileInput)" mat-stroked-button color="primary">Select a file</button>
-  <ng-container *ngIf="value">
-    <img [src]="value | safe:'url'" class="position-absolute w-100 h-100" alt="avatar">
-  </ng-container>
+  <div class="content d-flex flex-column align-items-center justify-content-center h-100">
+    <ng-container *ngIf="!value">
+      <mat-icon class="upload-icon text--primary mb-3">cloud_upload</mat-icon>
+      <h6>Drag and drop files here</h6>
+      <span class="mb-3">or</span>
+      <button (click)="openBrowserSelectWindow(fileInput)" mat-stroked-button color="primary">Select a file</button>
+    </ng-container>
+    <ng-container *ngIf="value">
+      <img [src]="value | safe:'url'" class="w-100 h-100" alt="avatar">
+    </ng-container>
+  </div>
 </label>

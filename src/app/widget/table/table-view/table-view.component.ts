@@ -10,32 +10,33 @@ import {
   ViewChildren,
   QueryList,
 } from '@angular/core';
-import { TableService } from '../table.service';
-import { TableActionsComponent } from '../table-actions/table-actions.component';
+import { TableManager, IColumnSetting } from '../table.service';
+import { TableActionComponent } from '../table-actions/table-actions.component';
 import { Subject } from 'rxjs';
 import { TableFilterDirective } from '../directive/filter.directive';
+import { AppUtils } from '@core/helpers/utils';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  // tslint:disable-next-line: component-selector
   selector: 'semi-table',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
-  viewProviders: [TableService]
+  viewProviders: [TableManager]
 })
 export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
-  private _dataSource = [];
-  private _tempDataSource = [];
+  private _dataSource: any[] = [];
+  private _tempDataSource: any[] = [];
   private locked = false;
 
-  public filterableColumns: { key: string, type: string, list: { name: string, value: string }[] }[] = [];
+  public filterableColumns: IColumnSetting[] = [];
 
   private _unsubscribe = new Subject();
 
   @Input() nativeTableClass: string = null;
 
-  @ContentChild(TemplateRef) tableBody;
+  @ContentChild(TemplateRef) tableBody: any;
 
-  @ContentChild(TableActionsComponent, { read: TableActionsComponent }) actionsComponent: TableActionsComponent;
+  @ContentChild(TableActionComponent, { read: TableActionComponent }) public actionComponent: TableActionComponent;
   @ViewChildren(TableFilterDirective) tableFilterDirective: QueryList<TableFilterDirective>;
 
   @Input()
@@ -49,30 +50,34 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     }
   }
 
-  registerColumn(columnSetting) {
+  registerColumn(columnSetting: IColumnSetting) {
     if (!this.locked) {
-      this.filterableColumns.push(columnSetting);
+      this.filterableColumns.push(columnSetting.key ? columnSetting : null);
     }
   }
 
   constructor(
-    private tableService: TableService,
+    private tableManager: TableManager,
   ) { }
 
   ngOnInit() {
-    const toLowerCase = value => String(value).toLowerCase();
-    this.tableService.onSearch()
+    const toLowerCase = (value: string) => String(value).toLowerCase();
+    this.tableManager.onSearch()
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe(() => {
         const tokens = this.tableFilterDirective
-          .filter(token => !!token.getValue())
+          .filter(token => {
+            const value = token.getValue();
+            return value !== '' || value !== null || value !== undefined;
+          })
           .reduce((acc, field) => {
             acc[field.getKey()] = field.getValue();
             return acc;
           }, {});
-        if (!this.isObjectEmpty(tokens)) {
+        if (!AppUtils.isObjectEmpty(tokens)) {
           this._dataSource = this._tempDataSource.filter((row) => {
             return Object.keys(tokens)
-              .every(column => toLowerCase(this.getDottedValue(column, row)).includes(toLowerCase(tokens[column])));
+              .every(column => toLowerCase(AppUtils.getDottedProperty(column, row)).includes(toLowerCase(tokens[column])));
           });
         } else {
           this._dataSource = this._tempDataSource;
@@ -82,16 +87,15 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
 
   ngAfterContentInit() {
     this.locked = true;
-    if (this.actionsComponent) {
-      if (this.actionsComponent.position === 'start') {
+    if (this.actionComponent) {
+      if (this.actionComponent.position === 'start') {
         this.filterableColumns.shift();
       }
     }
   }
 
-  trackByFn(index, item) {
-    const by = item.id || item.name || Object.keys(this.dataSource)[0] || item || index;
-    return by;
+  trackByFn(index: number, item: any) {
+    return item.id || item._id || item.name || Object.keys(this.dataSource[0])[0] || item || index;
   }
 
   ngOnDestroy() {
@@ -99,10 +103,6 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-
-  isObjectEmpty(obj) {
-    return Object.keys(obj).length === 0;
-  }
   // search(value, keys) {
   //   if (value.length && this.dataSource.length) {
   //     const filterdData = [];
@@ -123,8 +123,5 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   //   }
   // }
 
-  getDottedValue(name, obj) {
-    return name.split('.').reduce((a, v) => a[v], obj);
-  }
 
 }

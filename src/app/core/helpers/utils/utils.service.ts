@@ -1,5 +1,12 @@
 import { Observable, of, EMPTY, throwError, Observer } from 'rxjs';
 export class AppUtils {
+    static isObjectEmpty(obj: object) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
 
     static generateAlphabeticString(stringLength = 5) {
         let randomString = '';
@@ -29,7 +36,7 @@ export class AppUtils {
         event.stopPropagation();
     }
 
-    static mapEnumToValueAnd(enumObject): { title: string, value: any }[] {
+    static mapEnumToValueAnd(enumObject: object): { title: string, value: any }[] {
         return Object.keys(enumObject)
             .filter(item => isNaN(+item))
             .reduce((acc, curr) => {
@@ -68,13 +75,6 @@ export class AppUtils {
         return string;
     }
 
-    static prepareQueryParams(obj) {
-        return Object.keys(obj).reduce((acc, curr) => {
-            if (!obj[curr]) { return acc; }
-            return acc += `${curr}=${obj[curr]}&`;
-        }, '');
-    }
-
     // NOTE merge and return unique list from two lists
     static mergeList<T>(concatTo: Partial<T>[], filterFrom: Partial<T>[], key: keyof T) {
         return concatTo.concat(filterFrom.filter(one => !concatTo.find(two => two[key] === one[key])));
@@ -110,11 +110,14 @@ export class AppUtils {
      * convert an object with key:value to query param string
      * all falsy values will be avoided
      */
-    static convertObjectToQueryParams(obj) {
-        return Object.keys(obj).reduce((acc, curr) => {
-            if (this.isFalsy(obj[curr])) { return acc; }
-            return acc += `${curr}=${obj[curr]}&`;
-        }, '');
+    static convertObjectToQueryParams(obj: { [key: string]: string | number }) {
+        return Object.keys(obj)
+            .reduce((acc, curr) => {
+                if (this.isNullorUndefined(obj[curr])) {
+                    return acc;
+                }
+                return acc += `${curr}=${obj[curr]}&`;
+            }, '');
     }
 
     /**
@@ -148,23 +151,6 @@ export class AppUtils {
             }
         }
         return JSON.parse(JSON.stringify(fromObject, replaceUndefinedOrNull));
-    }
-
-    /**
-     * check if all values inside an object is a falsy type,
-     * NOTE: no deep check
-     */
-    static isAllObjectKeysEmpty(object: { [key: string]: any }) {
-        for (const key in object) {
-            if (!!object[key]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    static extractDateFromTIME_ZONE(date = new Date()) {
-        return new Date(date).toISOString().substr(0, 10);
     }
 
     static toTimestamp(date = new Date()) {
@@ -203,7 +189,7 @@ export class AppUtils {
         }
     }
 
-    static replaceTextCharToHTMLentity(text) {
+    static replaceTextCharToHTMLentity(text: string) {
         const entityMap = {
             '&': '&amp;',
             '<': '&lt;',

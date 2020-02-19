@@ -83,7 +83,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "stylePreprocessorOptions": {
               "includePaths": [
@@ -180,6 +180,32 @@
             "production": {
               "devServerTarget": "buildozer:serve:production"
             }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "buildozer:build",
+            "serverTarget": "buildozer:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "buildozer:build:production",
+              "serverTarget": "buildozer:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "buildozer:build:production",
+            "serverTarget": "buildozer:server:production",
+            "routes": [
+              "/portal"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

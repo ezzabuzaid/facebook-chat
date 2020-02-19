@@ -1,0 +1,33 @@
+<app-page-wrapper title="Sessions">
+    <mat-card>
+        <mat-card-content>
+            <semi-table [dataSource]="$sessions | async">
+                <semi-table-head>
+                    <th>Actions</th>
+                    <th>User</th>
+                    <th>Device</th>
+                    <th filterable="active" type="checkbox">Active</th>
+                    <th>Created at</th>
+                    <th>Updated at</th>
+                </semi-table-head>
+                <ng-template let-data>
+                    <td>
+                        <button color="accent" mat-icon-button (click)="deactivateSession(data)">
+                            <mat-icon>block</mat-icon>
+                        </button>
+                    </td>
+                    <td>{{ data.user_id }}</td>
+                    <td>{{ data.device_uuid }}</td>
+                    <td>
+                        <mat-checkbox [disabled]="true" [checked]="data.active"></mat-checkbox>
+                    </td>
+                    <td>{{ data.createdAt | date }}</td>
+                    <td>{{ data.updatedAt | date }}</td>
+                </ng-template>
+            </semi-table>
+        </mat-card-content>
+        <mat-card-footer>
+            <mat-paginator></mat-paginator>
+        </mat-card-footer>
+    </mat-card>
+</app-page-wrapper>

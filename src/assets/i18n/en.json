@@ -44,7 +44,7 @@
 	"name": "name",
 	"navbar.dashboard": "Dashboard",
 	"navbar_users": "Users",
-	"navbar_todos": "Todos",
+	"navbar_sessions": "Sessions",
 	"payment_information": "payment_information",
 	"pickup_address": "pickup_address",
 	"placeholder_confirm_password": "Confirm passord",

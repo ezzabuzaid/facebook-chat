@@ -6,7 +6,7 @@ export * from './material.module';
 export * from './breakpoints';
 export * from './ng-smart-table';
 export * from './extract';
-export * from './network-connectivity';
+// export * from './network-connectivity';
 
 export enum EFieldType {
     TEXT,
@@ -28,7 +28,7 @@ export interface ISelectOption {
     value: string;
 }
 
-export interface IField<Tname, T = any> extends FormControl {
+export interface IField<Tname, T> extends FormControl {
     id: string;
     name: Tname;
     type: EFieldType;
@@ -102,10 +102,10 @@ export class DateField<Tname> extends Field<Tname, Date> implements IField<Tname
     }
 }
 
-export class Form<T = any> extends FormGroup {
+export class Form<T> extends FormGroup {
     // TODO: Check if two fields has the same name
     constructor(
-        public fields: IField<keyof T>[],
+        public fields: IField<keyof T, T[keyof T]>[],
         validation?: AbstractControlOptions,
     ) {
         super({}, validation);

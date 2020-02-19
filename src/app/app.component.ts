@@ -7,7 +7,7 @@ import { LanguageService, ELanguage } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SeoService } from '@shared/services/seo/seo.service';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs/operators';
 // import { connectivity } from '@shared/common';
 import { AppUtils } from '@core/helpers/utils';
@@ -40,7 +40,8 @@ export class AppComponent implements OnInit {
     // STUB if requestSubscription success the subscribeToPushNotification result must be true
     // STUB if requestSubscription success the pushNotificationService.subscribe must be called
 
-    // const subscribeToPushNotification = () => from(this.serviceWorkerPushService.requestSubscription({ serverPublicKey: environment.vapidPublicKey }))
+    // const subscribeToPushNotification = () => from(this.serviceWorkerPushService
+    // .requestSubscription({ serverPublicKey: environment.vapidPublicKey }))
     //     .pipe(
     //         tap((subscription) => {
     //             console.log('Subscription => ', subscription);
@@ -77,15 +78,6 @@ export class AppComponent implements OnInit {
     //         // after that sh
     //     });
 
-    if (this.isBrowser) {
-      this.languageService.populate(ELanguage.EN);
-      // TODO PWA Checks if install popup should be appear
-      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-      if (isIos() && !isInStandaloneMode()) {
-        // Popup function!!
-      }
-    }
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({
       title: 'Angular Buildozer Boilerplate',
@@ -101,6 +93,16 @@ export class AppComponent implements OnInit {
       Logger.enableProductionMode();
     }
 
+    if (this.isBrowser) {
+      this.languageService.populate(ELanguage.EN);
+      // TODO PWA Checks if install popup should be appear
+      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      if (isIos() && !isInStandaloneMode()) {
+        // Popup function!!
+      }
+
+    }
     this.router.events.forEach((event: RouterEvent) => {
       if (this.isBrowser && environment.production && event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);

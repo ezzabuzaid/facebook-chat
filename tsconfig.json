@@ -13,6 +13,11 @@
     "target": "es2015",
     "removeComments": true,
     "resolveJsonModule": true,
+    "strict": false,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "pretty": true,
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -51,11 +56,6 @@
     "src/test/*/**"
   ],
   "angularCompilerOptions": {
-    "strictMetadataEmit": false,
-    "skipTemplateCodegen": false,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "trace": true,
-    "annotationsAs": "static fields"
+    "strictTemplates": true
   }
 }
