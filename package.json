@@ -19,8 +19,9 @@
     "build:app-shell": "ng run buildozer:app-shell:production",
     "dev:ssr": "ng run buildozer:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
-    "build:ssr": "ng build --prod && ng run buildozer:server:production",
-    "prerender": "ng run buildozer:prerender"
+    "build:ssr": "npm run build && ng run buildozer:server:production && npm run webpack:server",
+    "prerender": "ng run buildozer:prerender",
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "dependencies": {
     "@angular/animations": "~9.0.0",
