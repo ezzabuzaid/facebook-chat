@@ -9,8 +9,8 @@ import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-
 import { SeoService } from '@shared/services/seo/seo.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs/operators';
-// import { connectivity } from '@shared/common';
 import { AppUtils } from '@core/helpers/utils';
+import { connectivity } from '@shared/common';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
@@ -101,7 +101,21 @@ export class AppComponent implements OnInit {
       if (isIos() && !isInStandaloneMode()) {
         // Popup function!!
       }
-
+      connectivity.observe
+        .subscribe(status => {
+          let snackBarRef: MatSnackBarRef<any> = null;
+          if (AppUtils.isFalsy(status)) {
+            this.renderer.addClass(this.document.body, 'no-connection');
+            snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
+              duration: 1000 * 1000
+            });
+          } else {
+            if (AppUtils.isTruthy(snackBarRef)) {
+              snackBarRef.dismiss();
+            }
+            this.renderer.removeClass(this.document.body, 'no-connection');
+          }
+        });
     }
     this.router.events.forEach((event: RouterEvent) => {
       if (this.isBrowser && environment.production && event instanceof NavigationEnd) {
@@ -125,21 +139,7 @@ export class AppComponent implements OnInit {
         this.snackbar.open('The application has been updated');
       });
 
-    // connectivity.observe
-    //   .subscribe(status => {
-    //     let snackBarRef: MatSnackBarRef<any> = null;
-    //     if (AppUtils.isFalsy(status)) {
-    //       this.renderer.addClass(this.document.body, 'no-connection');
-    //       snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
-    //         duration: 1000 * 1000
-    //       });
-    //     } else {
-    //       if (AppUtils.isTruthy(snackBarRef)) {
-    //         snackBarRef.dismiss();
-    //       }
-    //       this.renderer.removeClass(this.document.body, 'no-connection');
-    //     }
-    //   });
+
   }
 
   get isBrowser() {

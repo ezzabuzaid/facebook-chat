@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { CustomHeaders } from '../http';
@@ -6,22 +6,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
-import { DeviceUUID } from 'device-uuid';
+import { isPlatformBrowser } from '@angular/common';
+import { $window } from '@shared/common';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
     constructor(
         private userService: UserService,
         private snackbar: MatSnackBar,
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        @Inject(PLATFORM_ID) private platformId: any,
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()));
-        if (this.userService.isAuthenticated) {
-            headers = headers.set('Authorization', `${this.tokenService.token}`);
+        // if (this.userService.isAuthenticated) {
+        //     headers = headers.set('Authorization', `${this.tokenService.token}`);
+        // }
+        if (isPlatformBrowser(this.platformId)) {
+            headers = headers.set('x-device-uuid', `${new ($window as any).DeviceUUID().get()}`);
         }
-        headers = headers.set('x-device-uuid', `${new DeviceUUID().get()}`);
         const retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(
