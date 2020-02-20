@@ -15,7 +15,6 @@ import { NavbarCollapseComponent } from './components/navbar-collapse/navbar-col
 import { NavbarHeaderComponent } from './components/navbar-header/navbar-header.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DirectivesModule } from '@shared/directives';
-import { AppShellLoaderModule } from '@widget/app-shell-loader';
 import { PopupModule } from '@widget/popup';
 
 import { GravatarModule } from 'ngx-gravatar';
@@ -30,7 +29,6 @@ import { ChatCardModule } from '@partials/chat-card';
     TranslateModule.forChild(),
     ScrollingModule,
     DirectivesModule,
-    AppShellLoaderModule,
     GravatarModule,
     PopupModule,
     ChatCardModule
