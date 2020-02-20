@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "postinstall": "npm run build:ssr",
     "test:coverage": "rimraf coverage && npm run test --code-coverage",
     "pre-e2e": "webdriver-manager update --standalone false --gecko false",
     "docs": "compodoc -p src/tsconfig.app.json -d docs",
