@@ -55,7 +55,7 @@
                 }
               ],
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
@@ -71,9 +71,11 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
+              "statsJson": true,
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
             }
@@ -85,6 +87,15 @@
             "outputPath": "dist/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }
+            ],
+            "outputHashing": "media",
+            "sourceMap": false,
+            "optimization": true,
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/assets/scss"
@@ -92,29 +103,30 @@
             }
           },
           "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true
-            }
+            "production": {}
           }
         },
-        "app-shell": {
-          "builder": "@angular-devkit/build-angular:app-shell",
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
           "options": {
-            "browserTarget": "buildozer:build",
-            "serverTarget": "buildozer:server",
-            "route": "shell"
+            "browserTarget": "buildozer:build:production",
+            "serverTarget": "buildozer:server:production",
+            "routes": [
+              "/"
+            ]
           },
           "configurations": {
-            "production": {
-              "browserTarget": "buildozer:build:production",
-              "serverTarget": "buildozer:server:production"
-            }
+            "production": {}
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "buildozer:build:production",
+            "serverTarget": "buildozer:server:production"
+          },
+          "configurations": {
+            "production": {}
           }
         },
         "serve": {
@@ -132,6 +144,19 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "buildozer:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "test": {
@@ -157,19 +182,6 @@
             }
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -180,32 +192,6 @@
             "production": {
               "devServerTarget": "buildozer:serve:production"
             }
-          }
-        },
-        "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
-          "options": {
-            "browserTarget": "buildozer:build",
-            "serverTarget": "buildozer:server"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "buildozer:build:production",
-              "serverTarget": "buildozer:server:production"
-            }
-          }
-        },
-        "prerender": {
-          "builder": "@nguniversal/builders:prerender",
-          "options": {
-            "browserTarget": "buildozer:build:production",
-            "serverTarget": "buildozer:server:production",
-            "routes": [
-              "/portal"
-            ]
-          },
-          "configurations": {
-            "production": {}
           }
         }
       }
