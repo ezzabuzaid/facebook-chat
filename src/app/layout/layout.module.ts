@@ -13,10 +13,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NavbarItemComponent } from './components/navbar-item/navbar-item.component';
 import { NavbarCollapseComponent } from './components/navbar-collapse/navbar-collapse.component';
 import { NavbarHeaderComponent } from './components/navbar-header/navbar-header.component';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DirectivesModule } from '@shared/directives';
-import { AppShellLoaderModule } from '@widget/app-shell-loader';
 import { PopupModule } from '@widget/popup';
 
 import { GravatarModule } from 'ngx-gravatar';
@@ -29,10 +27,8 @@ import { ChatCardModule } from '@partials/chat-card';
     MaterialModule,
     SidebarModule,
     TranslateModule.forChild(),
-    PerfectScrollbarModule,
     ScrollingModule,
     DirectivesModule,
-    AppShellLoaderModule,
     GravatarModule,
     PopupModule,
     ChatCardModule

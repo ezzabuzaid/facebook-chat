@@ -29,8 +29,8 @@
     <link rel="icon" type="image/png" href="./assets/images/icons/icon-192x192.png">
     <link rel="apple-touch-icon" href="./assets/images/icons/icon-192x192.png">
 
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icons/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/icons/favicon-32x32.png">
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/icons/favicon-32x32.png"> -->
     <link rel="icon" type="image/png" sizes="128x128" href="/images/touch/icon-128x128.png">
     <link rel="icon" type="image/png" sizes="192x192" href="./assets/images/icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="256x256" href="/images/touch/icon-256x256.png">
@@ -97,11 +97,9 @@
       media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
       rel="apple-touch-startup-image" />
 
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140879795-1"></script> -->
-    <script async defer src='https://www.google-analytics.com/analytics.js'></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgV1woChyZyh90cQU3YA6dy0_6jHs6Fds&libraries=places&language=us&region=JP"
-      async defer></script>
+    <script async defer crossorigin
+      src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
+
   </head>
 
   <body>
@@ -113,13 +111,7 @@
       ga('create', 'UA-XXXXX-Y', 'auto');
       ga('send', 'pageview');
     </script>
-    <!-- <script>
-    Google tag manager
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-140879795-1');
-  </script> -->
+
     <noscript>
       Please enable JavaScript to continue using this application.
       <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MCZKD4B" height="0" width="0"

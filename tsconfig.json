@@ -56,6 +56,11 @@
     "src/test/*/**"
   ],
   "angularCompilerOptions": {
-    "strictTemplates": true
-  }
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "trace": true,
+  },
+  "files": [
+    "server.ts"
+  ]
 }

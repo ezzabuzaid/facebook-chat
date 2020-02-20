@@ -9,8 +9,8 @@ import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-
 import { SeoService } from '@shared/services/seo/seo.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs/operators';
-import { connectivity } from '@shared/common';
 import { AppUtils } from '@core/helpers/utils';
+import { connectivity } from '@shared/common';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
@@ -101,7 +101,6 @@ export class AppComponent implements OnInit {
       if (isIos() && !isInStandaloneMode()) {
         // Popup function!!
       }
-
       connectivity.observe
         .subscribe(status => {
           let snackBarRef: MatSnackBarRef<any> = null;
@@ -139,6 +138,7 @@ export class AppComponent implements OnInit {
         log.debug('this.serviceWorkerUtils.updateActivated => ', update);
         this.snackbar.open('The application has been updated');
       });
+
 
   }
 

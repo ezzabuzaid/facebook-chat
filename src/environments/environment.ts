@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   endpointUrl: 'http://localhost:8080/api/',
-  serverOrigin: 'http://localhost:8080'
+  serverOrigin: 'http://localhost:8080/'
 };
 
 
