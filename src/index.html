@@ -29,8 +29,8 @@
     <link rel="icon" type="image/png" href="./assets/images/icons/icon-192x192.png">
     <link rel="apple-touch-icon" href="./assets/images/icons/icon-192x192.png">
 
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icons/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/icons/favicon-32x32.png">
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/icons/favicon-32x32.png"> -->
     <link rel="icon" type="image/png" sizes="128x128" href="/images/touch/icon-128x128.png">
     <link rel="icon" type="image/png" sizes="192x192" href="./assets/images/icons/icon-192x192.png">
     <link rel="icon" type="image/png" sizes="256x256" href="/images/touch/icon-256x256.png">
@@ -99,9 +99,9 @@
 
     <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140879795-1"></script> -->
     <script async defer src='https://www.google-analytics.com/analytics.js'></script>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgV1woChyZyh90cQU3YA6dy0_6jHs6Fds&libraries=places&language=us&region=JP"
-      async defer></script>
+    <script async defer
+      src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
+
   </head>
 
   <body>
@@ -126,7 +126,8 @@
         style="display:none;visibility:hidden">
       </iframe>
     </noscript>
-    <script src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
+    <script crossorigin
+      src="https://raw.githubusercontent.com/biggora/device-uuid/master/lib/device-uuid.min.js"></script>
   </body>
 
 </html>
