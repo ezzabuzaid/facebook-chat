@@ -23,9 +23,9 @@ export class TeardownInterceptor implements HttpInterceptor {
         // if (this.userService.isAuthenticated) {
         //     headers = headers.set('Authorization', `${this.tokenService.token}`);
         // }
-        if (isPlatformBrowser(this.platformId)) {
-            headers = headers.set('x-device-uuid', `${new ($window as any).DeviceUUID().get()}`);
-        }
+        // if (isPlatformBrowser(this.platformId)) {
+        //     headers = headers.set('x-device-uuid', `${new ($window as any).DeviceUUID().get()}`);
+        // }
         const retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(
