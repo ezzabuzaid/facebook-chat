@@ -37,3 +37,6 @@ For more information on SemVer, please visit <a href="http://semver.org">http://
 <p>After cloning the project run <code>npm install &amp;&amp; ng serve -o</code></p>
 <h5 id="built-with-love-3">Built with love &lt;3</h5>
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTk4MjY3ODY4MV19
+-->
