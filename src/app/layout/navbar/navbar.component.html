@@ -3,14 +3,12 @@
     <header #header>
       <app-navbar-header class="p-3"></app-navbar-header>
     </header>
-    <div>
-      <perfect-scrollbar class="position-relative" [config]="{ suppressScrollX: true }">
-        <ng-container *ngFor="let item of navigationMenu">
-          <app-navbar-item *ngIf="$any(item.type) === 'item'" [item]="item"></app-navbar-item>
-          <app-navbar-collapse *ngIf="$any(item.type) === 'collapse'" [item]="item"></app-navbar-collapse>
-        </ng-container>
-      </perfect-scrollbar>
-    </div>
+    <nav>
+      <ng-container *ngFor="let item of navigationMenu">
+        <app-navbar-item *ngIf="$any(item.type) === 'item'" [item]="item"></app-navbar-item>
+        <app-navbar-collapse *ngIf="$any(item.type) === 'collapse'" [item]="item"></app-navbar-collapse>
+      </ng-container>
+    </nav>
   </div>
   <div sidebar-container>
     <ng-content></ng-content>

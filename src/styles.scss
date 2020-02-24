@@ -1,9 +1,9 @@
-@import "~bootstrap/scss/bootstrap.scss";
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import "./app/app.theme";
-@import "assets/scss/main";
+@import '~bootstrap/scss/bootstrap.scss';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './app/app.theme';
+@import 'assets/scss/main';
 // @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap&subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese");
-@import url("https://fonts.googleapis.com/css?family=Tajawal:200,300,400,500,700,800,900&display=swap&subset=arabic");
+@import url('https://fonts.googleapis.com/css?family=Tajawal:200,300,400,500,700,800,900&display=swap&subset=arabic');
 
 $typography: mat-typography-config(
   $font-family: "'Tajawal', sans-serif",

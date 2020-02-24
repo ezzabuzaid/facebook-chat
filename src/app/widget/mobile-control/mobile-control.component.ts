@@ -1,11 +1,12 @@
 import {
   Component, OnInit, ViewChild, ElementRef, forwardRef,
-  Input, OnChanges, SimpleChanges, ChangeDetectionStrategy
+  Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, Inject, PLATFORM_ID
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, } from '@angular/forms';
 import { PhoneNumberShouldBeAssociatedWithCountry } from '@shared/validators';
 import { AppUtils } from '@core/helpers/utils';
 import { HttpClient } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-mobile-control',
@@ -23,7 +24,7 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   public intlTelInstance = null;
   private _value: any;
   // TODO: remove this after bind the field
-  public control = new FormControl(null, PhoneNumberShouldBeAssociatedWithCountry(this.id));
+  public control: FormControl = null;
 
   @Input() private code: string = null;
   @Input() private autoDetectCountry = true;
@@ -43,7 +44,8 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   onTouched: () => {};
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -54,6 +56,9 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.control = new FormControl(null, PhoneNumberShouldBeAssociatedWithCountry(this.id));
+    }
     try {
       this.intlTelInstance = (window as any).intlTelInput(this.phoneField.nativeElement);
       if (this.autoDetectCountry) {

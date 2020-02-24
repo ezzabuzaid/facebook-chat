@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECustomHeaders } from '../http/http.model';
 import { map } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
-import { connectivity } from '@shared/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { isPlatformBrowser } from '@angular/common';
+import { connectivity } from '@shared/common';
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {
@@ -13,7 +14,8 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
     private defaultSetting = new CustomHeaders();
 
     constructor(
-        private snackbar: MatSnackBar
+        private snackbar: MatSnackBar,
+        @Inject(PLATFORM_ID) private platformId: any,
     ) {
         this.configure(this.defaultSetting);
     }
@@ -22,9 +24,12 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         const headers = this.setCustomHeaders(req.headers);
         this.configure(this.defaultSetting);
 
-        if (AppUtils.isFalsy(connectivity.isOnline)) {
-            this.snackbar.open('The internet connection is not active, please check your connection');
-            return of();
+
+        if (isPlatformBrowser(this.platformId)) {
+            if (AppUtils.isFalsy(connectivity.isOnline)) {
+                this.snackbar.open('The internet connection is not active, please check your connection');
+                return of();
+            }
         }
 
         return next.handle(req.clone({ headers }))

@@ -1,6 +1,5 @@
 
 import { Component, OnInit } from '@angular/core';
-import { PortalModel } from '../../../shared/models/portal.model';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
 import { FormUtils } from '@partials/form';
@@ -9,6 +8,7 @@ import { Validators } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
+import { PortalModel } from '@shared/models';
 
 @Component({
   selector: 'app-login',
