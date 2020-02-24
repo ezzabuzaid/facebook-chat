@@ -17,9 +17,10 @@
     "build": "ng build --prod",
     "build:stats": "ng build --stats-json",
     "build:app-shell": "ng run buildozer:app-shell:production",
+    "build:github": "npm run build --base-href “https://ezzabuzaid.github.io/angular-buildozer/”",
     "dev:ssr": "ng run buildozer:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
-    "build:ssr": "ng build --prod && ng run buildozer:server:production",
+    "build:ssr": "npm run build && ng run buildozer:server:production",
     "prerender": "ng run buildozer:prerender"
   },
   "dependencies": {
