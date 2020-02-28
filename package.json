@@ -10,14 +10,14 @@
     "ng": "ng",
     "e2e": "ng e2e",
     "start": "ng serve -o",
+    "serve:ssr": "node dist/server/main.js",
     "test": "clear && ng test --browsers=ChromeHeadless",
     "test:coverage": "rm -rf ./coverage && ng test --codeCoverage --watch false",
     "lint": "ng lint --fix && stylelint './src/**/*.scss' --fix",
     "build": "ng build --prod",
     "build:ssr": "npm run build && ng run buildozer:server:production",
     "prerender": "ng run buildozer:prerender",
-    "dev:ssr": "ng run buildozer:serve-ssr",
-    "serve:ssr": "node dist/server/main.js"
+    "dev:ssr": "ng run buildozer:serve-ssr"
   },
   "dependencies": {
     "@angular/animations": "~9.0.0",
