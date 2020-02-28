@@ -4,3 +4,4 @@ export * from './logger.interceptor';
 export * from './url.interceptor';
 export * from './progress.interceptor';
 export * from './cache.interceptor';
+export * from './universal/universal.interceptor';

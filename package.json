@@ -1,7 +1,6 @@
 {
   "scripts": {
     "postinstall": "npm run build:ssr",
-    "test:coverage": "rimraf coverage && npm run test --code-coverage",
     "pre-e2e": "webdriver-manager update --standalone false --gecko false",
     "docs": "compodoc -p src/tsconfig.app.json -d docs",
     "docs:serve": "compodoc -p src/tsconfig.app.json -d docs -s",
@@ -10,11 +9,10 @@
     "bundle-report": "npm run build:stats && webpack-bundle-analyzer ./dist/browser/stats-es2015.json",
     "ng": "ng",
     "e2e": "ng e2e",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "test": "clear && ng test --browsers=ChromeHeadless",
-    "lint": "npm run lint:ts && npm run lint:style",
-    "lint:ts": "ng lint --fix",
-    "lint:style": "stylelint './src/**/*.scss' --fix",
+    "test:coverage": "rm -rf ./coverage && ng test --codeCoverage --watch false",
+    "lint": "ng lint --fix && stylelint './src/**/*.scss' --fix",
     "build": "ng build --prod",
     "build:ssr": "npm run build && ng run buildozer:server:production",
     "prerender": "ng run buildozer:prerender",
