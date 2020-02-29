@@ -4,8 +4,9 @@ import { UsersService } from '@shared/services/users';
 import { FormUtils } from '@partials/form';
 import { Form, Field, SelectField } from '@shared/common';
 import { ChatService } from '@shared/services/chat';
-import { ChatModel } from '@shared/models';
+import { ChatModel, UsersModel } from '@shared/models';
 import { Validators } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-group-chat-create',
@@ -13,8 +14,7 @@ import { Validators } from '@angular/forms';
   styleUrls: ['./group-chat-create.component.scss']
 })
 export class GroupChatCreateComponent extends FormUtils<ChatModel.ICreateGroup> implements OnInit {
-  public $users = this.usersService.getUsersWithoutMe();
-
+  public users: UsersModel.IUser[] = [];
 
   constructor(
     private usersService: UsersService,
@@ -56,6 +56,19 @@ export class GroupChatCreateComponent extends FormUtils<ChatModel.ICreateGroup> 
     }
   }
 
-  ngOnInit() { }
+  getUser(id: string) {
+    return this.users.find(user => user._id === id);
+  }
+
+  ngOnInit() {
+    this.usersService.getUsersWithoutMe()
+      .subscribe((users => {
+        this.users = users;
+      }));
+  }
+
+  trackBy(index: number, id: string) {
+    return id;
+  }
 
 }
