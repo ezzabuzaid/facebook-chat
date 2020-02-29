@@ -36,17 +36,16 @@ export class ProgressInterceptor implements HttpInterceptor {
             .pipe(
                 tap(
                     (response) => {
-                        if (this.showSnackbar) {
+                        if (response instanceof HttpResponse && this.showSnackbar) {
                             let text = 'Updated';
                             if (req.method === 'POST') {
                                 text = 'Created';
                             }
                             this.snackbar.open(text);
                         }
-
                     },
                     (error) => {
-                        if (error.message) {
+                        if (error instanceof HttpErrorResponse && error.message) {
                             this.snackbar.open(error.message);
                         }
                     }),
@@ -56,7 +55,6 @@ export class ProgressInterceptor implements HttpInterceptor {
                             snackbarRef.dismiss();
                         }, 500);
                     }
-
                     this.progressBarManager.notify(false);
                     this.formWidgetService.notify(false);
                 }),

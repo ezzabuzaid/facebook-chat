@@ -7,6 +7,7 @@ import {
   ProgressInterceptor,
   SetupInterceptor,
   TeardownInterceptor,
+  UniversalInterceptor,
   CacheInterceptor
 } from './interceptors';
 
@@ -36,6 +37,11 @@ import {
     //   useClass: CacheInterceptor,
     //   multi: true
     // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UniversalInterceptor,
+      multi: true
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ProgressInterceptor,
