@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UsersModel } from '@shared/models';
+import { UsersModel, ChatModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { ChatCardManager, GroupChatCreateComponent } from '@partials/chat-card';
+import { ChatCardManager, GroupChatCreateComponent, UserCardComponent, GroupCharCardComponent } from '@partials/chat-card';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
 
@@ -33,16 +33,16 @@ export class ContainerComponent implements OnInit {
   }
 
   openChatCard(user: UsersModel.IUser) {
-    this.chatCardManager.open(user);
+    this.chatCardManager.open(UserCardComponent, user);
   }
 
-  openGroupChatCard(user: UsersModel.IUser) {
-    this.chatCardManager.open(user);
+  openGroupChatCard(group: ChatModel.IGroup) {
+    this.chatCardManager.open(GroupCharCardComponent, group);
   }
 
   openCreateGroup() {
     const dialogRef = this.dialog.open(GroupChatCreateComponent, {
-      width: '600px'
+      width: '750px'
     });
     dialogRef.disableClose = true;
   }
