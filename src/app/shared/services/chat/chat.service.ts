@@ -13,11 +13,15 @@ export class ChatService {
     ) { }
 
     public createGroup(payload: ChatModel.IGroup) {
-        return this.http.post(Constants.API.CHAT_GROUPS, payload);
+        return this.http.post(Constants.API.CHAT.groups, payload);
     }
 
     public getGroups() {
-        return this.http.get<ChatModel.IGroup[]>(Constants.API.CHAT_GROUPS);
+        return this.http.get<ChatModel.IGroup[]>(Constants.API.CHAT.groups);
+    }
+
+    public getGroupMembers(group_id: string) {
+        return this.http.get<ChatModel.IMember[]>(`${Constants.API.CHAT.members}/${group_id}`);
     }
 
 }

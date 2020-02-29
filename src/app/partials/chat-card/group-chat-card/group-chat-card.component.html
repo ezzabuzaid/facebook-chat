@@ -1,11 +1,18 @@
 <mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z1 p-0">
-    <mat-card-header class="mat-elevation-z3 px-3 py-1 align-items-center bg-warning">
-        <img mat-card-avatar ngxGravatar [email]="user.email" fallback="identicon">
-        <mat-card-title class="mb-1">
-            <small class="text-white">{{user.username}}</small>
-        </mat-card-title>
-        <mat-card-subtitle class="mb-0">Teacher</mat-card-subtitle>
-    </mat-card-header>
+    <div class="mat-elevation-z1 py-1 d-flex align-items-center pl-3 pr-1">
+        <img mat-card-avatar ngxGravatar fallback="identicon">
+        <div class="w-100 d-flex align-items-center justify-content-between ml-3">
+            <h6 class="mb-0">{{data.title}}</h6>
+            <div class="d-flex">
+                <button mat-icon-button (click)="openGroupMembers()">
+                    <mat-icon class="text-muted">group_work</mat-icon>
+                </button>
+                <button mat-icon-button (click)="closeCard()">
+                    <mat-icon class="text-muted">close</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
     <mat-card-content class="d-flex flex-column justify-content-between h-100 mb-0 px-3 pt-3">
         <div>
             <ng-container *ngFor="let message of messages">
