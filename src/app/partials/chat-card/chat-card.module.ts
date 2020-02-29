@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/common';
 import { GravatarModule } from 'ngx-gravatar';
+import { TimeagoModule } from 'ngx-timeago';
 import { ChatCardManager } from './chat-card.manager';
 import { UserCardComponent } from './user-card/user-card.component';
 import { GroupCharCardComponent } from './group-chat-card/group-chat-card.component';
@@ -27,6 +28,7 @@ import { ChatMembersComponent } from './chat-members/chat-members.component';
     MaterialModule,
     GravatarModule,
     FormModule,
+    TimeagoModule,
     UploadFileModule
   ],
   providers: [

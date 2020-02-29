@@ -1,6 +1,6 @@
 <mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z1 p-0">
     <div class="mat-elevation-z1 py-1 d-flex align-items-center pl-3 pr-1">
-        <img mat-card-avatar ngxGravatar fallback="identicon">
+        <img mat-card-avatar [src]="data.logo">
         <div class="w-100 d-flex align-items-center justify-content-between ml-3">
             <h6 class="mb-0">{{data.title}}</h6>
             <div class="d-flex">
@@ -15,8 +15,15 @@
     </div>
     <mat-card-content class="d-flex flex-column justify-content-between h-100 mb-0 px-3 pt-3">
         <div>
-            <ng-container *ngFor="let message of messages">
-                <p>{{message.message}}</p>
+            <ng-container *ngFor="let message of messages; trackBy: trackMessagesBySenderID">
+                <p [class.text-right]="isSender(message.sender_id)">
+                    <span [matTooltip]="getMember(message.sender_id)?.user?.username" matTooltipPosition="after"
+                        class="rounded p-2 text-white" [ngClass]="{
+                        'bg--primary':isSender(message.sender_id),
+                        'bg--accent':!isSender(message.sender_id)
+                    }">{{message.message}}</span>
+                    <!-- <small>{{message | timeago:live}}</small> -->
+                </p>
             </ng-container>
         </div>
         <div>
@@ -37,7 +44,7 @@
         <button mat-icon-button>
             <mat-icon class="text-muted">emoji_emotions</mat-icon>
         </button>
-        <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput?.value)">
+        <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
             <mat-icon class="text-muted">send</mat-icon>
         </button>
     </mat-card-footer>

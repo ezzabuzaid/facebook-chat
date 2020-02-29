@@ -5,6 +5,7 @@ import { environment } from '@environments/environment';
 import { TokenService } from '@core/helpers/token';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '..';
+import { AppUtils } from '@core/helpers/utils';
 
 class Room {
   constructor(
@@ -40,9 +41,9 @@ export class UserCardComponent implements OnInit, IChatCard<UsersModel.IUser> {
   ngOnInit() {
     this.room = new Room(this.tokenService.decodedToken.id, this.data._id);
 
-    this.socket.emit('JoinRoom', this.room);
 
     this.socket.on('connect', () => {
+      this.socket.emit('JoinRoom', this.room);
       console.log('connected');
 
       this.socket.on('Message', (message) => {
@@ -53,9 +54,13 @@ export class UserCardComponent implements OnInit, IChatCard<UsersModel.IUser> {
 
   }
 
-  sendMessage(text: string) {
-    const message = new Message(text);
-    this.socket.emit('SendMessage', { ...this.room, ...message });
+  sendMessage(input: HTMLTextAreaElement) {
+    const text = input.value;
+    if (AppUtils.isTruthy(text)) {
+      const message = new Message(text);
+      this.socket.emit('SendMessage', { ...this.room, ...message });
+    }
+    input.value = '';
   }
 
   closeCard() {

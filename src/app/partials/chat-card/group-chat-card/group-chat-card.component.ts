@@ -6,6 +6,9 @@ import { TokenService } from '@core/helpers/token';
 import { IChatCard } from '..';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatMembersComponent } from '../chat-members/chat-members.component';
+import { ChatCardManager } from '../chat-card.manager';
+import { AppUtils } from '@core/helpers/utils';
+import { ChatService } from '@shared/services/chat';
 
 class Room {
   constructor(
@@ -30,18 +33,26 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
   public data: ChatModel.IGroup;
   public socket = io(environment.serverOrigin);
   public room: Room = null;
+  public members: ChatModel.IMember[] = [];
 
-  public messages = [];
+  public messages: (Message & Room)[] = [];
 
   constructor(
     private tokenService: TokenService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private chatCardManager: ChatCardManager,
+    private chatService: ChatService,
   ) { }
 
   ngOnInit() {
+    this.chatService.getGroupMembers(this.data._id)
+      .subscribe(members => {
+        this.members = members;
+      });
+
     this.room = new Room(this.tokenService.decodedToken.id, this.data._id);
 
-    this.socket.emit('JoinRoom', this.room);
+    this.socket.emit('JoinGroup', this.room);
 
     this.socket.on('connect', () => {
       console.log('connected');
@@ -54,15 +65,35 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
 
   }
 
-  sendMessage(text: string) {
-    const message = new Message(text);
-    this.socket.emit('SendMessage', { ...this.room, ...message });
+  sendMessage(input: HTMLTextAreaElement) {
+    const text = input.value;
+    if (AppUtils.isTruthy(text)) {
+      const message = new Message(text);
+      this.messages.push({ ...this.room, ...message });
+      this.socket.emit('SendGroupMessage', { ...this.room, ...message });
+      console.log(this.room.sender_id);
+    }
+    input.value = '';
   }
 
-  closeCard() { }
+  closeCard() {
+    this.chatCardManager.close(this.id);
+  }
 
   openGroupMembers() {
     this.dialog.open(ChatMembersComponent, { data: this.data });
+  }
+
+  isSender(id: string) {
+    return this.tokenService.decodedToken.id === id;
+  }
+
+  getMember(id: string) {
+    return this.members.find(member => member.user._id === id);
+  }
+
+  trackMessagesBySenderID(index: string, message: (Room & Message)) {
+    return message.sender_id;
   }
 
 }

@@ -20,7 +20,7 @@ export class UsersService {
     }
 
     public searchForUsers(name: string) {
-        return this.http.get<UsersModel.IUser[]>(`${Constants.API.users}/${name}`);
+        return this.http.get<UsersModel.IUser[]>(`${Constants.API.users.search}/${name}`);
     }
 
     public getUsersWithoutMe() {

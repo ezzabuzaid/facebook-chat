@@ -20,7 +20,7 @@
                     <mat-label>Search for people to add</mat-label>
                     <input matInput #searchInput (input)="searchForUsers(searchInput?.value)">
                 </mat-form-field>
-                <mat-selection-list [formControlName]="getName('members')">
+                <mat-selection-list class="scrollable-list" [formControlName]="getName('members')">
                     <h3 mat-subheader>Friends</h3>
                     <mat-list-option *ngFor="let user of users" [value]="user._id">
                         <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
@@ -31,7 +31,7 @@
             <div class="col-5">
                 <h6 mat-subheader class="text-muted d-flex justify-content-between align-items-center">Selected:
                     <span>{{getControlValue('members')?.length}}</span></h6>
-                <mat-list>
+                <mat-list class="scrollable-list">
                     <mat-list-item *ngFor="let user of getControlValue('members'); trackBy: trackBy;">
                         <ng-container *ngIf="getUser($any(user)) as userInfo">
                             <img mat-list-avatar ngxGravatar [email]="userInfo?.email" fallback="identicon">

@@ -46,6 +46,7 @@
     "intl-tel-input": "^16.0.8",
     "ngx-gravatar": "^8.0.0",
     "ngx-infinite-scroll": "^8.0.0",
+    "ngx-timeago": "^1.0.4",
     "rxjs": "~6.5.4",
     "socket.io-client": "^2.3.0",
     "tslib": "^1.10.0",
