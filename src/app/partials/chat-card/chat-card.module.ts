@@ -8,13 +8,15 @@ import { GroupCharCardComponent } from './group-chat-card/group-chat-card.compon
 import { GroupChatCreateComponent } from './group-chat-create/group-chat-create.component';
 import { FormModule } from '@partials/form';
 import { UploadFileModule } from '@widget/upload-file';
+import { ChatMembersComponent } from './chat-members/chat-members.component';
 
 
 @NgModule({
   declarations: [
     UserCardComponent,
     GroupCharCardComponent,
-    GroupChatCreateComponent
+    GroupChatCreateComponent,
+    ChatMembersComponent
   ],
   exports: [
     UserCardComponent,
