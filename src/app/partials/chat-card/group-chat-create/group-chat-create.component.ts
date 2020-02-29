@@ -7,6 +7,7 @@ import { ChatService } from '@shared/services/chat';
 import { ChatModel, UsersModel } from '@shared/models';
 import { Validators } from '@angular/forms';
 import { tap } from 'rxjs/operators';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-group-chat-create',
@@ -15,6 +16,7 @@ import { tap } from 'rxjs/operators';
 })
 export class GroupChatCreateComponent extends FormUtils<ChatModel.ICreateGroup> implements OnInit {
   public users: UsersModel.IUser[] = [];
+  private tempUsers: UsersModel.IUser[] = [];
 
   constructor(
     private usersService: UsersService,
@@ -56,6 +58,17 @@ export class GroupChatCreateComponent extends FormUtils<ChatModel.ICreateGroup> 
     }
   }
 
+  searchForUsers(name: string) {
+    if (AppUtils.isFalsy(name)) {
+      this.users = this.tempUsers;
+    } else {
+      this.usersService.searchForUsers(name)
+        .subscribe((users) => {
+          this.users = users;
+        });
+    }
+  }
+
   getUser(id: string) {
     return this.users.find(user => user._id === id);
   }
@@ -64,6 +77,7 @@ export class GroupChatCreateComponent extends FormUtils<ChatModel.ICreateGroup> 
     this.usersService.getUsersWithoutMe()
       .subscribe((users => {
         this.users = users;
+        this.tempUsers = users;
       }));
   }
 

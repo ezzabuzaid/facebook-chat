@@ -18,7 +18,7 @@
             <div class="col-7">
                 <mat-form-field appearance="legacy">
                     <mat-label>Search for people to add</mat-label>
-                    <input matInput>
+                    <input matInput #searchInput (input)="searchForUsers(searchInput?.value)">
                 </mat-form-field>
                 <mat-selection-list [formControlName]="getName('members')">
                     <h3 mat-subheader>Friends</h3>
