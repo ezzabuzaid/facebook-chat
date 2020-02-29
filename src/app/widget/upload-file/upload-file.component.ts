@@ -31,7 +31,12 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png'];
-  @HostBinding('class.drag-over') dragOverClass = false;
+  @Input() type: EUploadFileType = 'verbose';
+
+  @HostBinding('class.box') get isBox() { return this.type === 'box'; }
+  @HostBinding('class.verpose') get isVerpose() { return this.type === 'verbose'; }
+
+  @HostBinding('class.drag-over') public dragOverClass = false;
 
   changeValue: (value: string) => void = null;
 
@@ -120,3 +125,8 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   }
 
 }
+
+
+
+
+export type EUploadFileType = 'box' | 'verbose';
