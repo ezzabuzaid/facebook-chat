@@ -10,12 +10,7 @@
     width: 30px !important;
     height: 30px !important;
   }
-  $right-top-radius: 35px;
   mat-card {
-    border-top-right-radius: $right-top-radius;
-    mat-card-header {
-      border-top-right-radius: $right-top-radius;
-    }
     mat-card-content {
       textarea {
         font-size: 14px;

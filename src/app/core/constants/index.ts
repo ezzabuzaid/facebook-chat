@@ -46,8 +46,22 @@ export namespace Constants {
 
   export class API {
     static readonly LOGIN = 'portal/login';
-    static readonly users = 'users';
-    static readonly CHAT_GROUPS = 'groups';
+    static readonly users = {
+      base: 'users',
+      get search() {
+        return this.base + '/search'
+      }
+    };
+    static readonly CHAT = {
+      base: '',
+      get groups() {
+        return this.base + 'groups';
+      },
+      get members() {
+        return `members/${this.groups}`;
+      }
+    };
+
     static readonly SESSIONS = {
       base: 'sessions',
       get deactivate() {

@@ -8,6 +8,7 @@ import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
 import { isPlatformBrowser } from '@angular/common';
 import { $window } from '@shared/common';
+import { AppUtils } from '@core/helpers/utils';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
@@ -20,12 +21,12 @@ export class TeardownInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()));
-        // if (this.userService.isAuthenticated) {
-        //     headers = headers.set('Authorization', `${this.tokenService.token}`);
-        // }
-        // if (isPlatformBrowser(this.platformId)) {
-        //     headers = headers.set('x-device-uuid', `${new ($window as any).DeviceUUID().get()}`);
-        // }
+        if (this.userService.isAuthenticated) {
+            headers = headers.set('Authorization', `${this.tokenService.token}`);
+        }
+        if (isPlatformBrowser(this.platformId)) {
+            headers = headers.set('x-device-uuid', `${navigator.userAgent}`);
+        }
         const retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(

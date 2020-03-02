@@ -112,7 +112,7 @@
             "browserTarget": "buildozer:build:production",
             "serverTarget": "buildozer:server:production",
             "routes": [
-              "/"
+              "/portal"
             ]
           },
           "configurations": {
@@ -122,8 +122,8 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "buildozer:build:production",
-            "serverTarget": "buildozer:server:production"
+            "browserTarget": "buildozer:build",
+            "serverTarget": "buildozer:server"
           },
           "configurations": {
             "production": {}

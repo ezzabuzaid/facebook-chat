@@ -1,14 +1,22 @@
-<label class="file-upload position-relative pointer" [for]="id" [class.uploaded]="value">
+<label [ngClass]="[type]" class="file-upload position-relative pointer mb-0" [for]="id" [class.uploaded]="value">
   <input [id]="id" accept="image/*" #fileInput (change)="uploadFile(fileInput?.files[0])" hidden type="file" />
   <div class="content d-flex flex-column align-items-center justify-content-center h-100">
     <ng-container *ngIf="!value">
-      <mat-icon class="upload-icon text--primary mb-3">cloud_upload</mat-icon>
-      <h6>Drag and drop files here</h6>
-      <span class="mb-3">or</span>
-      <button (click)="openBrowserSelectWindow(fileInput)" mat-stroked-button color="primary">Select a file</button>
+      <ng-container [ngTemplateOutlet]="isBox ? box : verpose"></ng-container>
     </ng-container>
     <ng-container *ngIf="value">
       <img [src]="value | safe:'url'" class="w-100 h-100" alt="avatar">
     </ng-container>
   </div>
 </label>
+
+<ng-template #box>
+  <mat-icon color="primary">cloud_upload</mat-icon>
+</ng-template>
+
+<ng-template #verpose>
+  <mat-icon class="upload-icon text--primary mb-3">cloud_upload</mat-icon>
+  <h6>Drag and drop files here</h6>
+  <span class="mb-3">or</span>
+  <button (click)="openBrowserSelectWindow(fileInput)" mat-stroked-button color="primary">Select a file</button>
+</ng-template>

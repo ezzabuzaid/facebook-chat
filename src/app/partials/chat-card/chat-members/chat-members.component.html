@@ -1,0 +1,12 @@
+<mat-tab-group>
+    <mat-tab label="Members">
+        <mat-list>
+            <mat-list-item *ngFor="let member of ($members | async)">
+                <img mat-card-avatar ngxGravatar [email]="member.user.email" fallback="identicon">
+                <h3 matLine> {{member.user.username}} </h3>
+                <span matLine *ngIf="member.isAdmin" class="text-muted"> Admin </span>
+            </mat-list-item>
+        </mat-list>
+    </mat-tab>
+    <mat-tab label="Admins"> Content 2 </mat-tab>
+</mat-tab-group>

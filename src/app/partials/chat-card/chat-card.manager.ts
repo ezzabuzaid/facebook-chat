@@ -1,12 +1,12 @@
-import { ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, Injectable } from '@angular/core';
+import { ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, Injectable, Type } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { UsersModel } from '@shared/models';
-import { UserCardComponent } from './user-card/user-card.component';
+import { IChatCard } from './index';
 
 @Injectable()
 export class ChatCardManager {
     public static count = 0;
-    components = new Map<string, ComponentRef<UserCardComponent>>();
+    private components = new Map<string, ComponentRef<IChatCard<any>>>();
 
     constructor(
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -14,14 +14,14 @@ export class ChatCardManager {
         private injector: Injector
     ) { }
 
-    open(user: UsersModel.IUser) {
+    open<T>(component: Type<IChatCard<T>>, data: T) {
         const id = AppUtils.generateAlphabeticString();
-        const factory = this.componentFactoryResolver.resolveComponentFactory(UserCardComponent);
+        const factory = this.componentFactoryResolver.resolveComponentFactory(component);
         const componentRef = factory.create(this.injector);
-        const componentElement = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+        const componentElement = this.getElement(componentRef);
 
         componentRef.instance.id = id;
-        componentRef.instance.user = user;
+        componentRef.instance.data = data;
         componentElement.style.setProperty('right', `calc(${300 * ChatCardManager.count}px + 15% + ${ChatCardManager.count++}%)`);
 
         this.appRef.attachView(componentRef.hostView);
@@ -34,6 +34,16 @@ export class ChatCardManager {
         const componentRef = this.components.get(id);
         this.appRef.detachView(componentRef.hostView);
         componentRef.destroy();
+        ChatCardManager.count--;
+        console.log(ChatCardManager.count);
+        this.components.forEach((component) => {
+            const componentElement = this.getElement(component);
+            componentElement.style.setProperty('right', `calc(${300 * ChatCardManager.count}px + 15% + ${ChatCardManager.count}%)`);
+        });
+    }
+
+    getElement(componentRef: ComponentRef<IChatCard<any>>) {
+        return (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
     }
 
 }

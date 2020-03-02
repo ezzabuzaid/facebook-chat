@@ -1,6 +1,12 @@
+import { IModel } from './response.model';
+import { UsersModel } from './users.model';
+
 export namespace ChatModel {
-    export interface IGroup {
-        _id: string;
+    export interface IMember extends IModel {
+        isAdmin: boolean;
+        user: UsersModel.IUser;
+    }
+    export interface IGroup extends IModel {
         title: string;
         logo: string;
     }
