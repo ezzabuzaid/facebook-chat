@@ -2,11 +2,12 @@ import {
   Component, OnInit, ViewChild, ElementRef, forwardRef,
   Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, Inject, PLATFORM_ID
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PhoneNumberShouldBeAssociatedWithCountry } from '@shared/validators';
 import { AppUtils } from '@core/helpers/utils';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { IField } from '@shared/common';
 
 @Component({
   selector: 'app-mobile-control',
@@ -20,14 +21,12 @@ import { isPlatformBrowser } from '@angular/common';
   }]
 })
 export class MobileControlComponent implements OnInit, OnChanges, ControlValueAccessor {
-  public id = AppUtils.generateRandomString(5);
-  public intlTelInstance = null;
-  private _value: any;
-  // TODO: remove this after bind the field
-  public control: FormControl = null;
+  private intlTelInstance = null;
+  private _value: string;
 
   @Input() private code: string = null;
   @Input() private autoDetectCountry = true;
+  @Input() public formControl: IField<any, string> = null;
 
   @ViewChild('phoneField', { static: true }) private phoneField: ElementRef<HTMLElement>;
 
@@ -36,11 +35,23 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
     this.notifyValueChange();
   }
 
+  get selectedCountryCode() {
+    const country = this.intlTelInstance.getSelectedCountryData();
+    return country && country.dialCode;
+  }
+
   get value() {
+    const hasDialCode = AppUtils.equals(
+      this._value.startsWith(this.selectedCountryCode),
+      this._value.startsWith('+', this.selectedCountryCode)
+    );
+    if (AppUtils.isFalsy(hasDialCode)) {
+      return this.selectedCountryCode + this._value;
+    }
     return this._value;
   }
 
-  onChange: (value) => {};
+  onChange: (value: string) => {};
   onTouched: () => {};
 
   constructor(
@@ -56,9 +67,14 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.control = new FormControl(null, PhoneNumberShouldBeAssociatedWithCountry(this.id));
+    if (this.autoDetectCountry && this.code) {
+      throw new TypeError('you can not use [autoDetectCountry] along with [code]');
     }
+
+    this.formControl.setValidators([this.formControl.validator, PhoneNumberShouldBeAssociatedWithCountry(this.formControl.id)])
+
+    if (isPlatformBrowser(this.platformId)) { }
+
     try {
       this.intlTelInstance = (window as any).intlTelInput(this.phoneField.nativeElement);
       if (this.autoDetectCountry) {
@@ -70,8 +86,7 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
       } else {
         this.ngOnChanges(null);
       }
-    } catch (error) {
-    }
+    } catch (error) { }
   }
 
   public updateModel(value: string) {
@@ -80,7 +95,6 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
 
   notifyValueChange(): void {
     if (this.onChange) {
-      String();
       this.onChange(this.value);
     }
   }
@@ -88,7 +102,6 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   writeValue(obj: any) {
     if (obj) {
       this._value = obj;
-      this.control.setValue(obj);
       this.intlTelInstance.setNumber(obj);
     }
   }
