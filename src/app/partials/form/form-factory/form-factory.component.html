@@ -1,7 +1,7 @@
 <ng-container *ngIf="field.typeOf(types.TEXT)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="text" matInput [formControl]="field">
+        <input type="text" [autocomplete]="field.autocomplete" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.PASSWORD)">
@@ -12,13 +12,12 @@
                 suffix:,
             },
         );
-
         and split the field to be base class in order to RawField to extend it.
         RawField shouldn't have the style object.
     -->
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input #input type="password" autocomplete="new-password" matInput [formControl]="field">
+        <input #input type="password" [autocomplete]="field.autocomplete" matInput [formControl]="field">
         <mat-icon (click)="input.type === 'text' ? 'password' : 'text'" matSuffix>lock</mat-icon>
     </mat-form-field>
 </ng-container>
@@ -31,7 +30,7 @@
 <ng-container *ngIf="field.typeOf(types.EMAIL)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="email" matInput autocomplete="email" [formControl]="field">
+        <input type="email" matInput [autocomplete]="field.autocomplete || 'email'" [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.NUMBER)">

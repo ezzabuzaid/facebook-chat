@@ -37,6 +37,7 @@ export interface IField<Tname, T> extends FormControl {
     section: string;
     validation: AbstractControlOptions;
     options?: ISelectOption[];
+    autocomplete?: string;
     min?: T;
     max?: T;
     typeOf(type: EFieldType): boolean;
@@ -48,6 +49,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
     public label: string = null;
     public value: T = null;
     public id = null;
+    public autocomplete = '';
     public validation: AbstractControlOptions = {
         validators: [],
         asyncValidators: [],
@@ -61,7 +63,8 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
             type,
             label,
             section,
-            id
+            id,
+            autocomplete
         }: Partial<Field<Tname, T>> = {}
     ) {
         super(value, validation);
@@ -69,6 +72,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         this.section = section;
         this.label = label;
         this.id = id || AppUtils.generateRandomString(10);
+        this.autocomplete = autocomplete;
     }
 
     public typeOf(type: EFieldType) {

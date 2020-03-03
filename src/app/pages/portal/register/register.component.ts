@@ -24,20 +24,24 @@ export class RegisterComponent extends FormUtils<PortalModel.IRegister> implemen
     super(new Form<PortalModel.IRegister>([
       new Field('username', {
         label: 'placeholder_username',
+        autocomplete: 'username',
         validation: { validators: [Validators.required] }
       }),
       new Field('email', {
         type: EFieldType.EMAIL,
+        autocomplete: 'email',
         label: 'placeholder_email',
         validation: { validators: [Validators.required] }
       }),
       new Field('password', {
         type: EFieldType.PASSWORD,
+        autocomplete: 'new-password',
         label: 'placeholder_password',
         validation: { validators: [Validators.required] }
       }),
       new Field('mobile', {
         type: EFieldType.TEL,
+        autocomplete: 'mobile',
         label: 'placeholder_mobile',
         validation: { validators: [Validators.required] }
       }),
@@ -54,8 +58,6 @@ export class RegisterComponent extends FormUtils<PortalModel.IRegister> implemen
 
   register() {
     const { valid, value } = this.form;
-    // TODO: Locked step, the RawField should be finished first in order to to activated this function
-    // const country = this.form.getComponent(MobileControlComponent).getCountry();
     if (valid) {
       this.userService.register(value)
         .subscribe(() => {
