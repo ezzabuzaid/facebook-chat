@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Location } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 
 declare const ga: any;
 
@@ -10,17 +10,25 @@ export class AnalyticsService {
   public enabled: boolean;
 
   constructor(
-    private location: Location,
+    public router: Router
   ) {
     this.enabled = false;
   }
 
-  trackPageViews() {
-    ga('send', { hitType: 'pageview', page: this.location.path() });
+  trackPageViews(pagePath: string) {
+    ga('send', { hitType: 'pageview', page: pagePath });
   }
 
-  trackEvent(eventName: string) {
-    ga('send', 'event', eventName);
+  trackEvent<T>(event: T) {
+    ga('send', 'event', event);
+  }
+
+  recordPageNavigation() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.trackPageViews(event.urlAfterRedirects);
+      }
+    });
   }
 
 }

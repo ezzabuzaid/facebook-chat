@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { first, mergeMap, tap } from 'rxjs/operators';
+import { first, mergeMap, tap, concatMap, switchMap } from 'rxjs/operators';
 import { interval, concat } from 'rxjs';
 import { Logger } from '@core/helpers/logger';
 
@@ -17,18 +17,14 @@ export class ServiceWorkerUtils {
   ) { }
 
   checkEveryHour(hour = 5) {
-    const $appIsStable = this.applicationRef.isStable
+    const time = hour * 60 * 60 * 1000;
+    return this.applicationRef.isStable
       .pipe(
         first(isStable => isStable === true),
-        tap((stable) => log.debug('$appIsStable => ', stable))
+        tap((stable) => log.debug('$appIsStable => ', stable)),
+        switchMap(() => interval(time)),
+        switchMap(() => this.updates.checkForUpdate())
       );
-    const $interval = interval(hour * 60 * 60);
-    log.debug('will check every', hour * 60 * 60);
-    concat($appIsStable, $interval)
-      .pipe(mergeMap((data) => {
-        log.debug('this.updates.checkForUpdate => ', data);
-        return this.updates.checkForUpdate();
-      }));
   }
 
 }
