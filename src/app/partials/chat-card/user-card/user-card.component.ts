@@ -66,5 +66,13 @@ export class UserCardComponent implements OnInit, IChatCard<UsersModel.IUser> {
   closeCard() {
     this.chatCardManager.close(this.id);
   }
+  showEmojiPicker = false;
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmoji(emoji) {
+
+  }
 
 }

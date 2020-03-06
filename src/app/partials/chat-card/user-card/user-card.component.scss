@@ -12,9 +12,27 @@
   }
   mat-card {
     mat-card-content {
+      mat-form-field {
+        ::ng-deep {
+          .mat-form-field-wrapper {
+            padding: 0 !important;
+          }
+        }
+      }
       textarea {
         font-size: 14px;
       }
+    }
+  }
+  .footer-action-icon {
+    color: #afaeae;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+    margin: 0rem 0.25rem;
+    cursor: pointer;
+    :hover {
+      color: #8e8c8c;
     }
   }
 }

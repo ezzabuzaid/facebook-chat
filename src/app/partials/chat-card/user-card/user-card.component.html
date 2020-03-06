@@ -4,12 +4,8 @@
         <div class="w-100 d-flex align-items-center justify-content-between ml-3">
             <h6 class="mb-0">{{data.username}}</h6>
             <div class="d-flex">
-                <button mat-icon-button>
-                    <mat-icon class="text-muted">add</mat-icon>
-                </button>
-                <button mat-icon-button (click)="closeCard()">
-                    <mat-icon class="text-muted">close</mat-icon>
-                </button>
+                <mat-icon class="footer-action-icon">add</mat-icon>
+                <mat-icon (click)="closeCard()" class="footer-action-icon">close</mat-icon>
             </div>
         </div>
     </div>
@@ -28,17 +24,14 @@
         </div>
     </mat-card-content>
     <mat-card-footer class="m-0 d-flex align-items-center">
-        <button mat-icon-button>
-            <mat-icon class="text-muted">more_vert</mat-icon>
-        </button>
-        <button mat-icon-button>
-            <mat-icon class="text-muted">attach_file</mat-icon>
-        </button>
-        <button mat-icon-button>
-            <mat-icon class="text-muted">emoji_emotions</mat-icon>
-        </button>
+        <mat-icon class="footer-action-icon">add_photo_alternate</mat-icon>
+        <mat-icon class="footer-action-icon">emoji_emotions</mat-icon>
+        <mat-icon class="footer-action-icon">attach_file</mat-icon>
+        <mat-icon class="footer-action-icon">photo_camera</mat-icon>
+        <!-- <emoji-mart class="emoji-mart" set="emojione" (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"
+                title="Pick your emoji…"></emoji-mart> -->
         <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
-            <mat-icon class="text-muted">send</mat-icon>
+            <mat-icon class="footer-action-icon">send</mat-icon>
         </button>
     </mat-card-footer>
 </mat-card>

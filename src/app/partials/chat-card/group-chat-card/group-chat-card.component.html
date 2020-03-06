@@ -29,8 +29,9 @@
         <div>
             <mat-divider></mat-divider>
             <mat-form-field [appearance]="$any('none')">
-                <textarea placeholder="Write a message" matInput #messageInput cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+                <textarea placeholder="Write a message" (keyup.enter)="sendMessage(messageInput)" matInput #messageInput
+                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"></textarea>
             </mat-form-field>
         </div>
     </mat-card-content>
@@ -38,11 +39,11 @@
         <button mat-icon-button>
             <mat-icon class="text-muted">more_vert</mat-icon>
         </button>
+        <!-- <button mat-icon-button> -->
+        <mat-icon class="text-muted">attach_file</mat-icon>
+        <!-- </button> -->
         <button mat-icon-button>
-            <mat-icon class="text-muted">attach_file</mat-icon>
-        </button>
-        <button mat-icon-button>
-            <mat-icon class="text-muted">emoji_emotions</mat-icon>
+            <ngx-emoji emoji="santa" set="emojione" [size]="16"></ngx-emoji>
         </button>
         <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
             <mat-icon class="text-muted">send</mat-icon>

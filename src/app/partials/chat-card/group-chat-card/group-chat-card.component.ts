@@ -92,7 +92,7 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
     return this.members.find(member => member.user._id === id);
   }
 
-  trackMessagesBySenderID(index: string, message: (Room & Message)) {
+  trackMessagesBySenderID(index: number, message: (Room & Message)) {
     return message.sender_id;
   }
 
