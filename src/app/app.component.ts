@@ -97,6 +97,17 @@ export class AppComponent implements OnInit {
 
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
+
+      this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
+      this.serviceWorkerUtils.updateAvailable
+        .pipe(switchMap(() => this.snackbar.open('An update is available', 'Activate!').onAction()))
+        .subscribe(() => {
+          location.reload();
+        });
+      this.serviceWorkerUtils.updateActivated
+        .subscribe((updte) => {
+          this.snackbar.open('The application has been updated');
+        });
     }
 
     if (this.isBrowser) {
@@ -125,16 +136,6 @@ export class AppComponent implements OnInit {
           this.renderer.removeClass(affectedElement, noConnectionClass);
         }
       });
-      this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
-      this.serviceWorkerUtils.updateAvailable
-        .pipe(switchMap(() => this.snackbar.open('An update is available', 'Activate!').onAction()))
-        .subscribe(() => {
-          location.reload();
-        });
-      this.serviceWorkerUtils.updateActivated
-        .subscribe((updte) => {
-          this.snackbar.open('The application has been updated');
-        });
     }
 
   }
