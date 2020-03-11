@@ -45,6 +45,7 @@
 	"navbar.dashboard": "Dashboard",
 	"navbar_users": "Users",
 	"navbar_sessions": "Sessions",
+	"navbar_media": "Media hub",
 	"payment_information": "payment_information",
 	"pickup_address": "pickup_address",
 	"placeholder_confirm_password": "Confirm passord",

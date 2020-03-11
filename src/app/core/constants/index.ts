@@ -41,6 +41,10 @@ export namespace Constants {
       withSlash: '/sessions',
       withoutSlash: 'sessions',
     };
+    static MediaHub = {
+      withSlash: '/media',
+      withoutSlash: 'media',
+    };;
 
   }
 
