@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector, PLATFORM_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,25 @@ import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { StaticPagesModule } from './pages/static/static-pages.module';
 import { PopupModule } from '@widget/popup';
 import { ProgressBarModule } from '@widget/progress-bar';
+import { isPlatformBrowser } from '@angular/common';
+
+
+export const localStorageFactory = (injector: Injector) => {
+  console.log('PLATFORM_ID', injector.get(PLATFORM_ID));
+  if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
+    return new LocalStorage('buildozer');
+  }
+  return {};
+};
+
+export const sessionStorageFactory = (injector: Injector) => {
+  console.log('PLATFORM_ID', injector.get(PLATFORM_ID));
+  if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
+    return new SessionStorage('buildozer');
+  }
+  return {};
+};
+
 
 @NgModule({
   declarations: [
@@ -46,11 +65,13 @@ import { ProgressBarModule } from '@widget/progress-bar';
     },
     {
       provide: LocalStorage,
-      useValue: new LocalStorage()
+      useFactory: localStorageFactory,
+      deps: [Injector]
     },
     {
       provide: SessionStorage,
-      useValue: new SessionStorage('storage')
+      useFactory: sessionStorageFactory,
+      deps: [Injector]
     }
   ],
   bootstrap: [AppComponent]
