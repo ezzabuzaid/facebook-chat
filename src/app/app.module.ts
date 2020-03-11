@@ -32,7 +32,9 @@ export const sessionStorageFactory = (injector: Injector) => {
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
     return new SessionStorage('buildozer');
   }
-  return {};
+  return {
+    get(param: string) { },
+  } as Partial<SessionStorage>;
 };
 
 
