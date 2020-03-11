@@ -24,7 +24,9 @@ export const localStorageFactory = (injector: Injector) => {
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
     return new LocalStorage('buildozer');
   }
-  return {};
+  return {
+    get(param: string) { },
+  } as Partial<LocalStorage>;
 };
 
 export const sessionStorageFactory = (injector: Injector) => {
