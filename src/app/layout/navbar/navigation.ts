@@ -25,9 +25,15 @@ export default [
     type: 'item'
   }),
   new NavigationItem({
+    routerLink: `${Constants.Routing.MediaHub.withSlash}`,
+    icon: 'folder',
+    title: _extract('navbar_media'),
+    type: 'item'
+  }),
+  new NavigationItem({
     routerLink: `${Constants.Routing.SESSIONS.withSlash}`,
     icon: 'assistant',
     title: _extract('navbar_sessions'),
     type: 'item'
-  })
+  }),
 ];

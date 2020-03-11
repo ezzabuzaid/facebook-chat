@@ -1,9 +1,9 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { CustomHeaders } from '../http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError } from 'rxjs/operators';
+import { catchError, retryWhen, delay, mergeMap } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
 import { isPlatformBrowser } from '@angular/common';
@@ -24,17 +24,15 @@ export class TeardownInterceptor implements HttpInterceptor {
         if (this.userService.isAuthenticated) {
             headers = headers.set('Authorization', `${this.tokenService.token}`);
         }
-        if (isPlatformBrowser(this.platformId)) {
-            headers = headers.set('x-device-uuid', `${navigator.userAgent}`);
-        }
-        const retryCount = 0;
+        headers = headers.set('x-device-uuid', `${navigator.userAgent}`);
+
+        // const retryCount = 0;
         return next.handle(req.clone({ headers }))
             .pipe(
+                // TODO: implement retry
                 // retryWhen((source) => {
-                // NOTE: this is a special case where retry will depend on the business rule,
-                // so it's vary from application to another
                 //     return source.pipe(
-                //         delay(1000),
+                //         delay(3000),
                 //         mergeMap((error)=> retryCount > 3 ? throwError(error) : of(error) )
                 //     );
                 // }),

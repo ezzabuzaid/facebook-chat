@@ -15,6 +15,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/sessions/sessions.module').then(module => module.SessionsModule)
       },
       {
+        path: Constants.Routing.MediaHub.withoutSlash,
+        loadChildren: () => import('../pages/media-hub/media-hub.module').then(module => module.MediaHubModule)
+      },
+      {
         path: ':moduleName',
         loadChildren: () => import('../pages/generic-crud/generic-crud.module').then(module => module.GenericCrudModule)
       },
