@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { IField } from '@shared/common';
 
 @Component({
   selector: 'app-country-control',
@@ -14,18 +15,18 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 })
 export class CountryControlComponent implements OnInit, ControlValueAccessor {
   @Input() public placeholder: string = null;
-  public control = new FormControl(null);
-  // TODO: the countries should be fetched from [intl] lib or provided by user
-  public countries;
-  private _value: any;
-  public currentCountry;
+  @Input() public countries = [];
+  @Input() public formControl: IField<any, string> = null;
 
-  set value(value: any) {
+  private _value: string;
+  public currentCountry = null;
+
+  set value(value) {
     this._value = value;
     this.notifyValueChange();
   }
 
-  get value(): any {
+  get value() {
     return this._value;
   }
 
@@ -46,14 +47,14 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
   }
 
   public getCountry() {
-    return this.countries.find(el => el.code === this.control.value);
+    return this.countries.find(el => el.code === this.formControl.value);
   }
 
   writeValue(obj: string) {
     if (obj) {
       obj = obj.toUpperCase();
       this._value = obj;
-      this.control.setValue(obj);
+      this.formControl.setValue(obj);
     }
   }
 

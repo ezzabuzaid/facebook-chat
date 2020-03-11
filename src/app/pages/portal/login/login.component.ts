@@ -26,6 +26,7 @@ export class LoginComponent extends FormUtils<PortalModel.ILogin> implements OnI
       new Form([
         new Field('username', {
           label: 'placeholder_username',
+          autocomplete: 'username',
           validation: {
             validators: Validators.required
           }
@@ -33,6 +34,7 @@ export class LoginComponent extends FormUtils<PortalModel.ILogin> implements OnI
         new Field('password', {
           label: 'placeholder_passowrd',
           type: EFieldType.PASSWORD,
+          autocomplete: 'current-password',
           validation: {
             validators: Validators.required
           }

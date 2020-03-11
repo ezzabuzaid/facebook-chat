@@ -1,7 +1,7 @@
 import { Component, Inject, PLATFORM_ID, Renderer2, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Logger } from '@core/helpers/logger';
-import { NavigationEnd, ActivatedRoute, Router, RouterEvent } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService, ELanguage } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
@@ -11,6 +11,7 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { connectivity } from '@shared/common';
+import { AnalyticsService } from '@shared/services/analytics';
 
 declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
     private serviceWorkerUtils: ServiceWorkerUtils,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
+    private analyticService: AnalyticsService
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -93,52 +95,48 @@ export class AppComponent implements OnInit {
       Logger.enableProductionMode();
     }
 
+    if (this.isBrowser && environment.production) {
+      this.analyticService.recordPageNavigation();
+
+      this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
+      this.serviceWorkerUtils.updateAvailable
+        .pipe(switchMap(() => this.snackbar.open('An update is available', 'Activate!').onAction()))
+        .subscribe(() => {
+          location.reload();
+        });
+      this.serviceWorkerUtils.updateActivated
+        .subscribe((updte) => {
+          this.snackbar.open('The application has been updated');
+        });
+    }
+
     if (this.isBrowser) {
       this.languageService.populate(ELanguage.EN);
+
       // TODO PWA Checks if install popup should be appear
       const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
       const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
       if (isIos() && !isInStandaloneMode()) {
         // Popup function!!
       }
-      connectivity.observe
-        .subscribe(status => {
-          let snackBarRef: MatSnackBarRef<any> = null;
-          if (AppUtils.isFalsy(status)) {
-            this.renderer.addClass(this.document.body, 'no-connection');
-            snackBarRef = this.snackbar.open('No connection, please check you internet!', '', {
-              duration: 1000 * 1000
-            });
-          } else {
-            if (AppUtils.isTruthy(snackBarRef)) {
-              snackBarRef.dismiss();
-            }
-            this.renderer.removeClass(this.document.body, 'no-connection');
+
+      connectivity.observe.subscribe(status => {
+        const noConnectionClass = 'no-connection';
+        const affectedElement = this.document.body;
+        let snackBarRef: MatSnackBarRef<any> = null;
+        if (AppUtils.isFalsy(status)) {
+          this.renderer.addClass(affectedElement, noConnectionClass);
+          snackBarRef = this.snackbar.open('No connection, please check you internet!', 'Refresh!', {
+            duration: 1000 * 1000
+          });
+        } else {
+          if (AppUtils.isTruthy(snackBarRef)) {
+            snackBarRef.dismiss();
           }
-        });
+          this.renderer.removeClass(affectedElement, noConnectionClass);
+        }
+      });
     }
-    this.router.events.forEach((event: RouterEvent) => {
-      if (this.isBrowser && environment.production && event instanceof NavigationEnd) {
-        ga('set', 'page', event.urlAfterRedirects);
-        ga('send', 'pageview');
-      }
-    });
-
-    this.serviceWorkerUtils.checkEveryHour(1);
-    this.serviceWorkerUtils.updateAvailable
-      .pipe(switchMap((update) => {
-        log.debug('this.serviceWorkerUtils.updateAvailable => ', update);
-        return this.snackbar.open('An update is available', 'Activate!').onAction();
-      }))
-      .subscribe((update) => {
-        location.reload();
-      });
-    this.serviceWorkerUtils.updateActivated
-      .subscribe((update) => {
-        log.debug('this.serviceWorkerUtils.updateActivated => ', update);
-        this.snackbar.open('The application has been updated');
-      });
-
 
   }
 

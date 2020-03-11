@@ -11,6 +11,8 @@ import { FormModule } from '@partials/form';
 import { UploadFileModule } from '@widget/upload-file';
 import { ChatMembersComponent } from './chat-members/chat-members.component';
 
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ChatMembersComponent } from './chat-members/chat-members.component';
     GravatarModule,
     FormModule,
     TimeagoModule,
-    UploadFileModule
+    UploadFileModule,
+    PickerModule,
+    EmojiModule
   ],
   providers: [
     ChatCardManager

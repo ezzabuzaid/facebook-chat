@@ -5,6 +5,7 @@ import { FormContainerComponent } from './form-container/form-container.componen
 import { MaterialModule } from '@shared/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MobileControlModule } from '@widget/mobile-control';
+import { CountryControlModule } from '@widget/country-control';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MobileControlModule } from '@widget/mobile-control';
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    MobileControlModule
+    MobileControlModule,
+    CountryControlModule
   ],
 })
 export class FormModule { }

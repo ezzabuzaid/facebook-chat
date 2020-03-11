@@ -34,6 +34,7 @@
     "@angular/router": "~9.0.0",
     "@angular/service-worker": "~9.0.0",
     "@auth0/angular-jwt": "^4.0.0",
+    "@ctrl/ngx-emoji-mart": "^2.0.0",
     "@ezzabuzaid/document-storage": "^0.3.1",
     "@nguniversal/express-engine": "^9.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
@@ -89,7 +90,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm run build && git add ."
+      "pre-commit": "npm run lint && npm run build:ssr && git add ."
     }
   },
   "name": "angular-buildozer",
