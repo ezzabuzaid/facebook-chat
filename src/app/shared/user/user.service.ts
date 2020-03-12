@@ -37,10 +37,14 @@ export class UserService extends Listener<boolean> {
     return this.http.post('users', payload);
   }
 
+  refreshToken() {
+    // TODO: Implement refresh token
+  }
+
   public logout() {
-    this.state.next(this.isAuthenticated);
-    this.tokenService.deleteToken();
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
+    this.tokenService.deleteToken();
+    this.state.next(this.isAuthenticated);
     // TODO: Implement logout endpoing
     return of();
   }

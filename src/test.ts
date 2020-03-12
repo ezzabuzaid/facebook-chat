@@ -1,4 +1,3 @@
-import 'hammerjs';
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
 import 'zone.js/dist/zone-testing';
@@ -9,7 +8,7 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpService } from '@core/http';
-import { LocalStorage } from '@ezzabuzaid/document-storage';
+import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CoreModule } from '@core/core.module';
@@ -32,10 +31,8 @@ import { RouterTestingModule } from '@angular/router/testing';
       provide: HttpClient,
       useClass: HttpService
     },
-    {
-      provide: LocalStorage,
-      useValue: new LocalStorage('test')
-    }
+    LocalStorage,
+    SessionStorage
   ],
 })
 export class TestModule { }
@@ -44,10 +41,10 @@ declare const require: any;
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
+  [BrowserDynamicTestingModule, TestModule],
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-const context = require.context('./app/pages/portal/login', true, /\.spec\.ts$/);
+const context = require.context('./app/core', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);

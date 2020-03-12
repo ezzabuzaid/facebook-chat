@@ -10,6 +10,8 @@ import {
   UniversalInterceptor,
   CacheInterceptor
 } from './interceptors';
+import { CacheDatabase } from './helpers/cache';
+import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
 
 
 @NgModule({
@@ -17,6 +19,10 @@ import {
     CommonModule,
   ],
   providers: [
+    {
+      provide: CacheDatabase,
+      useValue: new AsyncDatabase(new IndexedDB('cache'))
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SetupInterceptor,
