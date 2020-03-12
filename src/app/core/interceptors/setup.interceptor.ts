@@ -28,8 +28,8 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         if (isPlatformBrowser(this.platformId)) {
             if (AppUtils.isFalsy(connectivity.isOnline)) {
                 this.snackbar.open('The internet connection is not active, please check your connection');
-                return of();
             }
+            return of();
         }
 
         return next.handle(req.clone({ headers }))
