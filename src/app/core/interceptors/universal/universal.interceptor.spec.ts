@@ -33,20 +33,37 @@ describe(`UniversalInterceptor`, () => {
             configureTestModule({} as Request);
         });
 
-        it('should not change absolute or protocol-relative url', () => {
+        it('should not change absolute url', () => {
             const httpClient = TestBed.inject(HttpClient);
-
             const httpMock = TestBed.inject(HttpTestingController);
+
             const httpURL = 'http://test.com/api/users';
-            httpClient.get(httpURL).subscribe();
+            const secureUrl = 'https://test.com/api/users';
+
+            httpClient
+                .configure({ DEFAULT_URL: false })
+                .get(httpURL)
+                .subscribe();
+
+            httpClient
+                .configure({ DEFAULT_URL: false })
+                .get(secureUrl)
+                .subscribe();
+
             httpMock.expectOne(httpURL);
+            httpMock.expectOne(secureUrl);
+        });
 
-            const secureURL = 'https://test.com/api/users';
-            httpClient.get(secureURL).subscribe();
-            httpMock.expectOne(secureURL);
-
+        it('should not change protocol relative url', () => {
+            const httpClient = TestBed.inject(HttpClient);
+            const httpMock = TestBed.inject(HttpTestingController);
             const protocolRelativeURL = '//test.com/api/users';
-            httpClient.get(protocolRelativeURL).subscribe();
+
+            httpClient
+                .configure({ DEFAULT_URL: false })
+                .get(protocolRelativeURL)
+                .subscribe();
+
             httpMock.expectOne(protocolRelativeURL);
         });
     });
@@ -58,17 +75,23 @@ describe(`UniversalInterceptor`, () => {
 
         it('should update relative URL to absolute', () => {
             const httpClient = TestBed.inject(HttpClient);
-
             const httpMock = TestBed.inject(HttpTestingController);
-            const relative_1 = 'api/users';
-            httpClient.get(relative_1).subscribe();
-            const absolute_1 = `${protocol}://${host}/${relative_1}`;
-            httpMock.expectOne(absolute_1);
+            const firstRelative = 'api/users';
+            const firstAbsolute = `${protocol}://${host}/${firstRelative}`;
+            const secondRelative = '/api/accounts';
+            const secondAbsolute = `${protocol}://${host}${secondRelative}`;
 
-            const relative_2 = '/api/accounts';
-            httpClient.get(relative_2).subscribe();
-            const absolute_2 = `${protocol}://${host}${relative_2}`;
-            httpMock.expectOne(absolute_2);
+            httpClient
+                .configure({ DEFAULT_URL: false })
+                .get(firstRelative)
+                .subscribe();
+            httpClient
+                .configure({ DEFAULT_URL: false })
+                .get(secondRelative)
+                .subscribe();
+
+            httpMock.expectOne(firstAbsolute);
+            httpMock.expectOne(secondAbsolute);
         });
 
 
