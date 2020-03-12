@@ -1,11 +1,26 @@
-import { Observable, of, EMPTY, throwError, Observer } from 'rxjs';
+import { Observable, of, EMPTY, throwError, Observer, Subject } from 'rxjs';
 export class AppUtils {
+
     static isObjectEmpty(obj: object) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key))
                 return false;
         }
         return true;
+    }
+
+    /**
+     * check if all values inside an object is a falsy type,
+     * NOTE: no deep check
+     * @param object 
+     */
+    static isAllObjectKeysEmpty(object: { [key: string]: any }) {
+        for (const key in object) {
+            if (object[key] === undefined || object[key] === '') {
+                return true;
+            }
+        }
+        return false;
     }
 
     static generateAlphabeticString(stringLength = 5) {
@@ -20,6 +35,37 @@ export class AppUtils {
         return randomString;
     }
 
+    static generate<T>(length: number, callback: (index: number) => T) {
+        const foo = [];
+        for (let i = 0; i <= length; i++) {
+            foo.push(callback(i));
+        }
+        return foo;
+    }
+
+    static generateRandomString(length: number) {
+        let string = '';
+        const randomchar = () => {
+            const number = Math.floor(Math.random() * 62);
+            if (number < 10) {
+                return number;
+            }
+            if (number < 36) {
+                return String.fromCharCode(number + 55);
+            }
+            return String.fromCharCode(number + 61);
+        };
+
+        while (string.length < length) {
+            string += randomchar();
+        }
+        return string;
+    }
+
+    static flattenArray(data: any[]) {
+        return data.reduce((a, b) => a.concat(b), []);
+    }
+
     static readFile(file: File) {
         return new Observable((observer: Observer<string | ArrayBuffer>) => {
             const reader = new FileReader();
@@ -31,9 +77,40 @@ export class AppUtils {
         });
     }
 
+    static unsubscribe(subscription: Subject<any>) {
+        subscription.next();
+        subscription.complete();
+    }
+
     static preventBubblingAndCapturing(event: Event) {
         event.preventDefault();
+        event.stopImmediatePropagation();
         event.stopPropagation();
+    }
+
+    static debounce(func: () => void, wait: number, immediate = false) {
+        let timeout: any;
+
+        return function executedFunction() {
+            const later = () => {
+                timeout = null;
+                if (!immediate) {
+                    func.apply(this, arguments);
+                }
+            };
+
+            const callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) {
+                func.apply(this, arguments);
+            }
+        };
+    }
+
+    static cloneObject<T>(target: T, source: Partial<T> = {}): T {
+        const clone = JSON.parse(JSON.stringify(target));
+        return Object.assign(clone, source);
     }
 
     static mapEnumToValueAnd(enumObject: object): { title: string, value: any }[] {
@@ -56,27 +133,13 @@ export class AppUtils {
         return lastUpdate < Date.now() - maxAge;
     }
 
-    static generateRandomString(length: number) {
-        let string = '';
-        const randomchar = () => {
-            const number = Math.floor(Math.random() * 62);
-            if (number < 10) {
-                return number;
-            }
-            if (number < 36) {
-                return String.fromCharCode(number + 55);
-            }
-            return String.fromCharCode(number + 61);
-        };
-
-        while (string.length < length) {
-            string += randomchar();
-        }
-        return string;
-    }
-
-    // NOTE merge and return unique list from two lists
-    static mergeList<T>(concatTo: Partial<T>[], filterFrom: Partial<T>[], key: keyof T) {
+    /**
+     * merge and return unique list from two lists
+     * @param concatTo
+     * @param filterFrom 
+     * @param key to filter upon
+     */
+    static mergeListOfObjects<T>(concatTo: Partial<T>[], filterFrom: Partial<T>[], key: keyof T) {
         return concatTo.concat(filterFrom.filter(one => !concatTo.find(two => two[key] === one[key])));
     }
 
@@ -128,6 +191,7 @@ export class AppUtils {
     static compose<T, Y>(...functions: ((arg: T | Y) => T)[]) {
         return (args: T | Y) => functions.reduceRight((acc, fn) => fn(acc), args);
     }
+
     /**
      *
      * @param functions Accept array of function to invoke in order,
@@ -136,7 +200,6 @@ export class AppUtils {
     static pipe<T, Y>(...functions: ((arg: T | Y) => T)[]) {
         return (args: T | Y) => functions.reduce((acc, fn) => fn(acc), args);
     }
-
 
     /**
      * remove all falsy props from an object expect empty string
@@ -247,11 +310,11 @@ export function tryOrThrow<T>(cb: (...args: any) => T) {
 
 export function tryOrComplete<T>(
     condition: boolean,
-    observable: Observable<T> | Promise<T>,
+    observable: () => Observable<T> | Promise<T>,
     defaultValue: T = null
 ) {
     if (condition) {
-        return observable;
+        return observable();
     }
     return of(defaultValue);
 }
@@ -260,4 +323,4 @@ export type PickAttr<T, P extends keyof T> = T[P];
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export interface KeyPairs<T> {
     [key: string]: T;
-}
+} 
