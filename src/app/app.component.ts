@@ -12,8 +12,8 @@ import { switchMap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { connectivity } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
+import { UserService } from '@shared/user';
 
-declare const ga: (...args: any[]) => void;
 const log = new Logger('AppComponent');
 @Component({
   selector: 'app-root',
@@ -33,7 +33,8 @@ export class AppComponent implements OnInit {
     private serviceWorkerUtils: ServiceWorkerUtils,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
-    private analyticService: AnalyticsService
+    private analyticService: AnalyticsService,
+    private userService: UserService
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -97,6 +98,12 @@ export class AppComponent implements OnInit {
 
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
+
+      window.addEventListener('beforeunload', (event) => {
+        if (this.userService.oneTimeLogin()) {
+          this.userService.logout();
+        }
+      });
 
       this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
       this.serviceWorkerUtils.updateAvailable

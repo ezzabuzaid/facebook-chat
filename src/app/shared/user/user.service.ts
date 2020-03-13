@@ -9,6 +9,7 @@ import { UserModel } from './user.model';
 import { AppUtils } from '@core/helpers/utils';
 import { Listener } from '@core/helpers/listener';
 import { ResponseModel } from '@shared/models';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class UserService extends Listener<boolean> {
   public login(payload) {
     return this.http
       .configure({ FULL_RESPONSE: true })
-      .post<{ refreshToken: string; token: string; }>(Constants.API.LOGIN, payload)
+      .post<{ refreshToken: string; token: string; }>(Constants.API.PORTAL.logout, payload)
       .pipe(
         tap((data) => {
           this.notify(this.isAuthenticated);
@@ -45,12 +46,24 @@ export class UserService extends Listener<boolean> {
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
     this.tokenService.deleteToken();
     this.state.next(this.isAuthenticated);
-    // TODO: Implement logout endpoing
-    return of();
+    return navigator.sendBeacon(
+      `${environment.endpointUrl}${Constants.API.PORTAL.logout}`,
+      JSON.stringify({
+        [Constants.Application.DEVICE_UUID]: this.getDeviceUUID()
+      })
+    );
   }
 
   public get isAuthenticated() {
     return this.tokenService.isLogged && AppUtils.isFalsy(this.tokenService.isExpired);
+  }
+
+  getDeviceUUID() {
+    return navigator.userAgent;
+  }
+
+  oneTimeLogin() {
+    return this.tokenService.oneTimeLogin;
   }
 
 }
