@@ -95,9 +95,15 @@ export class Logger {
     Logger.level = LogLevel.Warning;
   }
 
-  constructor(private source?: string) {
-    // objects = objects.map(value => [`${colors.FgBlue}`, value]);
-    // this.log(console.log, LogLevel.Info, [source]);
+  constructor(private header?: string) { }
+
+  private mapObjects(objects, color) {
+    return objects.map(object => {
+      try {
+        object = JSON.parse(object);
+      } catch (error) { }
+      return [`${color}`, JSON.stringify(object)];
+    });
   }
 
   /**
@@ -105,8 +111,7 @@ export class Logger {
    * Works the same as console.log().
    */
   debug(...objects: any[]) {
-    objects = objects.map(value => [`${colors.FgBlue}`, value]);
-    this.log(console.log, LogLevel.Debug, objects);
+    this.log(console.log, LogLevel.Debug, this.mapObjects(objects, colors.FgMagenta));
   }
 
   /**
@@ -114,8 +119,7 @@ export class Logger {
    * Works the same as console.log().
    */
   info(...objects: any[]) {
-    objects = objects.map(value => [`${colors.FgGreen}`, value]);
-    this.log(console.log, LogLevel.Info, objects);
+    this.log(console.log, LogLevel.Info, this.mapObjects(objects, colors.FgGreen));
   }
 
   /**
@@ -123,8 +127,7 @@ export class Logger {
    * Works the same as console.log().%c
    */
   warn(...objects: any[]) {
-    objects = objects.map(value => [`${colors.BgYellow}`, value]);
-    this.log(console.warn, LogLevel.Warning, objects, false);
+    this.log(console.warn, LogLevel.Info, this.mapObjects(objects, colors.BgYellow));
   }
 
   /**
@@ -143,7 +146,7 @@ export class Logger {
       } else {
         flating = objects;
       }
-      const log = this.source ? ['[' + this.source + ']'].concat(flating) : objects;
+      const log = this.header ? ['[' + this.header + ']'].concat(flating) : objects;
       func.call(console, log.join(' '));
     }
   }

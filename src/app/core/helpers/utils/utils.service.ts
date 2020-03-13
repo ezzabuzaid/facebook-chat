@@ -294,7 +294,11 @@ export class AppUtils {
     }
 
     static equals<T>(...values: T[]) {
-        return values.every((val, i, arr) => JSON.stringify(val) === JSON.stringify(arr[0]));
+        return values.every((value, i, arr) => JSON.stringify(value) === JSON.stringify(arr[0]));
+    }
+
+    static notEquals<T>(...values: T[]) {
+        return !this.equals(...values);
     }
 
 }
