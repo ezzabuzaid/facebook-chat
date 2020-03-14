@@ -8,7 +8,6 @@ import { Constants } from '@core/constants';
 import { UserModel } from './user.model';
 import { AppUtils } from '@core/helpers/utils';
 import { Listener } from '@core/helpers/listener';
-import { ResponseModel } from '@shared/models';
 import { environment } from '@environments/environment';
 
 @Injectable({
@@ -25,7 +24,7 @@ export class UserService extends Listener<boolean> {
   public login(payload) {
     return this.http
       .configure({ FULL_RESPONSE: true })
-      .post<{ refreshToken: string; token: string; }>(Constants.API.PORTAL.logout, payload)
+      .post<{ refreshToken: string; token: string; }>(Constants.API.PORTAL.login, payload)
       .pipe(
         tap((data) => {
           this.notify(this.isAuthenticated);
@@ -43,15 +42,10 @@ export class UserService extends Listener<boolean> {
   }
 
   public logout() {
+    navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}/${this.getDeviceUUID()}`);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
     this.tokenService.deleteToken();
     this.state.next(this.isAuthenticated);
-    return navigator.sendBeacon(
-      `${environment.endpointUrl}${Constants.API.PORTAL.logout}`,
-      JSON.stringify({
-        [Constants.Application.DEVICE_UUID]: this.getDeviceUUID()
-      })
-    );
   }
 
   public get isAuthenticated() {
@@ -59,7 +53,13 @@ export class UserService extends Listener<boolean> {
   }
 
   getDeviceUUID() {
-    return navigator.userAgent;
+    let guid = navigator.mimeTypes.length as any;
+    guid += navigator.userAgent.replace(/\D+/g, '');
+    guid += navigator.plugins.length;
+    guid += screen.height || '';
+    guid += screen.width || '';
+    guid += screen.pixelDepth || '';
+    return guid;
   }
 
   oneTimeLogin() {
