@@ -8,11 +8,12 @@ import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SeoService } from '@shared/services/seo/seo.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { connectivity } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { UserService } from '@shared/user';
+import { partition } from 'rxjs';
 
 const log = new Logger('AppComponent');
 @Component({
@@ -99,11 +100,7 @@ export class AppComponent implements OnInit {
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
 
-      window.addEventListener('beforeunload', (event) => {
-        if (this.userService.oneTimeLogin()) {
-          this.userService.logout();
-        }
-      });
+
 
       this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
       this.serviceWorkerUtils.updateAvailable
@@ -118,6 +115,13 @@ export class AppComponent implements OnInit {
     }
 
     if (this.isBrowser) {
+      window.addEventListener('unload', (event) => {
+        // FIXME F this fire every time the browser refreshed
+        if (this.userService.oneTimeLogin()) {
+          this.userService.logout();
+          return "";
+        }
+      });
       this.languageService.populate(ELanguage.EN);
 
       // TODO PWA Checks if install popup should be appear
@@ -127,22 +131,26 @@ export class AppComponent implements OnInit {
         // Popup function!!
       }
 
-      connectivity.observe.subscribe(status => {
-        const noConnectionClass = 'no-connection';
-        const affectedElement = this.document.body;
-        let snackBarRef: MatSnackBarRef<any> = null;
-        if (AppUtils.isFalsy(status)) {
+      const [$offline, $online] = partition(connectivity.observe, AppUtils.isFalsy);
+      const noConnectionClass = 'no-connection';
+      const affectedElement = this.document.body;
+      $online.subscribe(() => {
+        this.snackbar.dismiss();
+        this.renderer.removeClass(affectedElement, noConnectionClass);
+      })
+      $offline.pipe(
+        switchMap(() => {
+          let snackBarRef: MatSnackBarRef<any> = null;
           this.renderer.addClass(affectedElement, noConnectionClass);
-          snackBarRef = this.snackbar.open('No connection, please check you internet!', 'Refresh!', {
-            duration: 1000 * 1000
-          });
-        } else {
-          if (AppUtils.isTruthy(snackBarRef)) {
-            snackBarRef.dismiss();
-          }
-          this.renderer.removeClass(affectedElement, noConnectionClass);
-        }
-      });
+          this.snackbar.open(
+            'No connection, please check you internet!',
+            'Refresh!',
+            { duration: 1000 * 1000 });
+          return snackBarRef.onAction();
+        }),
+        tap(() => location.reload())
+      )
+        .subscribe()
     }
 
   }
