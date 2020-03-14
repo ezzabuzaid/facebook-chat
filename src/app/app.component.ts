@@ -140,13 +140,12 @@ export class AppComponent implements OnInit {
       })
       $offline.pipe(
         switchMap(() => {
-          let snackBarRef: MatSnackBarRef<any> = null;
           this.renderer.addClass(affectedElement, noConnectionClass);
-          this.snackbar.open(
+          return this.snackbar.open(
             'No connection, please check you internet!',
             'Refresh!',
-            { duration: 1000 * 1000 });
-          return snackBarRef.onAction();
+            { duration: 1000 * 1000 })
+            .onAction();
         }),
         tap(() => location.reload())
       )
