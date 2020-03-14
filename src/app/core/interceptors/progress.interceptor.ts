@@ -18,10 +18,8 @@ export class ProgressInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.showSnackbar = getHeader(req.headers, ECustomHeaders.SNACKBAR) && req.method !== HttpMethod.GET;
-        let snackbarRef: MatSnackBarRef<any> = null;
-
         if (this.showSnackbar) {
-            Promise.resolve(null).then(() => snackbarRef = this.snackbar.open('Please wait', '', { duration: 500000 }));
+            Promise.resolve(null).then(() => this.snackbar.open('Please wait', '', { duration: 500000 }));
         }
 
         if (getHeader(req.headers, ECustomHeaders.FORM_PROGRESS_BAR)) {
@@ -36,6 +34,7 @@ export class ProgressInterceptor implements HttpInterceptor {
             .pipe(
                 tap(
                     (response) => {
+                        // TODO to be removed
                         if (response instanceof HttpResponse && this.showSnackbar) {
                             let text = 'Updated';
                             if (req.method === 'POST') {
@@ -45,16 +44,11 @@ export class ProgressInterceptor implements HttpInterceptor {
                         }
                     },
                     (error) => {
-                        if (error instanceof HttpErrorResponse && error.message) {
-                            this.snackbar.open(error.message);
+                        if (error instanceof HttpErrorResponse && error.error) {
+                            this.snackbar.open(error.error.message);
                         }
                     }),
                 finalize(() => {
-                    if (snackbarRef) {
-                        setTimeout(() => {
-                            snackbarRef.dismiss();
-                        }, 500);
-                    }
                     this.progressBarManager.notify(false);
                     this.formWidgetService.notify(false);
                 }),

@@ -49,7 +49,7 @@ export class TeardownInterceptor implements HttpInterceptor {
                                 break;
                         }
                     }
-                    return throwError(event.error);
+                    return throwError(event);
                 })
             );
     }
