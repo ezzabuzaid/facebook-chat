@@ -2,7 +2,7 @@ import { Component, OnInit, forwardRef, Input, HostListener, HostBinding } from 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UploadFileService } from '@shared/services/upload';
+import { UploadService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 
 @Component({
@@ -19,7 +19,7 @@ import { AppUtils } from '@core/helpers/utils';
 })
 export class UploadFileComponent implements OnInit, ControlValueAccessor {
   constructor(
-    private uploadFileService: UploadFileService,
+    private uploadFileService: UploadService,
     private snackBar: MatSnackBar,
     private translateService: TranslateService
   ) { }
