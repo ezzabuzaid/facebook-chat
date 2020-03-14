@@ -9,15 +9,8 @@
       transform: scale(0.5) rotateZ(180deg);
     }
   }
-  .avatar {
-    width: 40px;
-    min-width: 40px;
-    height: 40px;
-    line-height: 40px;
-    margin: 0 8px 0 0;
-    border-radius: 50%;
-    font-size: 17px;
-    font-weight: 600;
-    text-align: center;
+  img {
+    width: 50px !important;
+    height: 50px !important;
   }
 }

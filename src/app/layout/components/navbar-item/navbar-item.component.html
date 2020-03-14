@@ -5,10 +5,7 @@
 <ng-template #normalItem>
   <button [routerLink]="item?.routerLink" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
     class="d-flex align-items-center w-100 pointer rounded-0 navbar-item py-2 px-4" [class.py-3]="toggled">
-    <div class="d-flex align-items-center" [ngClass]="{ 
-        'justify-content-center': toggled, 
-        'justify-content-between': !toggled 
-    }">
+    <div class="d-flex align-items-center justify-content-between">
       <ng-container *ngTemplateOutlet="title"></ng-container>
       <div class="navbar-item__pin" (click)="addShortcut()">
         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
