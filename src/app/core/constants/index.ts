@@ -50,13 +50,23 @@ export namespace Constants {
   }
 
   export class API {
+    static readonly UPLOADS = {
+      base: 'uploads',
+      get folder() {
+        return this.base + '/folders'
+      },
+      get files() {
+        return this.folder + '/files'
+      },
+    };
+
     static readonly PORTAL = {
       base: 'portal',
       get login() {
-        return this.base + 'login'
+        return this.base + '/login'
       },
       get logout() {
-        return this.base + 'logout'
+        return this.base + '/logout'
       }
     };
     static readonly users = {
