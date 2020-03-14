@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadService } from '@shared/services/upload';
+import { AppUtils } from '@core/helpers/utils';
+import { MediaModel } from '@shared/models';
 
 @Component({
   selector: 'app-media-hub-folders',
@@ -6,10 +9,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./media-hub-folders.component.scss']
 })
 export class MediaHubFoldersComponent implements OnInit {
-  folders = [{ name: 'test folder', updated: Date.now() }]
-  constructor() { }
+  folders: MediaModel.IFolder[] = [];
+  files: MediaModel.IFile[] = [];
+  createFolderActive = false;
 
-  ngOnInit(): void {
+  constructor(
+    private uploadsService: UploadService
+  ) { }
+
+  ngOnInit() {
+    this.getFolders();
+  }
+
+  createFolder(name: string) {
+    if (AppUtils.isTruthy(name)) {
+      this.createFolderActive = !this.createFolderActive;
+      this.uploadsService.createFolder(name)
+        .subscribe(() => {
+          this.toggleFolderCreation();
+        })
+    }
+  }
+
+  toggleFolderCreation() {
+    this.createFolderActive = !this.createFolderActive;
+  }
+
+  getFolderFiles(folder: MediaModel.IFolder) {
+    this.uploadsService.getFolderFiles(folder._id)
+      .subscribe(data => {
+        this.files = data;
+      })
+  }
+  getFolders() {
+    this.uploadsService.getFolders()
+      .subscribe(data => {
+        this.folders = data;
+      })
   }
 
 }

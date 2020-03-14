@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-media-hub-gate',
@@ -9,7 +10,7 @@ export class MediaHubGateComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }
