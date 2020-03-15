@@ -17,22 +17,25 @@ export class IModel {
     }
 }
 
-
-export interface ListEntityRes<T> {
-    items: T[];
-    pageNumber: number;
-    pagesCount: number;
+export class Query {
+    [key: string]: string | number;
 }
 
-export class PlainQuery<T extends { [key: string]: string | number }> {
+export class PlainQuery<T extends Query> {
     asString: string;
     queryObject: T;
     constructor(queryObject: T) {
         this.queryObject = queryObject;
         this.asString = AppUtils.convertObjectToQueryParams(queryObject);
     }
-
 }
+
+export interface ListEntityResponse<T> {
+    items: T[];
+    pageNumber: number;
+    pagesCount: number;
+}
+
 export class ListEntityQuery {
     page: number;
     size: number;
