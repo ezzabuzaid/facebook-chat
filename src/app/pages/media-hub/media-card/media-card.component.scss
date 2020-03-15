@@ -1,0 +1,12 @@
+:host {
+  .title {
+    width: 100%;
+    word-break: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  img {
+    max-height: 200px;
+  }
+}

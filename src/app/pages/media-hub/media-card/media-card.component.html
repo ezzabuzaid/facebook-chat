@@ -1,9 +1,9 @@
 <mat-card class="mat-elevation-z0 border">
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <img mat-card-image [src]="file.path" [alt]="file.name">
     <mat-card-content>
-        <h6 class="">Astarta holding</h6>
+        <h6 class="title">{{file.name}}</h6>
         <div class="d-flex align-items-center justify-content-between">
-            <span class="text-uppercase bg-secondary p-1 rounded">Jpg</span>
+            <span class="text-uppercase bg-secondary p-1 rounded">{{file.type}}</span>
             <span class="text-uppercase">323 kb</span>
         </div>
     </mat-card-content>
