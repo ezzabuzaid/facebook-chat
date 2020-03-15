@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UploadService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 import { MediaModel } from '@shared/models';
+import { MediaHubManager } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-hub-folders',
@@ -9,12 +10,13 @@ import { MediaModel } from '@shared/models';
   styleUrls: ['./media-hub-folders.component.scss']
 })
 export class MediaHubFoldersComponent implements OnInit {
-  folders: MediaModel.IFolder[] = [];
-  files: MediaModel.IFile[] = [];
+  folders: MediaModel.Folder[] = [];
+  currentFolderID = this.mediaHubManager.getCurrentFolderID();
   createFolderActive = false;
 
   constructor(
-    private uploadsService: UploadService
+    private uploadsService: UploadService,
+    private mediaHubManager: MediaHubManager
   ) { }
 
   ngOnInit() {
@@ -23,10 +25,13 @@ export class MediaHubFoldersComponent implements OnInit {
 
   createFolder(name: string) {
     if (AppUtils.isTruthy(name)) {
-      this.createFolderActive = !this.createFolderActive;
       this.uploadsService.createFolder(name)
-        .subscribe(() => {
+        .subscribe(({ id }) => {
           this.toggleFolderCreation();
+          this.folders.push(new MediaModel.Folder({
+            _id: id,
+            name: name
+          }));
         })
     }
   }
@@ -35,12 +40,14 @@ export class MediaHubFoldersComponent implements OnInit {
     this.createFolderActive = !this.createFolderActive;
   }
 
-  getFolderFiles(folder: MediaModel.IFolder) {
-    this.uploadsService.getFolderFiles(folder._id)
-      .subscribe(data => {
-        this.files = data;
-      })
+  onFolderClick(folder: MediaModel.Folder) {
+    this.currentFolderID = folder._id;
+    this.mediaHubManager.search({
+      folder_id: this.currentFolderID,
+      file: undefined
+    });
   }
+
   getFolders() {
     this.uploadsService.getFolders()
       .subscribe(data => {
