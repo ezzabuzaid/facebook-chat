@@ -1,4 +1,4 @@
-import { IModel } from './response.model';
+import { IModel, Query } from './response.model';
 export namespace MediaModel {
     export class Folder extends IModel {
         name: string;
@@ -15,6 +15,15 @@ export namespace MediaModel {
         path: string;
         user: string;
         folder: string;
+    }
+
+    export class FileSearchQuery extends Query {
+        constructor(
+            public folder: string,
+            public file: string
+        ) {
+            super();
+        }
     }
 
 }

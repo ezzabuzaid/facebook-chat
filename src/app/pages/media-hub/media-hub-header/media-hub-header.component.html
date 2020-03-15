@@ -2,7 +2,7 @@
     <div class="w-50">
         <mat-form-field appearance="legacy">
             <mat-label>Search for a file!</mat-label>
-            <input matInput #searchInput (input)="searchForFiles(searchInput?.value)">
+            <input matInput [formControl]="searchControl">
         </mat-form-field>
     </div>
     <div class="actions d-flex align-items-center">
