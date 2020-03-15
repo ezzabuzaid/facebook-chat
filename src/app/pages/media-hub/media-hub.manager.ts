@@ -1,11 +1,12 @@
 import { Injectable, Host } from '@angular/core';
 import { Listener } from '@core/helpers/listener';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { pluck, filter, distinctUntilKeyChanged, map } from 'rxjs/operators';
-import { AppUtils } from '@core/helpers/utils';
+import { pluck, distinctUntilKeyChanged, map, tap, share } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
 
 @Injectable()
 export class MediaHubManager extends Listener<any> {
+    subscription = new Subject()
 
     constructor(
         private route: ActivatedRoute,
@@ -19,7 +20,7 @@ export class MediaHubManager extends Listener<any> {
             .pipe(
                 distinctUntilKeyChanged(param),
                 pluck<Params, string>(param),
-                filter<string>(AppUtils.isTruthy)
+                share()
             );
     }
 
@@ -28,11 +29,16 @@ export class MediaHubManager extends Listener<any> {
     }
 
     onSearch() {
-        return this.onQueryParamChange('file')
-            .pipe(map((file) => ({
-                fileName: file,
-                folder_id: this.getCurrentFolderID()
-            })));
+        return merge(
+            // TODO: Implement typeahead operator
+            this.onQueryParamChange('file'),
+            this.onQueryParamChange('folder_id')
+        )
+            .pipe(
+                map(() => ({
+                    fileName: this.getQueryParam('file'),
+                    folder_id: this.getCurrentFolderID()
+                })));
     }
 
     search({ file, folder_id = this.getCurrentFolderID() }) {

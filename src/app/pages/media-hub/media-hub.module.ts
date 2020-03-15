@@ -11,7 +11,7 @@ import { MediaHubGridViewComponent } from './media-hub-grid-view/media-hub-grid-
 import { MediaHubListViewComponent } from './media-hub-list-view/media-hub-list-view.component';
 import { UploadFileModule } from '@widget/upload-file';
 import { FileControlModule } from '@widget/file-control/file-control.module';
-import { MediaHubManager } from './media-hub.manager';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -28,7 +28,8 @@ import { MediaHubManager } from './media-hub.manager';
     MaterialModule,
     MediaHubRoutingModule,
     UploadFileModule,
-    FileControlModule
+    FileControlModule,
+    ReactiveFormsModule
   ],
   providers: []
 })

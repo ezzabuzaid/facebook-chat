@@ -179,11 +179,11 @@ export class AppUtils {
      */
     static convertObjectToQueryParams(obj: { [key: string]: string | number }) {
         return Object.keys(obj)
-            .reduce((acc, curr) => {
-                if (this.isNullorUndefined(obj[curr])) {
-                    return acc;
+            .reduce((accumlator, value) => {
+                if (this.isNullorUndefined(obj[value]) || this.isEmptyString(value)) {
+                    return accumlator;
                 }
-                return acc += `${curr}=${obj[curr]}&`;
+                return accumlator += `${value}=${obj[value]}&`;
             }, '');
     }
 
