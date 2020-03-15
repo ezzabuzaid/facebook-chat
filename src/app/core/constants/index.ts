@@ -58,6 +58,9 @@ export namespace Constants {
       get files() {
         return this.folder + '/files'
       },
+      get search() {
+        return this.base + '/search'
+      }
     };
 
     static readonly PORTAL = {
