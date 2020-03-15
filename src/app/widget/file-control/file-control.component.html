@@ -1,0 +1,4 @@
+<label class="mb-0" [for]="id">
+    <input [id]="id" #fileInput (change)="uploadFile(fileInput?.files)" hidden type="file" />
+    <ng-content></ng-content>
+</label>
