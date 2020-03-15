@@ -1,41 +1,39 @@
 <app-navbar>
   <app-content>
-    <main class="flex-fill d-flex flex-column h-100">
-      <app-toolbar class="w-100 d-flex justify-content-end align-items-center bg-white border-bottom"></app-toolbar>
-      <section class="position-relative router-container h-100">
-        <app-sidebar name="chat_bar" class="right">
-          <div sidebar-drawer class="border-left">
-            <mat-card-content>
-              <mat-nav-list dense>
-                <div class="px-3">
-                  <p>Users</p>
-                </div>
-                <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
-                  <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
-                  <p matLine> {{user.username}} </p>
-                </mat-list-item>
-                <div class="px-3">
-                  <p>Groups</p>
-                </div>
-                <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
-                  <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
-                  <p matLine> {{group.title}} </p>
-                </mat-list-item>
-              </mat-nav-list>
-            </mat-card-content>
-            <mat-divider></mat-divider>
-            <mat-card-footer>
-              <button mat-button (click)="openCreateGroup()">
-                <mat-icon class="text-muted">group_add</mat-icon>
-              </button>
-            </mat-card-footer>
-          </div>
-          <div sidebar-container>
-            <router-outlet></router-outlet>
-          </div>
-        </app-sidebar>
-      </section>
-      <!-- <app-footer class="p-3"> </app-footer> -->
-    </main>
+    <app-toolbar class="w-100 d-flex justify-content-end align-items-center bg-white border-bottom"></app-toolbar>
+    <section class="router-container">
+      <app-sidebar name="chat_bar" class="right">
+        <div sidebar-drawer class="border-left">
+          <mat-card-content>
+            <mat-nav-list dense>
+              <div class="px-3">
+                <p>Users</p>
+              </div>
+              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
+                <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
+                <p matLine> {{user.username}} </p>
+              </mat-list-item>
+              <div class="px-3">
+                <p>Groups</p>
+              </div>
+              <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
+                <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
+                <p matLine> {{group.title}} </p>
+              </mat-list-item>
+            </mat-nav-list>
+          </mat-card-content>
+          <mat-divider></mat-divider>
+          <mat-card-footer>
+            <button mat-button (click)="openCreateGroup()">
+              <mat-icon class="text-muted">group_add</mat-icon>
+            </button>
+          </mat-card-footer>
+        </div>
+        <div sidebar-container>
+          <router-outlet></router-outlet>
+        </div>
+      </app-sidebar>
+    </section>
+    <!-- <app-footer class="p-3"> </app-footer> -->
   </app-content>
 </app-navbar>

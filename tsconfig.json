@@ -59,6 +59,7 @@
     "strictTemplates": true,
     "strictInjectionParameters": true,
     "trace": true,
+    "debug": true
   },
   "files": [
     "server.ts"

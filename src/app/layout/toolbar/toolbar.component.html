@@ -1,28 +1,40 @@
-<div class="d-flex align-items-center text--accent">
-  <button (click)="toggleSidebar()" class="mx-2" mat-icon-button>
-    <mat-icon>reorder</mat-icon>
-  </button>
-  <button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
-    <mat-icon>fullscreen</mat-icon>
-  </button>
-  <button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
-    <mat-icon>widgets</mat-icon>
-  </button>
-  <button [matMenuTriggerFor]="menu" mat-icon-button class="mx-2">
-    <mat-icon>public</mat-icon>
-  </button>
-
-  <mat-menu #menu="matMenu">
-    <button (click)="changeLanguage(languageEnum.AR)" mat-menu-item>
-      <img style="width:10%" src="assets/images/flags/sa.svg" alt="Arabic">
-      <span class="mx-3">{{ 'arabic' | translate }}</span>
-    </button>
-    <button (click)="changeLanguage(languageEnum.EN)" mat-menu-item>
-      <img style="width:10%" src="assets/images/flags/us.svg" alt="English">
-      <span class="mx-3">{{ 'english' | translate }}</span>
-    </button>
-  </mat-menu>
+<div class="mr-auto ml-5">
+  <iframe
+    src="https://ghbtns.com/github-btn.html?user=ezzabuzaid&repo=angular-buildozer&type=star&count=true&size=large"
+    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+  <iframe
+    src="https://ghbtns.com/github-btn.html?user=ezzabuzaid&repo=angular-buildozer&type=watch&count=true&size=large&v=2"
+    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+  <iframe
+    src="https://ghbtns.com/github-btn.html?user=ezzabuzaid&repo=angular-buildozer&type=fork&count=true&size=large"
+    frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+  <iframe src="https://ghbtns.com/github-btn.html?user=ezzabuzaid&type=follow&count=true&size=large" frameborder="0"
+    scrolling="0" width="220px" height="30px"></iframe>
 </div>
+
+<button (click)="toggleSidebar()" class="mx-2" mat-icon-button>
+  <mat-icon class="text--accent">reorder</mat-icon>
+</button>
+<button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
+  <mat-icon class="text--accent">fullscreen</mat-icon>
+</button>
+<button (click)="toggleFullScreen()" mat-icon-button class="mx-2">
+  <mat-icon class="text--accent">widgets</mat-icon>
+</button>
+<button [matMenuTriggerFor]="menu" mat-icon-button class="mx-2">
+  <mat-icon class="text--accent">public</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu">
+  <button (click)="changeLanguage(languageEnum.AR)" mat-menu-item>
+    <img style="width:10%" src="assets/images/flags/sa.svg" alt="Arabic">
+    <span class="mx-3">{{ 'arabic' | translate }}</span>
+  </button>
+  <button (click)="changeLanguage(languageEnum.EN)" mat-menu-item>
+    <img style="width:10%" src="assets/images/flags/us.svg" alt="English">
+    <span class="mx-3">{{ 'english' | translate }}</span>
+  </button>
+</mat-menu>
 
 <!-- <div class="seperator bg--primary"></div>
 <button class="toolbar-button" (click)="toggleFullScreen()" mat-icon-button>

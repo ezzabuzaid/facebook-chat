@@ -1,14 +1,12 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { CustomHeaders } from '../http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
-import { isPlatformBrowser } from '@angular/common';
-import { $window } from '@shared/common';
-import { AppUtils } from '@core/helpers/utils';
+import { Constants } from '@core/constants';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
@@ -20,11 +18,11 @@ export class TeardownInterceptor implements HttpInterceptor {
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()));
+        let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()) as any);
         if (this.userService.isAuthenticated) {
             headers = headers.set('Authorization', `${this.tokenService.token}`);
         }
-        headers = headers.set('x-device-uuid', `${navigator.userAgent}`);
+        headers = headers.set(Constants.Application.DEVICE_UUID, `${this.userService.getDeviceUUID()}`);
 
         // const retryCount = 0;
         return next.handle(req.clone({ headers }))
@@ -45,18 +43,16 @@ export class TeardownInterceptor implements HttpInterceptor {
                             case 500:
                                 this.snackbar.open(`An error occurred to the server, please contact the maintenance`);
                                 break;
-                            case 404:
-                                return throwError('ENDPOINT NOT FOUND');
                             default:
                                 break;
                         }
                     }
-                    return throwError(event.error);
+                    return throwError(event);
                 })
             );
     }
 
-    private removeHeaders(requestHeaders: HttpHeaders, ...customHeaders) {
+    private removeHeaders(requestHeaders: HttpHeaders, ...customHeaders: (keyof HttpHeaders)[]) {
         customHeaders.forEach(one => {
             if (requestHeaders.has(one)) {
                 requestHeaders = requestHeaders.delete(one);

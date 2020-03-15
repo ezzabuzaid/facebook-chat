@@ -1,0 +1,22 @@
+<header class="container-fluid d-flex align-items-center justify-content-between">
+    <div class="w-50">
+        <mat-form-field appearance="legacy">
+            <mat-label>Search for a file!</mat-label>
+            <input matInput [formControl]="searchControl">
+        </mat-form-field>
+    </div>
+    <div class="actions d-flex align-items-center">
+        <app-file-control (onChange)="uploadFiles($event)">
+            <button mat-stroked-button tabindex="-1">Upload</button>
+        </app-file-control>
+        <div class="d-flex align-items-center mx-2">
+            <button mat-icon-button class="view-icon">
+                <mat-icon>list</mat-icon>
+            </button>
+            <span class="toolbar-seperator mx-1"></span>
+            <button mat-icon-button class="view-icon">
+                <mat-icon>grid_on</mat-icon>
+            </button>
+        </div>
+    </div>
+</header>

@@ -1,5 +1,5 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpRequest, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ISetupInterceptor, ModifiableInterceptor, CustomHeaders, getHeader, ECustomHeaders } from '../http/http.model';
 import { map } from 'rxjs/operators';
@@ -53,8 +53,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
         Object.assign(this, obj);
     }
 
-    setCustomHeaders(headers) {
-        // tslint:disable-next-line: forin
+    setCustomHeaders(headers: HttpHeaders) {
         for (const header in (new CustomHeaders())) {
             headers = headers.set(header, String(this[header]));
         }

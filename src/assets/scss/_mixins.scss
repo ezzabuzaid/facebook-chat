@@ -1,5 +1,6 @@
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
 @import '~bootstrap/scss/bootstrap-grid';
+@import 'variables';
 
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -175,8 +176,16 @@
 }
 
 @mixin direction($dir) {
-  body[dir='#{$dir}'] &,
-  html[dir='#{$dir}'] & {
+  body[dir="#{$dir}"] &,
+  html[dir="#{$dir}"] & {
     @content;
   }
+}
+
+@mixin overflowHeight($threshold: 0) {
+  $toolbar-height: map-get(
+    $map: $layout_dimensions,
+    $key: toolbar-height
+  );
+  height: calc(100% - #{$toolbar-height} - #{$threshold});
 }

@@ -18,7 +18,6 @@ import { UserService } from '@shared/user';
 })
 export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   constructor(
-    private router: Router,
     private userService: UserService
   ) { }
 
@@ -39,9 +38,9 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   }
 
 
-  private authenticate() {
+  public authenticate() {
     if (!this.userService.isAuthenticated) {
-      this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
+      this.userService.logout();
       return false;
     }
     return true;

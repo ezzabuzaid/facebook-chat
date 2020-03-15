@@ -1,16 +1,37 @@
 <mat-list>
     <div class="d-flex justify-content-between align-items-baseline">
         <h3 mat-subheader> Folders </h3>
-        <button mat-icon-button>
+        <button mat-icon-button type="button" (click)="toggleFolderCreation()">
             <mat-icon class="text-muted">create_new_folder</mat-icon>
         </button>
     </div>
     <mat-divider></mat-divider>
-    <mat-list-item *ngFor="let folder of folders">
-        <mat-icon mat-list-icon>
-            folder
-            <!-- Active => 'folder_open' -->
-        </mat-icon>
-        <h4 mat-line>{{folder.name}}</h4>
-    </mat-list-item>
+
+    <ng-container *ngIf="createFolderActive">
+        <div class="px-3">
+            <mat-form-field appearance="legacy">
+                <mat-hint>Folder name...</mat-hint>
+                <input matInput #folderInput (keyup.enter)="createFolder(folderInput.value)">
+                <button type="button" (click)="createFolder(folderInput.value)" [disabled]="!folderInput.value"
+                    mat-icon-button matSuffix>
+                    <mat-icon class="text-muted">add</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div class="mb-3"></div>
+        <mat-divider></mat-divider>
+    </ng-container>
 </mat-list>
+
+<mat-nav-list class="h-100">
+    <mat-list-item (click)="onFolderClick(folder)" *ngFor="let folder of folders">
+        <mat-icon mat-list-icon>
+            {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
+        </mat-icon>
+        <div mat-line class="d-flex justify-content-between align-items-center">
+            <h4 class="folder-title"> {{folder.name}}</h4>
+            <mat-icon (click)="$event.preventDefault(); $event.stopPropagation();" class="text-muted">more_vert
+            </mat-icon>
+        </div>
+    </mat-list-item>
+</mat-nav-list>

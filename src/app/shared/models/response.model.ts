@@ -8,28 +8,34 @@ export interface ResponseModel<T> {
     status: string;
 }
 
-export interface IModel {
-    _id: string;
-    updatedAt: string;
-    createdAt: string;
+export class IModel {
+    _id: string = null;
+    createdAt = new Date().toISOString();
+    updatedAt = new Date().toISOString();
+    constructor(payload: Partial<IModel>) {
+        Object.assign(this, payload);
+    }
 }
 
-
-export interface ListEntityRes<T> {
-    items: T[];
-    pageNumber: number;
-    pagesCount: number;
+export class Query {
+    [key: string]: string | number;
 }
 
-export class PlainQuery<T extends { [key: string]: string | number }> {
+export class PlainQuery<T extends Query> {
     asString: string;
     queryObject: T;
     constructor(queryObject: T) {
         this.queryObject = queryObject;
         this.asString = AppUtils.convertObjectToQueryParams(queryObject);
     }
-
 }
+
+export interface ListEntityResponse<T> {
+    items: T[];
+    pageNumber: number;
+    pagesCount: number;
+}
+
 export class ListEntityQuery {
     page: number;
     size: number;

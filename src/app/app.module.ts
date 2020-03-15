@@ -20,7 +20,6 @@ import { isPlatformBrowser } from '@angular/common';
 
 
 export const localStorageFactory = (injector: Injector) => {
-  console.log('PLATFORM_ID', injector.get(PLATFORM_ID));
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
     return new LocalStorage('buildozer');
   }
@@ -30,7 +29,6 @@ export const localStorageFactory = (injector: Injector) => {
 };
 
 export const sessionStorageFactory = (injector: Injector) => {
-  console.log('PLATFORM_ID', injector.get(PLATFORM_ID));
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
     return new SessionStorage('buildozer');
   }

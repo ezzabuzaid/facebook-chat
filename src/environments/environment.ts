@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  endpointUrl: 'https://node-buildozer.herokuapp.com/api/',
-  serverOrigin: 'https://node-buildozer.herokuapp.com/'
+  endpointUrl: 'http://localhost:8080/api/',
+  serverOrigin: 'http://localhost:8080/'
 };
 
 

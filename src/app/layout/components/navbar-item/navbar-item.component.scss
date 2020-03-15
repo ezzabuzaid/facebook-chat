@@ -3,6 +3,8 @@
 :host {
   display: block;
   .navbar-item {
+    height: 55px;
+    width: 55px;
     font-weight: 400;
     ::ng-deep {
       .mat-button-wrapper {
@@ -17,8 +19,13 @@
   &:hover {
     .navbar-item {
       &__pin {
-        display: block;
+        display: flex;
       }
+    }
+  }
+  .navbar-item-title {
+    mat-icon {
+      width: 30px;
     }
   }
 }

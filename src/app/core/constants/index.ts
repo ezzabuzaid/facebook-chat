@@ -4,6 +4,7 @@ export namespace Constants {
     static readonly APPLICATION_NAME = 'Angular Buildozer';
     static readonly LANGUAGE_KEY = 'language';
     static REFRESH_TOKEN_KEY = 'refresh_token';
+    static DEVICE_UUID = 'x-device-uuid';
   }
 
   export class Routing {
@@ -49,7 +50,28 @@ export namespace Constants {
   }
 
   export class API {
-    static readonly LOGIN = 'portal/login';
+    static readonly UPLOADS = {
+      base: 'uploads',
+      get folder() {
+        return this.base + '/folders'
+      },
+      get files() {
+        return this.folder + '/files'
+      },
+      get search() {
+        return this.base + '/search'
+      }
+    };
+
+    static readonly PORTAL = {
+      base: 'portal',
+      get login() {
+        return this.base + '/login'
+      },
+      get logout() {
+        return this.base + '/logout'
+      }
+    };
     static readonly users = {
       base: 'users',
       get search() {

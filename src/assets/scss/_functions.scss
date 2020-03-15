@@ -3,6 +3,8 @@
 
 // Author:: ezzabuzaid
 // Date:: 15 / 1 / 2019
+
+@import './variables';
 @function get_color_from_theme($color, $theme) {
   $platte: map-get(
     $map: $theme,

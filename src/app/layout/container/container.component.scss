@@ -5,15 +5,11 @@
 
 :host {
   app-toolbar {
-    @include fixed_bar(absolute);
+    @include fixed_bar(sticky);
   }
 
   .router-container {
-    $height: map-get(
-      $map: $layout_dimensions,
-      $key: toolbar-height
-    );
-    margin-top: calc(#{$height} * 1);
+    @include overflowHeight();
   }
   app-sidebar {
     --width: 230px;

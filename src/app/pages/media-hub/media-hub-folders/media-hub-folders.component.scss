@@ -1,0 +1,18 @@
+@import 'mixins';
+
+:host {
+  .folder-title {
+    font-size: inherit;
+    margin: inherit;
+    & + mat-icon {
+      height: 20px;
+      font-size: 20px;
+      width: 20px;
+      line-height: 20px;
+    }
+  }
+  mat-nav-list {
+    @include overflowHeight(15px);
+    overflow: auto;
+  }
+}

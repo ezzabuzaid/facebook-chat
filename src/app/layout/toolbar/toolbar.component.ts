@@ -39,7 +39,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout().subscribe();
+    this.userService.logout();
   }
 
 }
