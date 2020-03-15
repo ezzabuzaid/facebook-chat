@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UploadService } from '@shared/services/upload';
+import { MediaHubManager } from '../media-hub.manager';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -7,20 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediaHubHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private uploadService: UploadService,
+    private mediaHubManager: MediaHubManager
+  ) { }
 
   ngOnInit(): void {
   }
 
   searchForFiles(name: string) {
-    // if (AppUtils.isFalsy(name)) {
-    //   this.users = this.tempUsers;
-    // } else {
-    //   this.usersService.searchForUsers(name)
-    //     .subscribe((users) => {
-    //       this.users = users;
-    //     });
-    // }
+    this.mediaHubManager.search({
+      file: name
+    });
+  }
+
+  uploadFiles(files: FileList) {
+    // TODO: setup `others` folder to upload a file to it if no folder specifed
+    const folder_id = this.mediaHubManager.getCurrentFolderID();
+    console.log(folder_id);
+    if (folder_id) {
+      for (const file of (files as any)) {
+        this.uploadService.uploadImage(file, folder_id).subscribe(console.log);
+      }
+    }
   }
 
 }

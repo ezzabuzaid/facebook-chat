@@ -1,7 +1,11 @@
 import { IModel } from './response.model';
 export namespace MediaModel {
-    export interface IFolder extends IModel {
+    export class Folder extends IModel {
         name: string;
+        constructor(payload: Partial<Folder>) {
+            super(payload);
+            Object.assign(payload, Folder);
+        }
     }
 
     export interface IFile extends IModel {
