@@ -1,6 +1,6 @@
-@import 'variables';
-@import 'mixins';
-@import '~@angular/material/theming';
+@import "variables";
+@import "mixins";
+@import "~@angular/material/theming";
 $transition-timing: ease-in-out;
 $transition-duration: 0.25s;
 :host {
@@ -24,6 +24,7 @@ $transition-duration: 0.25s;
       &:last-child {
         transition: width $transition-duration $transition-timing;
         width: calc(100% - var(--width));
+        overflow: auto;
         @include direction(ltr) {
           margin-left: auto;
         }
