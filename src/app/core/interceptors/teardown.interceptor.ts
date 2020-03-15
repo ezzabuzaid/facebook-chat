@@ -43,8 +43,6 @@ export class TeardownInterceptor implements HttpInterceptor {
                             case 500:
                                 this.snackbar.open(`An error occurred to the server, please contact the maintenance`);
                                 break;
-                            case 404:
-                                return throwError('ENDPOINT NOT FOUND');
                             default:
                                 break;
                         }
