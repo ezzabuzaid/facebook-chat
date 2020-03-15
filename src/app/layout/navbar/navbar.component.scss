@@ -14,8 +14,6 @@ $toolbar-height: map-deep-get($layout_dimensions, "toolbar-height");
       ::ng-deep {
         @include media-breakpoint-up(lg) {
           .drawer-invisible {
-            // transition: visibility 0s linear 0.2s;
-            // visibility: hidden;
             display: none;
           }
         }
