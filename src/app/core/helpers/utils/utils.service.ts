@@ -1,6 +1,10 @@
 import { Observable, of, EMPTY, throwError, Observer, Subject } from 'rxjs';
 export class AppUtils {
 
+    public static isEmptyString(value: string): boolean {
+        return typeof value !== 'string' || value === '';
+    }
+
     static isObjectEmpty(obj: object) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key))
@@ -202,18 +206,20 @@ export class AppUtils {
     }
 
     /**
-     * remove all falsy props from an object expect empty string
+     * remove null and undefined properties from an object expect empty string
      * @param withEmptyString to indicate of the empty values should be removed
      */
-    static excludeEmptyKeys(fromObject: { [key: string]: string }, withEmptyString = false) {
-        function replaceUndefinedOrNull(key: string, value: any) {
+    static excludeEmptyKeys(object: object, withEmptyString = false) {
+        const replaceUndefinedOrNull = (key: string, value: any) => {
             if (withEmptyString) {
-                return !value ? undefined : value;
+                return this.isEmptyString(value) || this.isNullorUndefined(value)
+                    ? undefined
+                    : value;
             } else {
-                return value !== '' && !value ? undefined : value;
+                return this.isNullorUndefined(value) ? undefined : value;
             }
-        }
-        return JSON.parse(JSON.stringify(fromObject, replaceUndefinedOrNull));
+        };
+        return JSON.parse(JSON.stringify(object, replaceUndefinedOrNull));
     }
 
     static toTimestamp(date = new Date()) {
