@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UploadService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-file',
@@ -30,7 +31,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
 
   @Input() private size = 4;
-  @Input() private supported = ['jpeg', 'png'];
+  @Input() private supported = ['jpeg', 'png', 'gif'];
   @Input() type: EUploadFileType = 'verbose';
 
   @HostBinding('class.box') get isBox() { return this.type === 'box'; }
@@ -83,6 +84,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   private onSuccess(value: string) {
     this.value = value;
+    // this.changeValue(value);
     this.openSnackBar(this.getTranslate('image_upload_success'));
   }
 
@@ -106,12 +108,13 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   uploadFile(file: File) {
     if (this.allowedToUpload(file)) {
       AppUtils.readFile(file)
+        .pipe(switchMap((value: string) => {
+          // this.onSuccess(value);
+          return this.uploadFileService.uploadImage(file, '')
+        }))
         .subscribe(
-          (value: string) => {
-            console.log(value);
-            this.onSuccess(value);
-            // changeValue should be inputed with url from the server
-            this.changeValue(value);
+          () => {
+            ;
           },
           () => this.onError('image_upload_error')
         );
