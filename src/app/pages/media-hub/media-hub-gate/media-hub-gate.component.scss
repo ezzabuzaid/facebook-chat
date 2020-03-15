@@ -12,9 +12,7 @@
     min-width: $height;
     height: $height;
   }
-  //   .input-append {
-  //     position: relative;
-  //     right: 65px;
-  //     bottom: 10px;
-  //   }
+  .card-columns {
+    column-count: 4 !important;
+  }
 }

@@ -1,15 +1,14 @@
 <app-media-hub-header></app-media-hub-header>
+
 <mat-divider></mat-divider>
-<div class="row h-100">
-    <div class="col-3 border-right pr-0">
+<div class="row mx-0">
+    <div class="col-3 border-right pr-0 h-100">
         <app-media-hub-folders></app-media-hub-folders>
     </div>
     <div class="col-9">
         <p class="bg-dark text-white py-1 px-2 mt-3">Media</p>
-        <div class="row">
-            <div class="col-4">
-                <app-media-card></app-media-card>
-            </div>
+        <div class="card-columns">
+            <app-media-card class="card" *ngFor="let file of files" [file]="file"></app-media-card>
         </div>
     </div>
 </div>
