@@ -41,11 +41,25 @@ export class MediaHubFoldersComponent implements OnInit {
   }
 
   onFolderClick(folder: MediaModel.Folder) {
+    console.log('onFolderClick => ', folder);
     this.currentFolderID = folder._id;
     this.mediaHubManager.search({
       folder_id: this.currentFolderID,
       file: undefined
     });
+  }
+
+  renameFolder(folder: MediaModel.Folder) {
+    console.log('renameFolder => ', folder);
+    // this.uploadsService.updateFolder();
+  }
+
+  deleteFolder(folder: MediaModel.Folder, index: number) {
+    console.log('deleteFolder => ', folder);
+    this.uploadsService.deleteFolder(folder._id)
+      .subscribe(data => {
+        this.folders.splice(index, 1);
+      });
   }
 
   getFolders() {

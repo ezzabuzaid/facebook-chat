@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType, HttpEvent, HttpProgressEvent } from '@angular/common/http';
 import { map, filter, tap } from 'rxjs/operators';
 import { Constants } from '@core/constants';
-import { MediaModel, PlainQuery } from '@shared/models';
+import { MediaModel, PlainQuery, CreateResponse } from '@shared/models';
 import { environment } from '@environments/environment';
 
 @Injectable({
@@ -17,11 +17,15 @@ export class UploadService {
     uploadImage(file: File, folder_id: string) {
         const fd = new FormData();
         fd.append('upload', file);
-        return this.http.post(Constants.API.UPLOADS.base + '/' + folder_id, fd);
+        return this.http.post<CreateResponse>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
     }
 
     createFolder(name: string) {
-        return this.http.post<{ id: string }>(Constants.API.UPLOADS.folder, { name });
+        return this.http.post<CreateResponse>(Constants.API.UPLOADS.folder, { name });
+    }
+
+    deleteFolder(folder_id: string) {
+        return this.http.delete(`${Constants.API.UPLOADS.folder}/${folder_id}`);
     }
 
     getFolders() {

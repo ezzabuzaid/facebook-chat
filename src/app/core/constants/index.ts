@@ -53,7 +53,7 @@ export namespace Constants {
     static readonly UPLOADS = {
       base: 'uploads',
       get folder() {
-        return this.base + '/folders'
+        return 'folders'
       },
       get files() {
         return this.folder + '/files'

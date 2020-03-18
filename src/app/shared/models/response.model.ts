@@ -17,6 +17,10 @@ export class IModel {
     }
 }
 
+export class CreateResponse {
+    id: string;
+}
+
 export class Query {
     [key: string]: string | number;
 }
