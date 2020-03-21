@@ -6,6 +6,6 @@ import { Listener } from '@core/helpers/listener';
 })
 export class ProgressBarManager extends Listener<boolean> {
   constructor() {
-    super(false);
+    super();
   }
 }
