@@ -5,7 +5,16 @@ import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floatin
 
 type Component<T> = Type<IChatCard<T>>;
 type ComponentReference<T> = ComponentRef<IChatCard<T>>;
-
+class CardConfig<T> {
+    withButton: boolean;
+    id: string;
+    data: T;
+    constructor(config: Partial<CardConfig<T>>) {
+        this.data = config.data ?? null;
+        this.id = config.id || AppUtils.generateAlphabeticString();
+        this.withButton = config.withButton ?? true;
+    }
+}
 @Injectable()
 export class ChatCardManager {
 
@@ -58,28 +67,32 @@ export class ChatCardManager {
         component.destroy();
     }
 
-    open<T>(component: Component<T>, data: T, id = AppUtils.generateAlphabeticString(), withButton = true) {
-        if (this.currentOpenedCardID !== id) {
-            if (this.buttons.has(id)) {
-                const buttonRef = this.buttons.get(id);
-                this.buttons.delete(id);
-                this.open(component, data, id, false);
-                this.buttons.set(id, buttonRef);
+    open<T>(component: Component<T>, config: Partial<CardConfig<T>>) {
+        const cardConfig = new CardConfig(config);
+        if (this.currentOpenedCardID !== cardConfig.id) {
+            if (this.buttons.has(cardConfig.id)) {
+                const buttonRef = this.buttons.get(cardConfig.id);
+                this.buttons.delete(cardConfig.id);
+                this.open(component, {
+                    data: cardConfig.data,
+                    id: cardConfig.id,
+                    withButton: false
+                });
+                this.buttons.set(cardConfig.id, buttonRef);
             } else {
                 if (this.currentCard) {
                     this.removeCard();
                 }
-                if (withButton) {
-                    this.createButton(data, id);
+                if (cardConfig.withButton) {
+                    this.createButton(cardConfig.data, cardConfig.id);
                 }
-                return this.createCard(component, data, id);
+                return this.createCard(component, cardConfig.data, cardConfig.id);
             }
         } else {
             this.adjustCaretCardPosition();
-            return this.components.get(id);
+            return this.components.get(cardConfig.id);
         }
     }
-
 
     removeButton(id: string) {
         const component = this.buttons.get(id)
@@ -103,12 +116,20 @@ export class ChatCardManager {
 
     toogleCard<T>(component: Component<T>, data: T, id: string) {
         if (AppUtils.isNullorUndefined(this.currentOpenedCardID)) {
-            this.open(component, data, id, false);
+            this.open(component, {
+                data,
+                id,
+                withButton: false
+            });
         } else if (id === this.currentOpenedCardID) {
             this.removeCard();
         } else {
             this.removeCard();
-            this.open(component, data, id, false);
+            this.open(component, {
+                data,
+                id,
+                withButton: false
+            });
         }
     }
 

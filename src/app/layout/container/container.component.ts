@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
 import { ChatCardManager, GroupCharCardComponent, GroupChatCreateComponent } from 'app/pages/chat';
 import { UserCardComponent } from 'app/pages/chat/conversation-chat-card/conversation-chat-card.component';
+import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 
 @Component({
   selector: 'app-container',
@@ -36,13 +37,18 @@ export class ContainerComponent implements OnInit {
 
   openChatCard(user: UsersModel.IUser, conversation = true) {
     this.chatCardManager.open(UserCardComponent, {
-      conversation,
-      user
-    }, user._id);
+      id: user._id,
+      data: {
+        conversation,
+        user
+      },
+    });
   }
 
   openGroupChatCard(group: ChatModel.IGroup) {
-    this.chatCardManager.open(GroupCharCardComponent, group);
+    this.chatCardManager.open(GroupCharCardComponent, {
+      data: group
+    });
   }
 
   openCreateGroup() {
@@ -50,6 +56,12 @@ export class ContainerComponent implements OnInit {
       width: '750px'
     });
     dialogRef.disableClose = true;
+  }
+
+  openCreateChatCard() {
+    this.chatCardManager.open(ChatCreateCardComponent, {
+      withButton: false
+    });
   }
 
 }
