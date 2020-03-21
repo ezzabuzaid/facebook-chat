@@ -5,17 +5,19 @@
       <app-sidebar name="chat_bar" class="right">
         <div sidebar-drawer class="border-left">
           <mat-card-content>
-            <mat-nav-list dense>
-              <div class="px-3">
-                <p>Users</p>
-              </div>
-              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
+            <mat-nav-list>
+              <h3 mat-subheader> Conversations </h3>
+              <mat-list-item *ngFor="let conversation of ($conversations | async)"
+                (click)="openChatCard(conversation, true)">
+                <img matListAvatar ngxGravatar [email]="conversation.email" fallback="identicon">
+                <p matLine> {{conversation.username}} </p>
+              </mat-list-item>
+              <h3 mat-subheader> Users </h3>
+              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user, false)">
                 <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
                 <p matLine> {{user.username}} </p>
               </mat-list-item>
-              <div class="px-3">
-                <p>Groups</p>
-              </div>
+              <h3 mat-subheader> Groups </h3>
               <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
                 <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
                 <p matLine> {{group.title}} </p>
@@ -37,3 +39,7 @@
     <!-- <app-footer class="p-3"> </app-footer> -->
   </app-content>
 </app-navbar>
+
+<button mat-fab class="floating-button">
+  <mat-icon>add_comment</mat-icon>
+</button>

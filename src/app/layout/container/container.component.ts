@@ -14,6 +14,7 @@ import { ChatService } from '@shared/services/chat';
 export class ContainerComponent implements OnInit {
   public $users = this.usersService.getUsersWithoutMe();
   public $groups = this.chatService.getGroups();
+  public $conversations = this.chatService.getConversations();
 
   constructor(
     private usersService: UsersService,
@@ -32,8 +33,11 @@ export class ContainerComponent implements OnInit {
     return outlet && outlet.activatedRouteData.state;
   }
 
-  openChatCard(user: UsersModel.IUser) {
-    this.chatCardManager.open(UserCardComponent, user);
+  openChatCard(user: UsersModel.IUser, conversation = true) {
+    this.chatCardManager.open(UserCardComponent, {
+      conversation,
+      user
+    });
   }
 
   openGroupChatCard(group: ChatModel.IGroup) {
