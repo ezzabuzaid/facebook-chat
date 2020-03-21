@@ -85,6 +85,12 @@ export namespace Constants {
       },
       get members() {
         return `members/${this.groups}`;
+      },
+      get conversation() {
+        return 'conversation';
+      },
+      get messages() {
+        return this.conversation + '/messages'
       }
     };
 

@@ -30,7 +30,7 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     MaterialModule,
     GravatarModule,
     FormModule,
-    TimeagoModule,
+    TimeagoModule.forRoot(),
     UploadFileModule,
     PickerModule,
     EmojiModule

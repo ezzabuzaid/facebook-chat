@@ -1,37 +1,54 @@
 <mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z1 p-0">
-    <div class="mat-elevation-z1 py-2 d-flex align-items-center pl-3 pr-1">
-        <img mat-card-avatar ngxGravatar [email]="data.email" fallback="identicon">
-        <div class="w-100 d-flex align-items-center justify-content-between ml-3">
-            <h6 class="mb-0">{{data.username}}</h6>
+    <div class="shadow-sm py-3 d-flex align-items-center pl-3 pr-1">
+        <img mat-card-avatar ngxGravatar [email]="data.user.email" fallback="identicon">
+        <div class="w-100 d-flex align-items-center justify-content-between">
+            <h6 class="mb-0">{{data.user.username}}</h6>
             <div class="d-flex">
                 <mat-icon class="footer-action-icon">add</mat-icon>
                 <mat-icon (click)="closeCard()" class="footer-action-icon">close</mat-icon>
             </div>
         </div>
     </div>
-    <mat-card-content class="d-flex flex-column justify-content-between h-100 mb-0 px-3 pt-3">
-        <div>
-            <ng-container *ngFor="let message of messages">
-                <p>{{message.message}}</p>
+    <mat-card-content class="d-flex flex-column h-100 mb-0">
+        <div class="overflow-auto d-flex flex-column messages-list">
+            <ng-container *ngFor="let message of messages; let first=first;let last = last;">
+                <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
+                    class="border-radius-1 p-2 text-white mb-2" [ngClass]="{
+                                    'bg--primary mr-3':isSender(message.user),
+                                    'bg--accent ml-3':!isSender(message.user),
+                                    'align-self-end': isSender(message.user),
+                                    'align-self-start': !isSender(message.user),
+                                    'mt-2': first
+                                }">
+                    {{message.text}}
+                </span>
             </ng-container>
         </div>
-        <div>
-            <mat-divider></mat-divider>
-            <mat-form-field [appearance]="$any('none')">
-                <textarea placeholder="Write a message" matInput #messageInput cdkTextareaAutosize
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
-            </mat-form-field>
-        </div>
+        <footer>
+            <div class="d-flex align-items-end py-3">
+                <button mat-flat-button class="mx-2 bg--primary add-button">
+                    <mat-icon class="text-white" (click)="sendMessage(messageInput)">
+                        add
+                    </mat-icon>
+                </button>
+                <textarea class="border-0 border-radius-1" placeholder="Write a message" #messageInput
+                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
+                    cdkAutosizeMaxRows="4"></textarea>
+                <button mat-icon-button class="ml-auto send-button" (click)="sendMessage(messageInput)">
+                    <mat-icon class="text--primary">send</mat-icon>
+                </button>
+            </div>
+        </footer>
     </mat-card-content>
-    <mat-card-footer class="m-0 d-flex align-items-center">
+    <!-- <mat-card-footer class="m-0 d-flex align-items-center">
         <mat-icon class="footer-action-icon">add_photo_alternate</mat-icon>
         <mat-icon class="footer-action-icon">emoji_emotions</mat-icon>
         <mat-icon class="footer-action-icon">attach_file</mat-icon>
         <mat-icon class="footer-action-icon">photo_camera</mat-icon>
-        <!-- <emoji-mart class="emoji-mart" set="emojione" (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"
-                title="Pick your emoji…"></emoji-mart> -->
+        <emoji-mart class="emoji-mart" set="emojione" (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"
+            title="Pick your emoji…"></emoji-mart>
         <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
             <mat-icon class="footer-action-icon">send</mat-icon>
         </button>
-    </mat-card-footer>
+    </mat-card-footer> -->
 </mat-card>
