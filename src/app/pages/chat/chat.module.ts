@@ -14,6 +14,8 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
 import { UserCardComponent } from './conversation-chat-card/conversation-chat-card.component';
 import { ChatGroupMembersComponent } from './chat-group-members/chat-group-members.component';
+import { ChatCreateCardComponent } from './chat-create-card/chat-create-card.component';
+import { ChatCardComponent } from './chat-card/chat-card.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { ChatGroupMembersComponent } from './chat-group-members/chat-group-membe
     GroupCharCardComponent,
     GroupChatCreateComponent,
     ChatGroupMembersComponent,
-    ChatFloatingButtonComponent
+    ChatFloatingButtonComponent,
+    ChatCreateCardComponent,
+    ChatCardComponent
   ],
   exports: [
     UserCardComponent,
