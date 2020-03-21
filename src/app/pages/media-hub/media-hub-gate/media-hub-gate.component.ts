@@ -4,7 +4,7 @@ import { UploadService } from '@shared/services/upload';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager } from '../media-hub.manager';
 import { Observable } from 'rxjs';
-import { AppUtils } from '@core/helpers/utils';
+import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-media-hub-gate',
@@ -24,9 +24,10 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
     this.mediaManager.onSearch()
       .pipe(
         takeUntil(this.mediaManager.subscription),
-        switchMap(({ fileName, folder_id }) => this.uploadsService.searchForFiles(
-          new MediaModel.FileSearchQuery(folder_id, fileName)
-        )))
+        typeaheadOperator(({ fileName, folder_id }) => this.uploadsService.searchForFiles(
+          new MediaModel.FileSearchQuery(folder_id, fileName))
+        )
+      )
       .subscribe((data) => {
         this.files = data;
       })
