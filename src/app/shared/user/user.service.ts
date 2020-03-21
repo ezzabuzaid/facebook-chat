@@ -23,7 +23,6 @@ export class UserService extends Listener<boolean> {
 
   public login(payload) {
     return this.http
-      .configure({ FULL_RESPONSE: true })
       .post<{ refreshToken: string; token: string; }>(Constants.API.PORTAL.login, payload)
       .pipe(
         tap((data) => {

@@ -14,7 +14,7 @@ export class SessionsService {
 
     public deactiveSession(payload: {
         session_id: string;
-        user_id: string;
+        user: string;
     }) {
         return this.http.patch(`${Constants.API.SESSIONS.deactivate}`, payload);
     }

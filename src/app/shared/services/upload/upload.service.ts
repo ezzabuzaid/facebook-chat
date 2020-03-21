@@ -17,7 +17,7 @@ export class UploadService {
     uploadImage(file: File, folder_id: string) {
         const fd = new FormData();
         fd.append('upload', file);
-        return this.http.post<CreateResponse>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
+        return this.http.post<CreateResponse & { path: string }>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
     }
 
     createFolder(name: string) {
