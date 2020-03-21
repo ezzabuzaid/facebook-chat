@@ -1,6 +1,6 @@
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
-@import '~bootstrap/scss/bootstrap-grid';
-@import 'variables';
+@import "~bootstrap/scss/bootstrap-grid";
+@import "variables";
 
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -66,7 +66,7 @@
   }
   ::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: $border-color;
+    background-color: transparent;
   }
   ::-webkit-scrollbar {
     width: $width;
@@ -129,7 +129,7 @@
     height: 100%;
     background-color: $color;
     z-index: 999;
-    content: '';
+    content: "";
   }
 }
 
@@ -182,7 +182,7 @@
   }
 }
 
-@mixin overflowHeight($threshold: 0) {
+@mixin overflowHeight($threshold: 0px) {
   $toolbar-height: map-get(
     $map: $layout_dimensions,
     $key: toolbar-height

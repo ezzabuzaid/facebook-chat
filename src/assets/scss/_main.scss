@@ -1,6 +1,6 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
+@import "functions";
+@import "mixins";
+@import "variables";
 
 html,
 body {
@@ -9,7 +9,7 @@ body {
 
 body {
   margin: 0;
-  background-color: #f5f9fa;
+  background-color: #f1f2f5;
 }
 
 .backdrop {
@@ -48,7 +48,7 @@ body {
 mat-form-field {
   width: 100%;
   $base_width: 0.75em;
-  &[appearance='outline'] {
+  &[appearance="outline"] {
     .mat-form-field-infix {
       padding: $base_width 0 $base_width 0 !important;
       .mat-form-field-label-wrapper {
