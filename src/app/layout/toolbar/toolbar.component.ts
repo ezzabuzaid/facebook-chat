@@ -4,7 +4,6 @@ import { LanguageService, ELanguage } from '@core/helpers/language';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
-import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 
 @Component({
