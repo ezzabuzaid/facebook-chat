@@ -1,0 +1,32 @@
+<app-chat-card>
+    <div card-header class="py-2 pl-3 pr-2 py-2">
+        <div class="w-100 d-flex align-items-center justify-content-between ">
+            <p class="mb-0">New Message</p>
+            <div class="d-flex">
+                <button mat-icon-button>
+                    <mat-icon (click)="closeCard()" class="text--accent">close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="pr-2">
+            <mat-form-field appearance="legacy">
+                <span matPrefix>TO:</span>
+                <input #autoCompleteInput [formControl]="autocompleteControl" [matAutocomplete]="auto"
+                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+                <mat-autocomplete (optionSelected)="addUser($event,autoCompleteInput)" #auto="matAutocomplete">
+                    <mat-option *ngFor="let user of ($users | async)" [value]="user">
+                        <img class="mr-2" [size]="35" ngxGravatar [email]="user.email" fallback="identicon">
+                        <span>{{user.username}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let user of selectedUsers; let index = index;" [selectable]="false"
+                        [removable]="true" (removed)="removeUser(index)">
+                        {{user.username}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </mat-form-field>
+        </div>
+    </div>
+</app-chat-card>
