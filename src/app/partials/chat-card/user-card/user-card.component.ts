@@ -1,17 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { UsersModel, ChatModel } from '@shared/models';
+import { Component, OnInit } from '@angular/core';
+import { ChatModel } from '@shared/models';
 import * as io from 'socket.io-client';
 import { environment } from '@environments/environment';
 import { TokenService } from '@core/helpers/token';
 import { ChatCardManager } from '../chat-card.manager';
-import { IChatCard } from '..';
+import { IChatCard, ChatCardData } from '../index';
 import { AppUtils } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
 import { switchMap } from 'rxjs/operators';
-class ChatCardData {
-  conversation: boolean;
-  user: UsersModel.IUser;
-}
 
 class Message {
   constructor(
@@ -79,8 +75,6 @@ export class UserCardComponent implements OnInit, IChatCard<ChatCardData> {
       });
     }
 
-
-
   }
 
   async sendMessage(input: HTMLTextAreaElement) {
@@ -102,8 +96,10 @@ export class UserCardComponent implements OnInit, IChatCard<ChatCardData> {
   }
 
   closeCard() {
-    this.chatCardManager.close(this.id);
+    this.chatCardManager.removeCard();
+    this.chatCardManager.removeButton(this.id);
   }
+
   showEmojiPicker = false;
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
@@ -112,7 +108,6 @@ export class UserCardComponent implements OnInit, IChatCard<ChatCardData> {
   addEmoji(emoji) {
 
   }
-
 
   isSender(id: string) {
     return this.tokenService.decodedToken.id === id;

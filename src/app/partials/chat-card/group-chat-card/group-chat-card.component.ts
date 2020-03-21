@@ -77,7 +77,7 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
   }
 
   closeCard() {
-    this.chatCardManager.close(this.id);
+    this.chatCardManager.removeCard();
   }
 
   openGroupMembers() {

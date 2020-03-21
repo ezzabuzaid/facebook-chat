@@ -1,15 +1,19 @@
-<mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z1 p-0">
-    <div class="shadow-sm py-3 d-flex align-items-center pl-3 pr-1">
-        <img mat-card-avatar ngxGravatar [email]="data.user.email" fallback="identicon">
+<mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z0 shadow-lg p-0">
+    <div class="py-2 d-flex align-items-center pl-2">
+        <img class="mr-2" mat-card-avatar ngxGravatar [email]="data.user.email" fallback="identicon">
         <div class="w-100 d-flex align-items-center justify-content-between">
             <h6 class="mb-0">{{data.user.username}}</h6>
             <div class="d-flex">
-                <mat-icon class="footer-action-icon">add</mat-icon>
-                <mat-icon (click)="closeCard()" class="footer-action-icon">close</mat-icon>
+                <button mat-icon-button>
+                    <mat-icon class="text--accent">add</mat-icon>
+                </button>
+                <button mat-icon-button>
+                    <mat-icon (click)="closeCard()" class="text--accent">close</mat-icon>
+                </button>
             </div>
         </div>
     </div>
-    <mat-card-content class="d-flex flex-column h-100 mb-0">
+    <mat-card-content>
         <div class="overflow-auto d-flex flex-column messages-list">
             <ng-container *ngFor="let message of messages; let first=first;let last = last;">
                 <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
@@ -24,8 +28,8 @@
                 </span>
             </ng-container>
         </div>
-        <footer>
-            <div class="d-flex align-items-end py-3">
+        <footer class="d-flex align-items-center">
+            <div class="d-flex align-items-end">
                 <button mat-flat-button class="mx-2 bg--primary add-button">
                     <mat-icon class="text-white" (click)="sendMessage(messageInput)">
                         add
@@ -52,3 +56,5 @@
         </button>
     </mat-card-footer> -->
 </mat-card>
+
+<div class="caret"></div>
