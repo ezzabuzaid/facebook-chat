@@ -19,7 +19,7 @@ export class SessionsComponent implements OnInit {
   deactivateSession(session: SessionsModel.ISession) {
     this.sessionsService.deactiveSession({
       session_id: session._id,
-      user_id: session.user_id
+      user: session.user._id
     })
       .subscribe(() => {
         session.active = false;

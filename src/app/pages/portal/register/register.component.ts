@@ -18,7 +18,6 @@ export class RegisterComponent extends FormUtils<PortalModel.IRegister> implemen
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private userService: UserService,
   ) {
     super(new Form<PortalModel.IRegister>([

@@ -51,7 +51,7 @@ export class LoginComponent extends FormUtils<PortalModel.ILogin> implements OnI
       this.portalService.login(value)
         .subscribe(data => {
           this.tokenHelper.setToken(rememberMeCheckBox.checked, data.token, data.refreshToken);
-          this.router.navigateByUrl(Constants.Routing.Users.withSlash);
+          this.router.navigateByUrl(Constants.Routing.SESSIONS.withSlash);
         });
     }
   }
