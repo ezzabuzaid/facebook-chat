@@ -12,16 +12,16 @@
     scrolling="0" width="220px" height="30px"></iframe>
 </div> -->
 
-<button (click)="toggleSidebar()" class="mx-2 toolbar-button" mat-flat-button>
+<button (click)="toggleSidebar()" class="toolbar-button" mat-flat-button>
   <mat-icon class="text--accent">reorder</mat-icon>
 </button>
-<button fullscreen mat-flat-button class="mx-2 toolbar-button">
+<button fullscreen mat-flat-button class="toolbar-button">
   <mat-icon class="text--accent">fullscreen</mat-icon>
 </button>
-<button mat-flat-button class="mx-2 toolbar-button">
+<button mat-flat-button class="toolbar-button">
   <mat-icon class="text--accent">widgets</mat-icon>
 </button>
-<button [matMenuTriggerFor]="menu" mat-flat-button class="mx-2 toolbar-button">
+<button [matMenuTriggerFor]="menu" mat-flat-button class="toolbar-button">
   <mat-icon class="text--accent">public</mat-icon>
 </button>
 
@@ -35,32 +35,3 @@
     <span class="mx-3">{{ 'english' | translate }}</span>
   </button>
 </mat-menu>
-
-<!-- <div class="seperator bg--primary"></div>
-<button class="toolbar-button" (click)="toggleFullScreen()" mat-flat-button>
-  <mat-icon color="primary">fullscreen</mat-icon>
-  <span></span>
-</button>
-<div class="seperator bg--primary"></div>
-<button class="toolbar-button" [routerLink]="[routes.CHAT.withSlash]" mat-flat-button>
-  <mat-icon color="primary">chat</mat-icon>
-</button>
-<div class="seperator bg--primary"></div>
-<button mat-button [matMenuTriggerFor]="userMenu" class="user-button h-100">
-  <div class="center-flex h-100">
-    <img class="avatar mr-0 mr-sm-16" fallback="identicon" [src]="user?.avatar || 'assets/images/avatar.svg'"
-      ngxGravatar [preferGravatar]="false">
-    <span class="username mx-4">{{user.name}}</span>
-    <mat-icon role="img" aria-hidden="true">keyboard_arrow_down</mat-icon>
-  </div>
-</button>
-<mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item [routerLink]="[routes.ADMINS.withSlash, user.jti]">
-    <mat-icon>account_circle</mat-icon>
-    <span>My Profile</span>
-  </button> 
-  <button mat-menu-item (click)="logout()">
-    <mat-icon>exit_to_app</mat-icon>
-    <span>Logout</span>
-  </button>
-</mat-menu> -->
