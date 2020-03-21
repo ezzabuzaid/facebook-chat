@@ -1,4 +1,5 @@
-import { Observable, of, EMPTY, throwError, Observer, Subject } from 'rxjs';
+import { Observable, of, EMPTY, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
+import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class AppUtils {
 
     public static isEmptyString(value: string): boolean {
@@ -288,6 +289,10 @@ export class AppUtils {
         return !this.equals(...values);
     }
 
+    public static notNullOrUndefined(value: any) {
+        return AppUtils.isFalsy(AppUtils.isNullorUndefined(value));
+    }
+
 }
 
 export function tryOrThrow<T>(cb: (...args: any) => T) {
@@ -314,4 +319,24 @@ export type PickAttr<T, P extends keyof T> = T[P];
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export interface KeyPairs<T> {
     [key: string]: T;
-} 
+}
+
+export function typeaheadOperator<T, Q>(
+    provider: (query: Q) => Observable<T>,
+    onEmpty: () => Partial<T> = null
+): OperatorFunction<Q, T> {
+    return (source) => {
+        return source.pipe(
+            filter(AppUtils.notNullOrUndefined),
+            debounceTime(400),
+            distinctUntilChanged(),
+            switchMap((value) => {
+                if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
+                    return of<T>(onEmpty() as any);
+                }
+                return provider(value);
+            })
+        );
+    };
+}
+
