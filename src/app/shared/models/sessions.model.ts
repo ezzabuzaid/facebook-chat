@@ -1,9 +1,10 @@
 import { IModel } from './response.model';
+import { UsersModel } from './users.model';
 
 export namespace SessionsModel {
     export interface ISession extends IModel {
         active: boolean;
-        user_id: string;
+        user: UsersModel.IUser;
         device_uuid: string;
     }
 
