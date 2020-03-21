@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { AppUtils } from '@core/helpers/utils';
+import { Component, OnInit } from '@angular/core';
 import { LanguageService, ELanguage } from '@core/helpers/language';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 import { UserService } from '@shared/user';
@@ -26,11 +25,6 @@ export class ToolbarComponent implements OnInit {
 
   changeLanguage(language: ELanguage) {
     this.languageService.changeLanguage(language);
-  }
-
-  toggleFullScreen() {
-    // TODO: Create full screen directive
-    AppUtils.fullScreen();
   }
 
   toggleSidebar() {

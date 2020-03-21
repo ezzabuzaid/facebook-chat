@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TextAreaAutoResizeDirective } from './text-area-auto-resize.directive';
 import { TogglePasswodDirective } from './toggle-passwod.directive';
 import { HoverDirective } from './hover.directive';
+import { FullscreenDirective } from './fullscreen.directive';
 
 @NgModule({
   imports: [
@@ -13,12 +14,14 @@ import { HoverDirective } from './hover.directive';
   declarations: [
     TogglePasswodDirective,
     TextAreaAutoResizeDirective,
-    HoverDirective
+    HoverDirective,
+    FullscreenDirective
   ],
   exports: [
     TogglePasswodDirective,
     TextAreaAutoResizeDirective,
-    HoverDirective
+    HoverDirective,
+    FullscreenDirective
   ]
 })
 export class DirectivesModule { }
