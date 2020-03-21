@@ -37,7 +37,7 @@ export class ContainerComponent implements OnInit {
     this.chatCardManager.open(UserCardComponent, {
       conversation,
       user
-    });
+    }, user._id);
   }
 
   openGroupChatCard(group: ChatModel.IGroup) {

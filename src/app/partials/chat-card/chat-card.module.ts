@@ -13,13 +13,15 @@ import { ChatMembersComponent } from './chat-members/chat-members.component';
 
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
 
 @NgModule({
   declarations: [
     UserCardComponent,
     GroupCharCardComponent,
     GroupChatCreateComponent,
-    ChatMembersComponent
+    ChatMembersComponent,
+    ChatFloatingButtonComponent
   ],
   exports: [
     UserCardComponent,
