@@ -23,8 +23,9 @@
       }
     }
   }
+
   .floating-button {
-    position: fixed;
+    position: fixed !important;
     right: 2%;
     bottom: 2%;
   }

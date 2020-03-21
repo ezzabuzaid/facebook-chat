@@ -1,10 +1,10 @@
-@import '~bootstrap/scss/bootstrap.scss';
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import './app/app.theme';
-@import 'assets/scss/main';
-@import '~@ctrl/ngx-emoji-mart/picker';
+@import "~bootstrap/scss/bootstrap.scss";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./app/app.theme";
+@import "assets/scss/main";
+@import "~@ctrl/ngx-emoji-mart/picker";
 
-@import url('https://fonts.googleapis.com/css?family=Nunito:300,400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Nunito:300,400,700&display=swap");
 $typography: mat-typography-config(
   $font-family: "'Nunito', sans-serif",
   $input: mat-typography-level(16px, 1.125, 400)
