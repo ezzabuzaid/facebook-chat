@@ -99,7 +99,13 @@ export class AppComponent implements OnInit {
 
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
-
+      window.addEventListener('unload', (event) => {
+        // FIXME F this fire every time the browser refreshed
+        if (this.userService.oneTimeLogin()) {
+          this.userService.logout();
+          return "";
+        }
+      });
 
 
       this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
@@ -115,13 +121,7 @@ export class AppComponent implements OnInit {
     }
 
     if (this.isBrowser) {
-      window.addEventListener('unload', (event) => {
-        // FIXME F this fire every time the browser refreshed
-        if (this.userService.oneTimeLogin()) {
-          this.userService.logout();
-          return "";
-        }
-      });
+
       this.languageService.populate(ELanguage.EN);
 
       // TODO PWA Checks if install popup should be appear

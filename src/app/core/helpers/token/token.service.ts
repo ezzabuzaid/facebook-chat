@@ -16,7 +16,7 @@ const REFRESH_TOKEN_KEY = Constants.Application.REFRESH_TOKEN_KEY;
 export class TokenService {
   oneTimeLogin = false;
   private get storage() {
-    return AppUtils.isNullorUndefined(this.session.get(TOKEN_KEY)) ? this.local : this.session;
+    return this.oneTimeLogin ? this.session : this.local;
   }
 
   constructor(
@@ -32,10 +32,8 @@ export class TokenService {
     return this.storage.get<string>(REFRESH_TOKEN_KEY);
   }
 
-  setToken(rememberMe: boolean, token: string, refreshToken: any) {
+  setToken(rememberMe: boolean, token: string, refreshToken: string) {
     if (AppUtils.isFalsy(rememberMe)) {
-      // NOTE: this way we can tell that the storage is session
-      this.session.set(TOKEN_KEY, 'token');
       this.oneTimeLogin = true;
     }
     this.storage.set(REFRESH_TOKEN_KEY, refreshToken);
