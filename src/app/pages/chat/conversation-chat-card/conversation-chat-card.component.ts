@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatModel } from '@shared/models';
+import { ChatModel, UsersModel } from '@shared/models';
 import * as io from 'socket.io-client';
 import { environment } from '@environments/environment';
 import { TokenService } from '@core/helpers/token';
 import { ChatCardManager } from '../chat-card.manager';
-import { IChatCard, ChatCardData } from '../index';
+import { IChatCard } from '../index';
 import { AppUtils } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
 import { switchMap } from 'rxjs/operators';
+
+export class ChatCardData {
+  conversation: boolean;
+  user: UsersModel.IUser;
+}
 
 class Message {
   constructor(
@@ -27,8 +32,8 @@ class Conversation {
 
 @Component({
   selector: 'app-user-card',
-  templateUrl: './user-card.component.html',
-  styleUrls: ['./user-card.component.scss']
+  templateUrl: './conversation-chat-card.component.html',
+  styleUrls: ['./conversation-chat-card.component.scss']
 })
 export class UserCardComponent implements OnInit, IChatCard<ChatCardData> {
   public id: string;

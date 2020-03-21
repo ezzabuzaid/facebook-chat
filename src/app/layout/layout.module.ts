@@ -18,7 +18,7 @@ import { DirectivesModule } from '@shared/directives';
 import { PopupModule } from '@widget/popup';
 
 import { GravatarModule } from 'ngx-gravatar';
-import { ChatCardModule } from '@partials/chat-card';
+import { ChatModule } from 'app/pages/chat';
 
 @NgModule({
   imports: [
@@ -31,7 +31,7 @@ import { ChatCardModule } from '@partials/chat-card';
     DirectivesModule,
     GravatarModule,
     PopupModule,
-    ChatCardModule
+    ChatModule
   ],
   declarations: [
     ToolbarComponent,

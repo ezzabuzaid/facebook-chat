@@ -5,10 +5,10 @@ import { ChatModel } from '@shared/models';
 
 @Component({
   selector: 'app-chat-members',
-  templateUrl: './chat-members.component.html',
-  styleUrls: ['./chat-members.component.scss']
+  templateUrl: './chat-group-members.component.html',
+  styleUrls: ['./chat-group-members.component.scss']
 })
-export class ChatMembersComponent implements OnInit {
+export class ChatGroupMembersComponent implements OnInit {
   $members = this.chatService.getGroupMembers(this.data._id);
 
   constructor(

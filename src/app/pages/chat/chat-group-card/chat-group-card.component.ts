@@ -5,10 +5,10 @@ import { environment } from '@environments/environment';
 import { TokenService } from '@core/helpers/token';
 import { IChatCard } from '..';
 import { MatDialog } from '@angular/material/dialog';
-import { ChatMembersComponent } from '../chat-members/chat-members.component';
 import { ChatCardManager } from '../chat-card.manager';
 import { AppUtils } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
+import { ChatGroupMembersComponent } from '../chat-group-members/chat-group-members.component';
 
 class Room {
   constructor(
@@ -25,8 +25,8 @@ class Message {
 
 @Component({
   selector: 'app-group-chat-card',
-  templateUrl: './group-chat-card.component.html',
-  styleUrls: ['./group-chat-card.component.scss']
+  templateUrl: './chat-group-card.component.html',
+  styleUrls: ['./chat-group-card.component.scss']
 })
 export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGroup> {
   public id: string;
@@ -81,7 +81,7 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
   }
 
   openGroupMembers() {
-    this.dialog.open(ChatMembersComponent, { data: this.data });
+    this.dialog.open(ChatGroupMembersComponent, { data: this.data });
   }
 
   isSender(id: string) {

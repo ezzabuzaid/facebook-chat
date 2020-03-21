@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UsersModel, ChatModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { ChatCardManager, GroupChatCreateComponent, UserCardComponent, GroupCharCardComponent } from '@partials/chat-card';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
+import { ChatCardManager, GroupCharCardComponent, GroupChatCreateComponent } from 'app/pages/chat';
+import { UserCardComponent } from 'app/pages/chat/conversation-chat-card/conversation-chat-card.component';
 
 @Component({
   selector: 'app-container',

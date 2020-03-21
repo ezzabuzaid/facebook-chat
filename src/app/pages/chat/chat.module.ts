@@ -4,23 +4,23 @@ import { MaterialModule } from '@shared/common';
 import { GravatarModule } from 'ngx-gravatar';
 import { TimeagoModule } from 'ngx-timeago';
 import { ChatCardManager } from './chat-card.manager';
-import { UserCardComponent } from './user-card/user-card.component';
-import { GroupCharCardComponent } from './group-chat-card/group-chat-card.component';
+import { GroupCharCardComponent } from './chat-group-card/chat-group-card.component';
 import { GroupChatCreateComponent } from './group-chat-create/group-chat-create.component';
 import { FormModule } from '@partials/form';
 import { UploadFileModule } from '@widget/upload-file';
-import { ChatMembersComponent } from './chat-members/chat-members.component';
 
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
+import { UserCardComponent } from './conversation-chat-card/conversation-chat-card.component';
+import { ChatGroupMembersComponent } from './chat-group-members/chat-group-members.component';
 
 @NgModule({
   declarations: [
     UserCardComponent,
     GroupCharCardComponent,
     GroupChatCreateComponent,
-    ChatMembersComponent,
+    ChatGroupMembersComponent,
     ChatFloatingButtonComponent
   ],
   exports: [
@@ -41,4 +41,4 @@ import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floatin
     ChatCardManager
   ]
 })
-export class ChatCardModule { }
+export class ChatModule { }

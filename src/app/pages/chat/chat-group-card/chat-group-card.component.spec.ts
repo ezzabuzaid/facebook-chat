@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GroupCharCardComponent } from './group-chat-card.component';
+import { GroupCharCardComponent } from './chat-group-card.component';
 
 
 describe('GroupCharCardComponent', () => {

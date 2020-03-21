@@ -12,11 +12,6 @@
                 <img matListAvatar ngxGravatar [email]="conversation.email" fallback="identicon">
                 <p matLine> {{conversation.username}} </p>
               </mat-list-item>
-              <h3 mat-subheader> Users </h3>
-              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user, false)">
-                <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
-                <p matLine> {{user.username}} </p>
-              </mat-list-item>
               <h3 mat-subheader> Groups </h3>
               <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
                 <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
