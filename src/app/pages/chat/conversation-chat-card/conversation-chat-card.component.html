@@ -1,5 +1,5 @@
-<mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z0 shadow-lg p-0">
-    <div class="py-2 d-flex align-items-center pl-2">
+<app-chat-card>
+    <div card-header class="py-2 d-flex align-items-center pl-2">
         <img class="mr-2" mat-card-avatar ngxGravatar [email]="data.user.email" fallback="identicon">
         <div class="w-100 d-flex align-items-center justify-content-between">
             <h6 class="mb-0">{{data.user.username}}</h6>
@@ -13,17 +13,18 @@
             </div>
         </div>
     </div>
-    <mat-card-content>
+
+    <section card-content>
         <div class="overflow-auto d-flex flex-column messages-list">
             <ng-container *ngFor="let message of messages; let first=first;let last = last;">
                 <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
                     class="border-radius-1 p-2 text-white mb-2" [ngClass]="{
-                                    'bg--primary mr-3':isSender(message.user),
-                                    'bg--accent ml-3':!isSender(message.user),
-                                    'align-self-end': isSender(message.user),
-                                    'align-self-start': !isSender(message.user),
-                                    'mt-2': first
-                                }">
+                                                'bg--primary mr-3':isSender(message.user),
+                                                'bg--accent ml-3':!isSender(message.user),
+                                                'align-self-end': isSender(message.user),
+                                                'align-self-start': !isSender(message.user),
+                                                'mt-2': first
+                                            }">
                     {{message.text}}
                 </span>
             </ng-container>
@@ -43,18 +44,17 @@
                 </button>
             </div>
         </footer>
-    </mat-card-content>
-    <!-- <mat-card-footer class="m-0 d-flex align-items-center">
-        <mat-icon class="footer-action-icon">add_photo_alternate</mat-icon>
-        <mat-icon class="footer-action-icon">emoji_emotions</mat-icon>
-        <mat-icon class="footer-action-icon">attach_file</mat-icon>
-        <mat-icon class="footer-action-icon">photo_camera</mat-icon>
-        <emoji-mart class="emoji-mart" set="emojione" (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"
-            title="Pick your emoji…"></emoji-mart>
-        <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
-            <mat-icon class="footer-action-icon">send</mat-icon>
-        </button>
-    </mat-card-footer> -->
-</mat-card>
+    </section>
 
-<div class="caret"></div>
+    <!-- <mat-card-footer class="m-0 d-flex align-items-center">
+            <mat-icon class="footer-action-icon">add_photo_alternate</mat-icon>
+            <mat-icon class="footer-action-icon">emoji_emotions</mat-icon>
+            <mat-icon class="footer-action-icon">attach_file</mat-icon>
+            <mat-icon class="footer-action-icon">photo_camera</mat-icon>
+            <emoji-mart class="emoji-mart" set="emojione" (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"
+                title="Pick your emoji…"></emoji-mart>
+            <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
+                <mat-icon class="footer-action-icon">send</mat-icon>
+            </button>
+        </mat-card-footer> -->
+</app-chat-card>
