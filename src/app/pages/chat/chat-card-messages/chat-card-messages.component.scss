@@ -1,5 +1,5 @@
 :host {
-  .messages-list {
-    height: calc(100% - 60px);
-  }
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
 }

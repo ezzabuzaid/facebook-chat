@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
-import { UserCardComponent } from '../conversation-chat-card/conversation-chat-card.component';
 import { UsersModel } from '@shared/models';
+import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
 
 @Component({
   selector: 'app-chat-floating-button',
@@ -22,7 +22,7 @@ export class ChatFloatingButtonComponent implements OnInit, IChatCard<UsersModel
   }
 
   @HostListener('click') floatingButton() {
-    this.chatCardManager.toogleCard(UserCardComponent, this.data, this.id);
+    this.chatCardManager.toogleCard(ChatConversationCardComponent, this.data, this.id);
   }
 
 }

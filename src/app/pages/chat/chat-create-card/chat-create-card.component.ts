@@ -10,9 +10,8 @@ import { map, filter, share } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
-import { UserCardComponent } from '../conversation-chat-card/conversation-chat-card.component';
-import { ChatManager } from '../chat.manager';
-import { TokenService } from '@core/helpers/token';
+import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
+import { isRegExp } from 'util';
 
 @Component({
   selector: 'app-chat-create-card',
@@ -72,17 +71,24 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   }
 
   createConvesationAndSendMessage(text: string) {
-    this.chatService.createConversation(this.firstSelectedUser._id, text)
-      .subscribe((conversation) => {
-        this.chatCardManager.open(UserCardComponent, {
-          id: this.firstSelectedUser._id,
-          data: this.firstSelectedUser
+    if (this.selectedUsers.length > 1) {
+      this.chatService.createGroup(this.selectedUsers.map(user => user._id))
+        .subscribe(() => {
+
         });
-      });
+    } else {
+      this.chatService.createConversation(this.firstSelectedUser._id, text)
+        .subscribe((conversation) => {
+          this.chatCardManager.open(ChatConversationCardComponent, {
+            id: this.firstSelectedUser._id,
+            data: this.firstSelectedUser
+          });
+        });
+    }
   }
 
   jumpToConversationCard(text: string) {
-    this.chatCardManager.open(UserCardComponent, {
+    this.chatCardManager.open(ChatConversationCardComponent, {
       id: this.firstSelectedUser._id,
       data: this.firstSelectedUser
     });
@@ -91,5 +97,6 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   get firstSelectedUser() {
     return this.selectedUsers[0];
   }
+
 
 }

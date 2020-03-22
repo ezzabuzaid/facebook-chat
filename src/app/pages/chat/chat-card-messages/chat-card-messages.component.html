@@ -1,14 +1,12 @@
-<div class="overflow-auto d-flex flex-column messages-list">
-    <ng-container *ngFor="let message of messages; let first=first;let last = last;">
-        <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
-            class="border-radius-1 p-2 text-white mb-2" [ngClass]="{
+<ng-container *ngFor="let message of messages; let index=index; let first=first; let last = last;">
+    <span [id]="'message-' + index" [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
+        class="border-radius-1 p-2 text-white mb-2" [ngClass]="{
                                                                 'bg--primary mr-3':isSender(message.user),
                                                                 'bg--accent ml-3':!isSender(message.user),
                                                                 'align-self-end': isSender(message.user),
                                                                 'align-self-start': !isSender(message.user),
                                                                 'mt-2': first
                                                             }">
-            {{message.text}}
-        </span>
-    </ng-container>
-</div>
+        {{message.text}}
+    </span>
+</ng-container>
