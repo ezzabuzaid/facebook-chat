@@ -15,35 +15,7 @@
     </div>
 
     <section card-content>
-        <div class="overflow-auto d-flex flex-column messages-list">
-            <ng-container *ngFor="let message of messages; let first=first;let last = last;">
-                <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
-                    class="border-radius-1 p-2 text-white mb-2" [ngClass]="{
-                                                'bg--primary mr-3':isSender(message.user),
-                                                'bg--accent ml-3':!isSender(message.user),
-                                                'align-self-end': isSender(message.user),
-                                                'align-self-start': !isSender(message.user),
-                                                'mt-2': first
-                                            }">
-                    {{message.text}}
-                </span>
-            </ng-container>
-        </div>
-        <footer class="d-flex align-items-center">
-            <div class="d-flex align-items-end">
-                <button mat-flat-button class="mx-2 bg--primary add-button">
-                    <mat-icon class="text-white" (click)="sendMessage(messageInput)">
-                        add
-                    </mat-icon>
-                </button>
-                <textarea class="border-0 border-radius-1" placeholder="Write a message" #messageInput
-                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"
-                    cdkAutosizeMaxRows="4"></textarea>
-                <button mat-icon-button class="ml-auto send-button" (click)="sendMessage(messageInput)">
-                    <mat-icon class="text--primary">send</mat-icon>
-                </button>
-            </div>
-        </footer>
+        <app-chat-card-messages [user]="data.user" [conversation]="conversation"></app-chat-card-messages>
     </section>
 
     <!-- <mat-card-footer class="m-0 d-flex align-items-center">
