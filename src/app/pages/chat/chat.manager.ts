@@ -2,7 +2,7 @@ import * as io from 'socket.io-client';
 import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
 import { Listener } from '@core/helpers/listener';
-import { ChatMessage } from './types';
+import { ChatMessage, ChatLocalMessage } from './types';
 import { fromEvent } from 'rxjs';
 import { TokenService } from '@core/helpers/token';
 
@@ -38,6 +38,10 @@ export class ChatManager {
 
     sendMessage(message: ChatMessage) {
         this.socket.emit('SendMessage', message);
+    }
+
+    sendLocalMessage<T>(message: ChatLocalMessage<T>) {
+        this.messageListener.notify(message);
     }
 
     joinConversation(recipiant_id: string) {

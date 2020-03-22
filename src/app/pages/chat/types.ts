@@ -1,4 +1,4 @@
-import { UsersModel } from '@shared/models';
+import { IModel } from '@shared/models';
 
 export class ChatMessage {
     constructor(
@@ -7,4 +7,15 @@ export class ChatMessage {
         public sender_id: string,
         public recipient_id: string
     ) { }
+}
+
+export class ChatLocalMessage<T = string> extends IModel {
+    constructor(
+        public text: T,
+        public conversation: string,
+        public sender_id: string,
+        public recipient_id: string
+    ) {
+        super();
+    }
 }

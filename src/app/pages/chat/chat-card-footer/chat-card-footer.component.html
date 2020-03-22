@@ -1,14 +1,45 @@
-<footer class="d-flex align-items-center">
-    <div class="d-flex align-items-end">
-        <button mat-flat-button class="mx-2 bg--primary add-button">
-            <mat-icon class="text-white" (click)="sendMessage(messageInput)">
-                add
-            </mat-icon>
+<!-- <emoji-mart set="facebook" *ngIf="showEmojiPicker"></emoji-mart> -->
+
+<div class="actions-buttons box" *ngIf="showActionBar">
+    <app-file-control (onChange)="uploadFiles($event)">
+        <button mat-button>
+            <mat-icon class="text-muted">insert_photo</mat-icon>
         </button>
-        <textarea class="border-0 border-radius-1" placeholder="Write a message" #messageInput cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
-        <button mat-icon-button class="ml-auto send-button" (click)="sendMessage(messageInput)">
-            <mat-icon class="text--primary">send</mat-icon>
-        </button>
+    </app-file-control>
+    <button mat-button class="mx-1">
+        <mat-icon class="text-muted">gif</mat-icon>
+    </button>
+    <button mat-button class="mx-1">
+        <mat-icon class="text-muted">photo_album</mat-icon>
+    </button>
+    <button mat-button class="mx-1">
+        <mat-icon class="text-muted">attachment</mat-icon>
+    </button>
+    <button mat-button>
+        <mat-icon class="text-muted">folder</mat-icon>
+    </button>
+</div>
+<footer class="d-flex align-items-end py-2 w-100">
+    <button mat-flat-button class="mx-2 bg--primary add-button">
+        <mat-icon class="text-white" (click)="openActionBar()">
+            add
+        </mat-icon>
+    </button>
+    <div class="w-100 textarea-wrapper border-radius-1">
+        <div *ngIf="files.length" class="d-flex pt-3 px-2 overflow-auto">
+            <div class="img-box mx-1 position-relative" *ngFor="let file of base64Files; let index = index;">
+                <mat-icon (click)="disposeFile(index)"
+                    class="pointer text-muted position-absolute bg-white border-radius-1">
+                    close</mat-icon>
+                <img class="img-fluid h-100 border-radius-1" [src]="file | async">
+            </div>
+        </div>
+        <textarea (keypress)="onActionBarVisibilityChange.emit()" value="" class="border-0 border-radius-1"
+            placeholder="Write a message" #messageInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="4">
+                            </textarea>
     </div>
+    <button mat-icon-button class="ml-auto send-button" (click)="sendMessage(messageInput)">
+        <mat-icon class="text--primary">send</mat-icon>
+    </button>
 </footer>

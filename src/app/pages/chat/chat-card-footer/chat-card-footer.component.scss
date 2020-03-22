@@ -1,16 +1,18 @@
 @import "mixins";
 
 :host {
-  footer {
-    position: relative;
-    height: 60px;
-    > div {
-      position: absolute;
-      left: 0;
-      width: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .actions-buttons {
+    button {
+      background-color: #f1f2f5;
     }
   }
-
   .add-button {
     $size: 30px;
     height: $size;
@@ -27,17 +29,33 @@
   .send-button {
     transform: translateY(-2px);
   }
-  textarea {
-    font-size: 14px;
-    width: 100%;
-    padding: 0.5rem;
+  .textarea-wrapper {
     background-color: #f1f2f5;
-    &:hover,
-    &:focus {
-      outline: 0;
+    textarea {
+      font-size: 14px;
+      width: 100%;
+      background-color: #f1f2f5;
+      min-height: 32px !important;
+      line-height: 28px;
+      padding-left: 0.5rem;
+      &:hover,
+      &:focus {
+        outline: 0;
+      }
+      // @include placeholder {
+      //   line-height: 30px;
+      // }
     }
-    @include placeholder {
-      line-height: 30px;
+  }
+  .img-box {
+    height: 50px;
+    flex: 0 0 20%;
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      top: -20%;
+      left: -15%;
     }
   }
 }
