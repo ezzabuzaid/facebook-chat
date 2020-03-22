@@ -17,6 +17,7 @@ import { ChatGroupMembersComponent } from './chat-group-members/chat-group-membe
 import { ChatCreateCardComponent } from './chat-create-card/chat-create-card.component';
 import { ChatCardComponent } from './chat-card/chat-card.component';
 import { ChatCardMessagesComponent } from './chat-card-messages/chat-card-messages.component';
+import { ChatCardFooterComponent } from './chat-card-footer/chat-card-footer.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ChatCardMessagesComponent } from './chat-card-messages/chat-card-messag
     ChatFloatingButtonComponent,
     ChatCreateCardComponent,
     ChatCardComponent,
-    ChatCardMessagesComponent
+    ChatCardMessagesComponent,
+    ChatCardFooterComponent
   ],
   exports: [
     UserCardComponent,
