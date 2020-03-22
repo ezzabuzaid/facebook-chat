@@ -1,0 +1,45 @@
+@import "mixins";
+
+:host {
+  .messages-list {
+    height: calc(100% - 60px);
+  }
+  .add-button {
+    $size: 30px;
+    height: $size;
+    line-height: 0px;
+    width: $size;
+    max-width: $size;
+    min-width: $size;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    transform: translateY(-5px);
+  }
+  .send-button {
+    transform: translateY(-2px);
+  }
+  textarea {
+    font-size: 14px;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #f1f2f5;
+    &:hover,
+    &:focus {
+      outline: 0;
+    }
+    @include placeholder {
+      line-height: 30px;
+    }
+  }
+  footer {
+    position: relative;
+    height: 60px;
+    div {
+      position: absolute;
+      left: 0;
+      width: 100%;
+    }
+  }
+}
