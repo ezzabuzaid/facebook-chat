@@ -40,15 +40,11 @@ export class ChatManager {
         this.socket.emit('SendMessage', message);
     }
 
-    joinConversation(recipiant_id: string, onJoin: () => void) {
+    joinConversation(recipiant_id: string) {
         const conversation = new Conversation(
             recipiant_id,
             this.tokenService.decodedToken.id
         );
         this.socket.emit('JoinRoom', conversation);
-        this.socket.on(conversation.sender_id + conversation.recipient_id, () => {
-            onJoin();
-            console.log('joined');
-        })
     }
 }
