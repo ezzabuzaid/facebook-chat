@@ -21,6 +21,7 @@ export namespace ChatModel {
     export interface IConversation extends IModel {
         user1: UsersModel.IUser;
         user2: UsersModel.IUser;
+        folder: string;
     }
 
     export class Message extends IModel {

@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
 import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
-import { isRegExp } from 'util';
 
 @Component({
   selector: 'app-chat-create-card',

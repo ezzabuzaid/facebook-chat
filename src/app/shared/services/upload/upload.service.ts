@@ -5,6 +5,11 @@ import { Constants } from '@core/constants';
 import { MediaModel, PlainQuery, CreateResponse } from '@shared/models';
 import { environment } from '@environments/environment';
 
+interface CreateFileResponse {
+    id: string;
+    path: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -17,11 +22,11 @@ export class UploadService {
     uploadImage(file: File, folder_id: string) {
         const fd = new FormData();
         fd.append('upload', file);
-        return this.http.post<CreateResponse & { path: string }>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
+        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
     }
 
     createFolder(name: string) {
-        return this.http.post<CreateResponse>(Constants.API.UPLOADS.folder, { name });
+        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.folder, { name });
     }
 
     deleteFolder(folder_id: string) {

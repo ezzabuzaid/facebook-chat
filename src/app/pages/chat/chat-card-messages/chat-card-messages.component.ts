@@ -4,6 +4,7 @@ import { TokenService } from '@core/helpers/token';
 
 import { ChatService } from '@shared/services/chat';
 import { ChatManager } from '../chat.manager';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-chat-card-messages',
@@ -63,6 +64,23 @@ export class ChatCardMessagesComponent implements OnInit {
 
   isSender(id: string) {
     return this.tokenService.decodedToken.id === id;
+  }
+
+  isUrl(value: any) {
+    try {
+      new URL(value);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  isImage(value: string) {
+    return /(\.jpg|\.png|\.bmp)$/.test(value);
+  }
+
+  populateImageURL(value: string) {
+    return environment.serverOrigin + value;
   }
 
 }
