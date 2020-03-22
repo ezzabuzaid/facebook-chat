@@ -86,12 +86,12 @@ export class ChatCardManager {
                 if (cardConfig.withButton) {
                     this.createButton(cardConfig.data, cardConfig.id);
                 }
-                return this.createCard(component, cardConfig.data, cardConfig.id);
+                this.createCard(component, cardConfig.data, cardConfig.id);
             }
         } else {
             this.adjustCaretCardPosition();
-            return this.components.get(cardConfig.id);
         }
+        return this.components.get(cardConfig.id);
     }
 
     removeButton(id: string) {

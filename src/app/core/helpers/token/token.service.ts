@@ -58,7 +58,7 @@ export class TokenService {
   }
 
   get isLogged(): boolean {
-    return AppUtils.isFalsy(AppUtils.isNullorUndefined(this.token));
+    return AppUtils.notNullOrUndefined(this.token);
   }
 
 

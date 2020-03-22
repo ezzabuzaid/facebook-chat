@@ -8,7 +8,3 @@ export class ChatMessage {
         public recipient_id: string
     ) { }
 }
-export class ChatCardData {
-    conversation: boolean;
-    user: UsersModel.IUser;
-}

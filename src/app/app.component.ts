@@ -7,7 +7,7 @@ import { LanguageService, ELanguage } from '@core/helpers/language';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { SeoService } from '@shared/services/seo/seo.service';
-import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap, tap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { connectivity } from '@shared/common';
@@ -100,7 +100,7 @@ export class AppComponent implements OnInit {
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
       window.addEventListener('unload', (event) => {
-        // FIXME F this fire every time the browser refreshed
+        // FIXME this fire every time the browser refreshed
         if (this.userService.oneTimeLogin()) {
           this.userService.logout();
           return "";

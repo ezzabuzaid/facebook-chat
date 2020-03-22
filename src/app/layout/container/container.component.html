@@ -7,8 +7,7 @@
           <mat-card-content>
             <mat-nav-list>
               <h3 mat-subheader> Conversations </h3>
-              <mat-list-item *ngFor="let conversation of ($conversations | async)"
-                (click)="openChatCard(conversation, true)">
+              <mat-list-item *ngFor="let conversation of ($conversations | async)" (click)="openChatCard(conversation)">
                 <img matListAvatar ngxGravatar [email]="conversation.email" fallback="identicon">
                 <p matLine> {{conversation.username}} </p>
               </mat-list-item>
