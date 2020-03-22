@@ -12,17 +12,3 @@
         </span>
     </ng-container>
 </div>
-<footer class="d-flex align-items-center">
-    <div class="d-flex align-items-end">
-        <button mat-flat-button class="mx-2 bg--primary add-button">
-            <mat-icon class="text-white" (click)="sendMessage(messageInput)">
-                add
-            </mat-icon>
-        </button>
-        <textarea class="border-0 border-radius-1" placeholder="Write a message" #messageInput cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="4"></textarea>
-        <button mat-icon-button class="ml-auto send-button" (click)="sendMessage(messageInput)">
-            <mat-icon class="text--primary">send</mat-icon>
-        </button>
-    </div>
-</footer>
