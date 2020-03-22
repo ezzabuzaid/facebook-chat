@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserCardComponent } from './user-card.component';
+import { UserCardComponent } from './conversation-chat-card.component';
 
 
 describe('UserCardComponent', () => {

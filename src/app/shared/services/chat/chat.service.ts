@@ -28,10 +28,11 @@ export class ChatService {
         // }));
     }
 
-    createConversation(participantID: string) {
+    createConversation(participantID: string, text: string) {
         return this.http.post<ChatModel.IConversation>(`${Constants.API.CHAT.conversation}`, {
             user1: this.tokenService.decodedToken.id,
-            user2: participantID
+            user2: participantID,
+            message: text
         });
     }
 
