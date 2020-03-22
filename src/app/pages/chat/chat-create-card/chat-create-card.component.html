@@ -10,7 +10,6 @@
         </div>
         <div class="pr-2">
             <mat-form-field appearance="legacy">
-                <!-- <span matPrefix>TO:</span> -->
                 <mat-chip-list #chipList>
                     <mat-chip *ngFor="let user of selectedUsers; let index = index;" [selectable]="false"
                         [removable]="true" (removed)="removeUser(index)">
@@ -31,7 +30,19 @@
     </header>
 
     <section card-content>
-        <app-chat-card-messages *ngIf="($conversation | async) as chatConversation" [user]="chatConversation?.user"
-            [conversation]="chatConversation?.conversation"></app-chat-card-messages>
+        <ng-container *ngIf="$conversation">
+            <ng-container *ngIf="($conversation | async) as conversation; else footerOnly">
+                <app-chat-card-messages [user]="firstSelectedUser" [conversation]="conversation">
+                </app-chat-card-messages>
+                <app-chat-card-footer [external]="true" (onSendMessage)="jumpToConversationCard($event)"
+                    [conversation]="conversation" [user]="firstSelectedUser">
+                </app-chat-card-footer>
+            </ng-container>
+            <ng-template #footerOnly>
+                <app-chat-card-footer [user]="firstSelectedUser" [external]="true"
+                    (onSendMessage)="createConvesationAndSendMessage($event)">
+                </app-chat-card-footer>
+            </ng-template>
+        </ng-container>
     </section>
 </app-chat-card>
