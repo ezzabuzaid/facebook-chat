@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
-import { UserCardComponent, ChatCardData } from '../conversation-chat-card/conversation-chat-card.component';
+import { UserCardComponent } from '../conversation-chat-card/conversation-chat-card.component';
+import { ChatCardData } from '../types';
 
 @Component({
   selector: 'app-chat-floating-button',
