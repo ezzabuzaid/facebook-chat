@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { ChatModel, UsersModel } from '@shared/models';
 import { TokenService } from '@core/helpers/token';
 
@@ -31,6 +31,7 @@ export class ChatCardMessagesComponent implements OnInit {
     private tokenService: TokenService,
     private chatService: ChatService,
     private chatManager: ChatManager,
+    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() {
@@ -38,17 +39,26 @@ export class ChatCardMessagesComponent implements OnInit {
       .listen()
       .subscribe(message => {
         this.messages.push(message);
-      })
+        this.scrollToLastMessage('auto');
+      });
   }
 
   populateMessages() {
     this.chatService.fetchMessages(this.conversation._id)
       .subscribe((messages) => {
         this.messages = messages;
-        // if an error happens, simply don't load the conversation
-        // meanwhile try to reconnect
+        this.scrollToLastMessage('smooth');
       });
+  }
 
+  scrollToLastMessage(behavior: ScrollBehavior) {
+    setTimeout(() => {
+      const children = this.elementRef.nativeElement.children;
+      const lastElement = children.item(children.length - 1);
+      lastElement && lastElement.scrollIntoView({
+        behavior
+      })
+    });
   }
 
   isSender(id: string) {
