@@ -15,8 +15,8 @@ export class ChatService {
         private tokenService: TokenService
     ) { }
 
-    public createGroup(payload: ChatModel.IGroup) {
-        return this.http.post(Constants.API.CHAT.groups, payload);
+    public createGroup(members: string[]) {
+        return this.http.post(Constants.API.CHAT.groups, { members });
     }
 
     getConversation(participantID: string) {
