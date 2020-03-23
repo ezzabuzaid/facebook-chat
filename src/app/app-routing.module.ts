@@ -17,7 +17,7 @@ const routes = [
     path: Constants.Routing.NOT_FOUND.withoutSlash,
     component: PageNotFoundComponent
   },
-  // { path: '**', component: PageNotFoundComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
