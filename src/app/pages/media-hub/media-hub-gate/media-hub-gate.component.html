@@ -2,13 +2,13 @@
 
 <mat-divider></mat-divider>
 <div class="row mx-0">
-    <div class="col-3 border-right pr-0 h-100">
+    <div class="col-3 border-right p-0 h-100">
         <app-media-hub-folders></app-media-hub-folders>
     </div>
     <div class="col-9">
         <p class="bg-dark text-white py-1 px-2 mt-3">Media</p>
         <div class="card-columns">
-            <app-media-card class="card" *ngFor="let file of files" [file]="file"></app-media-card>
+            <app-media-card class="card border-0 shadow-sm" *ngFor="let file of files" [file]="file"></app-media-card>
         </div>
     </div>
 </div>

@@ -37,7 +37,6 @@ export namespace UsersModel {
         verified: boolean;
         username: string;
         email: string;
-        password: string;
         mobile: string;
         role: number;
         createdAt: string;

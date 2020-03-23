@@ -5,29 +5,19 @@
       <app-sidebar name="chat_bar" class="right">
         <div sidebar-drawer class="border-left">
           <mat-card-content>
-            <mat-nav-list dense>
-              <div class="px-3">
-                <p>Users</p>
-              </div>
-              <mat-list-item *ngFor="let user of ($users | async)" (click)="openChatCard(user)">
-                <img matListAvatar ngxGravatar [email]="user.email" fallback="identicon">
-                <p matLine> {{user.username}} </p>
+            <mat-nav-list>
+              <h3 mat-subheader> Conversations </h3>
+              <mat-list-item *ngFor="let conversation of ($conversations | async)" (click)="openChatCard(conversation)">
+                <img matListAvatar ngxGravatar [email]="conversation.email" fallback="identicon">
+                <p matLine> {{conversation.username}} </p>
               </mat-list-item>
-              <div class="px-3">
-                <p>Groups</p>
-              </div>
+              <h3 mat-subheader> Groups </h3>
               <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
                 <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
                 <p matLine> {{group.title}} </p>
               </mat-list-item>
             </mat-nav-list>
           </mat-card-content>
-          <mat-divider></mat-divider>
-          <mat-card-footer>
-            <button mat-button (click)="openCreateGroup()">
-              <mat-icon class="text-muted">group_add</mat-icon>
-            </button>
-          </mat-card-footer>
         </div>
         <div sidebar-container>
           <router-outlet></router-outlet>
@@ -37,3 +27,7 @@
     <!-- <app-footer class="p-3"> </app-footer> -->
   </app-content>
 </app-navbar>
+
+<button mat-mini-fab class="floating-button" (click)="openCreateChatCard()">
+  <mat-icon>add_comment</mat-icon>
+</button>

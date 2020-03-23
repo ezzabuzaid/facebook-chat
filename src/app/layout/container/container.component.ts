@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UsersModel, ChatModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { ChatCardManager, GroupChatCreateComponent, UserCardComponent, GroupCharCardComponent } from '@partials/chat-card';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
+import { ChatCardManager, GroupCharCardComponent } from 'app/pages/chat';
+import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
+import { ChatConversationCardComponent } from 'app/pages/chat/chat-conversation-card/chat-conversation-card.component';
 
 @Component({
   selector: 'app-container',
@@ -14,6 +16,7 @@ import { ChatService } from '@shared/services/chat';
 export class ContainerComponent implements OnInit {
   public $users = this.usersService.getUsersWithoutMe();
   public $groups = this.chatService.getGroups();
+  public $conversations = this.chatService.getConversations();
 
   constructor(
     private usersService: UsersService,
@@ -33,18 +36,22 @@ export class ContainerComponent implements OnInit {
   }
 
   openChatCard(user: UsersModel.IUser) {
-    this.chatCardManager.open(UserCardComponent, user);
+    this.chatCardManager.open(ChatConversationCardComponent, {
+      id: user._id,
+      data: user
+    });
   }
 
   openGroupChatCard(group: ChatModel.IGroup) {
-    this.chatCardManager.open(GroupCharCardComponent, group);
+    this.chatCardManager.open(GroupCharCardComponent, {
+      data: group
+    });
   }
 
-  openCreateGroup() {
-    const dialogRef = this.dialog.open(GroupChatCreateComponent, {
-      width: '750px'
+  openCreateChatCard() {
+    this.chatCardManager.open(ChatCreateCardComponent, {
+      withButton: false
     });
-    dialogRef.disableClose = true;
   }
 
 }

@@ -1,0 +1,27 @@
+<ng-container *ngFor="let message of messages; let index=index; let first=first; let last = last;">
+
+    <ng-container *ngIf="isImage(message.text); else defaultView;">
+        <img class="border-radius-1 message" [ngClass]="{
+        
+    'align-self-end': isSender(message.user),
+    'align-self-start': !isSender(message.user)
+        }" [src]="populateImageURL(message.text)">
+    </ng-container>
+    <ng-template #defaultView>
+        <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
+            class="border-radius-1 text-white message" [ngClass]="{
+                'bg--primary mr-3':isSender(message.user),
+                'bg--accent ml-3':!isSender(message.user),
+                'align-self-end': isSender(message.user),
+                'align-self-start': !isSender(message.user),
+                'mt-2': first
+                                                                        }">
+            {{message.text}}
+        </span>
+    </ng-template>
+</ng-container>
+
+
+<ng-template #urlView>
+    <object data="" type=""></object>
+</ng-template>

@@ -12,9 +12,13 @@ export class IModel {
     _id: string = null;
     createdAt = new Date().toISOString();
     updatedAt = new Date().toISOString();
-    constructor(payload: Partial<IModel>) {
+    constructor(payload: Partial<IModel> = {}) {
         Object.assign(this, payload);
     }
+}
+
+export class CreateResponse {
+    id: string;
 }
 
 export class Query {

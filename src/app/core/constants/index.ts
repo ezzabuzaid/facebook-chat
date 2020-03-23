@@ -53,7 +53,7 @@ export namespace Constants {
     static readonly UPLOADS = {
       base: 'uploads',
       get folder() {
-        return this.base + '/folders'
+        return 'folders'
       },
       get files() {
         return this.folder + '/files'
@@ -85,6 +85,12 @@ export namespace Constants {
       },
       get members() {
         return `members/${this.groups}`;
+      },
+      get conversation() {
+        return 'conversation';
+      },
+      get messages() {
+        return this.conversation + '/messages'
       }
     };
 

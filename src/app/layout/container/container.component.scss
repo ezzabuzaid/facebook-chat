@@ -12,8 +12,9 @@
     @include overflowHeight();
   }
   app-sidebar {
-    --width: 230px;
+    --width: 275px;
     [sidebar-drawer] {
+      background-color: transparent;
       mat-nav-list {
         img {
           width: 30px !important;
@@ -21,6 +22,12 @@
         }
       }
     }
+  }
+
+  .floating-button {
+    position: fixed !important;
+    right: 2%;
+    bottom: 2%;
   }
 }
 

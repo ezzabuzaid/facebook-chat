@@ -32,7 +32,8 @@
     <span *ngIf="item?.title" class="navbar-item-title w-100 d-flex align-items-center"
       [class.justify-content-center]="toggled">
       <mat-icon matPrefix>{{item?.icon}}</mat-icon>
-      <span class="mx-3 text-uppercase title drawer-invisible font-weight-bold">{{item?.title | translate}}</span>
+      <span
+        class="mx-3 text-uppercase title drawer-invisible font-weight-bold text-dark">{{item?.title | translate}}</span>
     </span>
     <ng-content></ng-content>
   </div>

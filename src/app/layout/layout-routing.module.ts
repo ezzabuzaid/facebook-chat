@@ -11,6 +11,10 @@ const routes: Routes = [
     canActivate: [AppGuard],
     children: [
       {
+        path: Constants.Routing.Users.withoutSlash,
+        loadChildren: () => import('../pages/users/users.module').then(module => module.UsersModule)
+      },
+      {
         path: Constants.Routing.SESSIONS.withoutSlash,
         loadChildren: () => import('../pages/sessions/sessions.module').then(module => module.SessionsModule)
       },

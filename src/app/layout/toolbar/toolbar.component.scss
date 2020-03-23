@@ -1,7 +1,13 @@
+@import 'mixins';
+@import 'variables';
+$toolbar-height: map-get(
+  $map: $layout_dimensions,
+  $key: toolbar-height
+);
 :host {
   .toolbar-button {
-    width: 60px;
-    height: 60px;
+    width: $toolbar-height;
+    height: calc(#{$toolbar-height} - 2px);
   }
   .seperator {
     height: 100%;

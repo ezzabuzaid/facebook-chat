@@ -1,5 +1,6 @@
 import { Directive, OnInit, Input, Host, ElementRef, Renderer2 } from '@angular/core';
 import { TableManager } from '../table.service';
+import { FilterTypes } from '../index';
 
 @Directive({
   selector: '[tableFilter]'
@@ -7,7 +8,7 @@ import { TableManager } from '../table.service';
 
 export class TableFilterDirective implements OnInit {
   @Input() tableFilter: string;
-  @Input() type: string = null;
+  @Input() type: FilterTypes = null;
 
   constructor(
     @Host() private tableService: TableManager,

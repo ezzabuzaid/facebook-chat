@@ -1,4 +1,4 @@
-import { Component, OnInit, forwardRef, Input, HostListener, HostBinding } from '@angular/core';
+import { Component, OnInit, forwardRef, Input, HostListener, HostBinding, Output, EventEmitter } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,7 +28,8 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
   public id = AppUtils.generateAlphabeticString();
   public value: string = null;
 
-
+  @Input() private external = false;
+  @Output() onUpload = new EventEmitter();
 
   @Input() private size = 4;
   @Input() private supported = ['jpeg', 'png', 'gif'];
@@ -84,7 +85,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   private onSuccess(value: string) {
     this.value = value;
-    // this.changeValue(value);
+    this.changeValue(value);
     this.openSnackBar(this.getTranslate('image_upload_success'));
   }
 
@@ -107,17 +108,17 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   uploadFile(file: File) {
     if (this.allowedToUpload(file)) {
-      AppUtils.readFile(file)
-        .pipe(switchMap((value: string) => {
-          // this.onSuccess(value);
-          return this.uploadFileService.uploadImage(file, '')
-        }))
-        .subscribe(
-          () => {
-            ;
-          },
-          () => this.onError('image_upload_error')
-        );
+      if (this.external) {
+        this.onUpload.emit(file);
+      } else {
+        return this.uploadFileService.uploadImage(file, 'others')
+          .subscribe(
+            ({ id, path }) => {
+              this.onSuccess(path);
+            },
+            () => this.onError('image_upload_error')
+          );
+      }
     } else {
       this.onError('image_not_allowed');
     }

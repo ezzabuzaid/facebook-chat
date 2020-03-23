@@ -1,4 +1,5 @@
-import { Observable, of, EMPTY, throwError, Observer, Subject } from 'rxjs';
+import { Observable, of, EMPTY, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
+import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class AppUtils {
 
     public static isEmptyString(value: string): boolean {
@@ -239,25 +240,6 @@ export class AppUtils {
         return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
     }
 
-    static fullScreen() {
-        const doc = window.document;
-        const docEl = doc.documentElement;
-        const requestFullScreen =
-            docEl.requestFullscreen || docEl['mozRequestFullScreen'] ||
-            docEl['webkitRequestFullScreen'] || docEl['msRequestFullscreen'];
-        const cancelFullScreen =
-            doc.exitFullscreen || doc['mozCancelFullScreen'] ||
-            doc['webkitExitFullscreen'] || doc['msExitFullscreen'];
-        if (
-            !doc.fullscreenElement && !doc['mozFullScreenElement'] &&
-            !doc['webkitFullscreenElement'] && !doc['msFullscreenElement']
-        ) {
-            requestFullScreen.call(docEl);
-        } else {
-            cancelFullScreen.call(doc);
-        }
-    }
-
     static replaceTextCharToHTMLentity(text: string) {
         const entityMap = {
             '&': '&amp;',
@@ -307,6 +289,10 @@ export class AppUtils {
         return !this.equals(...values);
     }
 
+    public static notNullOrUndefined(value: any) {
+        return AppUtils.isFalsy(AppUtils.isNullorUndefined(value));
+    }
+
 }
 
 export function tryOrThrow<T>(cb: (...args: any) => T) {
@@ -333,4 +319,24 @@ export type PickAttr<T, P extends keyof T> = T[P];
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export interface KeyPairs<T> {
     [key: string]: T;
-} 
+}
+
+export function typeaheadOperator<T, Q>(
+    provider: (query: Q) => Observable<T>,
+    onEmpty: () => Partial<T> = null
+): OperatorFunction<Q, T> {
+    return (source) => {
+        return source.pipe(
+            filter(AppUtils.notNullOrUndefined),
+            debounceTime(400),
+            distinctUntilChanged(),
+            switchMap((value) => {
+                if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
+                    return of<T>(onEmpty() as any);
+                }
+                return provider(value);
+            })
+        );
+    };
+}
+

@@ -1,0 +1,48 @@
+<app-chat-card>
+    <header card-header class="py-2 pl-3 pr-2 py-2">
+        <div class="w-100 d-flex align-items-center justify-content-between ">
+            <p class="mb-0">New Message</p>
+            <div class="d-flex">
+                <button mat-icon-button>
+                    <mat-icon (click)="closeCard()" class="text--accent">close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="pr-2">
+            <mat-form-field appearance="legacy">
+                <mat-chip-list #chipList>
+                    <mat-chip *ngFor="let user of selectedUsers; let index = index;" [selectable]="false"
+                        [removable]="true" (removed)="removeUser(index)">
+                        {{user.username}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input #autoCompleteInput [formControl]="autocompleteControl" [matAutocomplete]="auto"
+                        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+                </mat-chip-list>
+                <mat-autocomplete (optionSelected)="selectUser($event, autoCompleteInput)" #auto="matAutocomplete">
+                    <mat-option *ngFor="let user of ($users | async)" [value]="user">
+                        <img class="mr-2" [size]="35" ngxGravatar [email]="user.email" fallback="identicon">
+                        <span>{{user.username}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </header>
+
+    <section card-content>
+        <ng-container *ngIf="$conversation">
+            <ng-container *ngIf="($conversation | async) as conversation; else footerOnly">
+                <app-chat-card-messages [user]="firstSelectedUser" [conversation]="conversation">
+                </app-chat-card-messages>
+                <app-chat-card-footer [external]="true" (onSendMessage)="jumpToConversationCard($event)"
+                    [conversation]="conversation" [user]="firstSelectedUser">
+                </app-chat-card-footer>
+            </ng-container>
+            <ng-template #footerOnly>
+                <app-chat-card-footer [user]="firstSelectedUser" [external]="true"
+                    (onSendMessage)="createConvesationAndSendMessage($event)">
+                </app-chat-card-footer>
+            </ng-template>
+        </ng-container>
+    </section>
+</app-chat-card>

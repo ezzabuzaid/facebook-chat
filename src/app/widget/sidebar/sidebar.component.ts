@@ -8,7 +8,9 @@ import { SidebarService } from './sidebar.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  @HostBinding('class.toggled') public toggled = false;
+  @Input()
+  @HostBinding('class.toggled')
+  public toggled = false;
   @ViewChild('panel') public drawer: ElementRef<HTMLElement>;
   @Input() public name = '';
 

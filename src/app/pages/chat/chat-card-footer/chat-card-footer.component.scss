@@ -1,0 +1,61 @@
+@import "mixins";
+
+:host {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .actions-buttons {
+    button {
+      background-color: #f1f2f5;
+    }
+  }
+  .add-button {
+    $size: 30px;
+    height: $size;
+    line-height: 0px;
+    width: $size;
+    max-width: $size;
+    min-width: $size;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    transform: translateY(-5px);
+  }
+  .send-button {
+    transform: translateY(-2px);
+  }
+  .textarea-wrapper {
+    background-color: #f1f2f5;
+    textarea {
+      font-size: 14px;
+      width: 100%;
+      background-color: #f1f2f5;
+      min-height: 32px !important;
+      line-height: 28px;
+      padding-left: 0.5rem;
+      &:hover,
+      &:focus {
+        outline: 0;
+      }
+      // @include placeholder {
+      //   line-height: 30px;
+      // }
+    }
+  }
+  .img-box {
+    height: 50px;
+    flex: 0 0 20%;
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+      top: -20%;
+      left: -15%;
+    }
+  }
+}

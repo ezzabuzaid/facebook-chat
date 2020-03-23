@@ -64,7 +64,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     const toLowerCase = (value: string) => String(value).toLowerCase();
     this.tableManager.onSearch()
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => {
+      .subscribe((value) => {
         const tokens = this.tableFilterDirective
           .filter(token => {
             const value = token.getValue();
