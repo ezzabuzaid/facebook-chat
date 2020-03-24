@@ -9,4 +9,19 @@
   img {
     max-height: 200px;
   }
+  border: 2px solid transparent;
+  transition: border 0.25s;
+  will-change: border;
+  .check-icon {
+    display: none;
+    z-index: 999;
+    top: -5%;
+    left: -5%;
+  }
+  &:hover {
+    border: 2px solid black;
+    .check-icon {
+      display: block;
+    }
+  }
 }
