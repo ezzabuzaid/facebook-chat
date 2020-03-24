@@ -3,14 +3,15 @@ import { AppUtils } from '@core/helpers/utils';
 import { TokenService } from '@core/helpers/token';
 import { ChatManager } from '../chat.manager';
 import { ChatMessage } from '../types';
-import { ChatModel, UsersModel } from '@shared/models';
+import { ChatModel, UsersModel, MediaModel } from '@shared/models';
 import { UploadService } from '@shared/services/upload';
+import { MediaPickerComponent } from 'app/pages/media-hub/media-picker/media-picker.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-chat-card-footer',
   templateUrl: './chat-card-footer.component.html',
   styleUrls: ['./chat-card-footer.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatCardFooterComponent implements OnInit {
   @Input() conversation: ChatModel.IConversation;
@@ -27,7 +28,8 @@ export class ChatCardFooterComponent implements OnInit {
   constructor(
     private tokenService: TokenService,
     private chatManager: ChatManager,
-    private uploadsService: UploadService
+    private uploadsService: UploadService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() { }
@@ -70,6 +72,10 @@ export class ChatCardFooterComponent implements OnInit {
     setTimeout(() => {
       this.onActionBarVisibilityChange.emit();
     });
+    if (!this.showActionBar) {
+      this.files = [];
+      this.base64Files = [];
+    }
   }
 
   openEmojiPicker() {
@@ -79,11 +85,31 @@ export class ChatCardFooterComponent implements OnInit {
   uploadFiles(files: FileList) {
     this.files = Array.from(files);
     this.base64Files = this.files.map(file => AppUtils.readFile(file));
-
   }
 
   disposeFile(index: number) {
     this.base64Files.splice(index, 1);
+  }
+
+  openMediaPicker() {
+    this.dialog.open<MediaPickerComponent, any, MediaModel.IFile[]>(MediaPickerComponent, {
+      width: '1000px',
+      height: '750px',
+      panelClass: ['media-picker-dialog']
+    })
+      .afterClosed()
+      .subscribe((files) => {
+        console.log(files);
+        files.forEach(file => {
+          const message = new ChatMessage(
+            file.path,
+            this.conversation._id,
+            this.tokenService.decodedToken.id,
+            this.user._id,
+          );
+          this.chatManager.sendMessage(message);
+        });
+      });
   }
 
 }
