@@ -42,7 +42,7 @@ export class UploadService {
         return this.http.get<MediaModel.IFile[]>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
             .pipe(map((files) => {
                 return files.map(file => {
-                    file.path = environment.serverOrigin + file.path;
+                    file.fullPath = environment.serverOrigin + file.path;
                     file.type = file.type.split('/')[1]
                     return file;
                 })

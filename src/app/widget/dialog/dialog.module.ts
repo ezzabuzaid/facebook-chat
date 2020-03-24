@@ -8,7 +8,6 @@ import { Backdrop } from './backdrop.utils';
   imports: [
     CommonModule
   ],
-  entryComponents: [DialogComponent],
   declarations: [
     DialogComponent
   ],
@@ -22,7 +21,11 @@ export class DialogModule {
     return {
       ngModule: DialogModule,
       providers: [
-        { provide: GLOBAL_CONFIG_FOR_DIALOG, useValue: Object.assign({ width: '500px', fadeLeave: 150, fadeEnter: 150 }, config) }
+        {
+          provide: GLOBAL_CONFIG_FOR_DIALOG,
+          // TODO: Use factory instead 
+          useValue: Object.assign({ width: '500px', fadeLeave: 150, fadeEnter: 150 }, config)
+        }
       ]
     };
   }

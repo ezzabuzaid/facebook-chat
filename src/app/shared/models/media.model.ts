@@ -9,6 +9,7 @@ export namespace MediaModel {
     }
 
     export interface IFile extends IModel {
+        fullPath: string;
         type: string;
         size: number;
         name: string;
