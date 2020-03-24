@@ -14,6 +14,10 @@ const routes = [
     loadChildren: () => import('./pages/portal/portal.module').then(e => e.PortalModule)
   },
   {
+    path: '',
+    loadChildren: () => import('./layout/layout.module').then(e => e.LayoutModule)
+  },
+  {
     path: Constants.Routing.NOT_FOUND.withoutSlash,
     component: PageNotFoundComponent
   },

@@ -7,7 +7,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '@core/core.module';
-import { LayoutModule } from '@layout/layout.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { LanguageLoader } from '@core/helpers/language';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -49,7 +48,6 @@ export const sessionStorageFactory = (injector: Injector) => {
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     CoreModule,
-    LayoutModule,
     PopupModule,
     StaticPagesModule,
     ProgressBarModule,
