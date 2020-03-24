@@ -14,6 +14,7 @@ import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 })
 export class MediaHubGateComponent implements OnInit, OnDestroy {
   files: MediaModel.IFile[] = [];
+  markedFiles: MediaModel.IFile[] = [];
 
   constructor(
     private uploadsService: UploadService,
@@ -35,6 +36,10 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     AppUtils.unsubscribe(this.mediaManager.subscription);
+  }
+
+  addToMarkedFiles(index: number) {
+    this.markedFiles.push(this.files[index]);
   }
 
 }

@@ -8,7 +8,8 @@
     <div class="col-9">
         <p class="bg-dark text-white py-1 px-2 mt-3">Media</p>
         <div class="card-columns">
-            <app-media-card class="card border-0 shadow-sm" *ngFor="let file of files" [file]="file"></app-media-card>
+            <app-media-card class="card border-0 shadow-sm" *ngFor="let file of files; let index = index;" [file]="file"
+                (onMarkChange)="addToMarkedFiles(index);"></app-media-card>
         </div>
     </div>
 </div>
