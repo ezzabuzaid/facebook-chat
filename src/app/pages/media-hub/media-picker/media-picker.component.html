@@ -1,0 +1,21 @@
+<app-sidebar>
+    <div sidebar-drawer>
+        <mat-nav-list class="h-100" dense>
+            <mat-list-item *ngFor="let folder of ($folders | async)" (click)="onFolderClick(folder)">
+                <mat-icon mat-list-icon text-muted>
+                    {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
+                </mat-icon>
+                <h4 mat-line class=""> {{folder.name}}</h4>
+            </mat-list-item>
+        </mat-nav-list>
+    </div>
+    <div sidebar-container class="d-flex flex-column justify-content-between p-3">
+        <div class="card-columns">
+            <app-media-card class="card shadow-sm" *ngFor="let file of files; let index = index;" [file]="file"
+                (onMarkChange)="addToMarkedFiles(index);"></app-media-card>
+        </div>
+        <footer class="text-right">
+            <button mat-flat-button [mat-dialog-close]="markedFiles" color="primary">Insert</button>
+        </footer>
+    </div>
+</app-sidebar>
