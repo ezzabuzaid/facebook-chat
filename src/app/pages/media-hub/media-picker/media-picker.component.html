@@ -9,11 +9,13 @@
             </mat-list-item>
         </mat-nav-list>
     </div>
-    <div sidebar-container class="d-flex flex-column justify-content-between p-3">
-        <div class="card-columns">
-            <app-media-card class="card shadow-sm" *ngFor="let file of files; let index = index;" [file]="file"
-                (onMarkChange)="addToMarkedFiles(index);"></app-media-card>
-        </div>
+    <div sidebar-container class="p-3">
+        <app-masonry>
+            <app-masonry-item *ngFor="let file of files; let index = index;">
+                <app-media-card class="item" [file]="file" (onMarkChange)="addToMarkedFiles(index);">
+                </app-media-card>
+            </app-masonry-item>
+        </app-masonry>
         <footer class="text-right">
             <button mat-flat-button [mat-dialog-close]="markedFiles" color="primary">Insert</button>
         </footer>
