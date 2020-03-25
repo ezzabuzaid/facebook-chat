@@ -176,15 +176,17 @@ export class AppUtils {
 
     /**
      * convert an object with key:value to query param string
-     * all falsy values will be avoided
+     * null and undefined values will be omited
+     * @param obj
      */
-    static convertObjectToQueryParams(obj: { [key: string]: string | number }) {
+    static convertObjectToQueryParams(obj: any) {
         return Object.keys(obj)
-            .reduce((accumlator, value) => {
-                if (this.isNullorUndefined(obj[value]) || this.isEmptyString(value)) {
-                    return accumlator;
+            .reduce((acc, curr, index, thisArray) => {
+                if (AppUtils.isNullorUndefined(obj[curr])) {
+                    return acc;
                 }
-                return accumlator += `${value}=${obj[value]}&`;
+                const lastIndex = thisArray.length - 1 === index;
+                return acc += `${curr}=${obj[curr]}${lastIndex ? '' : '&'}`;
             }, '');
     }
 
