@@ -1,7 +1,8 @@
 import { Component, OnInit, EventEmitter, OnDestroy, Output, HostBinding, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { share, takeUntil } from 'rxjs/operators';
 import { FormWidgetManager } from '../form.manager';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-form-container',
@@ -22,6 +23,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.progressListener
+      .pipe(takeUntil(this._subscription))
       .subscribe(show => {
         this.loading = show;
       });
@@ -32,8 +34,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscription.next();
-    this._subscription.complete();
+    AppUtils.unsubscribe(this._subscription);
   }
 
 
