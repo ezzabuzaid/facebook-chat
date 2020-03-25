@@ -12,7 +12,8 @@
     min-width: $height;
     height: $height;
   }
-  .card-columns {
-    column-count: 4 !important;
+
+  app-sidebar {
+    --width: 25%;
   }
 }

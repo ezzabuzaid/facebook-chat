@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { switchMap, tap, takeUntil, filter } from 'rxjs/operators';
 import { UploadService } from '@shared/services/upload';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager } from '../media-hub.manager';
@@ -25,8 +25,10 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
     this.mediaManager.onSearch()
       .pipe(
         takeUntil(this.mediaManager.subscription),
-        typeaheadOperator(({ fileName, folder_id }) => this.uploadsService.searchForFiles(
-          new MediaModel.FileSearchQuery(folder_id, fileName))
+        typeaheadOperator(
+          ({ fileName, folder_id }) => this.uploadsService.searchForFiles(
+            new MediaModel.FileSearchQuery(folder_id, fileName)
+          ),
         )
       )
       .subscribe((data) => {

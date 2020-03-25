@@ -73,7 +73,7 @@
     background: -webkit-gradient(
       radial,
       center center,
-      0px,
+      0,
       center center,
       100%,
       color-stop(0%, rgba(0, 0, 0, 0)),
@@ -107,7 +107,11 @@
       rgba(0, 0, 0, 0) 19%,
       rgba(0, 0, 0, 0.9) 100%
     ); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#00000000', endColorstr = '#e6000000', GradientType = 1); /* IE6-9 fallback on horizontal gradient */
+    filter: progid:dximagetransform.microsoft.gradient(
+      startColorstr = '#00000000',
+     endColorstr = '#e6000000',
+      GradientType = 1
+      ); /* IE6-9 fallback on horizontal gradient */
   }
 
   .frame div {

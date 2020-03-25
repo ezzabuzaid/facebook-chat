@@ -14,6 +14,7 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MediaPickerComponent } from './media-picker/media-picker.component';
 import { SidebarModule } from '@widget/sidebar';
+import { MasonryModule } from '@widget/masonry';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SidebarModule } from '@widget/sidebar';
     MediaHubGridViewComponent,
     MediaHubListViewComponent,
     MediaPickerComponent,
+
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { SidebarModule } from '@widget/sidebar';
     UploadFileModule,
     FileControlModule,
     ReactiveFormsModule,
-    SidebarModule
+    SidebarModule,
+    MasonryModule,
   ],
   providers: []
 })

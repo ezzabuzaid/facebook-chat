@@ -1,12 +1,17 @@
-<mat-icon (click)="toggleChecking()" [class.d-block]="checked"
-    class="pointer check-icon position-absolute bg--accent text-white border-radius-1">check</mat-icon>
-<mat-card class="mat-elevation-z0">
-    <img mat-card-image [src]="file.fullPath" [alt]="file.name">
+<mat-icon (click)="toggleChecking()" class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
+    check</mat-icon>
+<mat-card>
+    <img mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow">
     <mat-card-content>
-        <h6 class="title">{{file.name}}</h6>
         <div class="d-flex align-items-center justify-content-between">
-            <span class="text-uppercase bg-secondary p-1 rounded">{{file.type}}</span>
-            <span class="text-uppercase">{{file.size / 1000 || ''}} kb</span>
+            <div class="w-75">
+                <h6 class="title">{{file.name}}</h6>
+                <span class="text-uppercase bg-secondary mr-1 rounded">{{file.type}}</span>
+                <span class="text-uppercase">{{file.size / 1000 || ''}} kb</span>
+            </div>
+            <button mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+            </button>
         </div>
     </mat-card-content>
 </mat-card>

@@ -25,17 +25,19 @@
 
 <mat-nav-list class="h-100">
     <div class="d-flex" *ngFor="let folder of folders; let index = index;">
-        <mat-list-item (click)="onFolderClick(folder)">
+        <mat-list-item dense (click)="onFolderClick(folder)">
             <mat-icon mat-list-icon text-muted>
                 {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
             </mat-icon>
             <div mat-line class="d-flex justify-content-between align-items-center">
-                <h4 class="folder-title"> {{folder.name}}</h4>
+                <h4 class="folder-title text-truncate"> {{folder.name}}</h4>
+                <button (click)="$event.preventDefault();$event.stopImmediatePropagation();" mat-icon-button
+                    [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
+                    <mat-icon class="text-muted">more_vert</mat-icon>
+                </button>
             </div>
+
         </mat-list-item>
-        <button mat-icon-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
-            <mat-icon class="text-muted">more_vert</mat-icon>
-        </button>
     </div>
 </mat-nav-list>
 

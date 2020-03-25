@@ -1,4 +1,6 @@
 :host {
+  position: relative;
+  display: block;
   .title {
     width: 100%;
     word-break: break-word;
@@ -9,17 +11,30 @@
   img {
     max-height: 200px;
   }
-  border: 2px solid transparent;
-  transition: border 0.25s;
-  will-change: border;
+  transition: border-color 0.25s;
+  will-change: border-color;
   .check-icon {
     display: none;
     z-index: 999;
     top: -5%;
     left: -5%;
   }
+
+  mat-card {
+    border: 2px solid transparent;
+  }
+  &.checked {
+    mat-card {
+      border-color: black !important;
+    }
+    .check-icon {
+      display: block;
+    }
+  }
   &:hover {
-    border: 2px solid black;
+    mat-card {
+      border-color: black;
+    }
     .check-icon {
       display: block;
     }
