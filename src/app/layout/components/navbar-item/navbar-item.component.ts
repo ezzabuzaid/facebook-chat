@@ -24,7 +24,7 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   ngOnInit() { }
 
   public get toggled() {
-    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggled;
+    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).closed;
   }
 
   // TODO shortcuts service
