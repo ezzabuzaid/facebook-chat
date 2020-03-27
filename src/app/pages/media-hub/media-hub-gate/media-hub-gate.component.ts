@@ -28,7 +28,7 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
         typeaheadOperator(
           ({ fileName, folder_id }) => this.uploadsService.searchForFiles(
             new MediaModel.FileSearchQuery(folder_id, fileName)
-          ),
+          )
         )
       )
       .subscribe((data) => {

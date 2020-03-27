@@ -1,4 +1,4 @@
-@import 'mixins';
+@import "mixins";
 
 :host {
   .folder-title {
@@ -12,7 +12,6 @@
     }
   }
   mat-nav-list {
-    @include overflowHeight(15px);
     overflow: auto;
   }
 }

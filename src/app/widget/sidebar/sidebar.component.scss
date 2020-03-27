@@ -1,12 +1,11 @@
-@import "variables";
-@import "mixins";
-@import "~@angular/material/theming";
+@import 'variables';
+@import 'mixins';
+@import '~@angular/material/theming';
 $transition-timing: cubic-bezier(0.2, 0, 0, 1);
 $transition-duration: 0.22s;
 :host {
   --width: 100%;
   position: relative;
-  display: block;
   display: flex;
   height: 100%;
   ::ng-deep {
@@ -78,7 +77,6 @@ $transition-duration: 0.22s;
       }
     }
   }
-  position: relative;
   .resizer {
     position: relative;
     cursor: ew-resize;
