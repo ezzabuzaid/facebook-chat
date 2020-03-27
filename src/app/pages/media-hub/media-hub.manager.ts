@@ -1,8 +1,9 @@
 import { Injectable, Host } from '@angular/core';
 import { Listener } from '@core/helpers/listener';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { pluck, distinctUntilKeyChanged, map, tap, share } from 'rxjs/operators';
+import { pluck, distinctUntilKeyChanged, map, tap, share, filter } from 'rxjs/operators';
 import { merge, Subject } from 'rxjs';
+import { AppUtils } from '@core/helpers/utils';
 
 @Injectable()
 export class MediaHubManager extends Listener<any> {
@@ -31,8 +32,8 @@ export class MediaHubManager extends Listener<any> {
     onSearch() {
         return merge(
             // TODO: Implement typeahead operator
-            this.onQueryParamChange('file'),
-            this.onQueryParamChange('folder_id')
+            this.onQueryParamChange('file').pipe(filter(AppUtils.isTruthy)),
+            this.onQueryParamChange('folder_id').pipe(filter(AppUtils.isTruthy))
         )
             .pipe(
                 map(() => ({
