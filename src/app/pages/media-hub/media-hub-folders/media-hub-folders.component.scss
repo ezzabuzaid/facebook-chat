@@ -12,7 +12,6 @@
     }
   }
   mat-nav-list {
-    @include overflowHeight(15px);
     overflow: auto;
   }
 }

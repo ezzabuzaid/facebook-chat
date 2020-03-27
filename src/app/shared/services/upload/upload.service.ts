@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType, HttpEvent, HttpProgressEvent } from '@angular/common/http';
 import { map, filter, tap } from 'rxjs/operators';
 import { Constants } from '@core/constants';
-import { MediaModel, PlainQuery, CreateResponse } from '@shared/models';
+import { MediaModel, PlainQuery, CreateResponse, ListEntityResponse } from '@shared/models';
 import { environment } from '@environments/environment';
 
 interface CreateFileResponse {
@@ -34,7 +34,8 @@ export class UploadService {
     }
 
     getFolders() {
-        return this.http.get<MediaModel.Folder[]>(Constants.API.UPLOADS.folder);
+        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folder)
+            .pipe(map(({ list }) => list));
     }
 
     public searchForFiles(query: MediaModel.FileSearchQuery) {
@@ -42,7 +43,7 @@ export class UploadService {
         return this.http.get<MediaModel.IFile[]>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
             .pipe(map((files) => {
                 return files.map(file => {
-                    file.path = environment.serverOrigin + file.path;
+                    file.fullPath = environment.serverOrigin + file.path;
                     file.type = file.type.split('/')[1]
                     return file;
                 })

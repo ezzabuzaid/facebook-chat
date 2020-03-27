@@ -1,31 +1,25 @@
 import { Directive, ElementRef, Input, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appTogglePasswod]'
+  selector: '[togglePasswod]'
 })
 export class TogglePasswodDirective {
-  private input: HTMLInputElement = null;
-  @Input() private set appTogglePasswod(input) {
-    this.input = input;
-  }
+  @Input() togglePasswod: HTMLInputElement;
 
   constructor(
-    private elRef: ElementRef<HTMLInputElement>,
+    private elRef: ElementRef<HTMLElement>,
     private renderer: Renderer2,
   ) { }
 
   @HostListener('click') toggleType() {
-    const icon = this.elRef.nativeElement;
-    const iconElement = icon.tagName === 'I' ? icon : icon.querySelector('i');
-    const type = this.input.type || this.input.getAttribute('type');
+    const iconElement = this.elRef.nativeElement;
+    const type = this.togglePasswod.type || this.togglePasswod.getAttribute('type');
     if (type !== 'text') {
-      this.renderer.setAttribute(this.input, 'type', 'text');
-      this.renderer.removeClass(iconElement, 'fa-lock');
-      this.renderer.addClass(iconElement, 'fa-lock-open');
+      this.renderer.setAttribute(this.togglePasswod, 'type', 'text');
+      iconElement.textContent = 'lock_open';
     } else {
-      this.renderer.setAttribute(this.input, 'type', 'password');
-      this.renderer.addClass(iconElement, 'fa-lock');
-      this.renderer.removeClass(iconElement, 'fa-lock-open');
+      this.renderer.setAttribute(this.togglePasswod, 'type', 'password');
+      iconElement.textContent = 'lock';
     }
   }
 

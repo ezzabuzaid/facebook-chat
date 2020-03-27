@@ -76,7 +76,7 @@ export class ChatCardMessagesComponent implements OnInit {
   }
 
   isImage(value: string) {
-    return /(\.jpg|\.png|\.bmp)$/.test(value);
+    return /(\.jpg|\.png|\.bmp|\.gif)$/i.test(value);
   }
 
   populateImageURL(value: string) {

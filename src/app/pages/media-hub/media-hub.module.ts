@@ -12,6 +12,9 @@ import { MediaHubListViewComponent } from './media-hub-list-view/media-hub-list-
 import { UploadFileModule } from '@widget/upload-file';
 import { FileControlModule } from '@widget/file-control/file-control.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MediaPickerComponent } from './media-picker/media-picker.component';
+import { SidebarModule } from '@widget/sidebar';
+import { MasonryModule } from '@widget/masonry';
 
 
 @NgModule({
@@ -22,6 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MediaHubHeaderComponent,
     MediaHubGridViewComponent,
     MediaHubListViewComponent,
+    MediaPickerComponent,
+
   ],
   imports: [
     CommonModule,
@@ -29,7 +34,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     MediaHubRoutingModule,
     UploadFileModule,
     FileControlModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SidebarModule,
+    MasonryModule,
   ],
   providers: []
 })

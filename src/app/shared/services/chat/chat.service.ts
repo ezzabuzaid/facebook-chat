@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ChatModel } from '@shared/models';
+import { ChatModel, ListEntityResponse } from '@shared/models';
 import { Constants } from '@core/constants';
 import { map } from 'rxjs/operators';
 import { TokenService } from '@core/helpers/token';
@@ -38,9 +38,9 @@ export class ChatService {
 
     getConversations() {
         return this.http
-            .get<ChatModel.IConversation[]>(Constants.API.CHAT.conversation)
+            .get<ListEntityResponse<ChatModel.IConversation>>(Constants.API.CHAT.conversation)
             .pipe(map((data) => {
-                return data.map(conversation => this.tokenService.decodedToken.id === conversation.user1._id
+                return data.list.map(conversation => this.tokenService.decodedToken.id === conversation.user1._id
                     ? conversation.user2
                     : conversation.user1
                 )
@@ -48,15 +48,18 @@ export class ChatService {
     }
 
     public getGroups() {
-        return this.http.get<ChatModel.IGroup[]>(Constants.API.CHAT.groups);
+        return this.http.get<ListEntityResponse<ChatModel.IGroup>>(Constants.API.CHAT.groups)
+            .pipe(map(({ list }) => list))
     }
 
     public getGroupMembers(group_id: string) {
-        return this.http.get<ChatModel.IMember[]>(`${Constants.API.CHAT.members}/${group_id}`);
+        return this.http.get<ListEntityResponse<ChatModel.IMember>>(`${Constants.API.CHAT.members}/${group_id}`)
+            .pipe(map(({ list }) => list))
     }
 
     fetchMessages(conversation_id: string) {
-        return this.http.get<ChatModel.Message[]>(Constants.API.CHAT.messages + '/' + conversation_id);
+        return this.http.get<ListEntityResponse<ChatModel.Message>>(Constants.API.CHAT.messages + '/' + conversation_id)
+            .pipe(map(({ list }) => list))
     }
 
 }

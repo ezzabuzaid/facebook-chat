@@ -1,12 +1,11 @@
 @import 'variables';
 @import 'mixins';
 @import '~@angular/material/theming';
-$transition-timing: ease-in-out;
-$transition-duration: 0.25s;
+$transition-timing: cubic-bezier(0.2, 0, 0, 1);
+$transition-duration: 0.22s;
 :host {
   --width: 100%;
   position: relative;
-  display: block;
   display: flex;
   height: 100%;
   ::ng-deep {
@@ -51,6 +50,13 @@ $transition-duration: 0.25s;
     }
   }
 
+  &.toggled {
+    ::ng-deep {
+      > div:first-child {
+        transform: translateX(0%);
+      }
+    }
+  }
   @include media-breakpoint-down(md) {
     ::ng-deep {
       > div {
@@ -69,6 +75,23 @@ $transition-duration: 0.25s;
           transform: translateX(0%);
         }
       }
+    }
+  }
+  .resizer {
+    position: relative;
+    cursor: ew-resize;
+    display: block;
+    // position: absolute;
+    height: 100%;
+    width: 2px;
+    background-color: transparent;
+    will-change: background-color;
+    transition: background-color 0.25s;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    &:hover {
+      background-color: black;
     }
   }
 }

@@ -1,13 +1,13 @@
-@import "~bootstrap/scss/bootstrap.scss";
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import "./app/app.theme";
-@import "assets/scss/main";
-@import "~@ctrl/ngx-emoji-mart/picker";
+@import '~bootstrap/scss/bootstrap.scss';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './app/app.theme';
+@import 'assets/scss/main';
+@import '~@ctrl/ngx-emoji-mart/picker';
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
 $typography: mat-typography-config(
   $font-family: "'Roboto', sans-serif",
-  $input: mat-typography-level(16px, 1.125, 400)
+  $input: mat-typography-level(16px, 1.125, 400),
 );
 
 @include angular-material-typography($typography);
@@ -15,3 +15,10 @@ $typography: mat-typography-config(
 @include font_size(1.25);
 @include border_width;
 @include bootstrab_default;
+
+.media-picker-dialog {
+  mat-dialog-container {
+    padding: 0 !important;
+    overflow: hidden;
+  }
+}

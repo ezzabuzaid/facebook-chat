@@ -41,7 +41,7 @@ export class TeardownInterceptor implements HttpInterceptor {
                                 this.userService.logout();
                                 break;
                             case 500:
-                                this.snackbar.open(`An error occurred to the server, please contact the maintenance`);
+                                this.snackbar.open('Internal error. Please try again later.');
                                 break;
                             default:
                                 break;

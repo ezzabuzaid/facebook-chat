@@ -185,7 +185,7 @@
 @mixin overflowHeight($threshold: 0) {
   $toolbar-height: map-get(
     $map: $layout_dimensions,
-    $key: toolbar-height
+    $key: toolbar-height,
   );
   height: calc(100% - #{$toolbar-height} - #{$threshold});
 }

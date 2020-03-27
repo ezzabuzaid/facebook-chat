@@ -9,7 +9,7 @@
   }
 
   .router-container {
-    @include overflowHeight();
+    @include overflowHeight(0);
   }
   app-sidebar {
     --width: 275px;

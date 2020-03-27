@@ -10,6 +10,7 @@
         </mat-card-header>
         <mat-card-content>
           <!-- TODO: After finishing the auth module consider using form container -->
+
           <form [formGroup]="form">
             <app-field-factory *ngFor="let field of form.fields" [field]="field"></app-field-factory>
             <mat-checkbox id="rememberMe" #rememberMeCheckBox>Remember me!</mat-checkbox>

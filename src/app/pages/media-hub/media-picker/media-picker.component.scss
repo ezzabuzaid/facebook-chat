@@ -1,0 +1,11 @@
+:host {
+  app-sidebar {
+    --width: 230px;
+    [sidebar-drawer] {
+      background-color: #f1f2f5;
+    }
+    .card-columns {
+      column-count: 4;
+    }
+  }
+}

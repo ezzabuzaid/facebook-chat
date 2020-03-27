@@ -6,6 +6,7 @@ import { MaterialModule } from '@shared/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MobileControlModule } from '@widget/mobile-control';
 import { CountryControlModule } from '@widget/country-control';
+import { DirectivesModule } from '@shared/directives';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CountryControlModule } from '@widget/country-control';
     MaterialModule,
     ReactiveFormsModule,
     MobileControlModule,
-    CountryControlModule
+    CountryControlModule,
+    DirectivesModule
   ],
 })
 export class FormModule { }

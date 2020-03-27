@@ -12,7 +12,7 @@ export class NavbarHeaderComponent implements OnInit {
   ) { }
 
   public get toggled() {
-    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggled;
+    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).closed;
   }
 
   ngOnInit() { }

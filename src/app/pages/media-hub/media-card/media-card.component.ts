@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { MediaModel } from '@shared/models';
 
 @Component({
@@ -8,9 +8,19 @@ import { MediaModel } from '@shared/models';
 })
 export class MediaCardComponent implements OnInit {
   @Input() file: MediaModel.IFile;
+  @Output() onMarkChange = new EventEmitter();
+  @Input()
+  @HostBinding('class.checked')
+  checked = false;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toggleChecking() {
+    this.onMarkChange.emit(this.file);
+    this.checked = !this.checked;
   }
 
 }

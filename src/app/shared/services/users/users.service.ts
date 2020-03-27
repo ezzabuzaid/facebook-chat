@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UsersModel } from '@shared/models';
+import { UsersModel, ListEntityResponse } from '@shared/models';
 import { map } from 'rxjs/operators';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
@@ -16,7 +16,8 @@ export class UsersService {
     ) { }
 
     public getUsers() {
-        return this.http.get<UsersModel.IUser[]>(Constants.API.users.base);
+        return this.http.get<ListEntityResponse<UsersModel.IUser>>(Constants.API.users.base)
+            .pipe(map(({ list }) => list));
     }
 
     public searchForUsers(name: string) {

@@ -18,9 +18,6 @@ import { DirectivesModule } from '@shared/directives';
     CrudManagerComponent,
     GenericReadComponent
   ],
-  entryComponents: [
-    GenericReadComponent
-  ],
   imports: [
     CommonModule,
     GenericCrudRoutingModule,

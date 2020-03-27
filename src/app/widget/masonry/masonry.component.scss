@@ -1,0 +1,8 @@
+:host {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* [2] Make columns adjust according to the available viewport */
+  grid-auto-rows: 0; /* [3] Set the height for implicitly-created row track */
+}

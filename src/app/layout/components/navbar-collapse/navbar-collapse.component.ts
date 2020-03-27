@@ -19,7 +19,7 @@ export class NavbarCollapseComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.navbarInstance.listen()
+    this.navbarInstance.onToggle
       .pipe(
         takeUntil(this._subscribtion),
       )
@@ -31,7 +31,7 @@ export class NavbarCollapseComponent implements OnInit, OnDestroy {
   }
 
   expand(shouldExpand = !this.classList.contains('expanded')) {
-    if (this.navbarInstance.toggled) {
+    if (this.navbarInstance.closed) {
       this.navbarInstance.open();
     }
     if (shouldExpand) {

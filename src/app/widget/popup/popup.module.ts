@@ -20,11 +20,6 @@ import { PopupManager } from './popup.manager';
     FormsModule,
     TranslateModule.forChild()
   ],
-  entryComponents: [
-    AlertComponent,
-    ConfirmComponent,
-    PromptComponent,
-  ],
   providers: [
     PopupManager
   ]

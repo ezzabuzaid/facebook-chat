@@ -8,6 +8,7 @@ export interface ResponseModel<T> {
     status: string;
 }
 
+
 export class IModel {
     _id: string = null;
     createdAt = new Date().toISOString();
@@ -34,10 +35,11 @@ export class PlainQuery<T extends Query> {
     }
 }
 
-export interface ListEntityResponse<T> {
-    items: T[];
-    pageNumber: number;
-    pagesCount: number;
+export class ListEntityResponse<T> {
+    list: T[] = [];
+    totalPages: number = 0;
+    page: number = 0;
+    length: number = 0;
 }
 
 export class ListEntityQuery {
