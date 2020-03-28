@@ -1,7 +1,7 @@
 <ng-container *ngIf="field.typeOf(types.TEXT)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="text" [autocomplete]="field.autocomplete" matInput [formControl]="field">
+        <input [id]="field.id" type="text" [autocomplete]="field.autocomplete" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.PASSWORD)">
@@ -17,45 +17,47 @@
     -->
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input #input type="password" [autocomplete]="field.autocomplete" matInput [formControl]="field">
+        <input [id]="field.id" #input type="password" [autocomplete]="field.autocomplete" matInput
+            [formControl]="field">
         <mat-icon class="pointer" [togglePasswod]="input" matSuffix>lock</mat-icon>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.TEXTAREA)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <textarea matInput [formControl]="field"></textarea>
+        <textarea [id]="field.id" matInput [formControl]="field"></textarea>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.EMAIL)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="email" matInput [autocomplete]="field.autocomplete || 'email'" [formControl]="field">
+        <input [id]="field.id" type="email" matInput [autocomplete]="field.autocomplete || 'email'"
+            [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.NUMBER)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <input type="number" matInput [formControl]="field">
+        <input [id]="field.id" type="number" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.DATE)">
     <mat-form-field>
         <mat-label>{{ field.label }}</mat-label>
-        <input matInput [max]="field.max" [min]="field.min" (focus)="datePicker.open()" [matDatepicker]="datePicker"
-            [formControl]="field">
+        <input [id]="field.id" matInput [max]="field.max" [min]="field.min" (focus)="datePicker.open()"
+            [matDatepicker]="datePicker" [formControl]="field">
         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
         <mat-datepicker #datePicker></mat-datepicker>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.CHECKBOX)">
     <mat-label>{{field.label}}</mat-label>
-    <mat-checkbox [formControl]="field"></mat-checkbox>
+    <mat-checkbox [id]="field.id" [formControl]="field"></mat-checkbox>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.SELECT)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <mat-select [formControl]="field">
+        <mat-select [id]="field.id" [formControl]="field">
             <mat-option *ngFor="let option of field.options" [value]="option.value">
                 {{option.title}}
             </mat-option>
@@ -65,7 +67,7 @@
 <ng-container *ngIf="field.typeOf(types.MULTIPLE)">
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
-        <mat-select [formControl]="field" [multiple]="true">
+        <mat-select [id]="field.id" [formControl]="field" [multiple]="true">
             <mat-option *ngFor="let option of field.options" [value]="option.value">
                 {{option.title}}
             </mat-option>
@@ -74,7 +76,7 @@
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.RADIO)">
     <mat-label>{{field.label}}</mat-label>
-    <mat-radio-group class="d-flex flex-column">
+    <mat-radio-group [id]="field.id" class="d-flex flex-column">
         <mat-radio-button *ngFor="let option of field.options" [value]="option.value">
             {{option.title}}
         </mat-radio-button>
@@ -90,7 +92,7 @@
             ...fieldOptions
         });
     } -->
-    <app-mobile-control [formControl]="field"></app-mobile-control>
+    <app-mobile-control [id]="field.id" [formControl]="field"></app-mobile-control>
 </ng-container>
 <!-- <app-country-control [formControl]="field"></app-country-control> -->
 <!-- TODO: Setup datetime type -->
