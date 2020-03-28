@@ -1,7 +1,7 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
-@import '~@angular/material/theming';
+@import "functions";
+@import "mixins";
+@import "variables";
+@import "~@angular/material/theming";
 
 :host {
   app-toolbar {
@@ -9,7 +9,7 @@
   }
 
   .router-container {
-    @include overflowHeight(0);
+    @include overflowHeight(1px);
   }
   app-sidebar {
     --width: 275px;

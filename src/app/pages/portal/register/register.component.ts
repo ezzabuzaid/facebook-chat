@@ -1,6 +1,6 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PortalModel } from '../../../shared/models/portal.model';
 import { UserService } from '@shared/user';
 import { FormUtils } from '@partials/form';
@@ -8,7 +8,7 @@ import { Form, Field, SelectField, EFieldType } from '@shared/common';
 import { AppUtils } from '@core/helpers/utils';
 import { Constants } from '@core/constants';
 import { Validators } from '@angular/forms';
-import { MobileControlComponent } from '@widget/mobile-control';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -53,6 +53,7 @@ export class RegisterComponent extends FormUtils<PortalModel.IRegister> implemen
       }),
     ]));
   }
+
   ngOnInit() { }
 
   register() {

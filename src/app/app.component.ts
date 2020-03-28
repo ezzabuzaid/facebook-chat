@@ -10,7 +10,7 @@ import { SeoService } from '@shared/services/seo/seo.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap, tap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
-import { connectivity } from '@shared/common';
+import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { UserService } from '@shared/user';
 import { partition } from 'rxjs';
@@ -34,8 +34,10 @@ export class AppComponent implements OnInit {
     private serviceWorkerUtils: ServiceWorkerUtils,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(NAVIGATOR) private navigator: Navigator,
     private analyticService: AnalyticsService,
-    private userService: UserService
+    private userService: UserService,
+    private connectivity: Connectivity
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -125,13 +127,13 @@ export class AppComponent implements OnInit {
       this.languageService.populate(ELanguage.EN);
 
       // TODO PWA Checks if install popup should be appear
-      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      const isIos = () => /iphone|ipad|ipod/.test(this.navigator.userAgent.toLowerCase());
+      const isInStandaloneMode = () => ('standalone' in this.navigator) && (this.navigator['standalone']);
       if (isIos() && !isInStandaloneMode()) {
         // Popup function!!
       }
 
-      const [$offline, $online] = partition(connectivity.observe, AppUtils.isFalsy);
+      const [$offline, $online] = partition(this.connectivity.observe(), AppUtils.isFalsy);
       const noConnectionClass = 'no-connection';
       const affectedElement = this.document.body;
       $online.subscribe(() => {
@@ -159,3 +161,34 @@ export class AppComponent implements OnInit {
   }
 
 }
+
+// class UserSettings implements AsyncStorage {
+
+//   get<T>(name: string): Promise<Entity<T>> {
+//     return fetch(`settings/${name}`)
+//       .then(res => res.json());
+//   }
+
+//   clear(name?: string): Promise<void> {
+//     return fetch(`settings/${name}`, {
+//       method: 'POST',
+//       body: JSON.stringify([])
+//     }).then(res => res.json());
+//   }
+
+//   set<T>(name: string, value: Entity<T>[]): Promise<Entity<T>> {
+//     return fetch(`settings/${name}`, {
+//       method: 'POST',
+//       body: JSON.stringify(value)
+//     }).then(res => res.json());
+//   }
+
+// }
+
+// interface Table {
+//   columns: []
+// }
+
+// const db = new AsyncDatabase(new UserSettings());
+
+// const collection = db.collection<Table>('users.tables');

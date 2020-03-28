@@ -295,6 +295,10 @@ export class AppUtils {
         return AppUtils.isFalsy(AppUtils.isNullorUndefined(value));
     }
 
+    public static inverse(value: boolean) {
+        return !value;
+    }
+
 }
 
 export function tryOrThrow<T>(cb: (...args: any) => T) {
