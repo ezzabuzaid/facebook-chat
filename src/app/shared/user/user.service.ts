@@ -8,6 +8,7 @@ import { AppUtils } from '@core/helpers/utils';
 import { Listener } from '@core/helpers/listener';
 import { environment } from '@environments/environment';
 import { NAVIGATOR, WINDOW } from '@shared/common';
+import { PortalModel } from '@shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class UserService extends Listener<boolean> {
 
   public login(payload) {
     return this.http
-      .post<{ refreshToken: string; token: string; }>(Constants.API.PORTAL.login, payload)
+      .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.login, payload)
       .pipe(
         tap((data) => {
           this.notify(this.isAuthenticated);
@@ -32,13 +33,20 @@ export class UserService extends Listener<boolean> {
       );
   }
 
-  // TODO: Update the type after switch from default form to new crud like style
   register(payload) {
     return this.http.post('users', payload);
   }
 
   refreshToken() {
-    // TODO: Implement refresh token
+    return this.http
+      .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
+        this.getDeviceUUID(),
+        this.tokenService.token,
+        this.tokenService.refreshToken,
+      ))
+      .pipe(tap(({ refreshToken, token }) => {
+        this.tokenService.setToken(token, refreshToken);
+      }))
   }
 
   public logout() {

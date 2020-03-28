@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Constants } from '@core/constants';
-import { UserModel } from '@shared/user/user.model';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { AppUtils } from '../utils';
+import { PortalModel } from '@shared/models';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = Constants.Application.TOKEN_KEY;
@@ -32,7 +32,7 @@ export class TokenService {
     return this.storage.get<string>(REFRESH_TOKEN_KEY);
   }
 
-  setToken(rememberMe: boolean, token: string, refreshToken: string) {
+  setToken(token: string, refreshToken: string, rememberMe = this.oneTimeLogin) {
     if (AppUtils.isFalsy(rememberMe)) {
       this.oneTimeLogin = true;
     }
@@ -45,7 +45,7 @@ export class TokenService {
     this.storage.delete(REFRESH_TOKEN_KEY);
   }
 
-  get decodedToken(): UserModel.ITokenClaim {
+  get decodedToken(): PortalModel.ITokenClaim {
     return this.isLogged ? helper.decodeToken(this.token) : {};
   }
 
