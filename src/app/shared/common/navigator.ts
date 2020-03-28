@@ -6,6 +6,7 @@ export const NAVIGATOR: InjectionToken<Navigator> = new InjectionToken('NAVIGATO
             return navigator;
         } catch (error) {
             return {
+                sendBeacon(url, data) { },
                 mimeTypes: { length: 0 },
                 userAgent: '',
                 plugins: { length: 0 },
