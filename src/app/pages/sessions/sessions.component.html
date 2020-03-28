@@ -1,7 +1,7 @@
 <app-page-wrapper title="Sessions">
     <mat-card>
         <mat-card-content>
-            <semi-table [dataSource]="$sessions | async">
+            <semi-table [dataSource]="sessions">
                 <semi-table-head>
                     <th>Actions</th>
                     <th>User</th>
@@ -27,7 +27,8 @@
             </semi-table>
         </mat-card-content>
         <mat-card-footer>
-            <mat-paginator></mat-paginator>
+            <mat-paginator (page)="onPaginate($event)" [pageSizeOptions]="[10, 15, 20]" [showFirstLastButtons]="true">
+            </mat-paginator>
         </mat-card-footer>
     </mat-card>
 </app-page-wrapper>
