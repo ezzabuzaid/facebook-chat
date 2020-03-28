@@ -8,6 +8,7 @@ import { AppUtils } from '@core/helpers/utils';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { IField } from '@shared/common';
+import { Observable, from } from 'rxjs';
 
 @Component({
   selector: 'app-mobile-control',
@@ -79,8 +80,8 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
       this.intlTelInstance = (window as any).intlTelInput(this.phoneField.nativeElement);
       if (this.autoDetectCountry) {
         this.getUserCountry()
-          .subscribe(({ country_code }) => {
-            this.code = country_code.toLowerCase();
+          .subscribe(({ countryCode }) => {
+            this.code = countryCode.toLowerCase();
             this.ngOnChanges(null);
           });
       } else {
@@ -114,10 +115,9 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
     this.onTouched = fn;
   }
 
-  getUserCountry() {
-    return this.http
-      .configure({ DEFAULT_URL: false })
-      .get<any>('https://json.geoiplookup.io');
+  getUserCountry(): Observable<IpApi> {
+    return from(fetch('http://ip-api.com/json')
+      .then(res => res.json()));
   }
 
   getCountry(code = this.code) {
@@ -130,4 +130,21 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
       });
   }
 
+}
+
+interface IpApi {
+  status: string;
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  zip: string;
+  lat: number;
+  lon: number;
+  timezone: string;
+  isp: string;
+  org: string;
+  as: string;
+  query: string;
 }
