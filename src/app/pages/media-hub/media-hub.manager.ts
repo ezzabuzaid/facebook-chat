@@ -31,7 +31,6 @@ export class MediaHubManager extends Listener<any> {
 
     onSearch() {
         return merge(
-            // TODO: Implement typeahead operator
             this.onQueryParamChange('file').pipe(filter(AppUtils.isTruthy)),
             this.onQueryParamChange('folder_id').pipe(filter(AppUtils.isTruthy))
         )

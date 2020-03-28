@@ -39,7 +39,6 @@ export class MediaHubHeaderComponent implements OnInit {
 
 
   uploadFiles(files: FileList) {
-    // TODO: setup `others` folder to upload a file to it if no folder specifed
     const folder_id = this.mediaHubManager.getCurrentFolderID();
     if (folder_id) {
       for (const file of (files as any)) {

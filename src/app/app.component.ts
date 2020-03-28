@@ -101,6 +101,7 @@ export class AppComponent implements OnInit {
 
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
+
       window.addEventListener('unload', (event) => {
         // FIXME this fire every time the browser refreshed
         if (this.userService.oneTimeLogin()) {
