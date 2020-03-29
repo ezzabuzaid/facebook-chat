@@ -44,7 +44,6 @@
     "device-uuid": "^1.0.4",
     "express": "^4.15.2",
     "firebase": "^7.8.1",
-    "imagesloaded": "^4.1.4",
     "intl-tel-input": "^16.0.8",
     "ngx-gravatar": "^8.0.0",
     "ngx-infinite-scroll": "^8.0.0",

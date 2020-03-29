@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
-import { UserModel } from './user.model';
 import { AppUtils } from '@core/helpers/utils';
 import { Listener } from '@core/helpers/listener';
 import { environment } from '@environments/environment';
+import { NAVIGATOR, WINDOW } from '@shared/common';
+import { PortalModel } from '@shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +19,13 @@ export class UserService extends Listener<boolean> {
     private http: HttpClient,
     private tokenService: TokenService,
     private router: Router,
+    @Inject(NAVIGATOR) private navigator: Navigator,
+    @Inject(WINDOW) private window: Window,
   ) { super(); }
 
   public login(payload) {
     return this.http
-      .post<{ refreshToken: string; token: string; }>(Constants.API.PORTAL.login, payload)
+      .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.login, payload)
       .pipe(
         tap((data) => {
           this.notify(this.isAuthenticated);
@@ -31,17 +33,24 @@ export class UserService extends Listener<boolean> {
       );
   }
 
-  // TODO: Update the type after switch from default form to new crud like style
   register(payload) {
     return this.http.post('users', payload);
   }
 
   refreshToken() {
-    // TODO: Implement refresh token
+    return this.http
+      .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
+        this.getDeviceUUID(),
+        this.tokenService.token,
+        this.tokenService.refreshToken,
+      ))
+      .pipe(tap(({ refreshToken, token }) => {
+        this.tokenService.setToken(token, refreshToken);
+      }))
   }
 
   public logout() {
-    navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}/${this.getDeviceUUID()}`);
+    this.navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}/${this.getDeviceUUID()}`);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
     this.tokenService.deleteToken();
     this.state.next(this.isAuthenticated);
@@ -52,12 +61,12 @@ export class UserService extends Listener<boolean> {
   }
 
   getDeviceUUID() {
-    let guid = navigator.mimeTypes.length as any;
-    guid += navigator.userAgent.replace(/\D+/g, '');
-    guid += navigator.plugins.length;
-    guid += screen.height || '';
-    guid += screen.width || '';
-    guid += screen.pixelDepth || '';
+    let guid = this.navigator.mimeTypes.length as any;
+    guid += this.navigator.userAgent.replace(/\D+/g, '');
+    guid += this.navigator.plugins.length;
+    guid += this.window.screen.height || '';
+    guid += this.window.innerWidth || '';
+    guid += this.window.devicePixelRatio || '';
     return guid;
   }
 

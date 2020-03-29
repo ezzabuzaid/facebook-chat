@@ -60,42 +60,52 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   }
 
   tryConversation(user: UsersModel.IUser) {
-    if (this.selectedUsers.length === 1) {
+    if (this.isGroup) {
+      this.$conversation = null;
+    } else if (this.isSingleUser) {
       this.$conversation = this.chatService.getConversation(user._id)
         .pipe(share());
-    } else {
-      this.$conversation = null;
     }
 
   }
 
-  createConvesationAndSendMessage(text: string) {
-    if (this.selectedUsers.length > 1) {
-      this.chatService.createGroup(this.selectedUsers.map(user => user._id))
+  createConvesationAndSendMessage(message: string) {
+    if (this.isGroup) {
+      this.chatService.createGroup(
+        message,
+        this.selectedUsers.map(user => user._id),
+      )
         .subscribe(() => {
 
         });
     } else {
-      this.chatService.createConversation(this.firstSelectedUser._id, text)
+      this.chatService.createConversation(this.firstSelectedUser._id, message)
         .subscribe((conversation) => {
           this.chatCardManager.open(ChatConversationCardComponent, {
             id: this.firstSelectedUser._id,
-            data: this.firstSelectedUser
+            data: conversation
           });
         });
     }
   }
 
   jumpToConversationCard(text: string) {
-    this.chatCardManager.open(ChatConversationCardComponent, {
-      id: this.firstSelectedUser._id,
-      data: this.firstSelectedUser
-    });
+    // this.chatCardManager.open(ChatConversationCardComponent, {
+    //   id: this.firstSelectedUser._id,
+    //   data: this.firstSelectedUser
+    // });
   }
 
   get firstSelectedUser() {
     return this.selectedUsers[0];
   }
 
+  get isGroup() {
+    return this.selectedUsers.length > 1;
+  }
+
+  get isSingleUser() {
+    return this.selectedUsers.length === 1;
+  }
 
 }

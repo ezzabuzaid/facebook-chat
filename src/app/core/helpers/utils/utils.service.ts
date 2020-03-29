@@ -6,26 +6,28 @@ export class AppUtils {
         return typeof value !== 'string' || value === '';
     }
 
-    static isObjectEmpty(obj: object) {
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key))
-                return false;
+    /**
+     *
+     * @param object check if the list has at least an item
+     */
+    public static hasItemWithin(object: any) {
+        if (Array.isArray(object)) {
+            return AppUtils.isTruthy(object.length);
         }
-        return true;
+
+        if (new Object(object) === object) {
+            return Object.keys(object).length;
+        }
+
+        return AppUtils.isFalsy(AppUtils.isEmptyString(object));
     }
 
     /**
-     * check if all values inside an object is a falsy type,
-     * NOTE: no deep check
-     * @param object 
+     * check if the givin value is empty
+     * supported values are string, array, pojo {}
      */
-    static isAllObjectKeysEmpty(object: { [key: string]: any }) {
-        for (const key in object) {
-            if (object[key] === undefined || object[key] === '') {
-                return true;
-            }
-        }
-        return false;
+    static isEmpty(value: any) {
+        return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
     }
 
     static generateAlphabeticString(stringLength = 5) {
@@ -148,30 +150,12 @@ export class AppUtils {
         return concatTo.concat(filterFrom.filter(one => !concatTo.find(two => two[key] === one[key])));
     }
 
-    static isAllKeyEmpty(object: { [key: string]: string }) {
-        for (const key in object) {
-            // NOTE add support for checking objects and arrays
-            if (!!object[key]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     static strictText(text: string, count: number, insertDots = true) {
         return text.slice(0, count) + (((text.length > count) && insertDots) ? '&hellip;' : '');
     }
 
     static flatArray(data: any[]) {
         return data.reduce((a, b) => a.concat(b), []);
-    }
-
-    /**
-     *
-     * @param list check if the list has at least an item
-     */
-    static hasItemWithin(list: any[]) {
-        return Array.isArray(list) && !!list.length;
     }
 
     /**
@@ -293,6 +277,10 @@ export class AppUtils {
 
     public static notNullOrUndefined(value: any) {
         return AppUtils.isFalsy(AppUtils.isNullorUndefined(value));
+    }
+
+    public static inverse(value: boolean) {
+        return !value;
     }
 
 }

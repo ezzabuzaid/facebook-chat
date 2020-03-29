@@ -1,4 +1,4 @@
-import { Validators, AbstractControl, ValidatorFn, FormControl, AsyncValidatorFn, AbstractControlOptions, FormGroup } from '@angular/forms';
+import { FormControl, AbstractControlOptions, FormGroup } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
 import { Type } from '@angular/core';
 
@@ -6,6 +6,8 @@ export * from './material.module';
 export * from './breakpoints';
 export * from './ng-smart-table';
 export * from './extract';
+export * from './navigator';
+export * from './window';
 export * from './network-connectivity';
 
 export enum EFieldType {
@@ -71,7 +73,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         this.type = type || EFieldType.TEXT;
         this.section = section;
         this.label = label;
-        this.id = id || AppUtils.generateRandomString(10);
+        this.id = id || AppUtils.generateAlphabeticString(5);
         this.autocomplete = autocomplete;
     }
 

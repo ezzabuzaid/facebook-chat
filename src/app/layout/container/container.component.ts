@@ -35,10 +35,10 @@ export class ContainerComponent implements OnInit {
     return outlet && outlet.activatedRouteData.state;
   }
 
-  openChatCard(user: UsersModel.IUser) {
+  openChatCard(conversation: ChatModel.IConversation) {
     this.chatCardManager.open(ChatConversationCardComponent, {
-      id: user._id,
-      data: user
+      id: conversation._id,
+      data: conversation
     });
   }
 

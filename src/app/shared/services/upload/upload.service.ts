@@ -33,6 +33,10 @@ export class UploadService {
         return this.http.delete(`${Constants.API.UPLOADS.folder}/${folder_id}`);
     }
 
+    deleteFile(file_id: string) {
+        return this.http.delete(`${Constants.API.UPLOADS.base}/${file_id}`);
+    }
+
     getFolders() {
         return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folder)
             .pipe(map(({ list }) => list));
@@ -43,8 +47,9 @@ export class UploadService {
         return this.http.get<MediaModel.IFile[]>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
             .pipe(map((files) => {
                 return files.map(file => {
+                    file.fullType = file.type;
+                    file.type = file.type.split('/')[1];
                     file.fullPath = environment.serverOrigin + file.path;
-                    file.type = file.type.split('/')[1]
                     return file;
                 })
             }));

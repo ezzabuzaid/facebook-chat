@@ -6,35 +6,19 @@ import { ChatMessage, ChatLocalMessage } from './types';
 import { fromEvent } from 'rxjs';
 import { TokenService } from '@core/helpers/token';
 
-class Conversation {
-    constructor(
-        public recipient_id: string,
-        public sender_id: string
-    ) { }
-}
-
 @Injectable({
     providedIn: 'root'
 })
 export class ChatManager {
-    public socket = io(environment.serverOrigin);
+    public socket = io(environment.serverOrigin, {
+        query: { token: this.tokenService.token }
+    });
     public onConnect = fromEvent(this.socket, 'connect');
     public messageListener = new Listener<any>();
 
     constructor(
         private tokenService: TokenService
-    ) {
-        this.onConnect
-            .subscribe(() => {
-                this.socket.on('Message', (message) => {
-                    console.log('message => ', message);
-                    this.messageListener.notify(message);
-                });
-                // this.chatManager.socket.on('MessageValidationError', (faildMessage: ChatMessage) => {
-                //     // TODO: Mark the message `Faild to send`
-                // });
-            })
-    }
+    ) { }
 
     sendMessage(message: ChatMessage) {
         this.socket.emit('SendMessage', message);
@@ -44,11 +28,7 @@ export class ChatManager {
         this.messageListener.notify(message);
     }
 
-    joinConversation(recipiant_id: string) {
-        const conversation = new Conversation(
-            recipiant_id,
-            this.tokenService.decodedToken.id
-        );
-        this.socket.emit('JoinRoom', conversation);
+    join(id: string) {
+        this.socket.emit('Join', { id });
     }
 }

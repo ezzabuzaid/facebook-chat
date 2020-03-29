@@ -3,14 +3,12 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Router,
   CanLoad,
   Route,
   CanActivateChild,
   UrlTree
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Constants } from '../constants';
 import { UserService } from '@shared/user';
 
 @Injectable({

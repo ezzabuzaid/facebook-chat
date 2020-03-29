@@ -1,17 +1,27 @@
 <mat-icon (click)="toggleChecking()" class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
     check</mat-icon>
 <mat-card>
-    <img mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow">
+    <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow">
     <mat-card-content>
         <div class="d-flex align-items-center justify-content-between">
             <div class="w-75">
                 <h6 class="title">{{file.name}}</h6>
-                <span class="text-uppercase bg-secondary mr-1 rounded">{{file.type}}</span>
+                <span class="text-uppercase bg-secondary mr-1 roundeds p-1">{{file.type}}</span>
                 <span class="text-uppercase">{{file.size / 1000 || ''}} kb</span>
             </div>
-            <button mat-icon-button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>
     </mat-card-content>
 </mat-card>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="deleteFile()">
+        <mat-icon>delete_outline</mat-icon>
+        <span class="text-muted">Delete</span>
+    </button>
+    <button mat-menu-item (click)="renameFile()">
+        <mat-icon>text_format</mat-icon>
+        <span class="text-muted">Rename</span>
+    </button>
+</mat-menu>

@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
-import { connectivity } from '@shared/common';
+import { Connectivity } from '@shared/common';
 
 @Injectable()
 export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {
@@ -16,6 +16,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
     constructor(
         private snackbar: MatSnackBar,
         @Inject(PLATFORM_ID) private platformId: any,
+        private connectivity: Connectivity
     ) {
         this.configure(this.defaultSetting);
     }
@@ -26,7 +27,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
 
 
         if (isPlatformBrowser(this.platformId)) {
-            if (AppUtils.isFalsy(connectivity.isOnline)) {
+            if (this.connectivity.isOffline) {
                 this.snackbar.open('The internet connection is not active, please check your connection');
                 return of();
             }

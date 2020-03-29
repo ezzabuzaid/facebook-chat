@@ -28,7 +28,7 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
     ChatCreateCardComponent,
     ChatCardComponent,
     ChatCardMessagesComponent,
-    ChatCardFooterComponent
+    ChatCardFooterComponent,
   ],
   exports: [
     ChatConversationCardComponent,

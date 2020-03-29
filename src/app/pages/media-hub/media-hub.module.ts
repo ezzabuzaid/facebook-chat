@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MediaPickerComponent } from './media-picker/media-picker.component';
 import { SidebarModule } from '@widget/sidebar';
 import { MasonryModule } from '@widget/masonry';
+import { TableModule } from '@widget/table';
 
 
 @NgModule({
@@ -26,7 +27,6 @@ import { MasonryModule } from '@widget/masonry';
     MediaHubGridViewComponent,
     MediaHubListViewComponent,
     MediaPickerComponent,
-
   ],
   imports: [
     CommonModule,
@@ -37,6 +37,7 @@ import { MasonryModule } from '@widget/masonry';
     ReactiveFormsModule,
     SidebarModule,
     MasonryModule,
+    TableModule
   ],
   providers: []
 })

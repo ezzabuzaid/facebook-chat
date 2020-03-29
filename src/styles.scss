@@ -22,3 +22,8 @@ $typography: mat-typography-config(
     overflow: hidden;
   }
 }
+.iti__selected-flag {
+  &:focus {
+    outline: none !important;
+  }
+}

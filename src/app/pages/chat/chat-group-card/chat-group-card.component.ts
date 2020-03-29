@@ -1,27 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ChatModel } from '@shared/models';
-import * as io from 'socket.io-client';
-import { environment } from '@environments/environment';
 import { TokenService } from '@core/helpers/token';
 import { IChatCard } from '..';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatCardManager } from '../chat-card.manager';
-import { AppUtils } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
 import { ChatGroupMembersComponent } from '../chat-group-members/chat-group-members.component';
-
-class Room {
-  constructor(
-    public sender_id: string,
-    public recipient_id: string
-  ) { }
-}
-
-class Message {
-  constructor(
-    public message: string
-  ) { }
-}
+import { ChatManager } from '../chat.manager';
+import { ChatCardMessagesComponent } from '../chat-card-messages/chat-card-messages.component';
 
 @Component({
   selector: 'app-group-chat-card',
@@ -31,53 +17,33 @@ class Message {
 export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGroup> {
   public id: string;
   public data: ChatModel.IGroup;
-  public socket = io(environment.serverOrigin);
-  public room: Room = null;
   public members: ChatModel.IMember[] = [];
 
-  public messages: (Message & Room)[] = [];
 
   constructor(
     private tokenService: TokenService,
     private dialog: MatDialog,
     private chatCardManager: ChatCardManager,
     private chatService: ChatService,
+    private chatManager: ChatManager,
+    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() {
+    this.chatManager.join(this.data._id);
+
     this.chatService.getGroupMembers(this.data._id)
       .subscribe(members => {
         this.members = members;
       });
-
-    this.room = new Room(this.tokenService.decodedToken.id, this.data._id);
-
-    this.socket.emit('JoinGroup', this.room);
-
-    this.socket.on('connect', () => {
-      console.log('connected');
-
-      this.socket.on('Message', (message) => {
-        console.log('message => ', message);
-        this.messages.push(message);
-      });
-    });
+    this.updateScroll(this.getElement('app-chat-card-footer'), this.getElement('app-chat-card-messages'));
 
   }
 
-  sendMessage(input: HTMLTextAreaElement) {
-    const text = input.value;
-    if (AppUtils.isTruthy(text)) {
-      const message = new Message(text);
-      this.messages.push({ ...this.room, ...message });
-      this.socket.emit('SendGroupMessage', { ...this.room, ...message });
-      console.log(this.room.sender_id);
-    }
-    input.value = '';
-  }
 
   closeCard() {
     this.chatCardManager.removeCard();
+    this.chatCardManager.removeButton(this.id);
   }
 
   openGroupMembers() {
@@ -92,8 +58,19 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
     return this.members.find(member => member.user._id === id);
   }
 
-  trackMessagesBySenderID(index: number, message: (Room & Message)) {
-    return message.sender_id;
+
+  private getElement(selector: string) {
+    const element = this.elementRef.nativeElement;
+    return element.querySelector(selector) as HTMLElement;
+  }
+
+  updateScroll(footer: HTMLElement, messagesWrapper: HTMLElement) {
+    messagesWrapper.style.setProperty('height', `calc(100% - ${footer.clientHeight}px)`)
+    messagesWrapper.scrollTo({
+      top: messagesWrapper.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    })
   }
 
 }

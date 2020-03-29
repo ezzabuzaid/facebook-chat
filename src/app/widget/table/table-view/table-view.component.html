@@ -43,9 +43,9 @@
     </tr>
   </thead>
   <tbody>
-    <ng-container *ngFor="let item of dataSource; trackBy: trackByFn">
+    <ng-container *ngFor="let item of dataSource; trackBy: trackByFn; let index = index">
       <tr>
-        <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: item }"></ng-container>
+        <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: item, index: index }"></ng-container>
       </tr>
     </ng-container>
   </tbody>

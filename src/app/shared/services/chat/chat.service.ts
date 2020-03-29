@@ -15,12 +15,12 @@ export class ChatService {
         private tokenService: TokenService
     ) { }
 
-    public createGroup(members: string[]) {
-        return this.http.post(Constants.API.CHAT.groups, { members });
+    public createGroup(message: string, members: string[]) {
+        return this.http.post(Constants.API.CHAT.groups, { message, members });
     }
 
     getConversation(participantID: string) {
-        return this.http.get<ChatModel.IConversation>(`${Constants.API.CHAT.conversation}/user/${participantID}`)
+        return this.http.get<ChatModel.IConversation>(`${Constants.API.CHAT.conversation}/${participantID}`)
         // .pipe(map((conversation) => {
         //     return this.tokenService.decodedToken.id === conversation.user1._id
         //         ? conversation.user2
@@ -38,18 +38,35 @@ export class ChatService {
 
     getConversations() {
         return this.http
-            .get<ListEntityResponse<ChatModel.IConversation>>(Constants.API.CHAT.conversation)
+            .get<ChatModel.IConversation[]>(Constants.API.CHAT.conversation)
             .pipe(map((data) => {
-                return data.list.map(conversation => this.tokenService.decodedToken.id === conversation.user1._id
-                    ? conversation.user2
-                    : conversation.user1
-                )
-            }));
+                return data.map(conversation => ({
+                    ...conversation,
+                    peer: this.tokenService.decodedToken.id === conversation.user1._id
+                        ? conversation.user2
+                        : conversation.user1,
+                }));
+            }))
+            .pipe(
+                map((list) => {
+                    return list.map(group => {
+                        group.avatar = group.peer.email;
+                        return group;
+                    })
+                }),
+            );
     }
 
     public getGroups() {
         return this.http.get<ListEntityResponse<ChatModel.IGroup>>(Constants.API.CHAT.groups)
-            .pipe(map(({ list }) => list))
+            .pipe(
+                map(({ list }) => {
+                    return list.map(group => {
+                        group.avatar = group.logo;
+                        return group;
+                    })
+                }),
+            );
     }
 
     public getGroupMembers(group_id: string) {

@@ -65,6 +65,9 @@ export namespace Constants {
 
     static readonly PORTAL = {
       base: 'portal',
+      get refreshtoken() {
+        return this.base + '/refreshtoken'
+      },
       get login() {
         return this.base + '/login'
       },

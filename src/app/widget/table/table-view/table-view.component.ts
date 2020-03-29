@@ -74,7 +74,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
             acc[field.getKey()] = field.getValue();
             return acc;
           }, {});
-        if (!AppUtils.isObjectEmpty(tokens)) {
+        if (AppUtils.hasItemWithin(tokens)) {
           this._dataSource = this._tempDataSource.filter((row) => {
             return Object.keys(tokens)
               .every(column => toLowerCase(AppUtils.getDottedProperty(column, row)).includes(toLowerCase(tokens[column])));

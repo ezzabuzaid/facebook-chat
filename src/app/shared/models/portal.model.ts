@@ -1,9 +1,4 @@
 export namespace PortalModel {
-    export interface ILogin {
-        username: string;
-        password: string;
-    }
-
     export enum ERoles {
         SUPERADMIN,
         ADMIN,
@@ -17,5 +12,26 @@ export namespace PortalModel {
         username: string;
         email: string;
     }
+    export interface LoginRequest {
+        username: string;
+        password: string;
+    }
 
+    export interface ITokenClaim {
+        role: string;
+        id: string;
+    }
+    export class RefreshToken {
+        constructor(
+            public uuid: string,
+            public token: string,
+            public refreshToken: string,
+        ) { }
+    }
+
+
+    export interface ILoginResponse {
+        refreshToken: string;
+        token: string;
+    }
 }

@@ -10,7 +10,7 @@ import { SeoService } from '@shared/services/seo/seo.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap, tap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
-import { connectivity } from '@shared/common';
+import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { UserService } from '@shared/user';
 import { partition } from 'rxjs';
@@ -34,8 +34,10 @@ export class AppComponent implements OnInit {
     private serviceWorkerUtils: ServiceWorkerUtils,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(NAVIGATOR) private navigator: Navigator,
     private analyticService: AnalyticsService,
-    private userService: UserService
+    private userService: UserService,
+    private connectivity: Connectivity
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -99,14 +101,13 @@ export class AppComponent implements OnInit {
 
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
+
       window.addEventListener('unload', (event) => {
-        // FIXME this fire every time the browser refreshed
         if (this.userService.oneTimeLogin()) {
           this.userService.logout();
           return "";
         }
       });
-
 
       this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
       this.serviceWorkerUtils.updateAvailable
@@ -125,13 +126,13 @@ export class AppComponent implements OnInit {
       this.languageService.populate(ELanguage.EN);
 
       // TODO PWA Checks if install popup should be appear
-      const isIos = () => /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-      const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      const isIos = () => /iphone|ipad|ipod/.test(this.navigator.userAgent.toLowerCase());
+      const isInStandaloneMode = () => ('standalone' in this.navigator) && (this.navigator['standalone']);
       if (isIos() && !isInStandaloneMode()) {
         // Popup function!!
       }
 
-      const [$offline, $online] = partition(connectivity.observe, AppUtils.isFalsy);
+      const [$offline, $online] = partition(this.connectivity.observe(), AppUtils.isFalsy);
       const noConnectionClass = 'no-connection';
       const affectedElement = this.document.body;
       $online.subscribe(() => {
@@ -159,3 +160,4 @@ export class AppComponent implements OnInit {
   }
 
 }
+

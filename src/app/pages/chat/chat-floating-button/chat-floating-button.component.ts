@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
-import { UsersModel } from '@shared/models';
+import { ChatModel } from '@shared/models';
 import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
 
 @Component({
@@ -9,9 +9,9 @@ import { ChatConversationCardComponent } from '../chat-conversation-card/chat-co
   templateUrl: './chat-floating-button.component.html',
   styleUrls: ['./chat-floating-button.component.scss']
 })
-export class ChatFloatingButtonComponent implements OnInit, IChatCard<UsersModel.IUser>{
+export class ChatFloatingButtonComponent implements OnInit, IChatCard<ChatModel.IRoom>{
 
-  data: UsersModel.IUser;
+  data: ChatModel.IRoom;
   id: string;
 
   constructor(

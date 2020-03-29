@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '@shared/services/upload';
-import { MediaHubManager } from '../media-hub.manager';
+import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class MediaHubHeaderComponent implements OnInit {
   searchControl = new FormControl(this.mediaHubManager.getQueryParam('file'));
+  @Output() onViewChange = new EventEmitter();
 
   constructor(
     private uploadService: UploadService,
@@ -39,13 +40,22 @@ export class MediaHubHeaderComponent implements OnInit {
 
 
   uploadFiles(files: FileList) {
-    // TODO: setup `others` folder to upload a file to it if no folder specifed
+    console.log(files);
     const folder_id = this.mediaHubManager.getCurrentFolderID();
     if (folder_id) {
       for (const file of (files as any)) {
         this.uploadService.uploadImage(file, folder_id).subscribe();
       }
     }
+  }
+
+
+  listView() {
+    this.onViewChange.emit(MediaHubViews.ListView);
+  }
+
+  gridView() {
+    this.onViewChange.emit(MediaHubViews.GridView);
   }
 
 }

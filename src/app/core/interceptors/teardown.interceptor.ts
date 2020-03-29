@@ -1,20 +1,24 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { CustomHeaders } from '../http';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap, tap, filter, take } from 'rxjs/operators';
 import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
+import { AppUtils } from '@core/helpers/utils';
+import { Listener } from '@core/helpers/listener';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
+    private isRefreshing = false;
+    private requestQueue = new Listener(false);
+
     constructor(
         private userService: UserService,
         private snackbar: MatSnackBar,
         private tokenService: TokenService,
-        @Inject(PLATFORM_ID) private platformId: any,
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -38,8 +42,15 @@ export class TeardownInterceptor implements HttpInterceptor {
                     if (event instanceof HttpErrorResponse) {
                         switch (event.status) {
                             case 401:
-                                this.userService.logout();
-                                break;
+                                return this.refreshToken()
+                                    .pipe(
+                                        catchError(() => {
+                                            this.isRefreshing = false;
+                                            this.userService.logout();
+                                            return throwError(event);
+                                        }),
+                                        switchMap(() => this.intercept(req, next))
+                                    )
                             case 500:
                                 this.snackbar.open('Internal error. Please try again later.');
                                 break;
@@ -52,6 +63,25 @@ export class TeardownInterceptor implements HttpInterceptor {
             );
     }
 
+    private refreshToken() {
+        if (this.isRefreshing) {
+            return this.requestQueue.listen()
+                .pipe(
+                    filter(AppUtils.isTruthy),
+                    take(1)
+                );
+        } else {
+            this.isRefreshing = true;
+            this.requestQueue.notify(false);
+            return this.userService.refreshToken()
+                .pipe(
+                    tap((token: any) => {
+                        this.isRefreshing = false;
+                        this.requestQueue.notify(true);
+                    })
+                );
+        }
+    }
     private removeHeaders(requestHeaders: HttpHeaders, ...customHeaders: (keyof HttpHeaders)[]) {
         customHeaders.forEach(one => {
             if (requestHeaders.has(one)) {

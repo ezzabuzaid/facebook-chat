@@ -7,10 +7,6 @@ export namespace ChatModel {
         isAdmin: boolean;
         user: UsersModel.IUser;
     }
-    export interface IGroup extends IModel {
-        title: string;
-        logo: string;
-    }
 
     export interface ICreateGroup extends IGroup {
         members: string[];
@@ -18,10 +14,19 @@ export namespace ChatModel {
         logo: string;
     }
 
-    export interface IConversation extends IModel {
+    export interface IRoom extends IModel {
+        folder: string;
+        avatar: string;
+    }
+
+    export interface IGroup extends IRoom {
+        title: string;
+        logo: string;
+    }
+
+    export interface IConversation extends IRoom {
         user1: UsersModel.IUser;
         user2: UsersModel.IUser;
-        folder: string;
     }
 
     export class Message extends IModel {

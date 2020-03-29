@@ -15,7 +15,7 @@ import { PortalModel } from '@shared/models';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends FormUtils<PortalModel.ILogin> implements OnInit {
+export class LoginComponent extends FormUtils<PortalModel.LoginRequest> implements OnInit {
 
   constructor(
     private portalService: UserService,
@@ -50,7 +50,7 @@ export class LoginComponent extends FormUtils<PortalModel.ILogin> implements OnI
     if (valid) {
       this.portalService.login(value)
         .subscribe(data => {
-          this.tokenHelper.setToken(rememberMeCheckBox.checked, data.token, data.refreshToken);
+          this.tokenHelper.setToken(data.token, data.refreshToken, rememberMeCheckBox.checked);
           this.router.navigateByUrl(Constants.Routing.SESSIONS.withSlash);
         });
     }

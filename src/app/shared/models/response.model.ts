@@ -26,7 +26,7 @@ export class Query {
     [key: string]: string | number;
 }
 
-export class PlainQuery<T extends Query> {
+export class PlainQuery<T> {
     asString: string;
     queryObject: T;
     constructor(queryObject: T) {
@@ -37,17 +37,17 @@ export class PlainQuery<T extends Query> {
 
 export class ListEntityResponse<T> {
     list: T[] = [];
-    totalPages: number = 0;
-    page: number = 0;
     length: number = 0;
+    totalCount: number = 0;
+    pages: number = 0;
 }
 
 export class ListEntityQuery {
     page: number;
     size: number;
 
-    constructor(obj: ListEntityQuery) {
-        this.page = obj.page || 10;
-        this.size = obj.size || 1;
+    constructor(obj: Partial<ListEntityQuery> = {}) {
+        this.page = obj.page || 1;
+        this.size = obj.size || 10;
     }
 }

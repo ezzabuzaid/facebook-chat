@@ -1,8 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy, Input, HostBinding, Output, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, ElementRef, Input, HostBinding, Output, EventEmitter, Inject } from '@angular/core';
 import { SidebarService } from './sidebar.service';
 import { AppUtils } from '@core/helpers/utils';
-
+import { WINDOW } from '@shared/common';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -20,7 +19,8 @@ export class SidebarComponent implements OnInit {
   private rafPending;
   constructor(
     private sidebarService: SidebarService,
-    private elementRef: ElementRef<HTMLElement>
+    private elementRef: ElementRef<HTMLElement>,
+    @Inject(WINDOW) private window: Window,
   ) { }
 
   get element() {
@@ -46,7 +46,7 @@ export class SidebarComponent implements OnInit {
 
   private attachEvents(element: HTMLElement) {
     // Check if pointer events are supported.
-    if (window.PointerEvent) {
+    if (this.window['PointerEvent']) {
       // Add Pointer Event Listener
       element.addEventListener('pointerdown', this.handleGestureStart.bind(this), true);
       element.addEventListener('pointermove', this.handleGestureMove.bind(this), true);
@@ -73,7 +73,7 @@ export class SidebarComponent implements OnInit {
     }
 
     // Add the move and end listeners
-    if (window.PointerEvent) {
+    if (this.window['PointerEvent']) {
       evt.target.setPointerCapture(evt.pointerId);
     } else {
       // Add Mouse Listeners
@@ -95,7 +95,7 @@ export class SidebarComponent implements OnInit {
     this.rafPending = false;
 
     // Remove Event Listeners
-    if (window.PointerEvent) {
+    if (this.window['PointerEvent']) {
       evt.target.releasePointerCapture(evt.pointerId);
     } else {
       document.removeEventListener('mousemove', this.handleGestureMove.bind(this), true);
@@ -200,7 +200,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private pxToPercentege(pixels: number) {
-    const screenWidth = window.screen.width;
+    const screenWidth = this.window.screen.width;
     return pixels / screenWidth * 100;
   }
 
@@ -213,16 +213,18 @@ export class SidebarComponent implements OnInit {
   }
 
   private isExceededMaxWidth(pixels: number) {
-    const style = (element: HTMLElement) => window.getComputedStyle(element);
+    const style = (element: HTMLElement) => this.window.getComputedStyle(element);
     const maxWidthPx = this.percentegeToPx(+style(this.drawer).maxWidth.replace('%', ''));
     return pixels >= maxWidthPx;
   }
+
   private isExceededMinWidth(pixels: number) {
-    const style = (element: HTMLElement) => window.getComputedStyle(element);
+    const style = (element: HTMLElement) => this.window.getComputedStyle(element);
     const minWidthPx = this.percentegeToPx(+style(this.drawer).minWidth.replace('%', ''));
     const width = isNaN(minWidthPx) ? 100 : minWidthPx + 100;
     return pixels < width;
   }
+
 }
 
 interface ISidebarToggle {

@@ -1,8 +1,8 @@
 <app-chat-card>
     <div card-header class="py-2 d-flex align-items-center pl-2">
-        <img class="mr-2" mat-card-avatar ngxGravatar [email]="data.email" fallback="identicon">
+        <img class="mr-2" mat-card-avatar ngxGravatar [email]="$any(data).peer.email" fallback="identicon">
         <div class="w-100 d-flex align-items-center justify-content-between">
-            <h6 class="mb-0">{{data.username}}</h6>
+            <h6 class="mb-0">{{$any(data).peer?.username}}</h6>
             <div class="d-flex">
                 <button mat-icon-button>
                     <mat-icon class="text--accent">add</mat-icon>
@@ -15,9 +15,10 @@
     </div>
 
     <ng-container card-content>
-        <app-chat-card-messages [user]="data" [conversation]="($conversation | async)"></app-chat-card-messages>
-        <app-chat-card-footer (onActionBarVisibilityChange)="onActionBarVisibilityChange()"
-            [conversation]="($conversation | async)" [user]="data"></app-chat-card-footer>
+        <app-chat-card-messages #messagesWrapper [id]="data._id"> </app-chat-card-messages>
+        <app-chat-card-footer (onActionBarVisibilityChange)="updateScroll($event, messagesWrapper.element)"
+            [room]="data">
+        </app-chat-card-footer>
     </ng-container>
 
 </app-chat-card>

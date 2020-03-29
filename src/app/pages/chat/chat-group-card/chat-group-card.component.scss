@@ -1,20 +1,9 @@
 :host {
-  position: fixed;
-  height: 400px;
-  width: 300px;
-  bottom: 0;
   textarea.mat-input-element.cdk-textarea-autosize {
     box-sizing: content-box;
   }
   img {
     width: 30px !important;
     height: 30px !important;
-  }
-  mat-card {
-    mat-card-content {
-      textarea {
-        font-size: 14px;
-      }
-    }
   }
 }
