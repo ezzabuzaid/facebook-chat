@@ -61,3 +61,8 @@ export class MediaHubManager extends Listener<any> {
     }
 
 }
+
+export enum MediaHubViews {
+    ListView,
+    GridView
+}
