@@ -3,7 +3,7 @@ import { AppUtils } from '@core/helpers/utils';
 import { TokenService } from '@core/helpers/token';
 import { ChatManager } from '../chat.manager';
 import { ChatMessage } from '../types';
-import { ChatModel, UsersModel, MediaModel } from '@shared/models';
+import { ChatModel, MediaModel } from '@shared/models';
 import { UploadService } from '@shared/services/upload';
 import { MediaPickerComponent } from 'app/pages/media-hub/media-picker/media-picker.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./chat-card-footer.component.scss'],
 })
 export class ChatCardFooterComponent implements OnInit {
-  @Input() conversation: ChatModel.IConversation;
+  @Input() room: ChatModel.IRoom;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
   @Output() onActionBarVisibilityChange = new EventEmitter();
@@ -42,13 +42,13 @@ export class ChatCardFooterComponent implements OnInit {
       } else {
         const message = new ChatMessage(
           text,
-          this.conversation._id,
+          this.room._id,
           this.tokenService.decodedToken.id,
         );
         this.chatManager.sendMessage(message);
 
         this.files.forEach(file => {
-          this.uploadsService.uploadImage(file, this.conversation.folder)
+          this.uploadsService.uploadImage(file, this.room.folder)
             .subscribe(({ path }) => {
               message.text = path;
               this.chatManager.sendMessage(message);
@@ -92,7 +92,7 @@ export class ChatCardFooterComponent implements OnInit {
         files.forEach(file => {
           const message = new ChatMessage(
             file.path,
-            this.conversation._id,
+            this.room._id,
             this.tokenService.decodedToken.id,
           );
           this.chatManager.sendMessage(message);
