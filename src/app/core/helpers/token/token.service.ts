@@ -14,7 +14,6 @@ const REFRESH_TOKEN_KEY = Constants.Application.REFRESH_TOKEN_KEY;
 })
 
 export class TokenService {
-  oneTimeLogin = false;
   private get storage() {
     return this.oneTimeLogin ? this.session : this.local;
   }
@@ -32,10 +31,8 @@ export class TokenService {
     return this.storage.get<string>(REFRESH_TOKEN_KEY);
   }
 
-  setToken(token: string, refreshToken: string, rememberMe = this.oneTimeLogin) {
-    if (AppUtils.isFalsy(rememberMe)) {
-      this.oneTimeLogin = true;
-    }
+  setToken(token: string, refreshToken: string, rememberMe = false) {
+    this.oneTimeLogin = rememberMe;
     this.storage.set(REFRESH_TOKEN_KEY, refreshToken);
     this.storage.set(TOKEN_KEY, token);
   }
@@ -43,6 +40,7 @@ export class TokenService {
   deleteToken() {
     this.storage.delete(TOKEN_KEY);
     this.storage.delete(REFRESH_TOKEN_KEY);
+    this.local.delete('ontTime');
   }
 
   get decodedToken(): PortalModel.ITokenClaim {
@@ -61,5 +59,12 @@ export class TokenService {
     return AppUtils.notNullOrUndefined(this.token);
   }
 
+  get oneTimeLogin() {
+    return this.local.get<boolean>('oneTime');
+  }
+
+  set oneTimeLogin(value: boolean) {
+    this.local.set('oneTime', AppUtils.inverse(value));
+  }
 
 }
