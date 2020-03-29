@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, Input, HostBinding, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
-import * as imagesloaded from 'imagesloaded';
+import { Component, OnInit, ElementRef, Input, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
 import { MasonryItemComponent } from './masonry-item/masonry-item.component';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-masonry',
   templateUrl: './masonry.component.html',
@@ -75,16 +75,13 @@ export class MasonryComponent implements OnInit, AfterContentInit {
        * finish loading. This will ensure that all the content inside our
        * masonry items is visible.
        *
-       * @uses ImagesLoaded
        * @uses resizeMasonryItem
        */
       const waitForImages = () => {
-        for (let i = 0; i < masonryItems.length; i++) {
-          imagesloaded(masonryItems[i], (instance) => {
-            let item = instance.elements[0];
-            resizeMasonryItem(item);
+        this.imagesLoaded()
+          .subscribe(() => {
+            resizeAllMasonryItems()
           });
-        }
       }
 
       /* Resize all the grid items on the load and resize events */
@@ -101,4 +98,25 @@ export class MasonryComponent implements OnInit, AfterContentInit {
     return this.elementRef.nativeElement;
   }
 
+  imagesLoaded() {
+    return new Observable((subscriber) => {
+      const imgs = this.element.querySelectorAll('img');
+      const totalImages = imgs.length;
+      let counter = 0;
+      const incrementCounter = () => {
+        counter++;
+        if (counter === totalImages) {
+          subscriber.next();
+          subscriber.complete();
+        }
+      }
+      imgs.forEach((img) => {
+        if (img.complete)
+          incrementCounter();
+        else {
+          img.addEventListener('load', incrementCounter, false);
+        };
+      });
+    });
+  }
 }
