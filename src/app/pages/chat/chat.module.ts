@@ -18,6 +18,7 @@ import { ChatCardMessagesComponent } from './chat-card-messages/chat-card-messag
 import { ChatCardFooterComponent } from './chat-card-footer/chat-card-footer.component';
 import { ChatConversationCardComponent } from './chat-conversation-card/chat-conversation-card.component';
 import { FileControlModule } from '@widget/file-control/file-control.module';
+import { ChatCardGroupFooterComponent } from './chat-card-group-footer/chat-card-group-footer.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
     ChatCreateCardComponent,
     ChatCardComponent,
     ChatCardMessagesComponent,
-    ChatCardFooterComponent
+    ChatCardFooterComponent,
+    ChatCardGroupFooterComponent
   ],
   exports: [
     ChatConversationCardComponent,
