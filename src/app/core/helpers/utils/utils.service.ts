@@ -16,7 +16,7 @@ export class AppUtils {
         }
 
         if (new Object(object) === object) {
-            return AppUtils.isTruthy(Object.keys(object).length);
+            return Object.keys(object).length;
         }
 
         return AppUtils.isFalsy(AppUtils.isEmptyString(object));
@@ -28,20 +28,6 @@ export class AppUtils {
      */
     static isEmpty(value: any) {
         return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
-    }
-
-    /**
-     * check if all values inside an object is a falsy type,
-     * NOTE: no deep check
-     * @param object 
-     */
-    static isAllObjectKeysEmpty(object: { [key: string]: any }) {
-        for (const key in object) {
-            if (object[key] === undefined || object[key] === '') {
-                return true;
-            }
-        }
-        return false;
     }
 
     static generateAlphabeticString(stringLength = 5) {
@@ -162,16 +148,6 @@ export class AppUtils {
      */
     static mergeListOfObjects<T>(concatTo: Partial<T>[], filterFrom: Partial<T>[], key: keyof T) {
         return concatTo.concat(filterFrom.filter(one => !concatTo.find(two => two[key] === one[key])));
-    }
-
-    static isAllKeyEmpty(object: { [key: string]: string }) {
-        for (const key in object) {
-            // NOTE add support for checking objects and arrays
-            if (!!object[key]) {
-                return false;
-            }
-        }
-        return true;
     }
 
     static strictText(text: string, count: number, insertDots = true) {

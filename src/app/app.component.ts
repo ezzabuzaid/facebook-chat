@@ -109,7 +109,6 @@ export class AppComponent implements OnInit {
         }
       });
 
-
       this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
       this.serviceWorkerUtils.updateAvailable
         .pipe(switchMap(() => this.snackbar.open('An update is available', 'Activate!').onAction()))
@@ -162,33 +161,3 @@ export class AppComponent implements OnInit {
 
 }
 
-// class UserSettings implements AsyncStorage {
-
-//   get<T>(name: string): Promise<Entity<T>> {
-//     return fetch(`settings/${name}`)
-//       .then(res => res.json());
-//   }
-
-//   clear(name?: string): Promise<void> {
-//     return fetch(`settings/${name}`, {
-//       method: 'POST',
-//       body: JSON.stringify([])
-//     }).then(res => res.json());
-//   }
-
-//   set<T>(name: string, value: Entity<T>[]): Promise<Entity<T>> {
-//     return fetch(`settings/${name}`, {
-//       method: 'POST',
-//       body: JSON.stringify(value)
-//     }).then(res => res.json());
-//   }
-
-// }
-
-// interface Table {
-//   columns: []
-// }
-
-// const db = new AsyncDatabase(new UserSettings());
-
-// const collection = db.collection<Table>('users.tables');
