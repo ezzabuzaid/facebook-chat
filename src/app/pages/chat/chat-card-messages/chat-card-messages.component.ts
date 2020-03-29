@@ -12,20 +12,7 @@ import { environment } from '@environments/environment';
   styleUrls: ['./chat-card-messages.component.scss']
 })
 export class ChatCardMessagesComponent implements OnInit {
-  private _conversation = null;
-
-  @Input() user: UsersModel.IUser;
-  @Input()
-  set conversation(value: ChatModel.IConversation) {
-    this._conversation = value;
-    if (value) {
-      this.populateMessages();
-    }
-  }
-  get conversation() {
-    return this._conversation;
-  }
-
+  @Input() id: string = null;
   public messages: ChatModel.Message[] = [];
 
   constructor(
@@ -36,16 +23,16 @@ export class ChatCardMessagesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.chatManager.messageListener
-      .listen()
-      .subscribe(message => {
+    this.populateMessages();
+    this.chatManager.socket
+      .on('Message', message => {
         this.messages.push(message);
         this.scrollToLastMessage('auto');
       });
   }
 
   populateMessages() {
-    this.chatService.fetchMessages(this.conversation._id)
+    this.chatService.fetchMessages(this.id)
       .subscribe((messages) => {
         this.messages = messages;
         this.scrollToLastMessage('smooth');
@@ -56,9 +43,7 @@ export class ChatCardMessagesComponent implements OnInit {
     setTimeout(() => {
       const children = this.elementRef.nativeElement.children;
       const lastElement = children.item(children.length - 1);
-      lastElement && lastElement.scrollIntoView({
-        behavior
-      })
+      lastElement && lastElement.scrollIntoView({ behavior })
     });
   }
 
@@ -81,6 +66,10 @@ export class ChatCardMessagesComponent implements OnInit {
 
   populateImageURL(value: string) {
     return environment.serverOrigin + value;
+  }
+
+  get element() {
+    return this.elementRef.nativeElement;
   }
 
 }
