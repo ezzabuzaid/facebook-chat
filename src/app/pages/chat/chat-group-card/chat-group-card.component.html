@@ -1,52 +1,22 @@
-<mat-card class="h-100 d-flex flex-column justify-content-between mat-card-elevation-z1 p-0">
-    <div class="mat-elevation-z1 py-1 d-flex align-items-center pl-3 pr-1">
-        <img mat-card-avatar [src]="data.logo">
-        <div class="w-100 d-flex align-items-center justify-content-between ml-3">
+<app-chat-card>
+    <div card-header class="py-2 d-flex align-items-center pl-2">
+        <img class="mr-2" mat-card-avatar ngxGravatar [src]="data.logo" fallback="identicon">
+        <div class="w-100 d-flex align-items-center justify-content-between">
             <h6 class="mb-0">{{data.title}}</h6>
             <div class="d-flex">
-                <button mat-icon-button (click)="openGroupMembers()">
-                    <mat-icon class="text-muted">group_work</mat-icon>
+                <button mat-icon-button>
+                    <mat-icon class="text--accent">add</mat-icon>
                 </button>
-                <button mat-icon-button (click)="closeCard()">
-                    <mat-icon class="text-muted">close</mat-icon>
+                <button mat-icon-button>
+                    <mat-icon (click)="closeCard()" class="text--accent">close</mat-icon>
                 </button>
             </div>
         </div>
     </div>
-    <mat-card-content class="d-flex flex-column justify-content-between h-100 mb-0 px-3 pt-3">
-        <div>
-            <ng-container *ngFor="let message of messages; trackBy: trackMessagesBySenderID">
-                <p [class.text-right]="isSender(message.sender_id)">
-                    <span [matTooltip]="getMember(message.sender_id)?.user?.username" matTooltipPosition="after"
-                        class="rounded p-2 text-white" [ngClass]="{
-                        'bg--primary':isSender(message.sender_id),
-                        'bg--accent':!isSender(message.sender_id)
-                    }">{{message.message}}</span>
-                    <!-- <small>{{message | timeago:live}}</small> -->
-                </p>
-            </ng-container>
-        </div>
-        <div>
-            <mat-divider></mat-divider>
-            <mat-form-field [appearance]="$any('none')">
-                <textarea placeholder="Write a message" (keyup.enter)="sendMessage(messageInput)" matInput #messageInput
-                    cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"></textarea>
-            </mat-form-field>
-        </div>
-    </mat-card-content>
-    <mat-card-footer class="m-0 d-flex align-items-center">
-        <button mat-icon-button>
-            <mat-icon class="text-muted">more_vert</mat-icon>
-        </button>
-        <!-- <button mat-icon-button> -->
-        <mat-icon class="text-muted">attach_file</mat-icon>
-        <!-- </button> -->
-        <button mat-icon-button>
-            <ngx-emoji emoji="santa" set="emojione" [size]="16"></ngx-emoji>
-        </button>
-        <button mat-icon-button class="ml-auto" (click)="sendMessage(messageInput)">
-            <mat-icon class="text-muted">send</mat-icon>
-        </button>
-    </mat-card-footer>
-</mat-card>
+
+    <ng-container card-content>
+        <app-chat-card-messages #messagesWrapper [id]="data._id"> </app-chat-card-messages>
+        <app-chat-card-footer [room]="data"
+            (onActionBarVisibilityChange)="onActionBarVisibilityChange($event, messagesWrapper)"></app-chat-card-footer>
+    </ng-container>
+</app-chat-card>
