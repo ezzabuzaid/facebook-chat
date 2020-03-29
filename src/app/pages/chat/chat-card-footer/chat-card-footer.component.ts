@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { TokenService } from '@core/helpers/token';
 import { ChatManager } from '../chat.manager';
@@ -15,7 +15,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ChatCardFooterComponent implements OnInit {
   @Input() conversation: ChatModel.IConversation;
-  @Input() user: UsersModel.IUser;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
   @Output() onActionBarVisibilityChange = new EventEmitter();
@@ -23,13 +22,13 @@ export class ChatCardFooterComponent implements OnInit {
   files: File[] = [];
   base64Files = [];
   showActionBar = false;
-  showEmojiPicker = false;
 
   constructor(
     private tokenService: TokenService,
     private chatManager: ChatManager,
     private uploadsService: UploadService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() { }
@@ -45,19 +44,14 @@ export class ChatCardFooterComponent implements OnInit {
           text,
           this.conversation._id,
           this.tokenService.decodedToken.id,
-          this.user._id,
         );
         this.chatManager.sendMessage(message);
 
         this.files.forEach(file => {
           this.uploadsService.uploadImage(file, this.conversation.folder)
             .subscribe(({ path }) => {
-              this.chatManager.sendMessage(new ChatMessage(
-                path,
-                message.conversation,
-                message.sender_id,
-                message.recipient_id
-              ));
+              message.text = path;
+              this.chatManager.sendMessage(message);
               this.base64Files.shift();
               this.files.shift();
             })
@@ -78,10 +72,6 @@ export class ChatCardFooterComponent implements OnInit {
     }
   }
 
-  openEmojiPicker() {
-    this.showEmojiPicker = !this.showEmojiPicker;
-  }
-
   uploadFiles(files: FileList) {
     this.files = Array.from(files);
     this.base64Files = this.files.map(file => AppUtils.readFile(file));
@@ -99,17 +89,19 @@ export class ChatCardFooterComponent implements OnInit {
     })
       .afterClosed()
       .subscribe((files) => {
-        console.log(files);
         files.forEach(file => {
           const message = new ChatMessage(
             file.path,
             this.conversation._id,
             this.tokenService.decodedToken.id,
-            this.user._id,
           );
           this.chatManager.sendMessage(message);
         });
       });
+  }
+
+  textChange() {
+    this.onActionBarVisibilityChange.emit(this.elementRef.nativeElement);
   }
 
 }

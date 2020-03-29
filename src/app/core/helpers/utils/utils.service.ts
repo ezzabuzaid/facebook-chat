@@ -6,12 +6,28 @@ export class AppUtils {
         return typeof value !== 'string' || value === '';
     }
 
-    static isObjectEmpty(obj: object) {
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key))
-                return false;
+    /**
+     *
+     * @param object check if the list has at least an item
+     */
+    public static hasItemWithin(object: any) {
+        if (Array.isArray(object)) {
+            return AppUtils.isTruthy(object.length);
         }
-        return true;
+
+        if (new Object(object) === object) {
+            return AppUtils.isTruthy(Object.keys(object).length);
+        }
+
+        return AppUtils.isFalsy(AppUtils.isEmptyString(object));
+    }
+
+    /**
+     * check if the givin value is empty
+     * supported values are string, array, pojo {}
+     */
+    static isEmpty(value: any) {
+        return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
     }
 
     /**
@@ -164,14 +180,6 @@ export class AppUtils {
 
     static flatArray(data: any[]) {
         return data.reduce((a, b) => a.concat(b), []);
-    }
-
-    /**
-     *
-     * @param list check if the list has at least an item
-     */
-    static hasItemWithin(list: any[]) {
-        return Array.isArray(list) && !!list.length;
     }
 
     /**
