@@ -1,19 +1,45 @@
-<app-media-hub-header></app-media-hub-header>
+<app-media-hub-header (onViewChange)="changeView($event)"></app-media-hub-header>
 
 <mat-divider></mat-divider>
-
 
 <app-sidebar>
     <div sidebar-drawer>
         <app-media-hub-folders></app-media-hub-folders>
     </div>
     <div sidebar-container class="p-3">
-        <p class="bg-dark text-white py-1 px-2 mt-3">Media</p>
-        <app-masonry>
-            <app-masonry-item *ngFor="let file of files; let index = index;">
-                <app-media-card class="item" [file]="file" (onMarkChange)="addToMarkedFiles(index);">
-                </app-media-card>
-            </app-masonry-item>
-        </app-masonry>
+        <ng-container *ngIf="currentView === EmediaHubViews.GridView">
+            <p class="bg-dark text-white py-1 px-2 mt-3">Media</p>
+            <app-masonry>
+                <app-masonry-item *ngFor="let file of files; let index = index;">
+                    <app-media-card (onDelete)="deleteFile($event, index)" class="item" [file]="file"
+                        (onMarkChange)="addToMarkedFiles(index);">
+                    </app-media-card>
+                </app-masonry-item>
+            </app-masonry>
+        </ng-container>
+        <ng-container *ngIf="currentView === EmediaHubViews.ListView">
+            <semi-table [dataSource]="files">
+                <semi-table-head>
+                    <th>Actions</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Created at</th>
+                    <th>Last modifed</th>
+                </semi-table-head>
+                <ng-template let-data let-index="index">
+                    <td>
+                        <button color="accent" mat-icon-button (click)="deleteFile(data._id, index)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </td>
+                    <td>{{ data.name }}</td>
+                    <td><span class="text-uppercase bg-secondary mr-1 roundeds p-1">{{data.type}}</span></td>
+                    <td><span class="text-uppercase">{{data.size / 1000 || ''}} kb</span></td>
+                    <td>{{ data.createdAt | date:'short' }}</td>
+                    <td>{{ data.updatedAt | date }}</td>
+                </ng-template>
+            </semi-table>
+        </ng-container>
     </div>
 </app-sidebar>

@@ -10,11 +10,11 @@
             <button mat-stroked-button tabindex="-1">Upload</button>
         </app-file-control>
         <div class="d-flex align-items-center mx-2">
-            <button mat-icon-button class="view-icon">
+            <button mat-icon-button class="view-icon" (click)="listView()">
                 <mat-icon>list</mat-icon>
             </button>
             <span class="toolbar-seperator mx-1"></span>
-            <button mat-icon-button class="view-icon">
+            <button mat-icon-button class="view-icon" (click)="gridView()">
                 <mat-icon>grid_on</mat-icon>
             </button>
         </div>

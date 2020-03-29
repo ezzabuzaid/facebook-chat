@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { switchMap, tap, takeUntil, filter } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { UploadService } from '@shared/services/upload';
 import { MediaModel } from '@shared/models';
-import { MediaHubManager } from '../media-hub.manager';
-import { Observable } from 'rxjs';
+import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 
 @Component({
@@ -15,7 +14,8 @@ import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 export class MediaHubGateComponent implements OnInit, OnDestroy {
   files: MediaModel.IFile[] = [];
   markedFiles: MediaModel.IFile[] = [];
-
+  EmediaHubViews = MediaHubViews;
+  currentView = MediaHubViews.GridView;
   constructor(
     private uploadsService: UploadService,
     private mediaManager: MediaHubManager
@@ -42,6 +42,16 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
 
   addToMarkedFiles(index: number) {
     this.markedFiles.push(this.files[index]);
+  }
+  deleteFile(id: string, index: number) {
+    this.uploadsService.deleteFile(id)
+      .subscribe(() => {
+        this.files.splice(index, 1);
+      });
+  }
+
+  changeView(view: MediaHubViews) {
+    this.currentView = view;
   }
 
 }
