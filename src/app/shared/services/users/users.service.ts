@@ -29,5 +29,9 @@ export class UsersService {
             .pipe(map(list => list.filter(user => user._id !== this.tokenService.decodedToken.id)));
     }
 
+    public getCurrentUser() {
+        return this.http.get<UsersModel.IUser>(`${Constants.API.users.base}/${this.tokenService.decodedToken.id}`)
+    }
+
 }
 
