@@ -24,6 +24,7 @@ export class ChatCardMessagesComponent implements OnInit {
 
   ngOnInit() {
     this.populateMessages();
+
     this.chatManager.socket
       .on('Message', message => {
         this.messages.push(message);

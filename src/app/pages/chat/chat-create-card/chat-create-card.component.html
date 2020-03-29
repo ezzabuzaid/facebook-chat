@@ -29,20 +29,23 @@
         </div>
     </header>
 
-    <section card-content>
+    <!-- <section card-content>
         <ng-container *ngIf="$conversation">
             <ng-container *ngIf="($conversation | async) as conversation; else footerOnly">
                 <app-chat-card-messages [user]="firstSelectedUser" [conversation]="conversation">
                 </app-chat-card-messages>
                 <app-chat-card-footer [external]="true" (onSendMessage)="jumpToConversationCard($event)"
-                    [conversation]="conversation" [user]="firstSelectedUser">
+                    [conversation]="conversation">
                 </app-chat-card-footer>
             </ng-container>
             <ng-template #footerOnly>
-                <app-chat-card-footer [user]="firstSelectedUser" [external]="true"
-                    (onSendMessage)="createConvesationAndSendMessage($event)">
+                <app-chat-card-footer [external]="true" (onSendMessage)="createConvesationAndSendMessage($event)">
                 </app-chat-card-footer>
             </ng-template>
         </ng-container>
-    </section>
+        <ng-container *ngIf="isGroup;">
+            <app-chat-card-group-footer [external]="true" (onSendMessage)="createConvesationAndSendMessage($event)">
+            </app-chat-card-group-footer>
+        </ng-container>
+    </section> -->
 </app-chat-card>

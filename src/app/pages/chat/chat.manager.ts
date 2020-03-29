@@ -6,17 +6,13 @@ import { ChatMessage, ChatLocalMessage } from './types';
 import { fromEvent } from 'rxjs';
 import { TokenService } from '@core/helpers/token';
 
-class Conversation {
-    constructor(
-        public id: string
-    ) { }
-}
-
 @Injectable({
     providedIn: 'root'
 })
 export class ChatManager {
-    public socket = io(environment.serverOrigin);
+    public socket = io(environment.serverOrigin, {
+        query: { token: this.tokenService.token }
+    });
     public onConnect = fromEvent(this.socket, 'connect');
     public messageListener = new Listener<any>();
 

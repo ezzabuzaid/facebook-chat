@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { TokenService } from '@core/helpers/token';
 import { IChatCard } from '..';
@@ -25,7 +25,8 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
     private dialog: MatDialog,
     private chatCardManager: ChatCardManager,
     private chatService: ChatService,
-    private chatManager: ChatManager
+    private chatManager: ChatManager,
+    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() {
@@ -35,11 +36,14 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
       .subscribe(members => {
         this.members = members;
       });
+    this.updateScroll(this.getElement('app-chat-card-footer'), this.getElement('app-chat-card-messages'));
+
   }
 
 
   closeCard() {
     this.chatCardManager.removeCard();
+    this.chatCardManager.removeButton(this.id);
   }
 
   openGroupMembers() {
@@ -54,11 +58,16 @@ export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGrou
     return this.members.find(member => member.user._id === id);
   }
 
-  onActionBarVisibilityChange(footer: HTMLElement, messagesWrapper: ChatCardMessagesComponent) {
-    const element = messagesWrapper.element;
-    element.style.setProperty('height', `calc(100% - ${footer.clientHeight}px)`)
-    element.scrollTo({
-      top: element.scrollHeight,
+
+  private getElement(selector: string) {
+    const element = this.elementRef.nativeElement;
+    return element.querySelector(selector) as HTMLElement;
+  }
+
+  updateScroll(footer: HTMLElement, messagesWrapper: HTMLElement) {
+    messagesWrapper.style.setProperty('height', `calc(100% - ${footer.clientHeight}px)`)
+    messagesWrapper.scrollTo({
+      top: messagesWrapper.scrollHeight,
       left: 0,
       behavior: 'smooth'
     })

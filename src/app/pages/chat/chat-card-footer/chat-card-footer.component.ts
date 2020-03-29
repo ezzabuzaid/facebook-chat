@@ -40,11 +40,7 @@ export class ChatCardFooterComponent implements OnInit {
       if (this.external) {
         this.onSendMessage.emit(text);
       } else {
-        const message = new ChatMessage(
-          text,
-          this.room._id,
-          this.tokenService.decodedToken.id,
-        );
+        const message = new ChatMessage(text, this.room._id);
         this.chatManager.sendMessage(message);
 
         this.files.forEach(file => {
@@ -90,11 +86,7 @@ export class ChatCardFooterComponent implements OnInit {
       .afterClosed()
       .subscribe((files) => {
         files.forEach(file => {
-          const message = new ChatMessage(
-            file.path,
-            this.room._id,
-            this.tokenService.decodedToken.id,
-          );
+          const message = new ChatMessage(file.path, this.room._id);
           this.chatManager.sendMessage(message);
         });
       });

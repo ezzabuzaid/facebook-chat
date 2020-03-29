@@ -4,7 +4,6 @@ export class ChatMessage {
     constructor(
         public text: string,
         public id: string,
-        public user: string
     ) { }
 }
 
