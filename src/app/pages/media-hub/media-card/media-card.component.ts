@@ -23,4 +23,15 @@ export class MediaCardComponent implements OnInit {
     this.checked = !this.checked;
   }
 
+  formatType(type) {
+    return type.split('/')[1];
+  }
+
+  get isImage() {
+    return [
+      'image/jpg', 'image/JPG', 'image/jpeg', 'image/JPEG',
+      'image/png', 'image/PNG', 'image/gif', 'image/GIF',
+    ].includes(this.file.type);
+  }
+
 }
