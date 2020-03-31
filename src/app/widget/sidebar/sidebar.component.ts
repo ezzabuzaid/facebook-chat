@@ -9,6 +9,10 @@ import { WINDOW } from '@shared/common';
 })
 export class SidebarComponent implements OnInit {
   @Input() @HostBinding('class.toggled') public closed = false;
+  @Input() @HostBinding('class.right') public right = false;
+  @Input() @HostBinding('class.resizing') public resizing = false;
+  @Input() public minWidth = 0;
+  @Input() public maxWidth = 0;
   @Input() public name = '';
 
   @Output() onToggle = new EventEmitter<ISidebarToggle>();
@@ -16,7 +20,6 @@ export class SidebarComponent implements OnInit {
   @Output() minWidthExceeded = new EventEmitter<number>();
 
   private initialTouchPos;
-  private rafPending;
   constructor(
     private sidebarService: SidebarService,
     private elementRef: ElementRef<HTMLElement>,
@@ -29,6 +32,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
+    this.resizer.style[this.right ? 'right' : 'left'] = this.cssValue(this.element, '--width' as any);
   }
 
   toggle(value = !this.closed) {
@@ -67,6 +71,7 @@ export class SidebarComponent implements OnInit {
   private handleGestureStart(evt) {
     evt.preventDefault();
     console.log('handleGestureStart');
+    this.resizing = true;
 
     if (evt.touches && evt.touches.length > 1) {
       return;
@@ -81,18 +86,17 @@ export class SidebarComponent implements OnInit {
       document.addEventListener('mouseup', this.handleGestureEnd.bind(this), true);
     }
 
-    this.initialTouchPos = this.getGesturePointFromEvent(evt);
+    this.initialTouchPos = this.getVector(evt);
   }
 
   private handleGestureEnd(evt) {
     evt.preventDefault();
     console.log('handleGestureEnd');
+    this.resizing = false;
 
     if (evt.touches && evt.touches.length > 0) {
       return;
     }
-
-    this.rafPending = false;
 
     // Remove Event Listeners
     if (this.window['PointerEvent']) {
@@ -102,20 +106,21 @@ export class SidebarComponent implements OnInit {
       document.removeEventListener('mouseup', this.handleGestureEnd.bind(this), true);
     }
 
-    const dimension = this.getGesturePointFromEvent(evt);
-    if (this.isExceededMaxWidth(dimension.x)) {
+    const vector = this.getVector(evt);
+    if (this.isExceededMaxWidth(vector.offset)) {
       this.maxWidthExceeded.emit();
       if (this.closed) {
         this.open();
       }
     }
-    if (this.isExceededMinWidth(dimension.x)) {
+    if (this.isExceededMinWidth(vector.offset)) {
       this.minWidthExceeded.emit();
       if (!this.closed) {
         this.close();
       }
     }
-    this.element.style.removeProperty('--width');
+
+    this.element.style.setProperty('--width', `${vector.offset}px`);
 
     this.initialTouchPos = null;
   }
@@ -126,77 +131,47 @@ export class SidebarComponent implements OnInit {
     if (AppUtils.isNullorUndefined(this.initialTouchPos)) {
       return;
     }
-
-    const dimension = this.getGesturePointFromEvent(evt);
-    if (this.isExceededMaxWidth(dimension.x)) {
-      return;
-    }
-    if (this.isExceededMinWidth(dimension.x)) {
+    const vector = this.getVector(evt);
+    console.log(vector.offset);
+    if (this.isExceededMaxWidth(vector.offset) || this.isExceededMinWidth(vector.offset)) {
       return;
     }
 
-    this.element.style.setProperty('--width', `${dimension.x}px`);
+    this.resizer.style.setProperty(vector.direction, `${vector.offset}px`);
 
-
-    // onAnimFrame(getGesturePointFromEvent(evt));
-    if (this.rafPending) {
-      return;
-    }
-
-    this.rafPending = true;
-    // window.requestAnimationFrame(onAnimFrame);
   }
 
-  private getGesturePointFromEvent(evt) {
-    const point = { x: null, y: null };
-    if (evt.targetTouches) {
-      point.x = evt.targetTouches[0].clientX;
-      point.y = evt.targetTouches[0].clientY;
-    } else {
-      point.x = evt.x;
-      point.y = evt.y;
+  private getVector(evt) {
+    const point = { x: evt.x, y: evt.y };
+    let element = this.element;
+    let maxOffsetLeft = 0;
+    let maxOffsetTop = 0;
+    while (element.offsetParent) {
+      maxOffsetLeft += element.offsetLeft;
+      maxOffsetTop += element.offsetTop;
+      element = element.offsetParent as HTMLElement;
     }
-    return point;
+
+    point.x -= maxOffsetLeft;
+    point.y -= maxOffsetTop;
+    point.x = this.right ? this.element.offsetWidth - point.x : point.x;
+
+    const maxWidth = this.getDrawerMaxOffset('maxWidth') || this.element.offsetWidth;
+    const minWidth = this.getDrawerMaxOffset('minWidth') || 0;
+    if (point.x >= maxWidth) {
+      point.x = maxWidth;
+    }
+    if (point.x < minWidth) {
+      point.x = minWidth;
+    }
+    return {
+      direction: this.right ? 'right' : 'left',
+      offset: point.x
+    };
   }
 
   ngAfterViewInit() {
     this.attachEvents(this.element.querySelector('.resizer'))
-    //   let rafPending = false;
-    //   let initialTouchPos = null;
-
-
-
-
-    //   let lastScreenPosition = 0;
-    //   function onAnimFrame(dimension) {
-    //     if (!rafPending) {
-    //       return;
-    //     }
-
-    //     const appSidebar = document.querySelector('app-sidebar');
-    //     const style = getComputedStyle(appSidebar);
-    //     const currentWidth = parseInt(style.getPropertyValue('--width'), 5);
-
-    //     if (dimension.screenX >= lastScreenPosition) {
-    //       console.log('right');
-    //       lastScreenPosition = dimension.screenX;
-    //     } else {
-    //       console.log('left');
-    //       lastScreenPosition = dimension.screenX;
-    //     }
-
-    //     console.log(currentWidth);
-    //     if (currentWidth < 16 && !(dimension.screenX >= lastScreenPosition)) {
-    //       console.log('You cannot make it less');
-    //       return;
-    //     }
-
-    //     const screenWidth = window.screen.availWidth;
-    //     const percentage = dimension.x / screenWidth * 100;
-    //     appSidebar['style'].setProperty('--width', `${ percentage } % `);
-    //     rafPending = false;
-    //   }
-
   }
 
   private pxToPercentege(pixels: number) {
@@ -212,17 +187,38 @@ export class SidebarComponent implements OnInit {
     return this.element.querySelector('[sidebar-drawer]') as HTMLElement;
   }
 
+  get resizer() {
+    return this.element.querySelector('.resizer') as HTMLElement;
+  }
+
   private isExceededMaxWidth(pixels: number) {
-    const style = (element: HTMLElement) => this.window.getComputedStyle(element);
-    const maxWidthPx = this.percentegeToPx(+style(this.drawer).maxWidth.replace('%', ''));
-    return pixels >= maxWidthPx;
+    const maxWidth = this.getDrawerMaxOffset('maxWidth') || false;
+    return maxWidth && pixels >= maxWidth;
   }
 
   private isExceededMinWidth(pixels: number) {
-    const style = (element: HTMLElement) => this.window.getComputedStyle(element);
-    const minWidthPx = this.percentegeToPx(+style(this.drawer).minWidth.replace('%', ''));
-    const width = isNaN(minWidthPx) ? 100 : minWidthPx + 100;
-    return pixels < width;
+    return pixels < this.getDrawerMaxOffset('minWidth');
+  }
+
+  private getDrawerMaxOffset(property: keyof CSSStyleDeclaration) {
+    return this.formatWidthValue(this.cssValue(this.drawer, property));
+  }
+
+  private formatWidthValue(width: string): number {
+    let value = width as any;
+    if (width.includes('%')) {
+      value = this.percentegeToPx(+width.replace('%', ''));
+    } else if (width.includes('px')) {
+      value = +width.replace('px', '');
+    }
+    if (isNaN(value)) {
+      return null;
+    }
+    return value;
+  }
+
+  private cssValue(element: HTMLElement, property: keyof CSSStyleDeclaration) {
+    return this.window.getComputedStyle(element)[property];
   }
 
 }
@@ -230,3 +226,4 @@ export class SidebarComponent implements OnInit {
 interface ISidebarToggle {
   toggle: boolean;
 }
+

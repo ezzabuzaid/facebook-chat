@@ -1,6 +1,6 @@
-@import 'variables';
-@import 'mixins';
-@import '~@angular/material/theming';
+@import "variables";
+@import "mixins";
+@import "~@angular/material/theming";
 $transition-timing: cubic-bezier(0.2, 0, 0, 1);
 $transition-duration: 0.22s;
 :host {
@@ -33,6 +33,7 @@ $transition-duration: 0.22s;
       }
     }
   }
+
   &.right {
     flex-direction: row-reverse;
 
@@ -46,14 +47,6 @@ $transition-duration: 0.22s;
             margin-left: auto;
           }
         }
-      }
-    }
-  }
-
-  &.toggled {
-    ::ng-deep {
-      > div:first-child {
-        transform: translateX(0%);
       }
     }
   }
@@ -78,20 +71,19 @@ $transition-duration: 0.22s;
     }
   }
   .resizer {
-    position: relative;
+    position: absolute;
     cursor: ew-resize;
     display: block;
-    // position: absolute;
     height: 100%;
-    width: 2px;
+    width: 1px;
     background-color: transparent;
-    will-change: background-color;
-    transition: background-color 0.25s;
-    top: 0;
-    right: 0;
-    z-index: 9;
-    &:hover {
-      background-color: black;
+    background-color: #c8c8c8;
+    z-index: 1000;
+  }
+  &.resizing {
+    @include backdrop(absolute, #f1f2f557);
+    .resizer {
+      width: 5px;
     }
   }
 }
