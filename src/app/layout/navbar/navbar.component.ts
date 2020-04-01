@@ -3,6 +3,7 @@ import navigation from './navigation';
 import { DOCUMENT } from '@angular/common';
 import { UserService } from '@shared/user';
 import { AppUtils } from '@core/helpers/utils';
+import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 
 @Component({
   selector: 'app-navbar',
@@ -14,14 +15,17 @@ export class NavbarComponent {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private userService: UserService
+    private userService: UserService,
+    private sidebarService: SidebarService
   ) { }
 
   logout() {
     this.userService.logout();
   }
 
-}
+  closeSidebar() {
+    console.log('min width exceded');
+    this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).close();
+  }
 
-// an event should fire to start moving and this will be mousedown if the case was mouse
-// or pointerdown or touchstart
+}

@@ -1,4 +1,4 @@
-<app-sidebar name="navbar">
+<app-sidebar (minWidthExceeded)="closeSidebar()" name="navbar">
   <div sidebar-drawer class="sidebar-drawer border-right">
     <header #header>
       <app-navbar-header class="p-3"></app-navbar-header>
