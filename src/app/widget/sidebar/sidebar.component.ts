@@ -32,7 +32,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
-    this.resizer.style[this.right ? 'right' : 'left'] = this.cssValue(this.element, '--width' as any);
+    this.resizer.style[this.right ? 'right' : 'left'] = this.window.getComputedStyle(this.element).getPropertyValue('--width');
   }
 
   toggle(value = !this.closed) {
@@ -109,17 +109,12 @@ export class SidebarComponent implements OnInit {
     const vector = this.getVector(evt);
     if (this.isExceededMaxWidth(vector.offset)) {
       this.maxWidthExceeded.emit();
-      if (this.closed) {
-        this.open();
-      }
     }
     if (this.isExceededMinWidth(vector.offset)) {
       this.minWidthExceeded.emit();
-      if (!this.closed) {
-        this.close();
-      }
     }
 
+    // this.window.getComputedStyle(this.element).setProperty('--width', `${vector.offset}px`);
     this.element.style.setProperty('--width', `${vector.offset}px`);
 
     this.initialTouchPos = null;
@@ -132,7 +127,6 @@ export class SidebarComponent implements OnInit {
       return;
     }
     const vector = this.getVector(evt);
-    console.log(vector.offset);
     if (this.isExceededMaxWidth(vector.offset) || this.isExceededMinWidth(vector.offset)) {
       return;
     }
@@ -158,6 +152,7 @@ export class SidebarComponent implements OnInit {
 
     const maxWidth = this.getDrawerMaxOffset('maxWidth') || this.element.offsetWidth;
     const minWidth = this.getDrawerMaxOffset('minWidth') || 0;
+    console.log(minWidth);
     if (point.x >= maxWidth) {
       point.x = maxWidth;
     }

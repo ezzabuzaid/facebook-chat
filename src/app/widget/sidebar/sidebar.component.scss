@@ -16,12 +16,9 @@ $transition-duration: 0.22s;
         overflow-x: hidden;
         height: 100%;
         transform: translateX(0%);
-        will-change: width, transform;
-        transition: width $transition-duration $transition-timing, transform $transition-duration $transition-timing;
         width: var(--width);
       }
       &:last-child {
-        transition: width $transition-duration $transition-timing;
         width: calc(100% - var(--width));
         overflow: auto;
         @include direction(ltr) {
@@ -78,11 +75,12 @@ $transition-duration: 0.22s;
     width: 1px;
     background-color: transparent;
     background-color: #c8c8c8;
-    z-index: 1000;
+    z-index: 0;
   }
   &.resizing {
     @include backdrop(absolute, #f1f2f557);
     .resizer {
+      z-index: 1000;
       width: 5px;
     }
   }
