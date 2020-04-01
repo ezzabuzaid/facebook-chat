@@ -3,6 +3,8 @@ import { UploadService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager } from '../media-hub.manager';
+import { PopupManager } from '@widget/popup';
+import { switchMap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-media-hub-folders',
@@ -16,7 +18,8 @@ export class MediaHubFoldersComponent implements OnInit {
 
   constructor(
     private uploadsService: UploadService,
-    private mediaHubManager: MediaHubManager
+    private mediaHubManager: MediaHubManager,
+    private popupManager: PopupManager,
   ) { }
 
   ngOnInit() {
@@ -49,11 +52,23 @@ export class MediaHubFoldersComponent implements OnInit {
     });
   }
 
-  renameFolder(folder: MediaModel.Folder) {
-    console.log('renameFolder => ', folder);
-    // this.uploadsService.updateFolder();
-  }
-
+  renameFolder(folder: MediaModel.Folder, index: number) {
+    this.popupManager.prompt({
+      hasBackdrop: true,
+      data: {
+        confirm: 'Save',
+        value: folder.name
+      }
+    })
+      .afterClosed()
+      .pipe(
+        filter(name => name !== folder.name),
+        switchMap(name => {
+          this.folders[index].name = name;
+          return this.uploadsService.updateFolder({ name, _id: folder._id });
+        }))
+      .subscribe();
+  };
   deleteFolder(folder: MediaModel.Folder, index: number) {
     console.log('deleteFolder => ', folder);
     this.uploadsService.deleteFolder(folder._id)
