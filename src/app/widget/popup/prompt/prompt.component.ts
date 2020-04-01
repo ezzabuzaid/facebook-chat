@@ -7,7 +7,6 @@ import { IPromptPopup } from '../popup.manager';
   styleUrls: ['./prompt.component.scss']
 })
 export class PromptComponent implements OnInit {
-  public result = '';
   public data: IPromptPopup = null;
   constructor(
   ) { }
