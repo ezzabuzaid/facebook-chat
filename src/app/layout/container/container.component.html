@@ -2,7 +2,7 @@
   <app-content>
     <app-toolbar class="w-100 d-flex justify-content-end align-items-center bg-white border-bottom"></app-toolbar>
     <section class="router-container">
-      <app-sidebar name="chat_bar" class="right">
+      <app-sidebar name="chat_bar" [right]="true">
         <div sidebar-drawer class="border-left">
           <mat-card-content>
             <mat-nav-list>
@@ -13,8 +13,8 @@
               </mat-list-item>
               <h3 mat-subheader> Groups </h3>
               <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
-                <img matListAvatar ngxGravatar email="" [src]="group.logo" fallback="identicon">
-                <p matLine> {{group.title}} </p>
+                <img matListAvatar ngxGravatar [email]="group.avatar" [src]="group.avatar" fallback="identicon">
+                <p matLine> {{group.name}} </p>
               </mat-list-item>
             </mat-nav-list>
           </mat-card-content>

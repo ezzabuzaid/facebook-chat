@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UsersModel, ChatModel } from '@shared/models';
+import { ChatModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
-import { ChatCardManager, GroupCharCardComponent } from 'app/pages/chat';
+import { ChatCardManager, ChatGroupCardComponent } from 'app/pages/chat';
 import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 import { ChatConversationCardComponent } from 'app/pages/chat/chat-conversation-card/chat-conversation-card.component';
 
@@ -43,7 +43,7 @@ export class ContainerComponent implements OnInit {
   }
 
   openGroupChatCard(group: ChatModel.IGroup) {
-    this.chatCardManager.open(GroupCharCardComponent, {
+    this.chatCardManager.open(ChatGroupCardComponent, {
       data: group
     });
   }

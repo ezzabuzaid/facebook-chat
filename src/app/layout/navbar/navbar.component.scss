@@ -8,9 +8,6 @@ $navbar-mobile-width: map-deep-get($layout_dimensions, "navbar-width", small);
 $toolbar-height: map-deep-get($layout_dimensions, "toolbar-height");
 :host {
   app-sidebar {
-    [sidebar-drawer] {
-      min-width: #{$navbar-folded-width} + 100px;
-    }
     --width: #{$navbar-width};
     &.toggled {
       --width: #{$navbar-folded-width};
