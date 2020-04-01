@@ -37,6 +37,14 @@ export class UploadService {
         return this.http.delete(`${Constants.API.UPLOADS.base}/${file_id}`);
     }
 
+    updateFile(file: Partial<MediaModel.IFile>) {
+        return this.http.patch(`${Constants.API.UPLOADS.base}/${file._id}`, file);
+    }
+
+    updateFolder(folder: Partial<MediaModel.Folder>) {
+        return this.http.patch(`${Constants.API.UPLOADS.folder}/${folder._id}`, folder);
+    }
+
     getFolders() {
         return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folder)
             .pipe(map(({ list }) => list));
