@@ -7,14 +7,13 @@ import { ChatCardManager } from '../chat-card.manager';
 import { ChatService } from '@shared/services/chat';
 import { ChatGroupMembersComponent } from '../chat-group-members/chat-group-members.component';
 import { ChatManager } from '../chat.manager';
-import { ChatCardMessagesComponent } from '../chat-card-messages/chat-card-messages.component';
 
 @Component({
   selector: 'app-group-chat-card',
   templateUrl: './chat-group-card.component.html',
   styleUrls: ['./chat-group-card.component.scss']
 })
-export class GroupCharCardComponent implements OnInit, IChatCard<ChatModel.IGroup> {
+export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGroup> {
   public id: string;
   public data: ChatModel.IGroup;
   public members: ChatModel.IMember[] = [];
