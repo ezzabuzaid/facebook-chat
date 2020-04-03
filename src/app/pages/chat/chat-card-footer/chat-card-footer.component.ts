@@ -24,7 +24,6 @@ export class ChatCardFooterComponent implements OnInit {
   showActionBar = false;
 
   constructor(
-    private tokenService: TokenService,
     private chatManager: ChatManager,
     private uploadsService: UploadService,
     private dialog: MatDialog,

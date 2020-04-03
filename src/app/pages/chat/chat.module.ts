@@ -4,7 +4,7 @@ import { MaterialModule } from '@shared/common';
 import { GravatarModule } from 'ngx-gravatar';
 import { TimeagoModule } from 'ngx-timeago';
 import { ChatCardManager } from './chat-card.manager';
-import { GroupCharCardComponent } from './chat-group-card/chat-group-card.component';
+import { ChatGroupCardComponent } from './chat-group-card/chat-group-card.component';
 import { FormModule } from '@partials/form';
 import { UploadFileModule } from '@widget/upload-file';
 
@@ -22,7 +22,7 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
 @NgModule({
   declarations: [
     ChatConversationCardComponent,
-    GroupCharCardComponent,
+    ChatGroupCardComponent,
     ChatGroupMembersComponent,
     ChatFloatingButtonComponent,
     ChatCreateCardComponent,
@@ -32,7 +32,7 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
   ],
   exports: [
     ChatConversationCardComponent,
-    GroupCharCardComponent
+    ChatGroupCardComponent
   ],
   imports: [
     CommonModule,
