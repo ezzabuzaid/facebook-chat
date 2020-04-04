@@ -83,18 +83,21 @@ export namespace Constants {
     };
     static readonly CHAT = {
       base: '',
-      get groups() {
-        return this.base + 'groups';
+      get rooms() {
+        return this.base + 'rooms';
       },
-      get members() {
-        return `members/${this.groups}`;
+      get groups() {
+        return `${this.base}${this.rooms}/groups`;
       },
       get conversation() {
-        return 'conversation';
+        return `${this.base}${this.rooms}/conversations`;
       },
       get messages() {
-        return this.conversation + '/messages'
-      }
+        return `${this.base}${this.rooms}/messages`;
+      },
+      get members() {
+        return `${this.rooms}/members`;
+      },
     };
 
     static readonly SESSIONS = {
