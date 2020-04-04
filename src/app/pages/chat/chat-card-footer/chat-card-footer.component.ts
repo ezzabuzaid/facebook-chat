@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
-import { TokenService } from '@core/helpers/token';
 import { ChatManager } from '../chat.manager';
 import { ChatMessage } from '../types';
 import { ChatModel, MediaModel } from '@shared/models';
@@ -17,7 +16,7 @@ export class ChatCardFooterComponent implements OnInit {
   @Input() room: ChatModel.IRoom;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
-  @Output() onActionBarVisibilityChange = new EventEmitter();
+  @Output() onActionBarVisibilityChange = new EventEmitter(true);
 
   files: File[] = [];
   base64Files = [];
@@ -59,7 +58,7 @@ export class ChatCardFooterComponent implements OnInit {
   openActionBar() {
     this.showActionBar = !this.showActionBar;
     setTimeout(() => {
-      this.onActionBarVisibilityChange.emit();
+      this.onActionBarVisibilityChange.emit(this.element);
     });
     if (!this.showActionBar) {
       this.files = [];
@@ -92,7 +91,11 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   textChange() {
-    this.onActionBarVisibilityChange.emit(this.elementRef.nativeElement);
+    this.onActionBarVisibilityChange.emit(this.element);
+  }
+
+  get element() {
+    return this.elementRef.nativeElement;
   }
 
 }
