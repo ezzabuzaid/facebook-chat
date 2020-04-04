@@ -16,14 +16,11 @@ import { ChatManager } from '../chat.manager';
 export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGroup> {
   public id: string;
   public data: ChatModel.IGroup;
-  public members: ChatModel.IMember[] = [];
-
 
   constructor(
     private tokenService: TokenService,
     private dialog: MatDialog,
     private chatCardManager: ChatCardManager,
-    private chatService: ChatService,
     private chatManager: ChatManager,
     private elementRef: ElementRef<HTMLElement>
   ) { }
@@ -31,12 +28,7 @@ export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGrou
   ngOnInit() {
     this.chatManager.join(this.data._id);
 
-    this.chatService.getGroupMembers(this.data._id)
-      .subscribe(members => {
-        this.members = members;
-      });
     this.updateScroll(this.getElement('app-chat-card-footer'), this.getElement('app-chat-card-messages'));
-
   }
 
 
@@ -52,11 +44,6 @@ export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGrou
   isSender(id: string) {
     return this.tokenService.decodedToken.id === id;
   }
-
-  getMember(id: string) {
-    return this.members.find(member => member.user._id === id);
-  }
-
 
   private getElement(selector: string) {
     const element = this.elementRef.nativeElement;
