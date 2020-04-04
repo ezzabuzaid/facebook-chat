@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -44,7 +45,13 @@ export class MediaHubHeaderComponent implements OnInit {
     const folder_id = this.mediaHubManager.getCurrentFolderID();
     if (folder_id) {
       for (const file of (files as any)) {
-        this.uploadService.uploadImage(file, folder_id).subscribe();
+        this.uploadService.uploadImage(file, folder_id)
+          .subscribe((uploadedFile) => {
+            this.mediaHubManager.uploadListener.notify({
+              id: uploadedFile.id,
+              path: `${environment.serverOrigin}/${uploadedFile.path}`
+            });
+          });
       }
     }
   }

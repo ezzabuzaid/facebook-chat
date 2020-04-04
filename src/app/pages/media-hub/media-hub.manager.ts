@@ -7,8 +7,8 @@ import { AppUtils } from '@core/helpers/utils';
 
 @Injectable()
 export class MediaHubManager extends Listener<any> {
-    subscription = new Subject()
-
+    subscription = new Subject();
+    uploadListener = new Listener();
     constructor(
         private route: ActivatedRoute,
         private router: Router
@@ -54,7 +54,6 @@ export class MediaHubManager extends Listener<any> {
     getCurrentFolderID() {
         return this.getQueryParam('folder_id');
     }
-
 
     getQueryParam(param: string) {
         return this.route.snapshot.queryParamMap.get(param);
