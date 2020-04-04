@@ -25,4 +25,9 @@ export class Listener<T> {
         this.state.next(value as any);
     }
 
+    public dispose() {
+        this.state.next();
+        this.state.complete();
+    }
+
 }

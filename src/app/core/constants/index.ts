@@ -52,11 +52,14 @@ export namespace Constants {
   export class API {
     static readonly UPLOADS = {
       base: 'uploads',
-      get folder() {
+      get tags() {
+        return this.folders + '/tags';
+      },
+      get folders() {
         return 'folders'
       },
       get files() {
-        return this.folder + '/files'
+        return this.folders + '/files'
       },
       get search() {
         return this.base + '/search'
