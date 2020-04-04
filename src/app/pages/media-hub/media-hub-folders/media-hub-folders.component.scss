@@ -1,6 +1,9 @@
 @import 'mixins';
 
 :host {
+  display: flex;
+  flex-direction: column;
+  min-height: 99%;
   .folder-title {
     font-size: inherit;
     margin: inherit;

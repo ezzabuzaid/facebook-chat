@@ -6,7 +6,6 @@
         </button>
     </div>
     <mat-divider></mat-divider>
-
     <ng-container *ngIf="createFolderActive">
         <div class="px-3">
             <mat-form-field appearance="legacy">
@@ -22,26 +21,29 @@
         <mat-divider></mat-divider>
     </ng-container>
 </mat-list>
-
-<mat-nav-list>
-    <div class="d-flex" *ngFor="let folder of folders; let index = index;">
+<mat-nav-list class="flex-fill">
+    <ng-container *ngFor="let folder of folders; let index = index;">
         <mat-list-item dense (click)="onFolderClick(folder)">
             <mat-icon mat-list-icon text-muted>
                 {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
             </mat-icon>
             <div mat-line class="d-flex justify-content-between align-items-center">
-                <h4 class="folder-title text-truncate"> {{folder.name}}</h4>
+                <h5 class="folder-title text-truncate"> {{folder.name}}</h5>
                 <button (click)="$event.preventDefault();$event.stopImmediatePropagation();" mat-icon-button
                     [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
                     <mat-icon class="text-muted">more_vert</mat-icon>
                 </button>
             </div>
-
         </mat-list-item>
-    </div>
+    </ng-container>
 </mat-nav-list>
+<mat-chip-list class="px-2">
+    <mat-chip *ngFor="let tag of ($tags | async)" [style.background-color]="tag.color" (click)="filterByTag(tag)"
+        class="pointer" selected>
+    </mat-chip>
+</mat-chip-list>
 
-<mat-menu #menu="matMenu">
+<mat-menu style="display: contents;" #menu="matMenu">
     <ng-template matMenuContent let-folder="folder" let-index="index">
         <button mat-menu-item (click)="deleteFolder(folder, index)">
             <mat-icon>delete_outline</mat-icon>

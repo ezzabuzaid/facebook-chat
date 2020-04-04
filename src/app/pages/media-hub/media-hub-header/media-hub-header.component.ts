@@ -13,7 +13,7 @@ import { environment } from '@environments/environment';
   styleUrls: ['./media-hub-header.component.scss']
 })
 export class MediaHubHeaderComponent implements OnInit {
-  searchControl = new FormControl(this.mediaHubManager.getQueryParam('file'));
+  searchControl = new FormControl(this.mediaHubManager.getFileName());
   @Output() onViewChange = new EventEmitter();
 
   constructor(
@@ -23,26 +23,22 @@ export class MediaHubHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.searchControl.valueChanges
-      .pipe(
-        takeUntil(this.mediaHubManager.subscription),
-      )
+      .pipe(takeUntil(this.mediaHubManager.subscription))
       .subscribe((file) => {
         this.mediaHubManager.search({ file });
       })
 
     this.mediaHubManager.onFolderChange()
-      .pipe(
-        takeUntil(this.mediaHubManager.subscription),
-      )
+      .pipe(takeUntil(this.mediaHubManager.subscription))
       .subscribe(() => {
-        this.searchControl.setValue('');
+        this.searchControl.setValue('', { emitEvent: false });
+        this.mediaHubManager.search(null);
       })
   }
 
 
   uploadFiles(files: FileList) {
-    console.log(files);
-    const folder_id = this.mediaHubManager.getCurrentFolderID();
+    const folder_id = this.mediaHubManager.getFolderID();
     if (folder_id) {
       for (const file of (files as any)) {
         this.uploadService.uploadImage(file, folder_id)

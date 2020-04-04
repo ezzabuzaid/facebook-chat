@@ -13,8 +13,9 @@ import { switchMap, filter } from 'rxjs/operators';
 })
 export class MediaHubFoldersComponent implements OnInit {
   folders: MediaModel.Folder[] = [];
-  currentFolderID = this.mediaHubManager.getCurrentFolderID();
+  currentFolderID = this.mediaHubManager.getFolderID();
   createFolderActive = false;
+  $tags = this.uploadsService.getTags();
 
   constructor(
     private uploadsService: UploadService,
@@ -44,11 +45,20 @@ export class MediaHubFoldersComponent implements OnInit {
   }
 
   onFolderClick(folder: MediaModel.Folder) {
-    console.log('onFolderClick => ', folder);
     this.currentFolderID = folder._id;
     this.mediaHubManager.search({
-      folder_id: this.currentFolderID,
-      file: undefined
+      folder: this.currentFolderID,
+      file: undefined,
+      tag: undefined
+    });
+  }
+
+  filterByTag(tag: MediaModel.Tag) {
+    this.currentFolderID = undefined;
+    this.mediaHubManager.search({
+      folder: undefined,
+      file: undefined,
+      tag: tag.id
     });
   }
 

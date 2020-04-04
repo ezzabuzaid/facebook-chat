@@ -4,12 +4,13 @@ import { UploadService } from '@shared/services/upload';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
+import { RouteUtility } from '@shared/common';
 
 @Component({
   selector: 'app-media-hub-gate',
   templateUrl: './media-hub-gate.component.html',
   styleUrls: ['./media-hub-gate.component.scss'],
-  providers: [MediaHubManager]
+  providers: [MediaHubManager, RouteUtility]
 })
 export class MediaHubGateComponent implements OnInit, OnDestroy {
   files: MediaModel.IFile[] = [];
@@ -26,8 +27,8 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.mediaManager.subscription),
         typeaheadOperator(
-          ({ fileName, folder_id }) => this.uploadsService.searchForFiles(
-            new MediaModel.FileSearchQuery(folder_id, fileName)
+          ({ fileName, folder, tag }) => this.uploadsService.searchForFiles(
+            new MediaModel.FileSearchQuery(fileName, folder, tag)
           )
         )
       )

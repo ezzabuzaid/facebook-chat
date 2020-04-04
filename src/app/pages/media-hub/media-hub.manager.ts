@@ -1,62 +1,66 @@
-import { Injectable, Host } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Listener } from '@core/helpers/listener';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { pluck, distinctUntilKeyChanged, map, tap, share, filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { map, filter } from 'rxjs/operators';
 import { merge, Subject } from 'rxjs';
 import { AppUtils } from '@core/helpers/utils';
+import { RouteUtility } from '@shared/common';
+import { MediaModel } from '@shared/models';
 
 @Injectable()
 export class MediaHubManager extends Listener<any> {
     subscription = new Subject();
     uploadListener = new Listener();
     constructor(
-        private route: ActivatedRoute,
+        private routeUtility: RouteUtility,
         private router: Router
     ) {
-        super(null);
-    }
-
-    onQueryParamChange(param: string) {
-        return this.route.queryParams
-            .pipe(
-                distinctUntilKeyChanged(param),
-                pluck<Params, string>(param),
-                share()
-            );
+        super();
     }
 
     onFolderChange() {
-        return this.onQueryParamChange('folder_id');
+        return this.routeUtility.onQueryParamChange('folder');
     }
 
     onSearch() {
         return merge(
-            this.onQueryParamChange('file').pipe(filter(AppUtils.isTruthy)),
-            this.onQueryParamChange('folder_id').pipe(filter(AppUtils.isTruthy))
+            this.routeUtility.onQueryParamChange('file').pipe(filter(AppUtils.isTruthy)),
+            this.onFolderChange().pipe(filter(AppUtils.isTruthy))
         )
             .pipe(
                 map(() => ({
-                    fileName: this.getQueryParam('file'),
-                    folder_id: this.getCurrentFolderID()
+                    fileName: this.getFileName(),
+                    folder: this.getFolderID(),
+                    tag: this.getTagID()
                 })));
     }
 
-    search({ file, folder_id = this.getCurrentFolderID() }) {
+    search(query: MediaModel.FileSearchQuery) {
+        const defaultQuery = query || new MediaModel.FileSearchQuery(
+            this.getFileName(),
+            this.getFolderID(),
+            this.getTagID()
+        );
         return this.router.navigate(['.'], {
-            relativeTo: this.route,
+            relativeTo: this.routeUtility.route,
             queryParams: {
-                folder_id,
-                file
+                folder: defaultQuery.folder,
+                file: defaultQuery.file,
+                tag: defaultQuery.tag
             }
         })
     }
 
-    getCurrentFolderID() {
-        return this.getQueryParam('folder_id');
+    getFolderID() {
+        return this.routeUtility.getQueryParam('folder');
     }
 
-    getQueryParam(param: string) {
-        return this.route.snapshot.queryParamMap.get(param);
+    getFileName() {
+        return this.routeUtility.getQueryParam('file') || undefined;
+    }
+
+    getTagID() {
+        return this.routeUtility.getQueryParam('tag') || undefined;
     }
 
 }
