@@ -23,6 +23,7 @@ export enum EFieldType {
     RADIO,
     NUMBER,
     TEL,
+    COUNTRY,
 }
 
 export interface ISelectOption {

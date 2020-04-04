@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, Input, forwardRef, Inject } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { IField } from '@shared/common';
+import { IField, WINDOW } from '@shared/common';
 
 @Component({
   selector: 'app-country-control',
@@ -15,11 +14,15 @@ import { IField } from '@shared/common';
 })
 export class CountryControlComponent implements OnInit, ControlValueAccessor {
   @Input() public placeholder: string = null;
-  @Input() public countries = [];
   @Input() public formControl: IField<any, string> = null;
+  public countries = [];
 
   private _value: string;
   public currentCountry = null;
+
+  constructor(
+    @Inject(WINDOW) private window: Window
+  ) { }
 
   set value(value) {
     this._value = value;
@@ -39,7 +42,9 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.countries = this.window['intlTelInputGlobals'].getCountryData()
+  }
 
   public updateModel(value: string) {
     this.value = value;
@@ -50,11 +55,9 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
     return this.countries.find(el => el.code === this.formControl.value);
   }
 
-  writeValue(obj: string) {
-    if (obj) {
-      obj = obj.toUpperCase();
-      this._value = obj;
-      this.formControl.setValue(obj);
+  writeValue(value: string) {
+    if (value) {
+      this._value = value;
     }
   }
 
