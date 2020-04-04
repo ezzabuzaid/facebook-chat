@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatCardManager } from '../chat-card.manager';
-import { IChatCard, ChatGroupCardComponent } from '..';
+import { ChatCardManager, IChatCard } from '../chat-card.manager';
 import { UsersService } from '@shared/services/users';
 import { UsersModel, ChatModel } from '@shared/models';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -13,6 +12,7 @@ import { ChatService } from '@shared/services/chat';
 import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
 import { PopupManager } from '@widget/popup';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChatGroupCardComponent } from '../chat-group-card/chat-group-card.component';
 
 @Component({
   selector: 'app-chat-create-card',
