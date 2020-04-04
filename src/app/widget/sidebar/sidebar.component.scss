@@ -72,10 +72,12 @@ $transition-duration: 0.22s;
     cursor: ew-resize;
     display: block;
     height: 100%;
-    width: 1px;
+    width: 3px;
     background-color: transparent;
-    background-color: #c8c8c8;
     z-index: 0;
+    &:hover {
+      background-color: #c8c8c8;
+    }
   }
   &.resizing {
     @include backdrop(absolute, #f1f2f557);
