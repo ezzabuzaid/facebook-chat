@@ -11,6 +11,7 @@ export namespace ChatModel {
         folder: string;
         avatar: string;
         name: string
+        single: boolean;
     }
 
     export interface IGroup extends IRoom {
