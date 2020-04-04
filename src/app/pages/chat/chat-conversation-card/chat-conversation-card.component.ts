@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
@@ -9,7 +9,7 @@ import { ChatManager } from '../chat.manager';
   templateUrl: './chat-conversation-card.component.html',
   styleUrls: ['./chat-conversation-card.component.scss']
 })
-export class ChatConversationCardComponent implements OnInit, IChatCard<ChatModel.IRoom> {
+export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IRoom> {
   public id: string;
   public data: ChatModel.IRoom = null;
 
@@ -42,6 +42,10 @@ export class ChatConversationCardComponent implements OnInit, IChatCard<ChatMode
       left: 0,
       behavior: 'smooth'
     })
+  }
+
+  ngOnDestroy() {
+    this.chatManager.leave(this.data._id);
   }
 
 }

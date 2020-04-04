@@ -1,6 +1,6 @@
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
-@import "~bootstrap/scss/bootstrap-grid";
-@import "variables";
+@import '~bootstrap/scss/bootstrap-grid';
+@import 'variables';
 
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -129,7 +129,7 @@
     height: 100%;
     background-color: $color;
     z-index: 999;
-    content: "";
+    content: '';
   }
 }
 

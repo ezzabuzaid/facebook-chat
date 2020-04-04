@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { TokenService } from '@core/helpers/token';
 import { IChatCard } from '..';
@@ -13,7 +13,7 @@ import { ChatManager } from '../chat.manager';
   templateUrl: './chat-group-card.component.html',
   styleUrls: ['./chat-group-card.component.scss']
 })
-export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGroup> {
+export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IGroup> {
   public id: string;
   public data: ChatModel.IGroup;
 
@@ -27,7 +27,6 @@ export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGrou
 
   ngOnInit() {
     this.chatManager.join(this.data._id);
-
     this.updateScroll(this.getElement('app-chat-card-footer'), this.getElement('app-chat-card-messages'));
   }
 
@@ -59,4 +58,7 @@ export class ChatGroupCardComponent implements OnInit, IChatCard<ChatModel.IGrou
     })
   }
 
+  ngOnDestroy() {
+    this.chatManager.leave(this.data._id);
+  }
 }
