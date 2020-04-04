@@ -28,4 +28,9 @@ export namespace MediaModel {
         }
     }
 
+    export interface Tag {
+        id: string;
+        color: string;
+    }
+
 }

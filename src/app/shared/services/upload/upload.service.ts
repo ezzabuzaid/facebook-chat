@@ -26,11 +26,11 @@ export class UploadService {
     }
 
     createFolder(name: string) {
-        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.folder, { name });
+        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.folders, { name });
     }
 
     deleteFolder(folder_id: string) {
-        return this.http.delete(`${Constants.API.UPLOADS.folder}/${folder_id}`);
+        return this.http.delete(`${Constants.API.UPLOADS.folders}/${folder_id}`);
     }
 
     deleteFile(file_id: string) {
@@ -42,11 +42,11 @@ export class UploadService {
     }
 
     updateFolder(folder: Partial<MediaModel.Folder>) {
-        return this.http.patch(`${Constants.API.UPLOADS.folder}/${folder._id}`, folder);
+        return this.http.patch(`${Constants.API.UPLOADS.folders}/${folder._id}`, folder);
     }
 
     getFolders() {
-        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folder)
+        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders)
             .pipe(map(({ list }) => list));
     }
 
@@ -61,6 +61,10 @@ export class UploadService {
                     return file;
                 })
             }));
+    }
+
+    getTags() {
+        return this.http.get<MediaModel.Tag[]>(`${Constants.API.UPLOADS.tags}`);
     }
 
 }
