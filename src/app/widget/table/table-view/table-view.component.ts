@@ -9,6 +9,7 @@ import {
   OnDestroy,
   ViewChildren,
   QueryList,
+  TrackByFunction,
 } from '@angular/core';
 import { TableManager, IColumnSetting } from '../table.service';
 import { TableActionComponent } from '../table-actions/table-actions.component';
@@ -33,6 +34,8 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
   private _unsubscribe = new Subject();
 
   @Input() nativeTableClass: string = null;
+  @Input() dense: boolean = true;
+  @Input() trackByFn: TrackByFunction<any> = null;
 
   @ContentChild(TemplateRef) tableBody: any;
 
@@ -66,10 +69,7 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe))
       .subscribe((value) => {
         const tokens = this.tableFilterDirective
-          .filter(token => {
-            const value = token.getValue();
-            return value !== '' || value !== null || value !== undefined;
-          })
+          .filter(token => AppUtils.pipe(AppUtils.isFalsy, AppUtils.isNullorUndefined, AppUtils.isEmptyString)(token.getValue()))
           .reduce((acc, field) => {
             acc[field.getKey()] = field.getValue();
             return acc;
@@ -94,34 +94,10 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
     }
   }
 
-  trackByFn(index: number, item: any) {
-    return item.id || item._id || item.name || Object.keys(this.dataSource[0])[0] || item || index;
-  }
-
   ngOnDestroy() {
     this._unsubscribe.next();
     this._unsubscribe.complete();
   }
-
-  // search(value, keys) {
-  //   if (value.length && this.dataSource.length) {
-  //     const filterdData = [];
-  //     for (const key of keys) {
-  //       const sorted = this.dataSource.filter(el => {
-  //         const dataValue = this.getValue(key, el);
-  //         const dataType = typeof dataValue;
-  //         if (dataType === 'string' || dataType === 'number') {
-  //           const keyValue = String(dataValue).toLowerCase();
-  //           return keyValue.indexOf(value) !== -1;
-  //         }
-  //         return false;
-  //       });
-  //       filterdData.push(...sorted);
-  //     }
-  //     const data = [...new Set(filterdData)];
-  //     this.tableService.nextData(data);
-  //   }
-  // }
 
 
 }
