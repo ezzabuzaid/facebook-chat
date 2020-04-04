@@ -1,4 +1,4 @@
-@import 'mixins';
+@import "mixins";
 
 :host {
   width: 100%;
@@ -36,15 +36,10 @@
       width: 100%;
       background-color: #f1f2f5;
       min-height: 32px !important;
-      line-height: 28px;
-      padding-left: 0.5rem;
       &:hover,
       &:focus {
         outline: 0;
       }
-      // @include placeholder {
-      //   line-height: 30px;
-      // }
     }
   }
   .img-box {

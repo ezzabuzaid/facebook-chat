@@ -36,6 +36,7 @@
     "@auth0/angular-jwt": "^4.0.0",
     "@ctrl/ngx-emoji-mart": "^2.0.0",
     "@ezzabuzaid/document-storage": "^0.4.6",
+    "@joeattardi/emoji-button": "^2.12.1",
     "@nguniversal/express-engine": "^9.0.0",
     "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
     "@ngx-translate/core": "^12.0.0",
@@ -83,7 +84,7 @@
     "stylelint": "^13.1.0",
     "ts-loader": "^6.0.4",
     "ts-node": "~8.6.2",
-    "tslint": "~6.0.0",
+    "tslint": "^6.1.1",
     "typescript": "~3.7.5",
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.7"
