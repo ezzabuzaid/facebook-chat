@@ -75,7 +75,7 @@ export namespace Constants {
         return this.base + '/logout'
       }
     };
-    static readonly users = {
+    static readonly USERS = {
       base: 'users',
       get search() {
         return this.base + '/search'

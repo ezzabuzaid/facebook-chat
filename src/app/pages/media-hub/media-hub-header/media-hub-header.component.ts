@@ -49,7 +49,6 @@ export class MediaHubHeaderComponent implements OnInit {
     }
   }
 
-
   listView() {
     this.onViewChange.emit(MediaHubViews.ListView);
   }

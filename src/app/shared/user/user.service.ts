@@ -23,7 +23,7 @@ export class UserService extends Listener<boolean> {
     @Inject(WINDOW) private window: Window,
   ) { super(); }
 
-  public login(payload) {
+  public login(payload: PortalModel.ILoginRequest) {
     return this.http
       .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.login, payload)
       .pipe(
@@ -33,8 +33,8 @@ export class UserService extends Listener<boolean> {
       );
   }
 
-  register(payload) {
-    return this.http.post('users', payload);
+  register(payload: PortalModel.IRegister) {
+    return this.http.post(Constants.API.USERS.base, payload);
   }
 
   refreshToken() {

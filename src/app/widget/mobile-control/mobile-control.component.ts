@@ -3,7 +3,7 @@ import {
   Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, Inject, PLATFORM_ID
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { PhoneNumberShouldBeAssociatedWithCountry } from '@shared/validators';
+import { PhoneNumberAssociatedWithCountryValidator } from '@shared/validators';
 import { AppUtils } from '@core/helpers/utils';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
@@ -72,7 +72,7 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
       throw new TypeError('you can not use [autoDetectCountry] along with [code]');
     }
 
-    this.formControl.setValidators([this.formControl.validator, PhoneNumberShouldBeAssociatedWithCountry(this.formControl.id)])
+    this.formControl.setValidators([this.formControl.validator, PhoneNumberAssociatedWithCountryValidator(this.formControl.id)])
 
     if (isPlatformBrowser(this.platformId)) { }
 

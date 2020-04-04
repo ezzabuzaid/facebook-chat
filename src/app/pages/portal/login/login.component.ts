@@ -15,7 +15,7 @@ import { PortalModel } from '@shared/models';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends FormUtils<PortalModel.LoginRequest> implements OnInit {
+export class LoginComponent extends FormUtils<PortalModel.ILoginRequest> implements OnInit {
 
   constructor(
     private portalService: UserService,

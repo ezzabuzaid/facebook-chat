@@ -59,7 +59,7 @@ export namespace UsersModel {
         },
         read: {
             title: 'Users list',
-            endpoint: Constants.API.users.base,
+            endpoint: Constants.API.USERS.base,
             settings: ngTableSetting<IUser>({
                 columns: {
                     _id: {
