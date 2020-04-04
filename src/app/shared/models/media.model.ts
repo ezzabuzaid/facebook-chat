@@ -21,8 +21,9 @@ export namespace MediaModel {
 
     export class FileSearchQuery extends Query {
         constructor(
-            public folder: string,
-            public file: string
+            public file?: string,
+            public folder?: string,
+            public tag?: string,
         ) {
             super();
         }
