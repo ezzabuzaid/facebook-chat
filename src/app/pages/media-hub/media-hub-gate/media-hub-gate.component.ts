@@ -13,7 +13,6 @@ import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 })
 export class MediaHubGateComponent implements OnInit, OnDestroy {
   files: MediaModel.IFile[] = [];
-  markedFiles: MediaModel.IFile[] = [];
   EmediaHubViews = MediaHubViews;
   currentView = MediaHubViews.GridView;
 
@@ -35,17 +34,6 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.files = data;
       })
-  }
-
-  addToMarkedFiles(index: number) {
-    this.markedFiles.push(this.files[index]);
-  }
-
-  deleteFile(id: string, index: number) {
-    this.uploadsService.deleteFile(id)
-      .subscribe(() => {
-        this.files.splice(index, 1);
-      });
   }
 
   changeView(view: MediaHubViews) {
