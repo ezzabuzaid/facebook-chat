@@ -16,9 +16,7 @@ export class ChatFloatingButtonComponent implements OnInit, IChatCard<ChatModel.
     private chatCardManager: ChatCardManager
   ) { }
 
-  ngOnInit() {
-    this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
-  }
+  ngOnInit() { }
 
   @HostListener('click') floatingButton() {
     this.chatCardManager.toogleCard(this.chatCardManager.getComponent(this.id), this.data, this.id);
