@@ -1,4 +1,4 @@
-<div class="actions-buttons box" *ngIf="showActionBar">
+<div class="actions-buttons box" *ngIf="showActionBar && !external">
     <app-file-control (onChange)="uploadFiles($event)">
         <button mat-button>
             <mat-icon class="text-muted">insert_photo</mat-icon>
