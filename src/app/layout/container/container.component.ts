@@ -22,7 +22,6 @@ export class ContainerComponent implements OnInit {
     private usersService: UsersService,
     private chatCardManager: ChatCardManager,
     private chatService: ChatService,
-    private dialog: MatDialog
   ) { }
 
   ngOnInit() { }
@@ -35,15 +34,16 @@ export class ContainerComponent implements OnInit {
     return outlet && outlet.activatedRouteData.state;
   }
 
-  openChatCard(conversation: ChatModel.IConversation) {
+  openChatCard(conversation: ChatModel.IRoom) {
     this.chatCardManager.open(ChatConversationCardComponent, {
       id: conversation._id,
       data: conversation
     });
   }
 
-  openGroupChatCard(group: ChatModel.IGroup) {
+  openGroupChatCard(group: ChatModel.IRoom) {
     this.chatCardManager.open(ChatGroupCardComponent, {
+      id: group._id,
       data: group
     });
   }

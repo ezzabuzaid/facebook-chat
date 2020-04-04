@@ -8,8 +8,9 @@
             <mat-nav-list>
               <h3 mat-subheader> Conversations </h3>
               <mat-list-item *ngFor="let conversation of ($conversations | async)" (click)="openChatCard(conversation)">
-                <img matListAvatar ngxGravatar [email]="conversation?.peer?.email" fallback="identicon">
-                <p matLine> {{conversation?.peer?.username}} </p>
+                <img matListAvatar ngxGravatar [src]="conversation.avatar" [email]="conversation.avatar"
+                  fallback="identicon">
+                <p matLine> {{conversation.name}} </p>
               </mat-list-item>
               <h3 mat-subheader> Groups </h3>
               <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
