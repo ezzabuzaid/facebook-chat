@@ -16,7 +16,7 @@ export class PromptComponent implements OnInit {
   ngOnInit() { }
 
   close() {
-    this.ref.close(this.data.value);
+    this.ref.close(this.data.value.trim());
   }
 
 }
