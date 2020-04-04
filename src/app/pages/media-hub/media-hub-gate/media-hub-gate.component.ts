@@ -16,6 +16,7 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
   markedFiles: MediaModel.IFile[] = [];
   EmediaHubViews = MediaHubViews;
   currentView = MediaHubViews.GridView;
+
   constructor(
     private uploadsService: UploadService,
     private mediaManager: MediaHubManager
@@ -36,13 +37,10 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
       })
   }
 
-  ngOnDestroy() {
-    AppUtils.unsubscribe(this.mediaManager.subscription);
-  }
-
   addToMarkedFiles(index: number) {
     this.markedFiles.push(this.files[index]);
   }
+
   deleteFile(id: string, index: number) {
     this.uploadsService.deleteFile(id)
       .subscribe(() => {
@@ -52,6 +50,10 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
 
   changeView(view: MediaHubViews) {
     this.currentView = view;
+  }
+
+  ngOnDestroy() {
+    AppUtils.unsubscribe(this.mediaManager.subscription);
   }
 
 }

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class PopupManager {
-  private defaultConfig: MatDialogConfig<any> = { width: '400px' };
+  private defaultConfig: MatDialogConfig<any> = { width: '450px' };
   constructor(
     private dialog: MatDialog
   ) { }
@@ -17,7 +17,7 @@ export class PopupManager {
 
   prompt(config: MatDialogConfig<IPromptPopup> = {}) {
     const componentRef = this.dialog.open<PromptComponent, PopupData, string>(PromptComponent, this.populateDialogConfig(config));
-    componentRef.componentInstance.data = config.data;
+    componentRef.componentInstance.data = config.data || {};
     return componentRef;
   }
 
