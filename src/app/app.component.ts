@@ -133,7 +133,7 @@ export class AppComponent implements OnInit {
       }
 
       const [$offline, $online] = partition(this.connectivity.observe(), AppUtils.isFalsy);
-      const noConnectionClass = 'no-connection';
+      const noConnectionClass = 'backdrop';
       const affectedElement = this.document.body;
       $online.subscribe(() => {
         this.snackbar.dismiss();

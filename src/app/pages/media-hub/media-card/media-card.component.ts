@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { MediaModel } from '@shared/models';
 import { UploadService } from '@shared/services/upload';
+import { PopupManager } from '@widget/popup';
+import { switchMap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-media-card',
@@ -14,6 +16,11 @@ export class MediaCardComponent implements OnInit {
   @Input()
   @HostBinding('class.checked')
   checked = false;
+
+  constructor(
+    private popupManager: PopupManager,
+    private uploadsService: UploadService
+  ) { }
 
   ngOnInit() { }
 
@@ -33,6 +40,22 @@ export class MediaCardComponent implements OnInit {
     this.onDelete.emit(this.file._id);
   }
 
-  renameFile() { };
+  renameFile() {
+    this.popupManager.prompt({
+      hasBackdrop: true,
+      data: {
+        confirm: 'Save',
+        value: this.file.name
+      }
+    })
+      .afterClosed()
+      .pipe(
+        filter(name => name !== this.file.name),
+        switchMap(name => {
+          this.file.name = name;
+          return this.uploadsService.updateFile({ name, _id: this.file._id });
+        }))
+      .subscribe();
+  };
 
 }

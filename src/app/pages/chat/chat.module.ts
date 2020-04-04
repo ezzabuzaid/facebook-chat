@@ -4,7 +4,7 @@ import { MaterialModule } from '@shared/common';
 import { GravatarModule } from 'ngx-gravatar';
 import { TimeagoModule } from 'ngx-timeago';
 import { ChatCardManager } from './chat-card.manager';
-import { GroupCharCardComponent } from './chat-group-card/chat-group-card.component';
+import { ChatGroupCardComponent } from './chat-group-card/chat-group-card.component';
 import { FormModule } from '@partials/form';
 import { UploadFileModule } from '@widget/upload-file';
 
@@ -18,11 +18,12 @@ import { ChatCardMessagesComponent } from './chat-card-messages/chat-card-messag
 import { ChatCardFooterComponent } from './chat-card-footer/chat-card-footer.component';
 import { ChatConversationCardComponent } from './chat-conversation-card/chat-conversation-card.component';
 import { FileControlModule } from '@widget/file-control/file-control.module';
+import { PipesModule } from '@shared/pipes';
 
 @NgModule({
   declarations: [
     ChatConversationCardComponent,
-    GroupCharCardComponent,
+    ChatGroupCardComponent,
     ChatGroupMembersComponent,
     ChatFloatingButtonComponent,
     ChatCreateCardComponent,
@@ -32,7 +33,7 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
   ],
   exports: [
     ChatConversationCardComponent,
-    GroupCharCardComponent
+    ChatGroupCardComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +44,8 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
     UploadFileModule,
     PickerModule,
     EmojiModule,
-    FileControlModule
+    FileControlModule,
+    PipesModule
   ],
   providers: [
     ChatCardManager

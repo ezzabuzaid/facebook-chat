@@ -16,12 +16,12 @@ export class UsersService {
     ) { }
 
     public getUsers() {
-        return this.http.get<ListEntityResponse<UsersModel.IUser>>(Constants.API.users.base)
+        return this.http.get<ListEntityResponse<UsersModel.IUser>>(Constants.API.USERS.base)
             .pipe(map(({ list }) => list));
     }
 
     public searchForUsers(name: string) {
-        return this.http.get<UsersModel.IUser[]>(`${Constants.API.users.search}?username=${name}`);
+        return this.http.get<UsersModel.IUser[]>(`${Constants.API.USERS.search}?username=${name}`);
     }
 
     public getUsersWithoutMe() {
@@ -30,7 +30,7 @@ export class UsersService {
     }
 
     public getCurrentUser() {
-        return this.http.get<UsersModel.IUser>(`${Constants.API.users.base}/${this.tokenService.decodedToken.id}`)
+        return this.http.get<UsersModel.IUser>(`${Constants.API.USERS.base}/${this.tokenService.decodedToken.id}`)
     }
 
 }

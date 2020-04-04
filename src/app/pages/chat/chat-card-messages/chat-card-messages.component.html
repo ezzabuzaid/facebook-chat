@@ -5,13 +5,13 @@
         
     'align-self-end': isSender(message.user),
     'align-self-start': !isSender(message.user)
-        }" [src]="populateImageURL(message.text)">
+        }" [src]="populateFileURL(message.text)">
     </ng-container>
     <ng-template #defaultView>
         <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
-            class="border-radius-1 text-white message" [ngClass]="{
-                'bg--primary mr-3':isSender(message.user),
-                'bg--accent ml-3':!isSender(message.user),
+            class="border-radius-1 text-white message mx-3" [ngClass]="{
+                'bg--primary':isSender(message.user),
+                'bg--accent':!isSender(message.user),
                 'align-self-end': isSender(message.user),
                 'align-self-start': !isSender(message.user),
                 'mt-2': first
@@ -20,8 +20,3 @@
         </span>
     </ng-template>
 </ng-container>
-
-
-<ng-template #urlView>
-    <object data="" type=""></object>
-</ng-template>

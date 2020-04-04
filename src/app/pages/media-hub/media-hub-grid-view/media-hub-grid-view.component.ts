@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MediaModel } from '@shared/models';
+import { UploadService } from '@shared/services/upload';
 
 @Component({
   selector: 'app-media-hub-grid-view',
@@ -6,10 +8,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./media-hub-grid-view.component.scss']
 })
 export class MediaHubGridViewComponent implements OnInit {
+  @Input() files: MediaModel.IFile[] = [];
+  markedFiles: MediaModel.IFile[] = [];
 
-  constructor() { }
+  constructor(
+    private uploadsService: UploadService
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+  }
+
+  deleteFile(id: string, index: number) {
+    this.uploadsService.deleteFile(id)
+      .subscribe(() => {
+        this.files.splice(index, 1);
+      });
+  }
+
+  addToMarkedFiles(index: number) {
+    this.markedFiles.push(this.files[index]);
   }
 
 }

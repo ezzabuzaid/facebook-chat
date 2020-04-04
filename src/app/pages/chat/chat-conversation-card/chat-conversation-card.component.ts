@@ -1,24 +1,21 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
 import { ChatManager } from '../chat.manager';
-import { ChatService } from '@shared/services/chat';
-import { ChatCardMessagesComponent } from '../chat-card-messages/chat-card-messages.component';
 
 @Component({
   selector: 'app-user-card',
   templateUrl: './chat-conversation-card.component.html',
   styleUrls: ['./chat-conversation-card.component.scss']
 })
-export class ChatConversationCardComponent implements OnInit, IChatCard<ChatModel.IConversation> {
+export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IRoom> {
   public id: string;
-  public data: ChatModel.IConversation = null;
+  public data: ChatModel.IRoom = null;
 
   constructor(
     private chatCardManager: ChatCardManager,
     private chatManager: ChatManager,
-    private chatService: ChatService,
     private elementRef: ElementRef<HTMLElement>
   ) { }
 
@@ -45,6 +42,10 @@ export class ChatConversationCardComponent implements OnInit, IChatCard<ChatMode
       left: 0,
       behavior: 'smooth'
     })
+  }
+
+  ngOnDestroy() {
+    this.chatManager.leave(this.data._id);
   }
 
 }

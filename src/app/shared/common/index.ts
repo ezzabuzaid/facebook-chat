@@ -8,6 +8,7 @@ export * from './ng-smart-table';
 export * from './extract';
 export * from './navigator';
 export * from './window';
+export * from './route';
 export * from './network-connectivity';
 
 export enum EFieldType {
@@ -23,6 +24,7 @@ export enum EFieldType {
     RADIO,
     NUMBER,
     TEL,
+    COUNTRY,
 }
 
 export interface ISelectOption {

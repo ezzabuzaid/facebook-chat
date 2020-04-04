@@ -19,7 +19,7 @@
         <mat-label>{{field.label}}</mat-label>
         <input [id]="field.id" #input type="password" [autocomplete]="field.autocomplete" matInput
             [formControl]="field">
-        <mat-icon class="pointer" [togglePasswod]="input" matSuffix>lock</mat-icon>
+        <mat-icon class="pointer text-muted" [togglePasswod]="input" matSuffix>lock</mat-icon>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.TEXTAREA)">
@@ -94,5 +94,7 @@
     } -->
     <app-mobile-control [id]="field.id" [formControl]="field"></app-mobile-control>
 </ng-container>
-<!-- <app-country-control [formControl]="field"></app-country-control> -->
+<ng-container *ngIf="field.typeOf(types.COUNTRY)">
+    <app-country-control [id]="field.id" [formControl]="field"></app-country-control>
+</ng-container>
 <!-- TODO: Setup datetime type -->

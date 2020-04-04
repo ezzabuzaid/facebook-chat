@@ -29,23 +29,16 @@
         </div>
     </header>
 
-    <!-- <section card-content>
-        <ng-container *ngIf="$conversation">
-            <ng-container *ngIf="($conversation | async) as conversation; else footerOnly">
-                <app-chat-card-messages [user]="firstSelectedUser" [conversation]="conversation">
-                </app-chat-card-messages>
-                <app-chat-card-footer [external]="true" (onSendMessage)="jumpToConversationCard($event)"
-                    [conversation]="conversation">
+    <section card-content>
+        <ng-container *ngIf="$room">
+            <ng-container *ngIf="($room | async) as room; else footerOnly">
+                <app-chat-card-messages [id]="room._id"></app-chat-card-messages>
+                <app-chat-card-footer [external]="true" (onSendMessage)="jumpToRroom(room, $event)" [room]="room">
                 </app-chat-card-footer>
             </ng-container>
             <ng-template #footerOnly>
-                <app-chat-card-footer [external]="true" (onSendMessage)="createConvesationAndSendMessage($event)">
-                </app-chat-card-footer>
+                <app-chat-card-footer [external]="true" (onSendMessage)="createRoom($event)"></app-chat-card-footer>
             </ng-template>
         </ng-container>
-        <ng-container *ngIf="isGroup;">
-            <app-chat-card-group-footer [external]="true" (onSendMessage)="createConvesationAndSendMessage($event)">
-            </app-chat-card-group-footer>
-        </ng-container>
-    </section> -->
+    </section>
 </app-chat-card>

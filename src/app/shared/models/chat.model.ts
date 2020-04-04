@@ -1,6 +1,5 @@
 import { IModel } from './response.model';
 import { UsersModel } from './users.model';
-import { AppUtils } from '@core/helpers/utils';
 
 export namespace ChatModel {
     export interface IMember extends IModel {
@@ -8,20 +7,14 @@ export namespace ChatModel {
         user: UsersModel.IUser;
     }
 
-    export interface ICreateGroup extends IGroup {
-        members: string[];
-        title: string;
-        logo: string;
-    }
-
     export interface IRoom extends IModel {
         folder: string;
         avatar: string;
+        name: string
+        single: boolean;
     }
 
     export interface IGroup extends IRoom {
-        title: string;
-        logo: string;
     }
 
     export interface IConversation extends IRoom {

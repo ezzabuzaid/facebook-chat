@@ -16,12 +16,9 @@ $transition-duration: 0.22s;
         overflow-x: hidden;
         height: 100%;
         transform: translateX(0%);
-        will-change: width, transform;
-        transition: width $transition-duration $transition-timing, transform $transition-duration $transition-timing;
         width: var(--width);
       }
       &:last-child {
-        transition: width $transition-duration $transition-timing;
         width: calc(100% - var(--width));
         overflow: auto;
         @include direction(ltr) {
@@ -33,6 +30,7 @@ $transition-duration: 0.22s;
       }
     }
   }
+
   &.right {
     flex-direction: row-reverse;
 
@@ -46,14 +44,6 @@ $transition-duration: 0.22s;
             margin-left: auto;
           }
         }
-      }
-    }
-  }
-
-  &.toggled {
-    ::ng-deep {
-      > div:first-child {
-        transform: translateX(0%);
       }
     }
   }
@@ -78,20 +68,22 @@ $transition-duration: 0.22s;
     }
   }
   .resizer {
-    position: relative;
+    position: absolute;
     cursor: ew-resize;
     display: block;
-    // position: absolute;
     height: 100%;
-    width: 2px;
+    width: 3px;
     background-color: transparent;
-    will-change: background-color;
-    transition: background-color 0.25s;
-    top: 0;
-    right: 0;
-    z-index: 9;
+    z-index: 0;
     &:hover {
-      background-color: black;
+      background-color: #c8c8c8;
+    }
+  }
+  &.resizing {
+    @include backdrop(absolute, #f1f2f557);
+    .resizer {
+      z-index: 1000;
+      width: 5px;
     }
   }
 }

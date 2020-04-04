@@ -91,7 +91,6 @@ export class AppUtils {
 
     static preventBubblingAndCapturing(event: Event) {
         event.preventDefault();
-        event.stopImmediatePropagation();
         event.stopPropagation();
     }
 

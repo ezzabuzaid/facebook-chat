@@ -12,61 +12,25 @@ import { TokenService } from '@core/helpers/token';
 export class ChatService {
     constructor(
         private http: HttpClient,
-        private tokenService: TokenService
     ) { }
 
-    public createGroup(message: string, members: string[]) {
-        return this.http.post(Constants.API.CHAT.groups, { message, members });
+    public createRoom(message: string, name: string, members: string[]) {
+        return this.http.post<ChatModel.IRoom>(Constants.API.CHAT.rooms, { message, name, members });
     }
 
-    getConversation(participantID: string) {
-        return this.http.get<ChatModel.IConversation>(`${Constants.API.CHAT.conversation}/${participantID}`)
-        // .pipe(map((conversation) => {
-        //     return this.tokenService.decodedToken.id === conversation.user1._id
-        //         ? conversation.user2
-        //         : conversation.user1
-        // }));
-    }
-
-    createConversation(participantID: string, text: string) {
-        return this.http.post<ChatModel.IConversation>(`${Constants.API.CHAT.conversation}`, {
-            user1: this.tokenService.decodedToken.id,
-            user2: participantID,
-            message: text
-        });
-    }
-
-    getConversations() {
-        return this.http
-            .get<ChatModel.IConversation[]>(Constants.API.CHAT.conversation)
-            .pipe(map((data) => {
-                return data.map(conversation => ({
-                    ...conversation,
-                    peer: this.tokenService.decodedToken.id === conversation.user1._id
-                        ? conversation.user2
-                        : conversation.user1,
-                }));
-            }))
-            .pipe(
-                map((list) => {
-                    return list.map(group => {
-                        group.avatar = group.peer.email;
-                        return group;
-                    })
-                }),
-            );
+    public getGroup(users: string[]) {
+        const query = users.reduce((acc, user) => acc += `members[]=${user}&`, '');
+        return this.http.get<ChatModel.IGroup>(`${Constants.API.CHAT.members}?${query}`);
     }
 
     public getGroups() {
-        return this.http.get<ListEntityResponse<ChatModel.IGroup>>(Constants.API.CHAT.groups)
-            .pipe(
-                map(({ list }) => {
-                    return list.map(group => {
-                        group.avatar = group.logo;
-                        return group;
-                    })
-                }),
-            );
+        return this.http.get<ListEntityResponse<ChatModel.IRoom>>(Constants.API.CHAT.groups)
+            .pipe(map(({ list }) => list));
+    }
+
+    public getConversations() {
+        return this.http.get<ListEntityResponse<ChatModel.IRoom>>(Constants.API.CHAT.conversation)
+            .pipe(map(({ list }) => list));
     }
 
     public getGroupMembers(group_id: string) {
@@ -74,8 +38,8 @@ export class ChatService {
             .pipe(map(({ list }) => list))
     }
 
-    fetchMessages(conversation_id: string) {
-        return this.http.get<ListEntityResponse<ChatModel.Message>>(Constants.API.CHAT.messages + '/' + conversation_id)
+    public fetchMessages(room_id: string) {
+        return this.http.get<ListEntityResponse<ChatModel.Message>>(`${Constants.API.CHAT.rooms}/${room_id}/messages`)
             .pipe(map(({ list }) => list))
     }
 

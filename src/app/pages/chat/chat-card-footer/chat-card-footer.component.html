@@ -1,4 +1,4 @@
-<div class="actions-buttons box" *ngIf="showActionBar">
+<div class="actions-buttons box" *ngIf="showActionBar && !external">
     <app-file-control (onChange)="uploadFiles($event)">
         <button mat-button>
             <mat-icon class="text-muted">insert_photo</mat-icon>
@@ -23,8 +23,8 @@
             add
         </mat-icon>
     </button>
-    <div class="w-100 textarea-wrapper border-radius-1">
-        <div *ngIf="files.length" class="d-flex pt-3 px-2 overflow-auto">
+    <div class="mh-100 d-flex flex-column w-100 textarea-wrapper align-self-stretch border-radius-1">
+        <div *ngIf="base64Files.length" class="d-flex pt-3 px-2 overflow-auto flex-fill">
             <div class="img-box mx-1 position-relative" *ngFor="let file of base64Files; let index = index;">
                 <mat-icon (click)="disposeFile(index)"
                     class="pointer text-muted position-absolute bg-white border-radius-1">
@@ -32,11 +32,14 @@
                 <img class="img-fluid h-100 border-radius-1" [src]="file | async">
             </div>
         </div>
-        <textarea (keypress)="textChange()" class="border-0 border-radius-1" placeholder="Write a message" #messageInput
-            cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-            cdkAutosizeMaxRows="4"></textarea>
+        <div class="d-flex align-items-center px-2">
+            <textarea class="border-0 border-radius-1" [formControl]="messageFormControl" placeholder="Write a message"
+                cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="4"></textarea>
+            <mat-icon class="pointer align-self-end" (click)="openEmojiPicker($event)">tag_faces</mat-icon>
+        </div>
     </div>
-    <button mat-icon-button class="ml-auto send-button" (click)="sendMessage(messageInput)">
+    <button mat-icon-button class="ml-auto send-button" (click)="sendMessage()">
         <mat-icon class="text--primary">send</mat-icon>
     </button>
 </footer>

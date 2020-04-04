@@ -16,8 +16,8 @@
 }
 
 .default-theme {
-  $primary: mat-palette($mat-blue, 700);
-  $accent: mat-palette($mat-blue-gray, 800);
+  $primary: mat-palette($mat-pink, 900);
+  $accent: mat-palette($mat-pink, 200);
   $theme: mat-light-theme($primary, $accent);
   @include application_theme($theme);
 }

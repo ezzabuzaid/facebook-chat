@@ -1,13 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Inject, HostListener } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
-import { TokenService } from '@core/helpers/token';
 import { ChatManager } from '../chat.manager';
 import { ChatMessage } from '../types';
 import { ChatModel, MediaModel } from '@shared/models';
 import { UploadService } from '@shared/services/upload';
 import { MediaPickerComponent } from 'app/pages/media-hub/media-picker/media-picker.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import * as EmojiButton from '@joeattardi/emoji-button';
+import { WINDOW } from '@shared/common';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-chat-card-footer',
   templateUrl: './chat-card-footer.component.html',
@@ -17,26 +18,61 @@ export class ChatCardFooterComponent implements OnInit {
   @Input() room: ChatModel.IRoom;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
-  @Output() onActionBarVisibilityChange = new EventEmitter();
+  @Output() onActionBarVisibilityChange = new EventEmitter(true);
 
   files: File[] = [];
   base64Files = [];
   showActionBar = false;
+  emojiPicker = new EmojiButton();
+  messageFormControl = new FormControl('');
 
   constructor(
-    private tokenService: TokenService,
     private chatManager: ChatManager,
     private uploadsService: UploadService,
     private dialog: MatDialog,
-    private elementRef: ElementRef<HTMLElement>
+    private elementRef: ElementRef<HTMLElement>,
+    @Inject(WINDOW) private window: Window
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    const callback = emoji => {
+      this.messageFormControl.setValue(
+        this.messageFormControl.value + emoji
+      )
+    }
+    this.emojiPicker.on('emoji', callback);
+    this.messageFormControl.valueChanges
+      .subscribe(value => {
+        this.onActionBarVisibilityChange.emit(this.element);
+      })
+  }
 
-  sendMessage(input: HTMLTextAreaElement) {
-    const text = input.value;
+  openEmojiPicker(event) {
+    AppUtils.preventBubblingAndCapturing(event);
+    this.emojiPicker.showPicker(this.element, {
+      position: 'top',
+      autoHide: false,
+      showSearch: false,
+      autoFocusSearch: false,
+      showRecents: false,
+      showPreview: false,
+      categories: ['smileys'],
+      theme: 'auto'
+    });
+  }
+
+
+  @HostListener('click')
+  closeEmojiPicker() {
+    if (this.emojiPicker.pickerVisible) {
+      this.emojiPicker.hidePicker();
+    }
+  }
+
+  sendMessage() {
+    const text = this.messageFormControl.value;
     if (AppUtils.isTruthy(text)) {
-      input.value = '';
+      this.messageFormControl.setValue('');
       if (this.external) {
         this.onSendMessage.emit(text);
       } else {
@@ -60,7 +96,7 @@ export class ChatCardFooterComponent implements OnInit {
   openActionBar() {
     this.showActionBar = !this.showActionBar;
     setTimeout(() => {
-      this.onActionBarVisibilityChange.emit();
+      this.onActionBarVisibilityChange.emit(this.element);
     });
     if (!this.showActionBar) {
       this.files = [];
@@ -75,6 +111,10 @@ export class ChatCardFooterComponent implements OnInit {
 
   disposeFile(index: number) {
     this.base64Files.splice(index, 1);
+    this.files.splice(index, 1);
+    if (AppUtils.isEmpty(this.base64Files)) {
+      this.showActionBar = false;
+    }
   }
 
   openMediaPicker() {
@@ -92,8 +132,8 @@ export class ChatCardFooterComponent implements OnInit {
       });
   }
 
-  textChange() {
-    this.onActionBarVisibilityChange.emit(this.elementRef.nativeElement);
+  get element() {
+    return this.elementRef.nativeElement;
   }
 
 }

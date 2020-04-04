@@ -12,6 +12,7 @@
     border-top-left-radius: 15px;
   }
   .caret {
+    transition: bottom 0.25s;
     position: absolute;
     right: -4%;
     bottom: 1.5%;

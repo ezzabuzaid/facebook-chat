@@ -92,7 +92,7 @@
   position: $position;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 0;
   width: 100%;
 }
 
@@ -120,9 +120,9 @@
   }
 }
 
-@mixin backdrop($color: rgba(0, 0, 0, 0.5)) {
+@mixin backdrop($position: fixed, $color: rgba(0, 0, 0, 0.5)) {
   &::before {
-    position: fixed;
+    position: $position;
     left: 0;
     top: 0;
     width: 100%;

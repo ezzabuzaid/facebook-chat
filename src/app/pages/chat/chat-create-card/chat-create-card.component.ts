@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatCardManager } from '../chat-card.manager';
-import { IChatCard } from '..';
+import { ChatCardManager, IChatCard } from '../chat-card.manager';
 import { UsersService } from '@shared/services/users';
 import { UsersModel, ChatModel } from '@shared/models';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { FormControl } from '@angular/forms';
-import { map, filter, share } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, filter, share, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 import { ChatService } from '@shared/services/chat';
 import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
+import { PopupManager } from '@widget/popup';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChatGroupCardComponent } from '../chat-group-card/chat-group-card.component';
 
 @Component({
   selector: 'app-chat-create-card',
@@ -24,12 +26,15 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   selectedUsers: UsersModel.IUser[] = [];
   separatorKeysCodes: number[] = [ENTER, COMMA];
   autocompleteControl = new FormControl();
-  $conversation: Observable<ChatModel.IConversation> = null;
+
+  $room: Observable<ChatModel.IRoom> = null;
 
   constructor(
     private chatCardManager: ChatCardManager,
     private usersService: UsersService,
     private chatService: ChatService,
+    private popupManager: PopupManager,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -51,61 +56,57 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
     this.selectedUsers.push(user);
     this.autocompleteControl.setValue(null);
     autoCompleteInput.value = '';
-    this.tryConversation(user);
+    this.checkForRoom();
   }
 
   removeUser(index: number) {
     this.selectedUsers.splice(index, 1);
-    this.tryConversation(this.firstSelectedUser);
+    this.selectedUsers.length && this.checkForRoom();
   }
 
-  tryConversation(user: UsersModel.IUser) {
-    if (this.isGroup) {
-      this.$conversation = null;
-    } else if (this.isSingleUser) {
-      this.$conversation = this.chatService.getConversation(user._id)
-        .pipe(share());
-    }
-
+  checkForRoom() {
+    const users = this.selectedUsers.map(({ _id }) => _id);
+    this.$room = this.chatService.getGroup(users).pipe(share());
   }
 
-  createConvesationAndSendMessage(message: string) {
-    if (this.isGroup) {
-      this.chatService.createGroup(
-        message,
-        this.selectedUsers.map(user => user._id),
+  createRoom(message: string) {
+    const component = this.isSingleUser ? ChatConversationCardComponent : ChatGroupCardComponent;
+    this.popupManager.prompt({
+      data: { title: 'Conversation name' }
+    })
+      .afterClosed()
+      .pipe(
+        switchMap((name) => {
+          if (AppUtils.isEmptyString(name)) {
+            this.snackbar.open('Please enter name');
+            return of(null);
+          }
+          return this.chatService.createRoom(message, name, this.selectedUsers.map(user => user._id))
+        }),
+        filter(AppUtils.notNullOrUndefined)
       )
-        .subscribe(() => {
-
+      .subscribe((room) => {
+        this.chatCardManager.open(component, {
+          id: room._id,
+          data: room
         });
-    } else {
-      this.chatService.createConversation(this.firstSelectedUser._id, message)
-        .subscribe((conversation) => {
-          this.chatCardManager.open(ChatConversationCardComponent, {
-            id: this.firstSelectedUser._id,
-            data: conversation
-          });
-        });
-    }
+      });
   }
 
-  jumpToConversationCard(text: string) {
-    // this.chatCardManager.open(ChatConversationCardComponent, {
-    //   id: this.firstSelectedUser._id,
-    //   data: this.firstSelectedUser
-    // });
-  }
-
-  get firstSelectedUser() {
-    return this.selectedUsers[0];
-  }
-
-  get isGroup() {
-    return this.selectedUsers.length > 1;
+  jumpToRroom(room: ChatModel.IRoom, message: string) {
+    const component = room.single ? ChatConversationCardComponent : ChatGroupCardComponent;
+    this.chatCardManager.open(component, {
+      id: room._id,
+      data: room
+    });
   }
 
   get isSingleUser() {
     return this.selectedUsers.length === 1;
+  }
+
+  get isGroup() {
+    return this.selectedUsers.length > 1;
   }
 
 }

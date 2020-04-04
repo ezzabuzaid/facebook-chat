@@ -15,7 +15,6 @@ import { NavbarCollapseComponent } from './components/navbar-collapse/navbar-col
 import { NavbarHeaderComponent } from './components/navbar-header/navbar-header.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { DirectivesModule } from '@shared/directives';
-import { PopupModule } from '@widget/popup';
 
 import { GravatarModule } from 'ngx-gravatar';
 import { ChatModule } from 'app/pages/chat';
@@ -30,7 +29,6 @@ import { ChatModule } from 'app/pages/chat';
     ScrollingModule,
     DirectivesModule,
     GravatarModule,
-    PopupModule,
     ChatModule
   ],
   declarations: [
@@ -43,8 +41,8 @@ import { ChatModule } from 'app/pages/chat';
     NavbarCollapseComponent,
     NavbarHeaderComponent,
   ],
-  exports: [
-    ContainerComponent
-  ]
+  // exports: [
+  //   ContainerComponent
+  // ]
 })
 export class LayoutModule { }

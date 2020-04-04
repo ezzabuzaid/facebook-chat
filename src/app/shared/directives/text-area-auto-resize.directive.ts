@@ -17,7 +17,7 @@ export class TextAreaAutoResizeDirective implements OnInit {
     this.initialHeight = el.clientHeight;
   }
 
-  @HostListener('input') resizeTextarea(ev) {
+  @HostListener('input') resizeTextarea() {
     const el = this.elRef.nativeElement;
     this.renderer.setStyle(el, 'height', `${this.initialHeight}px`);
     this.renderer.setStyle(el, 'height', `${el.scrollHeight + 12}px`);

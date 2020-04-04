@@ -5,20 +5,20 @@ import { SidebarComponent } from './sidebar.component';
   providedIn: 'root'
 })
 export class SidebarService {
-  sidebarList: { name: string, sidebar: SidebarComponent }[] = [];
+  components: { name: string, sidebar: SidebarComponent }[] = [];
   constructor() { }
 
   registerSidebar(name: string, sidebar: SidebarComponent) {
-    this.sidebarList.push({ name, sidebar });
+    this.components.push({ name, sidebar });
   }
 
-  unregisterSidebar(name) {
-    const index = this.sidebarList.findIndex(el => el.name === name);
-    this.sidebarList.splice(index, 1);
+  unregisterSidebar(name: string) {
+    const index = this.components.findIndex(el => el.name === name);
+    this.components.splice(index, 1);
   }
 
-  getSidebar(name) {
-    const sidebarWrapper = this.sidebarList.find(el => el.name === name);
+  getSidebar(name: string) {
+    const sidebarWrapper = this.components.find(el => el.name === name);
     return sidebarWrapper && sidebarWrapper.sidebar;
   }
 
@@ -27,3 +27,4 @@ export class SidebarService {
 export enum RegisterdSidebar {
   NAVBAR = 'navbar',
 }
+

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class PopupManager {
-  private defaultConfig: MatDialogConfig<any> = { width: '300px' };
+  private defaultConfig: MatDialogConfig<any> = { width: '450px' };
   constructor(
     private dialog: MatDialog
   ) { }
@@ -15,9 +15,9 @@ export class PopupManager {
     return this.dialog.open<AlertComponent, PopupData>(AlertComponent, this.populateDialogConfig(config));
   }
 
-  prompt(config: MatDialogConfig<PopupData> = {}) {
-    const componentRef = this.dialog.open<PromptComponent, PopupData, boolean>(PromptComponent, this.populateDialogConfig(config));
-    componentRef.componentInstance.data = config.data;
+  prompt(config: MatDialogConfig<IPromptPopup> = {}) {
+    const componentRef = this.dialog.open<PromptComponent, PopupData, string>(PromptComponent, this.populateDialogConfig(config));
+    componentRef.componentInstance.data = config.data || {};
     return componentRef;
   }
 
@@ -43,5 +43,6 @@ export interface IConfirmPopup extends PopupData {
 }
 
 export interface IPromptPopup extends PopupData {
+  value?: string
   confirm?: string;
 }

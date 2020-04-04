@@ -31,4 +31,8 @@ export class ChatManager {
     join(id: string) {
         this.socket.emit('Join', { id });
     }
+
+    leave(id: string) {
+        this.socket.emit('Leave', { id });
+    }
 }

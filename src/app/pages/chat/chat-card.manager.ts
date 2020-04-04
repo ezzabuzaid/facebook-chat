@@ -1,8 +1,10 @@
 import { ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, Injectable, Type } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
-import { IChatCard } from './index';
-import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
 
+export interface IChatCard<T> {
+    id: string;
+    data: T;
+}
 type Component<T> = Type<IChatCard<T>>;
 type ComponentReference<T> = ComponentRef<IChatCard<T>>;
 class CardConfig<T> {
@@ -20,8 +22,10 @@ export class ChatCardManager {
 
     public static count = 0;
 
+    private buttonComponent: Component<any> = null;
     private buttons = new Map<string, ComponentRef<IChatCard<any>>>();
-    private components = new Map<string, ComponentRef<IChatCard<any>>>();
+    private componentsRef = new Map<string, ComponentRef<IChatCard<any>>>();
+    private components = new Map<string, Component<any>>();
     private currentOpenedCardID: string = null;
 
     constructor(
@@ -31,7 +35,7 @@ export class ChatCardManager {
     ) { }
 
     get currentCard() {
-        return this.components.get(this.currentOpenedCardID);
+        return this.componentsRef.get(this.currentOpenedCardID);
     }
 
     private createComponent<T>(component: Component<T>, data: T, id: string) {
@@ -51,13 +55,14 @@ export class ChatCardManager {
     private createCard<T>(component: Component<T>, data: T, id: string) {
         const { element, reference } = this.createComponent(component, data, id);
         element.style.setProperty('right', '7%');
-        this.components.set(id, reference);
+        this.componentsRef.set(id, reference);
+        this.components.set(id, component);
         this.currentOpenedCardID = id;
         this.adjustCaretCardPosition();
     }
 
     private createButton<T>(data: T, id: string) {
-        const { element, reference } = this.createComponent(ChatFloatingButtonComponent, data as any, id);
+        const { element, reference } = this.createComponent(this.buttonComponent, data as any, id);
         this.buttons.set(id, reference);
         element.style.setProperty('bottom', `${this.buttons.size * 5 + 2}%`);
     }
@@ -91,7 +96,7 @@ export class ChatCardManager {
         } else {
             this.adjustCaretCardPosition();
         }
-        return this.components.get(cardConfig.id);
+        return this.componentsRef.get(cardConfig.id);
     }
 
     removeButton(id: string) {
@@ -106,12 +111,16 @@ export class ChatCardManager {
 
     removeCard() {
         this.close(this.currentCard);
-        this.components.delete(this.currentOpenedCardID);
+        this.componentsRef.delete(this.currentOpenedCardID);
         this.currentOpenedCardID = null;
     }
 
     getElement(componentRef: ComponentRef<IChatCard<any>>) {
         return (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    }
+
+    getComponent(id: string) {
+        return this.components.get(id);
     }
 
     toogleCard<T>(component: Component<T>, data: T, id: string) {
@@ -140,6 +149,10 @@ export class ChatCardManager {
     adjustCaretCardPosition() {
         const caret = this.getElement(this.currentCard).querySelector('.caret') as HTMLElement;
         caret.style.setProperty('bottom', `${this.buttons.size * 10 + 2}%`);
+    }
+
+    setButtonComponent(component: Component<any>) {
+        this.buttonComponent = component;
     }
 
 }

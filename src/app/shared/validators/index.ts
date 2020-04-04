@@ -1,6 +1,6 @@
 export * from './equal.validator';
 export * from './number-only.validator';
-export * from './is-number-realted-country.validator';
+export * from './phonenumber-associated-with-country.validator';
 
 import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 

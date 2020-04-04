@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { UsersModel, ChatModel } from '@shared/models';
+import { ChatModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
-import { ChatCardManager, GroupCharCardComponent } from 'app/pages/chat';
+import { ChatCardManager, ChatGroupCardComponent } from 'app/pages/chat';
 import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 import { ChatConversationCardComponent } from 'app/pages/chat/chat-conversation-card/chat-conversation-card.component';
+import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button/chat-floating-button.component';
 
 @Component({
   selector: 'app-container',
@@ -22,10 +22,11 @@ export class ContainerComponent implements OnInit {
     private usersService: UsersService,
     private chatCardManager: ChatCardManager,
     private chatService: ChatService,
-    private dialog: MatDialog
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
+  }
 
   prepareRoute(outlet: RouterOutlet) {
     return outlet.activatedRouteData.state;
@@ -35,15 +36,16 @@ export class ContainerComponent implements OnInit {
     return outlet && outlet.activatedRouteData.state;
   }
 
-  openChatCard(conversation: ChatModel.IConversation) {
+  openChatCard(conversation: ChatModel.IRoom) {
     this.chatCardManager.open(ChatConversationCardComponent, {
       id: conversation._id,
       data: conversation
     });
   }
 
-  openGroupChatCard(group: ChatModel.IGroup) {
-    this.chatCardManager.open(GroupCharCardComponent, {
+  openGroupChatCard(group: ChatModel.IRoom) {
+    this.chatCardManager.open(ChatGroupCardComponent, {
+      id: group._id,
       data: group
     });
   }

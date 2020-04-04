@@ -52,11 +52,14 @@ export namespace Constants {
   export class API {
     static readonly UPLOADS = {
       base: 'uploads',
-      get folder() {
+      get tags() {
+        return this.folders + '/tags';
+      },
+      get folders() {
         return 'folders'
       },
       get files() {
-        return this.folder + '/files'
+        return this.folders + '/files'
       },
       get search() {
         return this.base + '/search'
@@ -75,7 +78,7 @@ export namespace Constants {
         return this.base + '/logout'
       }
     };
-    static readonly users = {
+    static readonly USERS = {
       base: 'users',
       get search() {
         return this.base + '/search'
@@ -83,18 +86,21 @@ export namespace Constants {
     };
     static readonly CHAT = {
       base: '',
-      get groups() {
-        return this.base + 'groups';
+      get rooms() {
+        return this.base + 'rooms';
       },
-      get members() {
-        return `members/${this.groups}`;
+      get groups() {
+        return `${this.base}${this.rooms}/groups`;
       },
       get conversation() {
-        return 'conversation';
+        return `${this.base}${this.rooms}/conversations`;
       },
       get messages() {
-        return this.conversation + '/messages'
-      }
+        return `${this.base}${this.rooms}/messages`;
+      },
+      get members() {
+        return `${this.rooms}/members`;
+      },
     };
 
     static readonly SESSIONS = {
