@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChatModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
-import { MatDialog } from '@angular/material/dialog';
 import { ChatService } from '@shared/services/chat';
 import { ChatCardManager, ChatGroupCardComponent } from 'app/pages/chat';
 import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 import { ChatConversationCardComponent } from 'app/pages/chat/chat-conversation-card/chat-conversation-card.component';
+import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button/chat-floating-button.component';
 
 @Component({
   selector: 'app-container',
@@ -24,7 +24,9 @@ export class ContainerComponent implements OnInit {
     private chatService: ChatService,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
+  }
 
   prepareRoute(outlet: RouterOutlet) {
     return outlet.activatedRouteData.state;

@@ -18,6 +18,7 @@ import { ChatCardMessagesComponent } from './chat-card-messages/chat-card-messag
 import { ChatCardFooterComponent } from './chat-card-footer/chat-card-footer.component';
 import { ChatConversationCardComponent } from './chat-conversation-card/chat-conversation-card.component';
 import { FileControlModule } from '@widget/file-control/file-control.module';
+import { PipesModule } from '@shared/pipes';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
     UploadFileModule,
     PickerModule,
     EmojiModule,
-    FileControlModule
+    FileControlModule,
+    PipesModule
   ],
   providers: [
     ChatCardManager
