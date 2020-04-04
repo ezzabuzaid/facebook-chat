@@ -3,12 +3,12 @@
 <div mat-dialog-content>
   <p *ngIf="data.description">{{ data.description }}</p>
   <mat-form-field cdkFocusInitial appearance="fill">
-    <input [(ngModel)]="data.value" required type="text" matInput>
+    <input (keyup.enter)="close()" [(ngModel)]="data.value" required type="text" matInput>
   </mat-form-field>
 </div>
 <mat-divider></mat-divider>
 <div mat-dialog-actions class="justify-content-end">
-  <button color="accent" class="w-25" mat-stroked-button [mat-dialog-close]="data.value">
-    {{ (data.confirm || 'confirm') | translate }}
+  <button color="accent" type="button" class="w-25" mat-stroked-button [mat-dialog-close]="data.value">
+    {{ (data.confirm || 'button_confirm') | translate }}
   </button>
 </div>
