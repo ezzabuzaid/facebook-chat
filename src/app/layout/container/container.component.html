@@ -20,8 +20,8 @@
             </mat-nav-list>
           </mat-card-content>
         </div>
-        <div sidebar-container>
-          <router-outlet></router-outlet>
+        <div sidebar-container [@routeAnimations]="outlet?.activateEvents | async">
+          <router-outlet #outlet="outlet"></router-outlet>
         </div>
       </app-sidebar>
     </section>
