@@ -1,31 +1,56 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MediaModel } from '@shared/models';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MediaHubManager } from '../media-hub.manager';
-import { RouteUtility } from '@shared/common';
 import { UploadService } from '@shared/services/upload';
-
+import { Observable } from 'rxjs';
+export interface ILightBoxData {
+  file: MediaModel.IFile,
+  folder?: string,
+  tag?: string
+}
 @Component({
   selector: 'app-media-lightbox',
   templateUrl: './media-lightbox.component.html',
   styleUrls: ['./media-lightbox.component.scss'],
-  providers: [MediaHubManager, RouteUtility]
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaLightboxComponent implements OnInit {
-  $folders = this.uploadService.getFolders()
-
+  $folders = this.uploadService.getFolders();
+  $tags = this.uploadService.getTags();
+  $files: Observable<MediaModel.IFile[]> = null;
+  show = false;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {
-      file: MediaModel.IFile
-    },
+    @Inject(MAT_DIALOG_DATA) public dialogData: ILightBoxData,
     @Inject(MatDialogRef) private dialogRef: MatDialogRef<MediaLightboxComponent>,
     private uploadService: UploadService,
+    private cdf: ChangeDetectorRef
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.$files = this.uploadService.searchForFiles(
+      {
+        tag: this.dialogData.tag,
+        folder: this.dialogData.folder,
+      }
+    )
+    this.show = true;
+  }
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  openFolder(folder: MediaModel.Folder) {
+    this.$files = this.uploadService.searchForFiles({ folder: folder._id })
+  }
+
+  filterByTag(tag: MediaModel.Tag) {
+    this.$files = this.uploadService.searchForFiles({ tag: tag.id })
+  }
+
+  selectFile(file: MediaModel.IFile) {
+    this.dialogData.file = file;
+    this.cdf.markForCheck();
   }
 
 }

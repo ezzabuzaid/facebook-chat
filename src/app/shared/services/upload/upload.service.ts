@@ -19,10 +19,10 @@ export class UploadService {
         private http: HttpClient
     ) { }
 
-    uploadImage(file: File, folder_id: string) {
+    uploadImage(file: File, folder: string) {
         const fd = new FormData();
         fd.append('upload', file);
-        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
+        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.base + '/' + folder, fd);
     }
 
     createFolder(name: string) {

@@ -8,17 +8,26 @@
                 <mat-icon>fullscreen</mat-icon>
             </button>
         </nav>
-        <figure class="d-flex align-items-center h-100 justify-content-center">
+        <div class="d-flex align-items-center h-100 justify-content-center">
             <div class="blur-area"></div>
-            <object [attr.data]="data.file.fullPath | safe:'resourceUrl'"></object>
-        </figure>
+            <object *ngIf="show" [attr.data]="(dialogData.file.fullPath) | safe:'resourceUrl'"></object>
+        </div>
+        <footer class="d-flex align-items-center overflow-auto">
+            <img (click)="selectFile(file)" class="mr-1" *ngFor="let file of ($files | async)" [src]="file.fullPath" alt="">
+        </footer>
     </section>
     <aside sidebar-drawer>
         <mat-nav-list class="h-100" dense>
-            <mat-list-item *ngFor="let folder of ($folders | async)">
+            <h3 mat-subheader class="text-truncate"> {{dialogData.file.name}} </h3>
+            <mat-list-item (click)="openFolder(folder)" *ngFor="let folder of ($folders | async)">
                 <mat-icon mat-list-icon text-muted> folder </mat-icon>
                 <h4 mat-line class=""> {{folder.name}}</h4>
             </mat-list-item>
         </mat-nav-list>
+        <mat-chip-list class="px-2">
+            <mat-chip *ngFor="let tag of ($tags | async)" [style.background-color]="tag.color"
+                (click)="filterByTag(tag)" class="pointer" selected>
+            </mat-chip>
+        </mat-chip-list>
     </aside>
 </app-sidebar>
