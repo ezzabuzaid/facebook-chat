@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as EmojiButton from '@joeattardi/emoji-button';
 import { WINDOW } from '@shared/common';
 import { FormControl } from '@angular/forms';
+import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 @Component({
   selector: 'app-chat-card-footer',
   templateUrl: './chat-card-footer.component.html',
@@ -29,9 +30,9 @@ export class ChatCardFooterComponent implements OnInit {
   constructor(
     private chatManager: ChatManager,
     private uploadsService: UploadService,
-    private dialog: MatDialog,
     private elementRef: ElementRef<HTMLElement>,
-    @Inject(WINDOW) private window: Window
+    @Inject(WINDOW) private window: Window,
+    private mediaHubManager: MediaHubManager
   ) { }
 
   ngOnInit() {
@@ -118,11 +119,7 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   openMediaPicker() {
-    this.dialog.open<MediaPickerComponent, any, MediaModel.IFile[]>(MediaPickerComponent, {
-      width: '1000px',
-      height: '750px',
-      panelClass: ['media-picker-dialog']
-    })
+    this.mediaHubManager.openMediaPicker()
       .afterClosed()
       .subscribe((files) => {
         files.forEach(file => {

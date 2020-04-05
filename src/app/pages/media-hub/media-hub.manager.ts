@@ -6,14 +6,19 @@ import { merge, Subject } from 'rxjs';
 import { AppUtils } from '@core/helpers/utils';
 import { RouteUtility } from '@shared/common';
 import { MediaModel } from '@shared/models';
+import { MediaPickerComponent } from './media-picker/media-picker.component';
+import { MatDialog } from '@angular/material/dialog';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class MediaHubManager extends Listener<any> {
     subscription = new Subject();
     uploadListener = new Listener();
     constructor(
         private routeUtility: RouteUtility,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) {
         super();
     }
@@ -61,6 +66,14 @@ export class MediaHubManager extends Listener<any> {
 
     getTagID() {
         return this.routeUtility.getQueryParam('tag') || undefined;
+    }
+
+    openMediaPicker() {
+        return this.dialog.open<MediaPickerComponent, any, MediaModel.IFile[]>(MediaPickerComponent, {
+            width: '1000px',
+            height: '750px',
+            panelClass: ['media-dialog']
+        })
     }
 
 }
