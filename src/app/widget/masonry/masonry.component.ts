@@ -67,7 +67,10 @@ export class MasonryComponent implements OnInit, AfterContentInit {
          * each list-item (i.e. each masonry item)
          */
         for (let i = 0; i < masonryItems.length; i++) {
-          resizeMasonryItem(masonryItems[i]);
+          const imgs = masonryItems[i].element.querySelectorAll('img');
+          this.imagesLoaded(Array.from(imgs)).subscribe(() => {
+            resizeMasonryItem(masonryItems[i]);
+          });
         }
       }
       /**
@@ -77,19 +80,13 @@ export class MasonryComponent implements OnInit, AfterContentInit {
        *
        * @uses resizeMasonryItem
        */
-      const waitForImages = () => {
-        this.imagesLoaded()
-          .subscribe(() => {
-            resizeAllMasonryItems()
-          });
-      }
 
       /* Resize all the grid items on the load and resize events */
       var masonryEvents = ['load', 'resize'];
       masonryEvents.forEach(function (event) {
         window.addEventListener(event, resizeAllMasonryItems);
       });
-      waitForImages();
+      resizeAllMasonryItems();
     })
   }
 
@@ -98,9 +95,9 @@ export class MasonryComponent implements OnInit, AfterContentInit {
     return this.elementRef.nativeElement;
   }
 
-  imagesLoaded() {
+  imagesLoaded(imgs: HTMLImageElement[]) {
     return new Observable((subscriber) => {
-      const imgs = this.element.querySelectorAll('img');
+      // const imgs = this.element.querySelectorAll('img');
       const totalImages = imgs.length;
       let counter = 0;
       const incrementCounter = () => {
