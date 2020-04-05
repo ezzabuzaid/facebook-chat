@@ -1,13 +1,9 @@
 <ng-container *ngFor="let message of messages; let index=index; let first=first; let last = last;">
-
     <ng-container *ngIf="isImage(message.text); else defaultView;">
-        <button (click)="openLightbox(message)">
-            <img class="border-radius-1 message pointer" [ngClass]="{
-                    
+        <img (click)="openLightbox(message)" class="border-radius-1 message pointer" [ngClass]="{
                 'align-self-end': isSender(message.user),
                 'align-self-start': !isSender(message.user)
                     }" [src]="populateFileURL(message.text)">
-        </button>
     </ng-container>
     <ng-template #defaultView>
         <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"

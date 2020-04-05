@@ -78,7 +78,8 @@ export class ChatCardMessagesComponent implements OnInit {
   openLightbox(message: ChatModel.Message) {
     this.mediaHubManager.openLightbox({
       file: {
-        fullPath: this.populateFileURL(message.text)
+        fullPath: this.populateFileURL(message.text),
+        name: message.text
       } as any
     });
   }

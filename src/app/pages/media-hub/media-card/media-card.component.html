@@ -1,8 +1,15 @@
-<mat-icon (click)="toggleChecking()" class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
+<mat-icon *ngIf="markable" (click)="toggleChecking()"
+    class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
     check</mat-icon>
 <mat-card>
-    <img (click)="openLightbox()" *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name"
-        class="shadow pointer">
+    <span role="button" *ngIf="lightBox else image" (click)="openLightbox()">
+        <ng-container [ngTemplateOutlet]="image"></ng-container>
+    </span>
+
+    <ng-template #image>
+        <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow pointer">
+    </ng-template>
+
     <mat-card-content>
         <div class="d-flex align-items-center justify-content-between">
             <div class="w-75">
@@ -10,7 +17,7 @@
                 <span class="text-uppercase bg-secondary mr-1 roundeds p-1">{{file.type}}</span>
                 <span class="text-uppercase">{{file.size / 1000 || ''}} kb</span>
             </div>
-            <button mat-icon-button [matMenuTriggerFor]="menu">
+            <button *ngIf="showMenu" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>

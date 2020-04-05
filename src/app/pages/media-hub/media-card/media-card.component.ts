@@ -8,7 +8,7 @@ import { MediaHubManager } from '../media-hub.manager';
 @Component({
   selector: 'app-media-card',
   templateUrl: './media-card.component.html',
-  styleUrls: ['./media-card.component.scss']
+  styleUrls: ['./media-card.component.scss'],
 })
 export class MediaCardComponent implements OnInit {
   @Input() file: MediaModel.IFile;
@@ -17,6 +17,9 @@ export class MediaCardComponent implements OnInit {
   @Input()
   @HostBinding('class.checked')
   checked = false;
+  @Input() showMenu = true;
+  @Input() markable = true;
+  @Input() lightBox = true;
 
   constructor(
     private popupManager: PopupManager,
@@ -61,7 +64,12 @@ export class MediaCardComponent implements OnInit {
   }
 
   openLightbox() {
-    this.mediaHubManager.openLightbox({ file: this.file });
+    const folder = this.mediaHubManager.getFolderID();
+    const tag = this.mediaHubManager.getTagID();
+    this.mediaHubManager.openLightbox({
+      file: this.file,
+      [folder ? 'folder' : 'tag']: folder || tag
+    });
   }
 
 }
