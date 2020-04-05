@@ -1,6 +1,6 @@
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
-@import '~bootstrap/scss/bootstrap-grid';
-@import 'variables';
+@import "~bootstrap/scss/bootstrap-grid";
+@import "variables";
 
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -53,7 +53,7 @@
   align-items: center;
 }
 
-@mixin scrollbar_theme($width: 10px, $height: 10px) {
+@mixin scrollbar_theme($width: 5px, $height: 5px, $color: gray) {
   $border-color: #fff;
   ::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -65,7 +65,7 @@
     height: $height;
   }
   ::-webkit-scrollbar-track {
-    border-radius: 10px;
+    border-radius: 0px;
     background-color: transparent;
   }
   ::-webkit-scrollbar {
@@ -77,9 +77,9 @@
     background-color: rgba(0, 0, 0, 0.12);
   }
   ::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 10px;
-    border: 2px solid $border-color;
+    background-color: $color;
+    border-radius: 0px;
+    border: 0px solid $border-color;
   }
   ::-webkit-scrollbar-thumb:active {
     box-shadow: inset 0 0 0 24px rgba(0, 0, 0, 0.54);
@@ -129,7 +129,7 @@
     height: 100%;
     background-color: $color;
     z-index: 999;
-    content: '';
+    content: "";
   }
 }
 
