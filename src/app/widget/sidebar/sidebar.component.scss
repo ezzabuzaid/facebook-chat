@@ -1,48 +1,54 @@
-@import 'variables';
-@import 'mixins';
-@import '~@angular/material/theming';
+@import "variables";
+@import "mixins";
+@import "~@angular/material/theming";
 $transition-timing: cubic-bezier(0.2, 0, 0, 1);
 $transition-duration: 0.22s;
+
+@mixin drawer {
+  > [sidebar-drawer] {
+    @content;
+  }
+}
+@mixin container {
+  > [sidebar-container] {
+    @content;
+  }
+}
 :host {
   --width: 100%;
   position: relative;
   display: flex;
   height: 100%;
   ::ng-deep {
-    > div {
-      &:first-child {
-        background-color: #fff;
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: 100%;
-        transform: translateX(0%);
-        width: var(--width);
+    @include drawer() {
+      background-color: #fff;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+      transform: translateX(0%);
+      width: var(--width);
+    }
+    @include container() {
+      width: calc(100% - var(--width));
+      overflow: auto;
+      @include direction(ltr) {
+        margin-left: auto;
       }
-      &:last-child {
-        width: calc(100% - var(--width));
-        overflow: auto;
-        @include direction(ltr) {
-          margin-left: auto;
-        }
-        @include direction(rtl) {
-          margin-right: auto;
-        }
+      @include direction(rtl) {
+        margin-right: auto;
       }
     }
   }
 
   &.right {
     flex-direction: row-reverse;
-
     ::ng-deep {
-      > div {
-        &:last-child {
-          @include direction(ltr) {
-            margin-right: auto;
-          }
-          @include direction(rtl) {
-            margin-left: auto;
-          }
+      @include container() {
+        @include direction(ltr) {
+          margin-right: auto;
+        }
+        @include direction(rtl) {
+          margin-left: auto;
         }
       }
     }
@@ -50,18 +56,18 @@ $transition-duration: 0.22s;
   @include media-breakpoint-down(md) {
     ::ng-deep {
       > div {
-        &:first-child {
+        @include drawer() {
           z-index: 100;
           transform: translateX(-100%);
         }
-        &:last-child {
+        @include container() {
           width: 100% !important;
         }
       }
     }
     &.toggled {
       ::ng-deep {
-        > div:first-child {
+        @include drawer() {
           transform: translateX(0%);
         }
       }
