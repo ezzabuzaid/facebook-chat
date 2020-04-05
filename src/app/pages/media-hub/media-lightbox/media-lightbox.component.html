@@ -1,0 +1,24 @@
+<app-sidebar [right]="true" [resizable]="false">
+    <section class="d-flex flex-column position-relative" sidebar-container>
+        <nav class="d-flex py-2 px-3">
+            <button mat-flat-button color="accent" class="toolbar-button" (click)="closeDialog()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <button mat-flat-button color="accent" class="toolbar-button ml-auto" fullscreen>
+                <mat-icon>fullscreen</mat-icon>
+            </button>
+        </nav>
+        <figure class="d-flex align-items-center h-100 justify-content-center">
+            <div class="blur-area"></div>
+            <object [attr.data]="data.file.fullPath | safe:'resourceUrl'"></object>
+        </figure>
+    </section>
+    <aside sidebar-drawer>
+        <mat-nav-list class="h-100" dense>
+            <mat-list-item *ngFor="let folder of ($folders | async)">
+                <mat-icon mat-list-icon text-muted> folder </mat-icon>
+                <h4 mat-line class=""> {{folder.name}}</h4>
+            </mat-list-item>
+        </mat-nav-list>
+    </aside>
+</app-sidebar>

@@ -1,0 +1,40 @@
+:host {
+    nav {
+        z-index: 1;
+    }
+    app-sidebar {
+        --width: 300px;
+        > section {
+            background-color: #312e2e;
+        }
+    }
+    .toolbar-button {
+        $size: 40px;
+        min-width: $size;
+        width: $size;
+        height: $size;
+        padding: 0rem;
+        border-radius: $size;
+    }
+    object,
+    img {
+        z-index: 1;
+    }
+    .blur-area {
+        height: 100%;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        background-image: url(http://localhost:8080/5e88adf5ec796826da298876/upload-1586022012791.jpg);
+        background-size: cover;
+        filter: brightness(0.5) blur(10px);
+
+        &::before {
+            content: "";
+            background-color: #00000078;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+}
