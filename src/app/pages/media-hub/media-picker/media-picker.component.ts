@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MediaModel } from '@shared/models';
-import { MediaHubManager } from '../media-hub.manager';
 import { UploadService } from '@shared/services/upload';
-import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Component({
