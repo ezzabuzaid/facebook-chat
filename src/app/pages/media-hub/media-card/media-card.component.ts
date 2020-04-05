@@ -3,6 +3,7 @@ import { MediaModel } from '@shared/models';
 import { UploadService } from '@shared/services/upload';
 import { PopupManager } from '@widget/popup';
 import { switchMap, filter } from 'rxjs/operators';
+import { MediaHubManager } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-card',
@@ -19,7 +20,8 @@ export class MediaCardComponent implements OnInit {
 
   constructor(
     private popupManager: PopupManager,
-    private uploadsService: UploadService
+    private uploadsService: UploadService,
+    private mediaHubManager: MediaHubManager
   ) { }
 
   ngOnInit() { }
@@ -56,6 +58,10 @@ export class MediaCardComponent implements OnInit {
           return this.uploadsService.updateFile({ name, _id: this.file._id });
         }))
       .subscribe();
-  };
+  }
+
+  openLightbox() {
+    this.mediaHubManager.openLightbox({ file: this.file });
+  }
 
 }

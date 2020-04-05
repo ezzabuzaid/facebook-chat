@@ -1,7 +1,8 @@
 <mat-icon (click)="toggleChecking()" class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
     check</mat-icon>
 <mat-card>
-    <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow">
+    <img (click)="openLightbox()" *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name"
+        class="shadow pointer">
     <mat-card-content>
         <div class="d-flex align-items-center justify-content-between">
             <div class="w-75">

@@ -5,6 +5,7 @@ import { TokenService } from '@core/helpers/token';
 import { ChatService } from '@shared/services/chat';
 import { ChatManager } from '../chat.manager';
 import { environment } from '@environments/environment';
+import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 
 @Component({
   selector: 'app-chat-card-messages',
@@ -19,7 +20,8 @@ export class ChatCardMessagesComponent implements OnInit {
     private tokenService: TokenService,
     private chatService: ChatService,
     private chatManager: ChatManager,
-    private elementRef: ElementRef<HTMLElement>
+    private elementRef: ElementRef<HTMLElement>,
+    private mediaHubManager: MediaHubManager
   ) { }
 
   ngOnInit() {
@@ -71,6 +73,14 @@ export class ChatCardMessagesComponent implements OnInit {
 
   get element() {
     return this.elementRef.nativeElement;
+  }
+
+  openLightbox(message: ChatModel.Message) {
+    this.mediaHubManager.openLightbox({
+      file: {
+        fullPath: this.populateFileURL(message.text)
+      } as any
+    });
   }
 
 }

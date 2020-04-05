@@ -8,11 +8,13 @@ import { RouteUtility } from '@shared/common';
 import { MediaModel } from '@shared/models';
 import { MediaPickerComponent } from './media-picker/media-picker.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MediaLightboxComponent } from './media-lightbox/media-lightbox.component';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MediaHubManager extends Listener<any> {
+
     subscription = new Subject();
     uploadListener = new Listener();
     constructor(
@@ -76,6 +78,14 @@ export class MediaHubManager extends Listener<any> {
         })
     }
 
+    openLightbox(data: { file: MediaModel.IFile }) {
+        this.dialog.open(MediaLightboxComponent, {
+            width: '100vw',
+            height: '100vh',
+            panelClass: ['media-dialog'],
+            data: data
+        })
+    }
 }
 
 export enum MediaHubViews {
