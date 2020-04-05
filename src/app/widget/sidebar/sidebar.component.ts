@@ -10,7 +10,8 @@ import { WINDOW } from '@shared/common';
 export class SidebarComponent implements OnInit {
   @Input() @HostBinding('class.toggled') public closed = false;
   @Input() @HostBinding('class.right') public right = false;
-  @Input() @HostBinding('class.resizing') public resizing = false;
+  @Input() resizable = true;
+  @HostBinding('class.resizing') public resizing = false;
   @Input() public minWidth = 0;
   @Input() public maxWidth = 0;
   @Input() public name = '';
@@ -32,7 +33,13 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
-    this.resizer.style[this.right ? 'right' : 'left'] = this.window.getComputedStyle(this.element).getPropertyValue('--width');
+  }
+
+  ngAfterViewInit() {
+    if (this.resizable) {
+      this.resizer.style[this.right ? 'right' : 'left'] = this.window.getComputedStyle(this.element).getPropertyValue('--width');
+      this.attachEvents(this.element.querySelector('.resizer'))
+    }
   }
 
   toggle(value = !this.closed) {
@@ -163,10 +170,6 @@ export class SidebarComponent implements OnInit {
       direction: this.right ? 'right' : 'left',
       offset: point.x
     };
-  }
-
-  ngAfterViewInit() {
-    this.attachEvents(this.element.querySelector('.resizer'))
   }
 
   private pxToPercentege(pixels: number) {
