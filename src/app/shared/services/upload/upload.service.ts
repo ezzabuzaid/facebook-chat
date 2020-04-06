@@ -46,7 +46,12 @@ export class UploadService {
     }
 
     getFolders() {
-        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders)
+        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders + '/user')
+            .pipe(map(({ list }) => list));
+    }
+
+    getSharedFolders() {
+        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders + '/user/shared')
             .pipe(map(({ list }) => list));
     }
 
