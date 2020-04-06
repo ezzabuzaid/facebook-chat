@@ -37,8 +37,13 @@ export class SidebarComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.resizable) {
-      this.resizer.style[this.right ? 'right' : 'left'] = this.window.getComputedStyle(this.element).getPropertyValue('--width');
-      this.attachEvents(this.element.querySelector('.resizer'))
+      const cursor = this.right ? 'w-resize' : 'e-resize';
+      this.resizer.style.setProperty('cursor', cursor);
+      this.setResizerPosition({
+        direction: this.direction,
+        offset: this.formatWidthValue(this.window.getComputedStyle(this.element).getPropertyValue('--width'))
+      });
+      this.attachEvents(this.resizer);
     }
   }
 
@@ -121,7 +126,6 @@ export class SidebarComponent implements OnInit {
       this.minWidthExceeded.emit();
     }
 
-    // this.window.getComputedStyle(this.element).setProperty('--width', `${vector.offset}px`);
     this.element.style.setProperty('--width', `${vector.offset}px`);
 
     this.initialTouchPos = null;
@@ -138,11 +142,17 @@ export class SidebarComponent implements OnInit {
       return;
     }
 
-    this.resizer.style.setProperty(vector.direction, `${vector.offset}px`);
+    this.setResizerPosition(vector);
 
   }
 
-  private getVector(evt) {
+  setResizerPosition(vector: Vector) {
+    const operator = this.right ? '+' : '-';
+    // `calc(${} ${operator} 3px)`
+    this.resizer.style.setProperty(vector.direction, `${vector.offset}px`);
+  }
+
+  private getVector(evt): Vector {
     const point = { x: evt.x, y: evt.y };
     let element = this.element;
     let maxOffsetLeft = 0;
@@ -167,11 +177,13 @@ export class SidebarComponent implements OnInit {
       point.x = minWidth;
     }
     return {
-      direction: this.right ? 'right' : 'left',
+      direction: this.direction,
       offset: point.x
     };
   }
-
+  get direction() {
+    return this.right ? 'right' : 'left';
+  }
   private pxToPercentege(pixels: number) {
     const screenWidth = this.window.screen.width;
     return pixels / screenWidth * 100;
@@ -225,3 +237,7 @@ interface ISidebarToggle {
   toggle: boolean;
 }
 
+interface Vector {
+  direction: 'left' | 'right';
+  offset: number;
+}
