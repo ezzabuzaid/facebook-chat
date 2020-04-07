@@ -50,6 +50,7 @@ export class MediaHubManager extends Listener<any> {
         );
         return this.router.navigate(['.'], {
             relativeTo: this.routeUtility.route,
+            queryParamsHandling: 'preserve',
             queryParams: {
                 folder: defaultQuery.folder,
                 file: defaultQuery.file,

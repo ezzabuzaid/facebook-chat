@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UploadService } from '@shared/services/upload';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { environment } from '@environments/environment';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -14,8 +13,8 @@ import { environment } from '@environments/environment';
 })
 export class MediaHubHeaderComponent implements OnInit {
   searchControl = new FormControl(this.mediaHubManager.getFileName());
-  @Output() onViewChange = new EventEmitter();
-
+  @Output() onViewChange = new EventEmitter<MediaHubViews>();
+  EMediaHubViews = MediaHubViews;
   constructor(
     private uploadService: UploadService,
     private mediaHubManager: MediaHubManager
@@ -38,10 +37,10 @@ export class MediaHubHeaderComponent implements OnInit {
 
 
   uploadFiles(files: FileList) {
-    const folder_id = this.mediaHubManager.getFolderID();
-    if (folder_id) {
+    const folder = this.mediaHubManager.getFolderID();
+    if (folder) {
       for (const file of (files as any)) {
-        this.uploadService.uploadImage(file, folder_id)
+        this.uploadService.uploadImage(file, folder)
           .subscribe((uploadedFile) => {
             this.mediaHubManager.uploadListener.notify({
               id: uploadedFile.id,
@@ -52,12 +51,8 @@ export class MediaHubHeaderComponent implements OnInit {
     }
   }
 
-  listView() {
-    this.onViewChange.emit(MediaHubViews.ListView);
-  }
-
-  gridView() {
-    this.onViewChange.emit(MediaHubViews.GridView);
+  changeView(view: MatButtonToggleChange) {
+    this.onViewChange.emit(view.value);
   }
 
 }
