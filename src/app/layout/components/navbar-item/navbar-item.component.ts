@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Host, HostBinding } from '@angular/core';
 import { SidebarService, RegisterdSidebar } from 'app/widget/sidebar';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
@@ -14,6 +14,7 @@ import { LocalStorage } from '@ezzabuzaid/document-storage';
 export class NavbarItemComponent implements OnInit, OnDestroy {
   @Input() public item: NavigationItem;
   @Input() public collapse = false;
+  @Input() @HostBinding('class.dense') dense = false;
   private _subscribtion = new Subject();
 
   constructor(

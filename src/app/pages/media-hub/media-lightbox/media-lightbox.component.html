@@ -9,11 +9,13 @@
             </button>
         </nav>
         <div class="d-flex align-items-center h-100 justify-content-center">
+            <!-- TODO: set the background image of this -->
             <div class="blur-area"></div>
             <object *ngIf="show" [attr.data]="(dialogData.file.fullPath) | safe:'resourceUrl'"></object>
         </div>
         <footer class="d-flex align-items-center overflow-auto">
-            <img (click)="selectFile(file)" class="mr-1" *ngFor="let file of ($files | async)" [src]="file.fullPath" alt="">
+            <img (click)="selectFile(file)" class="mr-1" *ngFor="let file of ($files | async)" [src]="file.fullPath"
+                alt="">
         </footer>
     </section>
     <aside sidebar-drawer>

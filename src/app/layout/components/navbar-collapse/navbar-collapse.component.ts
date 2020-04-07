@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, ElementRef, HostBinding, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NavigationItem } from '@layout/navbar/navigation';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-navbar-collapse',
@@ -9,10 +11,11 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./navbar-collapse.component.scss'],
 })
 export class NavbarCollapseComponent implements OnInit, OnDestroy {
-  @Input() public item;
-  private _subscribtion = new Subject();
+  @Input() public item: NavigationItem;
+  private subscription = new Subject();
   private classList = this.elRef.nativeElement.classList;
   private navbarInstance = this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR);
+
   constructor(
     private elRef: ElementRef<HTMLElement>,
     private sidebarService: SidebarService,
@@ -21,7 +24,7 @@ export class NavbarCollapseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.navbarInstance.onToggle
       .pipe(
-        takeUntil(this._subscribtion),
+        takeUntil(this.subscription),
       )
       .subscribe(({ toggle }) => {
         if (toggle) {
@@ -42,8 +45,7 @@ export class NavbarCollapseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscribtion.next();
-    this._subscribtion.complete();
+    AppUtils.unsubscribe(this.subscription);
   }
 
 }

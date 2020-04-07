@@ -1,11 +1,10 @@
-@import "~@angular/material/theming";
-@import "functions";
+@import '~@angular/material/theming';
+@import 'functions';
 :host {
   display: block;
   .navbar-item {
-    height: 55px;
+    height: 50px;
     width: 55px;
-    font-weight: 400;
     ::ng-deep {
       .mat-button-wrapper {
         width: 100%;
@@ -15,7 +14,6 @@
       display: none;
     }
   }
-
   &:hover {
     .navbar-item {
       &__pin {
@@ -30,5 +28,12 @@
   }
   a {
     text-decoration: none !important;
+  }
+  &.dense {
+    .navbar-item {
+      height: 40px;
+      width: 55px;
+      font-weight: 400;
+    }
   }
 }

@@ -6,8 +6,6 @@
 </app-navbar-item>
 <div class="droplist ml-2">
   <ng-container *ngFor="let childItem of item?.children">
-    <div class="d-flex align-items-center">
-      <app-navbar-item class="w-100" [item]="childItem"></app-navbar-item>
-    </div>
+    <app-navbar-item [dense]="true" class="w-100" [item]="childItem"></app-navbar-item>
   </ng-container>
 </div>
