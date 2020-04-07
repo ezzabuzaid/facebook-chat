@@ -1,5 +1,5 @@
-@import '~@angular/material/theming';
-@import 'functions';
+@import "~@angular/material/theming";
+@import "functions";
 :host {
   display: block;
   .navbar-item {
@@ -27,5 +27,8 @@
     mat-icon {
       width: 30px;
     }
+  }
+  a {
+    text-decoration: none !important;
   }
 }

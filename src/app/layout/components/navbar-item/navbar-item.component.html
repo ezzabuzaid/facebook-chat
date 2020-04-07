@@ -3,8 +3,9 @@
 </div>
 
 <ng-template #normalItem>
-  <button [routerLink]="item?.routerLink" mat-button routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-    class="d-flex align-items-center w-100 pointer rounded-0 navbar-item py-2 px-4" [class.py-3]="toggled">
+  <a mat-button [routerLink]="item?.routerLink" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+    [queryParams]="item.queryParams" class="d-flex align-items-center w-100 pointer rounded-0 navbar-item py-2 px-4"
+    [class.py-3]="toggled">
     <div class="d-flex align-items-center justify-content-between">
       <ng-container *ngTemplateOutlet="title"></ng-container>
       <div class="navbar-item__pin" (click)="addShortcut()">
@@ -18,7 +19,7 @@
         </svg>
       </div>
     </div>
-  </button>
+  </a>
 </ng-template>
 
 <ng-template #collapsed>
