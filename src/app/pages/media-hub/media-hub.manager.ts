@@ -16,7 +16,8 @@ import { MediaLightboxComponent, ILightBoxData } from './media-lightbox/media-li
 export class MediaHubManager extends Listener<any> {
 
     subscription = new Subject();
-    uploadListener = new Listener();
+    uploadListener = new Listener<MediaModel.File>();
+
     constructor(
         private routeUtility: RouteUtility,
         private router: Router,
@@ -50,7 +51,6 @@ export class MediaHubManager extends Listener<any> {
         );
         return this.router.navigate(['.'], {
             relativeTo: this.routeUtility.route,
-            queryParamsHandling: 'preserve',
             queryParams: {
                 folder: defaultQuery.folder,
                 file: defaultQuery.file,
@@ -59,6 +59,9 @@ export class MediaHubManager extends Listener<any> {
         })
     }
 
+    /**
+     * Get selected folder id
+     */
     getFolderID() {
         return this.routeUtility.getQueryParam('folder');
     }
@@ -72,7 +75,7 @@ export class MediaHubManager extends Listener<any> {
     }
 
     openMediaPicker() {
-        return this.dialog.open<MediaPickerComponent, any, MediaModel.IFile[]>(MediaPickerComponent, {
+        return this.dialog.open<MediaPickerComponent, any, MediaModel.File[]>(MediaPickerComponent, {
             width: '1000px',
             height: '750px',
             panelClass: ['media-dialog']

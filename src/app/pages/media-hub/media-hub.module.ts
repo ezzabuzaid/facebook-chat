@@ -19,6 +19,7 @@ import { TableModule } from '@widget/table';
 import { MediaLightboxComponent } from './media-lightbox/media-lightbox.component';
 import { DirectivesModule } from '@shared/directives';
 import { PipesModule } from '@shared/pipes';
+import { FileUploadProgressModule } from '@partials/file-upload-progress';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { PipesModule } from '@shared/pipes';
     MasonryModule,
     TableModule,
     DirectivesModule,
-    PipesModule
+    PipesModule,
+    FileUploadProgressModule
   ],
   providers: []
 })

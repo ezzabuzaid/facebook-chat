@@ -1,13 +1,22 @@
 <mat-icon *ngIf="markable" (click)="toggleChecking()"
     class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
-    check</mat-icon>
+    check
+</mat-icon>
 <mat-card>
-    <span role="button" *ngIf="lightBox else image" (click)="openLightbox()">
-        <ng-container [ngTemplateOutlet]="image"></ng-container>
-    </span>
 
-    <ng-template #image>
-        <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow pointer">
+    <ng-container *ngIf="!file.rawFile; else uploadTemplate">
+        <span role="button" *ngIf="lightBox else image" (click)="openLightbox()">
+            <ng-container [ngTemplateOutlet]="image"></ng-container>
+        </span>
+        <ng-template #image>
+            <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow pointer">
+        </ng-template>
+    </ng-container>
+
+    <ng-template #uploadTemplate>
+        <app-file-upload-progress (onUpload)="appendUploadedFile($event)" mat-card-image [folder]="file.folder"
+            [rawFile]="file.rawFile">
+        </app-file-upload-progress>
     </ng-template>
 
     <mat-card-content>
@@ -17,11 +26,12 @@
                 <span class="text-uppercase bg-secondary mr-1 roundeds p-1">{{file.type}}</span>
                 <span class="text-uppercase">{{file.size / 1000 || ''}} kb</span>
             </div>
-            <button *ngIf="showMenu" mat-icon-button [matMenuTriggerFor]="menu">
+            <button *ngIf="showMenu" [disabled]="!!file.rawFile" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>
     </mat-card-content>
+
 </mat-card>
 <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="deleteFile()">

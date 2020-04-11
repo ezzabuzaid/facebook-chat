@@ -4,6 +4,7 @@ import { UploadService } from '@shared/services/upload';
 import { PopupManager } from '@widget/popup';
 import { switchMap, filter } from 'rxjs/operators';
 import { MediaHubManager } from '../media-hub.manager';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-media-card',
@@ -11,14 +12,12 @@ import { MediaHubManager } from '../media-hub.manager';
   styleUrls: ['./media-card.component.scss'],
 })
 export class MediaCardComponent implements OnInit {
-  @Input() file: MediaModel.IFile;
+  @Input() file: MediaModel.File;
   @Output() onMarkChange = new EventEmitter();
   @Output() onDelete = new EventEmitter();
-  @Input()
-  @HostBinding('class.checked')
-  checked = false;
+  @Input() @HostBinding('class.checked') checked = false;
+  @Input() @HostBinding('class.markable') markable = true;
   @Input() showMenu = true;
-  @Input() markable = true;
   @Input() lightBox = true;
 
   constructor(
@@ -27,7 +26,9 @@ export class MediaCardComponent implements OnInit {
     private mediaHubManager: MediaHubManager
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.markable = AppUtils.isFalsy(this.file.rawFile) && this.markable;
+  }
 
   toggleChecking() {
     this.onMarkChange.emit(this.file);
@@ -35,10 +36,7 @@ export class MediaCardComponent implements OnInit {
   }
 
   get isImage() {
-    return [
-      'image/jpg', 'image/JPG', 'image/jpeg', 'image/JPEG',
-      'image/png', 'image/PNG', 'image/gif', 'image/GIF',
-    ].includes(this.file.fullType);
+    return AppUtils.isImage(this.file.path);
   }
 
   deleteFile() {
@@ -72,4 +70,10 @@ export class MediaCardComponent implements OnInit {
     });
   }
 
+  appendUploadedFile(event: MediaModel.CreateFileResponse) {
+    this.file.path = event.path;
+    this.file._id = event.id;
+    this.file.rawFile = null;
+    this.file = new MediaModel.File(this.file);
+  }
 }
