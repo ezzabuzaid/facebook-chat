@@ -3,8 +3,7 @@ import { UploadService } from '@shared/services/upload';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 import { FormControl } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { environment } from '@environments/environment';
-import { MatButtonToggleChange } from '@angular/material/button-toggle';
+import { MediaModel } from '@shared/models';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -15,6 +14,8 @@ export class MediaHubHeaderComponent implements OnInit {
   searchControl = new FormControl(this.mediaHubManager.getFileName());
   @Output() onViewChange = new EventEmitter<MediaHubViews>();
   EMediaHubViews = MediaHubViews;
+  $folder = this.mediaHubManager.onFolderChange();
+
   constructor(
     private uploadService: UploadService,
     private mediaHubManager: MediaHubManager
@@ -35,24 +36,26 @@ export class MediaHubHeaderComponent implements OnInit {
       })
   }
 
-
-  uploadFiles(files: FileList) {
+  async uploadFiles(files: FileList) {
     const folder = this.mediaHubManager.getFolderID();
     if (folder) {
-      for (const file of (files as any)) {
-        this.uploadService.uploadImage(file, folder)
-          .subscribe((uploadedFile) => {
-            this.mediaHubManager.uploadListener.notify({
-              id: uploadedFile.id,
-              path: `${environment.serverOrigin}/${uploadedFile.path}`
-            });
-          });
+      for (const file of Array.from(files)) {
+        this.mediaHubManager.uploadListener.notify(
+          new MediaModel.File({
+            path: null,
+            folder: this.mediaHubManager.getFolderID(),
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            rawFile: file
+          })
+        );
       }
     }
   }
 
-  changeView(view: MatButtonToggleChange) {
-    this.onViewChange.emit(view.value);
+  changeView(view: MediaHubViews) {
+    this.onViewChange.emit(view);
   }
 
 }
