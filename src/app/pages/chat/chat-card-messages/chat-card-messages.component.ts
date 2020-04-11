@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { ChatModel, UsersModel } from '@shared/models';
+import { ChatModel } from '@shared/models';
 import { TokenService } from '@core/helpers/token';
 
 import { ChatService } from '@shared/services/chat';
 import { ChatManager } from '../chat.manager';
 import { environment } from '@environments/environment';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-chat-card-messages',
@@ -64,7 +65,7 @@ export class ChatCardMessagesComponent implements OnInit {
   }
 
   isImage(value: string) {
-    return /(\.jpg|\.png|\.bmp|\.gif)$/i.test(value);
+    return AppUtils.isImage(value);
   }
 
   populateFileURL(value: string) {
