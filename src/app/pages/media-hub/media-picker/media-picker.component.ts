@@ -15,8 +15,8 @@ export class MediaPickerComponent implements OnInit {
       this.onFolderClick(folders[0]);
     }))
 
-  files: MediaModel.IFile[] = [];
-  markedFiles: MediaModel.IFile[] = [];
+  files: MediaModel.File[] = [];
+  markedFiles: MediaModel.File[] = [];
 
   constructor(
     private uploadService: UploadService,

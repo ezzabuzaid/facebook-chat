@@ -13,7 +13,7 @@ import { RouteUtility } from '@shared/common';
   providers: [MediaHubManager, RouteUtility]
 })
 export class MediaHubGateComponent implements OnInit, OnDestroy {
-  files: MediaModel.IFile[] = [];
+  files: MediaModel.File[] = [];
   EmediaHubViews = MediaHubViews;
   currentView = MediaHubViews.GridView;
 

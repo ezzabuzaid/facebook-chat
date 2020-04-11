@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UploadService } from '@shared/services/upload';
 import { Observable } from 'rxjs';
 export interface ILightBoxData {
-  file: MediaModel.IFile,
+  file: MediaModel.File,
   folder?: string,
   tag?: string
 }
@@ -17,7 +17,7 @@ export interface ILightBoxData {
 export class MediaLightboxComponent implements OnInit {
   $folders = this.uploadService.getFolders();
   $tags = this.uploadService.getTags();
-  $files: Observable<MediaModel.IFile[]> = null;
+  $files: Observable<MediaModel.File[]> = null;
   show = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: ILightBoxData,
@@ -48,7 +48,7 @@ export class MediaLightboxComponent implements OnInit {
     this.$files = this.uploadService.searchForFiles({ tag: tag.id })
   }
 
-  selectFile(file: MediaModel.IFile) {
+  selectFile(file: MediaModel.File) {
     this.dialogData.file = file;
     this.cdf.markForCheck();
   }
