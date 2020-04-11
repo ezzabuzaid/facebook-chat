@@ -7,17 +7,15 @@
     </div>
     <div class="actions d-flex align-items-center">
         <app-file-control (onChange)="uploadFiles($event)">
-            <button mat-stroked-button tabindex="-1">Upload</button>
+            <button mat-stroked-button tabindex="-1" [disabled]="!($folder | async)">Upload</button>
         </app-file-control>
         <div class="d-flex align-items-center mx-2">
-            <mat-button-toggle-group (change)="changeView($event)" name="view_type" aria-label="Font Style">
-                <mat-button-toggle [value]="EMediaHubViews.GridView">
-                    <mat-icon>grid_on</mat-icon>
-                </mat-button-toggle>
-                <mat-button-toggle [value]="EMediaHubViews.ListView">
-                    <mat-icon>list</mat-icon>
-                </mat-button-toggle>
-            </mat-button-toggle-group>
+            <button mat-flat-button (click)="changeView(EMediaHubViews.GridView)">
+                <mat-icon>grid_on</mat-icon>
+            </button>
+            <button mat-flat-button (click)="changeView(EMediaHubViews.ListView)">
+                <mat-icon>list</mat-icon>
+            </button>
         </div>
     </div>
 </header>
