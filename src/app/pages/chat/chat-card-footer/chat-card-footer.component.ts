@@ -62,7 +62,6 @@ export class ChatCardFooterComponent implements OnInit {
     });
   }
 
-
   @HostListener('click')
   closeEmojiPicker() {
     if (this.emojiPicker.pickerVisible) {
@@ -72,7 +71,7 @@ export class ChatCardFooterComponent implements OnInit {
 
   sendMessage() {
     const text = this.messageFormControl.value;
-    if (AppUtils.isTruthy(text)) {
+    if (AppUtils.isTruthy(text) || AppUtils.hasItemWithin(this.files)) {
       this.messageFormControl.setValue('');
       if (this.external) {
         this.onSendMessage.emit(text);
@@ -85,13 +84,11 @@ export class ChatCardFooterComponent implements OnInit {
             .subscribe(({ path }) => {
               message.text = path;
               this.chatManager.sendMessage(message);
-              this.base64Files.shift();
-              this.files.shift();
+              this.hideActionBar();
             })
         });
       }
     }
-
   }
 
   openActionBar() {
@@ -131,6 +128,17 @@ export class ChatCardFooterComponent implements OnInit {
 
   get element() {
     return this.elementRef.nativeElement;
+
+  }
+
+  isImage(type: string) {
+    return AppUtils.isImage(type);
+  }
+
+  hideActionBar() {
+    this.showActionBar = false;
+    this.files = [];
+    this.base64Files = [];
   }
 
 }
