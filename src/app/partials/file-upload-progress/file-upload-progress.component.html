@@ -1,0 +1,5 @@
+<img class="img-fluid" *ngIf="isImage; else placeholder" [src]="fileBase64 | async">
+<ng-template #placeholder>
+    <div class="placeholder"></div>
+</ng-template>
+<div class="loader"></div>
