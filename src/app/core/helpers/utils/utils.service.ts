@@ -2,8 +2,22 @@ import { Observable, of, EMPTY, throwError, Observer, Subject, OperatorFunction 
 import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class AppUtils {
 
+    /**
+     * Check if the type is image
+     * @default jpg jpg jpeg png bmp gif
+     * @param type file mimetype
+     */
+    public static isImage(type: string) {
+        return /(\.jpg|\.png|\.bmp|\.gif|\.jpeg)$/i.test(type);
+    }
+
+    /**
+     * checks if the value is string or not if so it will return true if it has at least one char
+     * NOTE: the value will be trimmed before the evaluation
+     * @param value to be checked
+     */
     public static isEmptyString(value: string): boolean {
-        return typeof value !== 'string' || value === '';
+        return typeof value !== 'string' || value.trim() === '';
     }
 
     /**
@@ -24,6 +38,7 @@ export class AppUtils {
 
     /**
      * check if the givin value is empty
+     * --
      * supported values are string, array, pojo {}
      */
     static isEmpty(value: any) {
@@ -79,7 +94,10 @@ export class AppUtils {
             reader.addEventListener('abort', (error) => observer.error(error));
             reader.addEventListener('error', (error) => observer.error(error));
             reader.addEventListener('progress', console.log);
-            reader.addEventListener('loadend', (e) => observer.next(reader.result));
+            reader.addEventListener('loadend', (e) => {
+                observer.next(reader.result);
+                observer.complete();
+            });
             reader.readAsDataURL(file);
         });
     }

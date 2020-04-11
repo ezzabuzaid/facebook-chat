@@ -21,7 +21,7 @@ export class Listener<T> {
             }));
     }
 
-    public notify<Y = T>(value: Y) {
+    public notify(value: T) {
         this.state.next(value as any);
     }
 
