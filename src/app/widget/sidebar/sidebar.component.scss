@@ -1,6 +1,6 @@
-@import 'variables';
-@import 'mixins';
-@import '~@angular/material/theming';
+@import "variables";
+@import "mixins";
+@import "~@angular/material/theming";
 $transition-timing: cubic-bezier(0.2, 0, 0, 1);
 $transition-duration: 0.22s;
 
@@ -86,7 +86,7 @@ $transition-duration: 0.22s;
     }
   }
   &.resizing {
-    @include backdrop(absolute, #f1f2f557);
+    @include backdrop(absolute, 999, #f1f2f557);
     .resizer {
       z-index: 1000;
       width: 5px;

@@ -138,7 +138,11 @@ export class SidebarComponent implements OnInit {
       return;
     }
     const vector = this.getVector(evt);
-    if (this.isExceededMaxWidth(vector.offset) || this.isExceededMinWidth(vector.offset)) {
+    if (
+      this.isExceededMaxWidth(vector.offset)
+      ||
+      this.isExceededMinWidth(vector.offset)
+    ) {
       return;
     }
 
@@ -147,9 +151,7 @@ export class SidebarComponent implements OnInit {
   }
 
   setResizerPosition(vector: Vector) {
-    const operator = this.right ? '+' : '-';
-    // `calc(${} ${operator} 3px)`
-    this.resizer.style.setProperty(vector.direction, `${vector.offset}px`);
+    this.resizer.style.setProperty(vector.direction, `${vector.offset - this.resizer.clientWidth}px`);
   }
 
   private getVector(evt): Vector {
@@ -167,9 +169,9 @@ export class SidebarComponent implements OnInit {
     point.y -= maxOffsetTop;
     point.x = this.right ? this.element.offsetWidth - point.x : point.x;
 
-    const maxWidth = this.getDrawerMaxOffset('maxWidth') || this.element.offsetWidth;
-    const minWidth = this.getDrawerMaxOffset('minWidth') || 0;
-    console.log(minWidth);
+    const maxWidth = this.getDrawerOffset('maxWidth') || this.element.offsetWidth;
+    const minWidth = this.getDrawerOffset('minWidth') || 0;
+
     if (point.x >= maxWidth) {
       point.x = maxWidth;
     }
@@ -181,16 +183,18 @@ export class SidebarComponent implements OnInit {
       offset: point.x
     };
   }
+
   get direction() {
     return this.right ? 'right' : 'left';
   }
+
   private pxToPercentege(pixels: number) {
     const screenWidth = this.window.screen.width;
     return pixels / screenWidth * 100;
   }
 
   private percentegeToPx(percentge: number) {
-    return percentge * 1680 / 100;
+    return percentge * this.element.clientWidth / 100;
   }
 
   get drawer() {
@@ -202,15 +206,15 @@ export class SidebarComponent implements OnInit {
   }
 
   private isExceededMaxWidth(pixels: number) {
-    const maxWidth = this.getDrawerMaxOffset('maxWidth') || false;
+    const maxWidth = this.getDrawerOffset('maxWidth') || false;
     return maxWidth && pixels >= maxWidth;
   }
 
   private isExceededMinWidth(pixels: number) {
-    return pixels < this.getDrawerMaxOffset('minWidth');
+    return pixels < this.getDrawerOffset('minWidth');
   }
 
-  private getDrawerMaxOffset(property: keyof CSSStyleDeclaration) {
+  private getDrawerOffset(property: keyof CSSStyleDeclaration) {
     return this.formatWidthValue(this.cssValue(this.drawer, property));
   }
 
@@ -228,7 +232,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private cssValue(element: HTMLElement, property: keyof CSSStyleDeclaration) {
-    return this.window.getComputedStyle(element)[property];
+    return this.window.getComputedStyle(element).getPropertyValue(property as string);
   }
 
 }
