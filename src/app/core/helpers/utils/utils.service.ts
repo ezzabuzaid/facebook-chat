@@ -1,6 +1,20 @@
-import { Observable, of, EMPTY, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
+import { Observable, of, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class AppUtils {
+
+    /**
+     * Checks if the givin value is url
+     * @param {string} value
+     * @returns {boolean}
+     */
+    static isUrl(value: string): boolean {
+        try {
+            new URL(value);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
 
     /**
      * Check if the type is image
@@ -21,16 +35,18 @@ export class AppUtils {
     }
 
     /**
-     *
-     * @param object check if the list has at least an item
+     * Check if the value has at least one item
+     * --
+     * @param object any series value
+     * @returns {boolean} indicate that the {value} is empty
      */
-    public static hasItemWithin(object: any) {
+    public static hasItemWithin(object: any): boolean {
         if (Array.isArray(object)) {
             return AppUtils.isTruthy(object.length);
         }
 
         if (new Object(object) === object) {
-            return Object.keys(object).length;
+            return AppUtils.isTruthy(Object.keys(object).length);
         }
 
         return AppUtils.isFalsy(AppUtils.isEmptyString(object));
@@ -40,17 +56,24 @@ export class AppUtils {
      * check if the givin value is empty
      * --
      * supported values are string, array, pojo {}
+     * @param object any series value
+     * @returns {boolean} indicate that the {value} is empty
      */
-    static isEmpty(value: any) {
+    static isEmpty(value: any): boolean {
         return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
     }
 
-    static generateAlphabeticString(stringLength = 5) {
+    /**
+     * generate a random alphapetic string
+     * @param {number} length the maximum length of the string
+     * @returns {string}
+     */
+    static generateAlphabeticString(length = 5): string {
         let randomString = '';
         let randomAscii: number;
         const asciiLow = 65;
         const asciiHigh = 90;
-        for (let i = 0; i < stringLength; i++) {
+        for (let i = 0; i < length; i++) {
             randomAscii = Math.floor((Math.random() * (asciiHigh - asciiLow)) + asciiLow);
             randomString += String.fromCharCode(randomAscii);
         }
