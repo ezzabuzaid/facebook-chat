@@ -1,0 +1,30 @@
+:host {
+    align-self: flex-start;
+    &.sender {
+        align-self: flex-end;
+    }
+    .loader,
+    .loader:after {
+        border-radius: 50%;
+        width: 10em;
+        height: 10em;
+    }
+    .loader {
+        font-size: 1px;
+        right: -12px;
+        bottom: 1%;
+        position: absolute;
+        text-indent: -9999em;
+        border-left: 1.1em solid #ffffff;
+        transform: translateZ(0);
+        animation: load8 1.1s infinite linear;
+    }
+    @keyframes load8 {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+}
