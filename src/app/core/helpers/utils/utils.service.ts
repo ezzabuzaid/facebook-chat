@@ -26,6 +26,14 @@ export class AppUtils {
     }
 
     /**
+     * Check if the givin value is file type
+     * File type includes the images
+     */
+    public static isFile(type: string) {
+        return AppUtils.isImage(type) || /(.pdf|application\/pdf)/;
+    }
+
+    /**
      * checks if the value is string or not if so it will return true if it has at least one char
      * NOTE: the value will be trimmed before the evaluation
      * @param value to be checked
@@ -62,6 +70,7 @@ export class AppUtils {
     static isEmpty(value: any): boolean {
         return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
     }
+
 
     /**
      * generate a random alphapetic string
@@ -111,21 +120,26 @@ export class AppUtils {
         return data.reduce((a, b) => a.concat(b), []);
     }
 
-    static readFile(file: File) {
-        return new Observable((observer: Observer<string | ArrayBuffer>) => {
+    /**
+     * Encode file to base 64 text format
+     */
+    static readFile(file: File): Observable<string> {
+        return new Observable((observer: Observer<string>) => {
             const reader = new FileReader();
             reader.addEventListener('abort', (error) => observer.error(error));
             reader.addEventListener('error', (error) => observer.error(error));
-            reader.addEventListener('progress', console.log);
-            reader.addEventListener('loadend', (e) => {
-                observer.next(reader.result);
+            reader.addEventListener('loadend', () => {
+                observer.next(reader.result as any);
                 observer.complete();
             });
             reader.readAsDataURL(file);
         });
     }
 
-    static unsubscribe(subscription: Subject<any>) {
+    /**
+     * Complete a Subject
+     */
+    static unsubscribe<T = any>(subscription: Subject<T>) {
         subscription.next();
         subscription.complete();
     }
