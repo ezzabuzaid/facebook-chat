@@ -15,9 +15,8 @@
     </div>
 
     <ng-container card-content>
-        <app-chat-card-messages #messagesWrapper [id]="data._id"> </app-chat-card-messages>
-        <app-chat-card-footer (onActionBarVisibilityChange)="updateScroll($event, messagesWrapper.element)"
-            [room]="data">
+        <app-chat-card-messages [id]="data._id"> </app-chat-card-messages>
+        <app-chat-card-footer (onActionBarVisibilityChange)="updateScroll()" [room]="data">
         </app-chat-card-footer>
     </ng-container>
 
