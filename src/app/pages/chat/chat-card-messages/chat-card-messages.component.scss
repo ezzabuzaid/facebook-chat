@@ -2,12 +2,4 @@
   display: flex;
   overflow: auto;
   flex-direction: column;
-  img {
-    max-width: 75%;
-    max-height: 75%;
-  }
-  .message {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem;
-  }
 }

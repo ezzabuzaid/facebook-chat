@@ -1,20 +1,3 @@
-<ng-container *ngFor="let message of messages; let index=index; let first=first; let last = last;">
-    <ng-container *ngIf="isImage(message.text); else defaultView;">
-        <img (click)="openLightbox(message)" class="border-radius-1 message pointer" [ngClass]="{
-                'align-self-end': isSender(message.user),
-                'align-self-start': !isSender(message.user)
-                    }" [src]="populateFileURL(message.text)">
-    </ng-container>
-    <ng-template #defaultView>
-        <span [matTooltipPosition]="'above'" [matTooltip]="message.createdAt | timeago"
-            class="border-radius-1 text-white message mx-3" [ngClass]="{
-                'bg--primary':isSender(message.user),
-                'bg--accent':!isSender(message.user),
-                'align-self-end': isSender(message.user),
-                'align-self-start': !isSender(message.user),
-                'mt-2': first
-                                                                        }">
-            {{message.text}}
-        </span>
-    </ng-template>
+<ng-container *ngFor="let message of messages; let index=index; let first=first; let last = last; trackBy:trackBy">
+    <app-message-bubble [message]="message" [class.mt-2]="first"></app-message-bubble>
 </ng-container>
