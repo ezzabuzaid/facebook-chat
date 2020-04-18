@@ -1,21 +1,31 @@
 <app-sidebar [right]="true" [resizable]="false">
     <section class="d-flex flex-column position-relative" sidebar-container>
+        <div [style.background-image]="'url(' + dialogData.file.fullPath + ')'" class="blur-area"></div>
         <nav class="d-flex py-2 px-3">
             <button mat-flat-button color="accent" class="toolbar-button" (click)="closeDialog()">
                 <mat-icon>close</mat-icon>
             </button>
-            <button mat-flat-button color="accent" class="toolbar-button ml-auto" fullscreen>
+            <button mat-flat-button color="accent" class="toolbar-button ml-auto" fullscreen=".file-wrapper">
                 <mat-icon>fullscreen</mat-icon>
             </button>
         </nav>
-        <div class="d-flex align-items-center h-100 justify-content-center">
-            <!-- TODO: set the background image of this -->
-            <div class="blur-area"></div>
-            <object *ngIf="show" [attr.data]="(dialogData.file.fullPath) | safe:'resourceUrl'"></object>
+        <div class="file-wrapper text-center">
+            <ng-container *ngIf="show">
+                <object *ngIf="dialogData.file.isPdf()"
+                    [attr.data]="(dialogData.file.fullPath) | safe:'resourceUrl'"></object>
+                <img class="img-fluid" *ngIf="dialogData.file.isImage()" [src]="dialogData.file.fullPath"
+                    [alt]="dialogData.file.name">
+            </ng-container>
         </div>
         <footer class="d-flex align-items-center overflow-auto">
-            <img (click)="selectFile(file)" class="mr-1" *ngFor="let file of ($files | async)" [src]="file.fullPath"
-                alt="">
+            <ng-container *ngFor="let file of ($files | async)">
+                <div role="button" (click)="selectFile(file)" class="border-radius-1 mr-1 pointer footer-file">
+                    <img *ngIf="file.isImage(); else textView" [src]=" file.fullPath" [alt]="file.name">
+                    <ng-template #textView>
+                        <h6 class="mb-0 p-2 bg-white">{{file.name}}</h6>
+                    </ng-template>
+                </div>
+            </ng-container>
         </footer>
     </section>
     <aside sidebar-drawer>
