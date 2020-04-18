@@ -3,22 +3,8 @@
     check
 </mat-icon>
 <mat-card>
-
-    <ng-container *ngIf="!file.rawFile; else uploadTemplate">
-        <span role="button" *ngIf="lightBox else image" (click)="openLightbox()">
-            <ng-container [ngTemplateOutlet]="image"></ng-container>
-        </span>
-        <ng-template #image>
-            <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow pointer">
-        </ng-template>
-    </ng-container>
-
-    <ng-template #uploadTemplate>
-        <app-file-upload-progress (onUpload)="appendUploadedFile($event)" mat-card-image [folder]="file.folder"
-            [rawFile]="file.rawFile">
-        </app-file-upload-progress>
-    </ng-template>
-
+    <app-file-viewer (onUpload)="patchFile($event)" mat-card-image [file]="file">
+    </app-file-viewer>
     <mat-card-content>
         <div class="d-flex align-items-center justify-content-between">
             <div class="w-75">

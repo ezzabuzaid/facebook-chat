@@ -35,10 +35,6 @@ export class MediaCardComponent implements OnInit {
     this.checked = !this.checked;
   }
 
-  get isImage() {
-    return AppUtils.isImage(this.file.path);
-  }
-
   deleteFile() {
     this.onDelete.emit(this.file._id);
   }
@@ -61,19 +57,7 @@ export class MediaCardComponent implements OnInit {
       .subscribe();
   }
 
-  openLightbox() {
-    const folder = this.mediaHubManager.getFolderID();
-    const tag = this.mediaHubManager.getTagID();
-    this.mediaHubManager.openLightbox({
-      file: this.file,
-      [folder ? 'folder' : 'tag']: folder || tag
-    });
-  }
-
-  appendUploadedFile(event: MediaModel.CreateFileResponse) {
-    this.file.path = event.path;
-    this.file._id = event.id;
-    this.file.rawFile = null;
-    this.file = new MediaModel.File(this.file);
+  patchFile(event: MediaModel.File) {
+    this.file = event;
   }
 }
