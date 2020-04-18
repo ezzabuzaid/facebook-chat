@@ -30,7 +30,14 @@ export class AppUtils {
      * File type includes the images
      */
     public static isFile(type: string) {
-        return AppUtils.isImage(type) || /(.pdf|application\/pdf)/;
+        return AppUtils.isImage(type) || AppUtils.isPdf(type);
+    }
+
+    /**
+     * Check if the type is pdf type
+     */
+    public static isPdf(type: string) {
+        return /(.pdf|application\/pdf)/.test(type);
     }
 
     /**
