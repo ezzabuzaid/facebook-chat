@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Listener } from '@core/helpers/listener';
 import { Router } from '@angular/router';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, takeUntil } from 'rxjs/operators';
 import { merge, Subject } from 'rxjs';
-import { AppUtils } from '@core/helpers/utils';
+import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 import { RouteUtility } from '@shared/common';
 import { MediaModel } from '@shared/models';
 import { MediaPickerComponent } from './media-picker/media-picker.component';
@@ -13,7 +13,7 @@ import { MediaLightboxComponent, ILightBoxData } from './media-lightbox/media-li
 @Injectable({
     providedIn: 'root'
 })
-export class MediaHubManager extends Listener<any> {
+export class MediaHubManager {
 
     subscription = new Subject();
     uploadListener = new Listener<MediaModel.File>();
@@ -22,9 +22,7 @@ export class MediaHubManager extends Listener<any> {
         private routeUtility: RouteUtility,
         private router: Router,
         private dialog: MatDialog
-    ) {
-        super();
-    }
+    ) { }
 
     onFolderChange() {
         return this.routeUtility.onQueryParamChange('folder');
@@ -36,11 +34,14 @@ export class MediaHubManager extends Listener<any> {
             this.onFolderChange().pipe(filter(AppUtils.isTruthy))
         )
             .pipe(
+                takeUntil(this.subscription),
                 map(() => ({
                     fileName: this.getFileName(),
                     folder: this.getFolderID(),
                     tag: this.getTagID()
-                })));
+                })),
+                typeaheadOperator()
+            )
     }
 
     search(query: MediaModel.FileSearchQuery) {

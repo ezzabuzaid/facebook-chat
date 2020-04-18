@@ -373,7 +373,7 @@ export interface KeyPairs<T> {
 }
 
 export function typeaheadOperator<T, Q>(
-    provider: (query: Q) => Observable<T>,
+    provider: (query: Q) => Observable<T> = null,
     onEmpty: () => Partial<T> = null
 ): OperatorFunction<Q, T> {
     return (source) => {
@@ -381,12 +381,12 @@ export function typeaheadOperator<T, Q>(
             filter(AppUtils.notNullOrUndefined),
             debounceTime(400),
             distinctUntilChanged(),
-            switchMap((value) => {
-                if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
-                    return of<T>(onEmpty() as any);
-                }
-                return provider(value);
-            })
+            // switchMap((value) => {
+            //     if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
+            //         return of<T>(onEmpty() as any);
+            //     }
+            //     return provider(value);
+            // })
         );
     };
 }
