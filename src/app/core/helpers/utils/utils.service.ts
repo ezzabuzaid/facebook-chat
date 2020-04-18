@@ -356,8 +356,8 @@ export function tryOrThrow<T>(cb: (...args: any) => T) {
 }
 
 export function tryOrComplete<T>(
-    condition: boolean,
-    observable: () => Observable<T> | Promise<T>,
+    condition: () => boolean,
+    observable: () => Observable<T>,
     defaultValue: T = null
 ) {
     if (condition) {
