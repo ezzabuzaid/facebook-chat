@@ -72,6 +72,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         }: Partial<Field<Tname, T>> = {}
     ) {
         super(value, validation);
+        this.value = value;
         this.type = type || EFieldType.TEXT;
         this.section = section;
         this.label = label;
@@ -87,14 +88,14 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
 
 export class SelectField<Tname, T = string | string[]> extends Field<Tname, T> implements IField<Tname, T> {
     public options: ISelectOption[] = [];
-    public value: T = null;
+    // public value: T = null;
     constructor(
         public name: Tname,
         option: Partial<SelectField<Tname, T>>
     ) {
         super(name, option);
         this.options = option.options;
-        this.value = option.value as any;
+        // this.value = option.value as any;
     }
 }
 export class DateField<Tname> extends Field<Tname, Date> implements IField<Tname, Date> {
