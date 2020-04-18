@@ -20,7 +20,7 @@ import { MediaLightboxComponent } from './media-lightbox/media-lightbox.componen
 import { DirectivesModule } from '@shared/directives';
 import { PipesModule } from '@shared/pipes';
 import { FileViewerModule } from '@partials/file-viewer';
-
+import { InifiniteScrollingModule } from '@widget/inifinite-scroll';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,8 @@ import { FileViewerModule } from '@partials/file-viewer';
     TableModule,
     DirectivesModule,
     PipesModule,
-    FileViewerModule
+    FileViewerModule,
+    InifiniteScrollingModule
   ],
   providers: []
 })

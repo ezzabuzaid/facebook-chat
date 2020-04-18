@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
-import { UploadService } from '@shared/services/upload';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
-import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
+import { AppUtils } from '@core/helpers/utils';
 import { RouteUtility } from '@shared/common';
 
 @Component({
@@ -13,29 +11,14 @@ import { RouteUtility } from '@shared/common';
   providers: [MediaHubManager, RouteUtility]
 })
 export class MediaHubGateComponent implements OnInit, OnDestroy {
-  files: MediaModel.File[] = [];
   EmediaHubViews = MediaHubViews;
   currentView = MediaHubViews.GridView;
 
   constructor(
-    private uploadsService: UploadService,
     private mediaManager: MediaHubManager
   ) { }
 
-  ngOnInit() {
-    this.mediaManager.onSearch()
-      .pipe(
-        takeUntil(this.mediaManager.subscription),
-        typeaheadOperator(
-          ({ fileName, folder, tag }) => this.uploadsService.searchForFiles(
-            new MediaModel.FileSearchQuery(fileName, folder, tag)
-          )
-        )
-      )
-      .subscribe((data) => {
-        this.files = data;
-      })
-  }
+  ngOnInit() { }
 
   changeView(view: MediaHubViews) {
     this.currentView = view;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadService } from '@shared/services/upload';
+import { UploadsService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager } from '../media-hub.manager';
@@ -19,7 +19,7 @@ export class MediaHubFoldersComponent implements OnInit {
   $tags = this.uploadsService.getTags();
 
   constructor(
-    private uploadsService: UploadService,
+    private uploadsService: UploadsService,
     private mediaHubManager: MediaHubManager,
     private popupManager: PopupManager,
     private routeUtility: RouteUtility

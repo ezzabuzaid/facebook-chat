@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { MediaModel } from '@shared/models';
-import { UploadService } from '@shared/services/upload';
+import { UploadsService } from '@shared/services/upload';
 import { PopupManager } from '@widget/popup';
 import { switchMap, filter } from 'rxjs/operators';
-import { MediaHubManager } from '../media-hub.manager';
 import { AppUtils } from '@core/helpers/utils';
 
 @Component({
@@ -22,8 +21,7 @@ export class MediaCardComponent implements OnInit {
 
   constructor(
     private popupManager: PopupManager,
-    private uploadsService: UploadService,
-    private mediaHubManager: MediaHubManager
+    private uploadsService: UploadsService,
   ) { }
 
   ngOnInit() {
