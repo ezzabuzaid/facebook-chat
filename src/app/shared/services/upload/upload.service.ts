@@ -8,7 +8,7 @@ import { MediaModel, PlainQuery, ListEntityResponse } from '@shared/models';
 @Injectable({
     providedIn: 'root'
 })
-export class UploadService {
+export class UploadsService {
 
     constructor(
         private http: HttpClient
@@ -52,8 +52,11 @@ export class UploadService {
 
     public searchForFiles(query: MediaModel.FileSearchQuery) {
         const plainQuery = new PlainQuery(query);
-        return this.http.get<MediaModel.File[]>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
-            .pipe(map((files) => files.map(file => new MediaModel.File(file))));
+        return this.http.get<ListEntityResponse<MediaModel.File>>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
+            .pipe(map((data) => {
+                data.list = data.list.map(file => new MediaModel.File(file));
+                return data;
+            }));
     }
 
     getTags() {
