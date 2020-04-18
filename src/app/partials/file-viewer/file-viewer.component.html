@@ -1,0 +1,5 @@
+<img class="img-fluid mh-100 rounded" *ngIf="isImage; else placeholder" [src]="(fileBase64 | async) || file.fullPath">
+<ng-template #placeholder>
+    <div class="placeholder">{{file.name}}</div>
+</ng-template>
+<div *ngIf="withLoader && fileBase64" class="loader"></div>
