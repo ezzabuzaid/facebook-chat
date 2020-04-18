@@ -1,8 +1,12 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { MediaModel } from '@shared/models';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { MediaModel, ListEntityResponse, ListEntityQuery } from '@shared/models';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UploadService } from '@shared/services/upload';
+import { UploadsService } from '@shared/services/upload';
 import { Observable } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+import { typeaheadOperator } from '@core/helpers/utils';
+import { MediaHubManager } from '../media-hub.manager';
+import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 export interface ILightBoxData {
   file: MediaModel.File,
   folder?: string,
@@ -17,23 +21,24 @@ export interface ILightBoxData {
 export class MediaLightboxComponent implements OnInit {
   $folders = this.uploadService.getFolders();
   $tags = this.uploadService.getTags();
-  $files: Observable<MediaModel.File[]> = null;
-  show = false;
+  files: MediaModel.File[] = [];
+  $provider = (pageQuery: ListEntityQuery) => this.uploadsService.searchForFiles(
+    new MediaModel.FileSearchQuery(null, this.dialogData.folder, this.dialogData.tag, pageQuery)
+  );
+  @ViewChild(InifiniteScrollingComponent) inifiniteScrollingComponent: InifiniteScrollingComponent;
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: ILightBoxData,
     @Inject(MatDialogRef) private dialogRef: MatDialogRef<MediaLightboxComponent>,
-    private uploadService: UploadService,
-    private cdf: ChangeDetectorRef
+    private uploadService: UploadsService,
+    private cdf: ChangeDetectorRef,
+    private uploadsService: UploadsService
   ) { }
 
-  ngOnInit() {
-    this.$files = this.uploadService.searchForFiles(
-      {
-        tag: this.dialogData.tag,
-        folder: this.dialogData.folder,
-      }
-    )
-    this.show = true;
+  ngOnInit() { }
+
+  appendFiles(files: MediaModel.File[]) {
+    console.log(files);
+    this.files.push(...files);
   }
 
   closeDialog() {
@@ -41,11 +46,15 @@ export class MediaLightboxComponent implements OnInit {
   }
 
   openFolder(folder: MediaModel.Folder) {
-    this.$files = this.uploadService.searchForFiles({ folder: folder._id })
+    this.dialogData.folder = folder._id;
+    this.files = [];
+    this.inifiniteScrollingComponent.restart();
   }
 
   filterByTag(tag: MediaModel.Tag) {
-    this.$files = this.uploadService.searchForFiles({ tag: tag.id })
+    this.dialogData.folder = tag.id;
+    this.files = [];
+    this.inifiniteScrollingComponent.restart();
   }
 
   selectFile(file: MediaModel.File) {

@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UploadService } from '@shared/services/upload';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 import { FormControl } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -17,7 +16,6 @@ export class MediaHubHeaderComponent implements OnInit {
   $folder = this.mediaHubManager.onFolderChange();
 
   constructor(
-    private uploadService: UploadService,
     private mediaHubManager: MediaHubManager
   ) { }
 

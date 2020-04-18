@@ -2,9 +2,8 @@ import { Component, OnInit, forwardRef, Input, HostListener, HostBinding, Output
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UploadService } from '@shared/services/upload';
+import { UploadsService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-file',
@@ -20,7 +19,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class UploadFileComponent implements OnInit, ControlValueAccessor {
   constructor(
-    private uploadFileService: UploadService,
+    private uploadFileService: UploadsService,
     private snackBar: MatSnackBar,
     private translateService: TranslateService
   ) { }

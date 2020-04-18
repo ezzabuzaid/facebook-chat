@@ -22,6 +22,7 @@ export class InifiniteScrollingComponent implements OnInit {
    * If true the provider will be used inside {ngOnInit} lifecycle
    */
   @Input() public fetchOnInit = true;
+  @Input() horizontal = false;
 
   constructor() { }
 
