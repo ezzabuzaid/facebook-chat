@@ -1,6 +1,6 @@
 export namespace PortalModel {
     export enum ERoles {
-        SUPERADMIN,
+        SUPERADMIN = 1,
         ADMIN,
         CLIENT,
         CUSTOMER,
