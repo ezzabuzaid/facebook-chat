@@ -1,4 +1,4 @@
-import { FormControl, AbstractControlOptions, FormGroup } from '@angular/forms';
+import { FormControl, AbstractControlOptions, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
 import { Type } from '@angular/core';
 
@@ -45,6 +45,7 @@ export interface IField<Tname, T> extends FormControl {
     min?: T;
     max?: T;
     typeOf(type: EFieldType): boolean;
+    addValidator(...validator: ValidatorFn[]): void;
 }
 
 export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
@@ -78,6 +79,10 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         this.label = label;
         this.id = id || AppUtils.generateAlphabeticString(5);
         this.autocomplete = autocomplete;
+    }
+
+    addValidator(...validator: ValidatorFn[]) {
+        this.setValidators(Validators.compose([this.validator, ...validator]));
     }
 
     public typeOf(type: EFieldType) {

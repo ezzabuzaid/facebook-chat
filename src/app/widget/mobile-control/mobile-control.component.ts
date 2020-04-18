@@ -5,7 +5,6 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PhoneNumberAssociatedWithCountryValidator } from '@shared/validators';
 import { AppUtils } from '@core/helpers/utils';
-import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { IField } from '@shared/common';
 import { Observable, from } from 'rxjs';
@@ -34,6 +33,7 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   set value(value: any) {
     this._value = value;
     this.notifyValueChange();
+    console.log(this.formControl.errors);
   }
 
   get selectedCountryCode() {
@@ -56,7 +56,6 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   onTouched: () => {};
 
   constructor(
-    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
@@ -71,11 +70,8 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
     if (this.autoDetectCountry && this.code) {
       throw new TypeError('you can not use [autoDetectCountry] along with [code]');
     }
-
-    this.formControl.setValidators([this.formControl.validator, PhoneNumberAssociatedWithCountryValidator(this.formControl.id)])
-
+    this.formControl.addValidator(PhoneNumberAssociatedWithCountryValidator(this.formControl.id));
     if (isPlatformBrowser(this.platformId)) { }
-
     try {
       this.intlTelInstance = (window as any).intlTelInput(this.phoneField.nativeElement);
       if (this.autoDetectCountry) {

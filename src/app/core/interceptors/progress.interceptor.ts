@@ -34,7 +34,6 @@ export class ProgressInterceptor implements HttpInterceptor {
             .pipe(
                 tap(
                     (response) => {
-                        // TODO to be removed
                         if (response instanceof HttpResponse && this.showSnackbar) {
                             let text = 'Updated';
                             if (req.method === 'POST') {
