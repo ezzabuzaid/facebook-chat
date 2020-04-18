@@ -1,4 +1,4 @@
-@import "functions";
+@import 'functions';
 @mixin chat_theme($theme) {
     .loader {
         $color: get_color_from_theme(primary, $theme);

@@ -33,7 +33,6 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   set value(value: any) {
     this._value = value;
     this.notifyValueChange();
-    console.log(this.formControl.errors);
   }
 
   get selectedCountryCode() {
