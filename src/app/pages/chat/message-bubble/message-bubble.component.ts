@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { ChatManager } from '../chat.manager';
 import { TokenService } from '@core/helpers/token';
-import { ChatModel } from '@shared/models';
+import { ChatModel, MediaModel } from '@shared/models';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
@@ -19,14 +19,34 @@ export class MessageBubbleComponent implements OnInit {
   @Input() message: ChatModel.Message;
   public loading = false;
   @HostBinding('class.sender') isSender: boolean = false;
-
+  file: MediaModel.File = null;
   constructor(
     private chatManager: ChatManager,
     private tokenService: TokenService,
-    private mediaHubManager: MediaHubManager
   ) { }
 
   ngOnInit() {
+    if (this.message.rawFile) {
+      this.file = new MediaModel.File({
+        path: null,
+        type: this.message.rawFile.type,
+        rawFile: this.message.rawFile,
+        size: this.message.rawFile.size,
+        name: this.message.rawFile.name,
+        folder: this.message.room,
+      });
+    } else if (this.isFile()) {
+      const searchParam = new URLSearchParams(this.message.text.split('?')[1]);
+      this.file = new MediaModel.File({
+        rawFile: null,
+        type: searchParam.get('type'),
+        size: +searchParam.get('size'),
+        name: searchParam.get('name'),
+        path: this.message.text,
+        folder: this.message.room,
+      });
+    }
+
     if (this.message.timestamp) {
       this.loading = true;
       const listener = this.chatManager.socket
@@ -45,7 +65,7 @@ export class MessageBubbleComponent implements OnInit {
   }
 
   isFile() {
-    return AppUtils.isFile(this.message.text);
+    return AppUtils.isTruthy(this.message.rawFile) || AppUtils.isFile(this.message.text.split('?')[0]);
   }
 
 }
