@@ -11,7 +11,7 @@ $typography: mat-typography-config(
 );
 
 @include angular-material-typography($typography);
-@include border_radius;
+@include border_radius(2);
 @include font_size(1.25);
 @include border_width;
 @include bootstrab_default;
