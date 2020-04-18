@@ -1,27 +1,47 @@
-import { Directive, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Input, Inject, ElementRef, Output, EventEmitter } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({
   selector: '[fullscreen]'
 })
 export class FullscreenDirective {
+  @Input() fullscreen: 'document' | 'current' | any = 'document';
+  @Output() onChange = new EventEmitter();
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private elementRef: ElementRef<HTMLElement>
+  ) { }
 
   @HostListener('click')
-  fullScreen() {
-    const doc = window.document;
-    const docEl = doc.documentElement;
+  request() {
+    let docEl: HTMLElement;
+    switch (this.fullscreen) {
+      case 'current':
+        docEl = this.elementRef.nativeElement;
+        break;
+      case 'document':
+        docEl = this.document.documentElement;
+        break;
+      default:
+        docEl = this.document.querySelector(this.fullscreen as any);
+        break;
+    }
     const requestFullScreen =
       docEl.requestFullscreen || docEl['mozRequestFullScreen'] ||
       docEl['webkitRequestFullScreen'] || docEl['msRequestFullscreen'];
     const cancelFullScreen =
-      doc.exitFullscreen || doc['mozCancelFullScreen'] ||
-      doc['webkitExitFullscreen'] || doc['msExitFullscreen'];
+      this.document.exitFullscreen || this.document['mozCancelFullScreen'] ||
+      this.document['webkitExitFullscreen'] || this.document['msExitFullscreen'];
     if (
-      !doc.fullscreenElement && !doc['mozFullScreenElement'] &&
-      !doc['webkitFullscreenElement'] && !doc['msFullscreenElement']
+      !this.document.fullscreenElement && !this.document['mozFullScreenElement'] &&
+      !this.document['webkitFullscreenElement'] && !this.document['msFullscreenElement']
     ) {
       requestFullScreen.call(docEl);
+      this.onChange.emit();
     } else {
-      cancelFullScreen.call(doc);
+      cancelFullScreen.call(this.document);
+      this.onChange.emit();
     }
   }
 
