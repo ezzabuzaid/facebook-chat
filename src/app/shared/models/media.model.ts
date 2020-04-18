@@ -1,6 +1,6 @@
 import { IModel, Query } from './response.model';
 import { environment } from '@environments/environment';
-import { Omit } from '@core/helpers/utils';
+import { Omit, AppUtils } from '@core/helpers/utils';
 export namespace MediaModel {
     export class Folder extends IModel {
         name: string;
@@ -12,7 +12,6 @@ export namespace MediaModel {
 
     export class File extends IModel {
         fullType: string;
-        fullPath: string;
         rawFile: FileList[0];
         type: string;
         size: number;
@@ -22,9 +21,8 @@ export namespace MediaModel {
         folder: string;
         constructor(object: Partial<File>) {
             super();
-            this.path = object.path;
+            this.path = object.path && object.path.split('?')[0];
             this.fullType = object.fullType ?? object.type;
-            this.fullPath = environment.serverOrigin + object.path;
             this.type = object.type.includes('/') ? object.type.split('/')[1] : object.type;
             this.size = object.size;
             this.name = object.name;
@@ -34,6 +32,18 @@ export namespace MediaModel {
             this.createdAt = object.createdAt || this.createdAt;
             this.updatedAt = object.updatedAt || this.updatedAt;
             this.rawFile = object.rawFile;
+        }
+
+        get fullPath() {
+            return environment.serverOrigin + this.path;
+        }
+
+        isImage() {
+            return AppUtils.isImage(this.path);
+        }
+
+        isPdf() {
+            return AppUtils.isPdf(this.path);
         }
     }
 

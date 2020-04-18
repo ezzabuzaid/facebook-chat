@@ -47,18 +47,17 @@ export class MasonryComponent implements OnInit, AfterContentInit {
          */
         const itemContent = item.element.querySelector('.masonry-content');
         const rowSpan = Math.ceil((itemContent.clientHeight + rowGap) / (rowHeight + rowGap));
-
         /* Set the spanning as calculated above (S) */
         item.element.style.gridRowEnd = 'span ' + rowSpan;
       }
       /**
-   * Apply spanning to all the masonry items
-   *
-   * Loop through all the items and apply the spanning to them using 
-   * `resizeMasonryItem()` function.
-   *
-   * @uses resizeMasonryItem
-   */
+       * Apply spanning to all the masonry items
+       *
+       * Loop through all the items and apply the spanning to them using 
+       * `resizeMasonryItem()` function.
+       *
+       * @uses resizeMasonryItem
+       */
       const resizeAllMasonryItems = () => {
         // Get all item class objects in one list
 
@@ -68,9 +67,10 @@ export class MasonryComponent implements OnInit, AfterContentInit {
          */
         for (let i = 0; i < masonryItems.length; i++) {
           const imgs = masonryItems[i].element.querySelectorAll('img');
-          this.imagesLoaded(Array.from(imgs)).subscribe(() => {
-            resizeMasonryItem(masonryItems[i]);
-          });
+          this.imagesLoaded(Array.from(imgs))
+            .subscribe(() => {
+              resizeMasonryItem(masonryItems[i]);
+            });
         }
       }
       /**
@@ -97,7 +97,6 @@ export class MasonryComponent implements OnInit, AfterContentInit {
 
   imagesLoaded(imgs: HTMLImageElement[]) {
     return new Observable((subscriber) => {
-      // const imgs = this.element.querySelectorAll('img');
       const totalImages = imgs.length;
       let counter = 0;
       const incrementCounter = () => {
