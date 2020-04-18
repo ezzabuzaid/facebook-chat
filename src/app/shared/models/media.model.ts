@@ -1,6 +1,6 @@
-import { IModel, Query } from './response.model';
+import { IModel, ListEntityQuery } from './response.model';
 import { environment } from '@environments/environment';
-import { Omit, AppUtils } from '@core/helpers/utils';
+import { AppUtils } from '@core/helpers/utils';
 export namespace MediaModel {
     export class Folder extends IModel {
         name: string;
@@ -47,13 +47,14 @@ export namespace MediaModel {
         }
     }
 
-    export class FileSearchQuery extends Query {
+    export class FileSearchQuery extends ListEntityQuery {
         constructor(
             public file?: string,
             public folder?: string,
             public tag?: string,
+            options?: ListEntityQuery
         ) {
-            super();
+            super(options);
         }
     }
 

@@ -43,10 +43,10 @@ export class ListEntityResponse<T> {
 }
 
 export class ListEntityQuery {
-    page: number;
-    size: number;
+    page?: number;
+    size?: number;
 
-    constructor(obj: Partial<ListEntityQuery> = {}) {
+    constructor(obj: ListEntityQuery = {}) {
         this.page = obj.page || 1;
         this.size = obj.size || 10;
     }

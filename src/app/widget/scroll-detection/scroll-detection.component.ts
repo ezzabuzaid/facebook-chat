@@ -7,7 +7,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class ScrollDetectionComponent implements OnInit {
   @Output() public onScroll = new EventEmitter();
-  @Input() public scrollContainerSelector: string;
+  @Input() public scrollContainerSelector: string | HTMLElement;
+  @Input() horizontal = false;
   constructor() { }
 
   ngOnInit() { }
