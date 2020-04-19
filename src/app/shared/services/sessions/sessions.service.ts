@@ -19,7 +19,7 @@ export class SessionsService {
         return this.http.patch(`${Constants.API.SESSIONS.deactivate}`, payload);
     }
 
-    public getSessions(query = new ListEntityQuery()) {
+    public getSessions(query: ListEntityQuery) {
         const plainQuery = new PlainQuery<ListEntityQuery>(query);
         return this.http.get<ListEntityResponse<SessionsModel.ISession>>(`${Constants.API.SESSIONS.base}?${plainQuery.asString}`);
     }

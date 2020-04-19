@@ -42,7 +42,6 @@ export class SessionsComponent implements OnInit, AfterContentInit {
   }
 
   onPaginate(event: PageEvent) {
-    console.log(event);
     this.fetchData(event.pageIndex, event.pageSize);
   }
 

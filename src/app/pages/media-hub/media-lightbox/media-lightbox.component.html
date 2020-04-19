@@ -17,7 +17,7 @@
                     [alt]="dialogData.file.name">
             </ng-container>
         </div>
-        <app-inifinite-scroll [horizontal]="true" (dataChange)="appendFiles($event)" [provider]="$provider"
+        <app-inifinite-scrolling [horizontal]="true" (dataChange)="appendFiles($event)" [provider]="$provider"
             [scrollContainerSelector]="footer">
             <footer #footer class="d-flex align-items-center overflow-auto">
                 <ng-container *ngFor="let file of files">
@@ -30,7 +30,7 @@
                     </div>
                 </ng-container>
             </footer>
-        </app-inifinite-scroll>
+        </app-inifinite-scrolling>
     </section>
     <aside sidebar-drawer>
         <mat-nav-list class="h-100" dense>

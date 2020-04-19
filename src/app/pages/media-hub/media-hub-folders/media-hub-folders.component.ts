@@ -90,7 +90,6 @@ export class MediaHubFoldersComponent implements OnInit {
       .subscribe();
   };
   deleteFolder(folder: MediaModel.Folder, index: number) {
-    console.log('deleteFolder => ', folder);
     this.uploadsService.deleteFolder(folder._id)
       .subscribe(data => {
         this.folders.splice(index, 1);

@@ -37,7 +37,6 @@ export class MediaLightboxComponent implements OnInit {
   ngOnInit() { }
 
   appendFiles(files: MediaModel.File[]) {
-    console.log(files);
     this.files.push(...files);
   }
 

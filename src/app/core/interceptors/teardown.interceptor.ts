@@ -74,7 +74,6 @@ export class TeardownInterceptor implements HttpInterceptor {
     }
 
     tryRefreshToken(event: HttpErrorResponse) {
-        console.log(event);
         const blackList = [
             Constants.API.PORTAL.login,
             Constants.API.PORTAL.refreshtoken,
