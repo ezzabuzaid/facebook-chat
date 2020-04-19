@@ -1,3 +1,9 @@
-<ng-container *ngFor="let message of messages; let index=index; let first=first; let last = last; trackBy:trackBy">
-    <app-message-bubble [message]="message" [class.mt-2]="first"></app-message-bubble>
-</ng-container>
+<app-inifinite-scrolling direction="up" [scrollContainerSelector]="element" [provider]="$provider"
+    (dataChange)="prependMessages($event)">
+    <div class="d-flex flex-column">
+        <ng-container
+            *ngFor="let message of messages; let index=index; let first=first; let last = last; trackBy:trackBy">
+            <app-message-bubble [message]="message" [class.mt-2]="first"></app-message-bubble>
+        </ng-container>
+    </div>
+</app-inifinite-scrolling>

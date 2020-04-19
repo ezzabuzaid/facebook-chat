@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-inifinite-scroll',
+  selector: 'app-inifinite-scrolling',
   templateUrl: './inifinite-scroll.component.html',
   styleUrls: ['./inifinite-scroll.component.scss']
 })
 export class InifiniteScrollingComponent implements OnInit {
-  private isLastFetchDone = false;
+  private isLastFetchDone = true;
   private currentLength = -1;
   @Output() public dataChange = new EventEmitter();
   @Input() public provider: (query: ListEntityQuery) => Observable<ListEntityResponse<any>>;
@@ -28,7 +28,7 @@ export class InifiniteScrollingComponent implements OnInit {
 
   ngOnInit() {
     if (this.fetchOnInit) {
-      this.fetchItems();
+      this.populateItems();
     } else {
       this.isLastFetchDone = true;
     }

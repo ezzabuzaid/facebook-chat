@@ -21,6 +21,7 @@ import { FileControlModule } from '@widget/file-control/file-control.module';
 import { PipesModule } from '@shared/pipes';
 import { FileViewerModule } from '@partials/file-viewer';
 import { MessageBubbleComponent } from './message-bubble/message-bubble.component';
+import { InifiniteScrollingModule } from '@widget/inifinite-scroll';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MessageBubbleComponent } from './message-bubble/message-bubble.componen
     EmojiModule,
     FileControlModule,
     PipesModule,
-    FileViewerModule
+    FileViewerModule,
+    InifiniteScrollingModule
   ],
   providers: [
     ChatCardManager

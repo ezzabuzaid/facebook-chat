@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding, ElementRef } from '@angular/core';
 import { ChatManager } from '../chat.manager';
 import { TokenService } from '@core/helpers/token';
 import { ChatModel, MediaModel } from '@shared/models';
-import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 import { AppUtils } from '@core/helpers/utils';
-import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-message-bubble',
@@ -23,6 +21,7 @@ export class MessageBubbleComponent implements OnInit {
   constructor(
     private chatManager: ChatManager,
     private tokenService: TokenService,
+    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() {
@@ -66,6 +65,10 @@ export class MessageBubbleComponent implements OnInit {
 
   isFile() {
     return AppUtils.isTruthy(this.message.rawFile) || AppUtils.isFile(this.message.text.split('?')[0]);
+  }
+
+  get element() {
+    return this.elementRef.nativeElement;
   }
 
 }
