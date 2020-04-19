@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 import { FormControl } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, skip } from 'rxjs/operators';
 import { MediaModel } from '@shared/models';
 
 @Component({
@@ -27,7 +27,10 @@ export class MediaHubHeaderComponent implements OnInit {
       })
 
     this.mediaHubManager.onFolderChange()
-      .pipe(takeUntil(this.mediaHubManager.subscription))
+      .pipe(
+        takeUntil(this.mediaHubManager.subscription),
+        skip(1)
+      )
       .subscribe(() => {
         this.searchControl.setValue('', { emitEvent: false });
         this.mediaHubManager.search(null);

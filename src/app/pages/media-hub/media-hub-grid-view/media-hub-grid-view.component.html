@@ -1,4 +1,4 @@
-<app-inifinite-scroll [scrollContainerSelector]="parentSelector" (dataChange)="appendFiles($event)"
+<app-inifinite-scrolling [scrollContainerSelector]="parentSelector" (dataChange)="appendFiles($event)"
     [provider]="$provider">
     <app-masonry>
         <app-masonry-item *ngFor="let file of files; let index = index;">
@@ -7,4 +7,4 @@
             </app-media-card>
         </app-masonry-item>
     </app-masonry>
-</app-inifinite-scroll>
+</app-inifinite-scrolling>
