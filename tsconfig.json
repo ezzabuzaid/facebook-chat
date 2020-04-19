@@ -28,9 +28,6 @@
       "@shared/*": [
         "app/shared/*"
       ],
-      "@features/*": [
-        "app/features/*"
-      ],
       "@widget/*": [
         "app/widget/*"
       ],

@@ -28,7 +28,6 @@ export class CrudManagerComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    console.log(this.modules);
     this.route.params
       .pipe(
         tap(() => {

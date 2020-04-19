@@ -23,16 +23,29 @@ export namespace ChatModel {
     }
 
     export class Message extends IModel {
+        public timestamp = Date.now();
         user: string;
-        conversation: string;
+        room: string;
         text: string;
+        order: number;
+        rawFile: File;
         constructor(content: Partial<Message>) {
-            super();
+            super(content);
             this.user = content.user;
-            this.conversation = content.conversation;
+            this.room = content.room;
             this.text = content.text;
-            this._id = content._id;
+            this.order = content.order;
+            this.rawFile = content.rawFile;
         }
+    }
+
+    export class ChatOutgoingMessage {
+        constructor(
+            public id: string,
+            public text: string,
+            public order: number,
+            public timestamp: number,
+        ) { }
     }
 
 }

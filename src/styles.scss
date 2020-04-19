@@ -4,22 +4,23 @@
 @import 'assets/scss/main';
 @import '~@ctrl/ngx-emoji-mart/picker';
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap');
 $typography: mat-typography-config(
-  $font-family: "'Roboto', sans-serif",
+  $font-family: "'Quicksand', sans-serif",
   $input: mat-typography-level(16px, 1.125, 400),
 );
 
 @include angular-material-typography($typography);
-@include border_radius;
+@include border_radius(2);
 @include font_size(1.25);
 @include border_width;
 @include bootstrab_default;
 
-.media-picker-dialog {
+.media-dialog {
   mat-dialog-container {
     padding: 0 !important;
     overflow: hidden;
+    border-radius: 0 !important;
   }
 }
 .iti__selected-flag {

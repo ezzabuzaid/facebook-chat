@@ -1,11 +1,8 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { UploadService } from '@shared/services/upload';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { environment } from '@environments/environment';
+import { takeUntil, skip } from 'rxjs/operators';
+import { MediaModel } from '@shared/models';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -14,10 +11,11 @@ import { environment } from '@environments/environment';
 })
 export class MediaHubHeaderComponent implements OnInit {
   searchControl = new FormControl(this.mediaHubManager.getFileName());
-  @Output() onViewChange = new EventEmitter();
+  @Output() onViewChange = new EventEmitter<MediaHubViews>();
+  EMediaHubViews = MediaHubViews;
+  $folder = this.mediaHubManager.onFolderChange();
 
   constructor(
-    private uploadService: UploadService,
     private mediaHubManager: MediaHubManager
   ) { }
 
@@ -29,35 +27,36 @@ export class MediaHubHeaderComponent implements OnInit {
       })
 
     this.mediaHubManager.onFolderChange()
-      .pipe(takeUntil(this.mediaHubManager.subscription))
+      .pipe(
+        takeUntil(this.mediaHubManager.subscription),
+        skip(1)
+      )
       .subscribe(() => {
         this.searchControl.setValue('', { emitEvent: false });
         this.mediaHubManager.search(null);
       })
   }
 
-
-  uploadFiles(files: FileList) {
-    const folder_id = this.mediaHubManager.getFolderID();
-    if (folder_id) {
-      for (const file of (files as any)) {
-        this.uploadService.uploadImage(file, folder_id)
-          .subscribe((uploadedFile) => {
-            this.mediaHubManager.uploadListener.notify({
-              id: uploadedFile.id,
-              path: `${environment.serverOrigin}/${uploadedFile.path}`
-            });
-          });
+  async uploadFiles(files: FileList) {
+    const folder = this.mediaHubManager.getFolderID();
+    if (folder) {
+      for (const file of Array.from(files)) {
+        this.mediaHubManager.uploadListener.notify(
+          new MediaModel.File({
+            path: null,
+            folder: this.mediaHubManager.getFolderID(),
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            rawFile: file
+          })
+        );
       }
     }
   }
 
-  listView() {
-    this.onViewChange.emit(MediaHubViews.ListView);
-  }
-
-  gridView() {
-    this.onViewChange.emit(MediaHubViews.GridView);
+  changeView(view: MediaHubViews) {
+    this.onViewChange.emit(view);
   }
 
 }

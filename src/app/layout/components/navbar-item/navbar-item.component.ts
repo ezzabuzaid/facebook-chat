@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core';
 import { SidebarService, RegisterdSidebar } from 'app/widget/sidebar';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Subject } from 'rxjs';
 import { MEDIA_BREAKPOINTS } from '@shared/common';
 import { NavigationItem } from '@layout/navbar/navigation';
-import { LocalStorage } from '@ezzabuzaid/document-storage';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-navbar-item',
@@ -14,7 +14,8 @@ import { LocalStorage } from '@ezzabuzaid/document-storage';
 export class NavbarItemComponent implements OnInit, OnDestroy {
   @Input() public item: NavigationItem;
   @Input() public collapse = false;
-  private _subscribtion = new Subject();
+  @Input() @HostBinding('class.dense') dense = false;
+  private subscribtion = new Subject();
 
   constructor(
     private sidebarService: SidebarService,
@@ -27,9 +28,6 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
     return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).closed;
   }
 
-  // TODO shortcuts service
-  addShortcut() { }
-
   toggleNavbar() {
     if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md')) && !this.collapse) {
       this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
@@ -37,29 +35,8 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscribtion.next();
-    this._subscribtion.complete();
+    AppUtils.unsubscribe(this.subscribtion);
   }
 
 }
 
-
-class ShortcutService {
-
-  constructor(
-    private localstorage: LocalStorage
-  ) {
-
-  }
-
-  addShortcut(item: NavigationItem) {
-    const shortcuts = this.localstorage.get<NavigationItem[]>('shortcuts') || [];
-    shortcuts.push(item);
-    this.localstorage.set('shortcuts', shortcuts);
-  }
-
-  removeShortcut() {
-  }
-
-
-}

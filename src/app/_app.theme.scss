@@ -3,6 +3,7 @@
 @import 'variables';
 @import 'layout/layout.theme';
 @import 'pages/portal/portal.theme';
+@import 'pages/chat/chat.theme';
 @import 'widget/upload-file/upload-file.theme';
 
 @include mat-core();
@@ -12,6 +13,7 @@
   @include theme_classes($theme);
   @include layout_theme($theme);
   @include portal_theme($theme);
+  @include chat_theme($theme);
   @include upload_file($theme);
 }
 

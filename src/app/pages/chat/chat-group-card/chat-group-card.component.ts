@@ -1,12 +1,12 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { TokenService } from '@core/helpers/token';
 import { IChatCard } from '..';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatCardManager } from '../chat-card.manager';
-import { ChatService } from '@shared/services/chat';
 import { ChatGroupMembersComponent } from '../chat-group-members/chat-group-members.component';
 import { ChatManager } from '../chat.manager';
+import { ChatCardComponent } from '../chat-card/chat-card.component';
 
 @Component({
   selector: 'app-group-chat-card',
@@ -16,20 +16,23 @@ import { ChatManager } from '../chat.manager';
 export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IGroup> {
   public id: string;
   public data: ChatModel.IGroup;
+  @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
     private tokenService: TokenService,
     private dialog: MatDialog,
     private chatCardManager: ChatCardManager,
     private chatManager: ChatManager,
-    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() {
     this.chatManager.join(this.data._id);
-    this.updateScroll(this.getElement('app-chat-card-footer'), this.getElement('app-chat-card-messages'));
+    this.baseCharCard.updateContentHeight();
   }
 
+  updateScroll() {
+    this.baseCharCard.updateContentHeight();
+  }
 
   closeCard() {
     this.chatCardManager.removeCard();
@@ -42,20 +45,6 @@ export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<Chat
 
   isSender(id: string) {
     return this.tokenService.decodedToken.id === id;
-  }
-
-  private getElement(selector: string) {
-    const element = this.elementRef.nativeElement;
-    return element.querySelector(selector) as HTMLElement;
-  }
-
-  updateScroll(footer: HTMLElement, messagesWrapper: HTMLElement) {
-    messagesWrapper.style.setProperty('height', `calc(100% - ${footer.clientHeight}px)`)
-    messagesWrapper.scrollTo({
-      top: messagesWrapper.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    })
   }
 
   ngOnDestroy() {

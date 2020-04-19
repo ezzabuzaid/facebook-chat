@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UploadService } from '@shared/services/upload';
+import { UploadsService } from '@shared/services/upload';
 import { MediaModel } from '@shared/models';
 
 @Component({
@@ -8,10 +8,10 @@ import { MediaModel } from '@shared/models';
   styleUrls: ['./media-hub-list-view.component.scss']
 })
 export class MediaHubListViewComponent implements OnInit {
-  @Input() files: MediaModel.IFile[] = [];
+  @Input() files: MediaModel.File[] = [];
 
   constructor(
-    private uploadsService: UploadService
+    private uploadsService: UploadsService
   ) { }
 
   ngOnInit() { }

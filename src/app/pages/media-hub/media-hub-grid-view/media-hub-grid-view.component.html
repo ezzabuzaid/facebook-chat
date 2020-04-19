@@ -1,8 +1,10 @@
-<p class="bg-dark text-white py-1 px-2 mt-3">Media</p>
-<app-masonry>
-    <app-masonry-item *ngFor="let file of files; let index = index;">
-        <app-media-card (onDelete)="deleteFile($event, index)" class="item" [file]="file"
-            (onMarkChange)="addToMarkedFiles(index);">
-        </app-media-card>
-    </app-masonry-item>
-</app-masonry>
+<app-inifinite-scrolling [scrollContainerSelector]="parentSelector" (dataChange)="appendFiles($event)"
+    [provider]="$provider">
+    <app-masonry>
+        <app-masonry-item *ngFor="let file of files; let index = index;">
+            <app-media-card (onDelete)="deleteFile($event, index)" class="item" [file]="file"
+                (onMarkChange)="addToMarkedFiles(index);">
+            </app-media-card>
+        </app-masonry-item>
+    </app-masonry>
+</app-inifinite-scrolling>

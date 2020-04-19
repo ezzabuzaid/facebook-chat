@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ChatModel, ListEntityResponse } from '@shared/models';
+import { ChatModel, ListEntityResponse, PlainQuery, ListEntityQuery } from '@shared/models';
 import { Constants } from '@core/constants';
 import { map } from 'rxjs/operators';
-import { TokenService } from '@core/helpers/token';
 
 @Injectable({
     providedIn: 'root'
@@ -38,9 +37,9 @@ export class ChatService {
             .pipe(map(({ list }) => list))
     }
 
-    public fetchMessages(room_id: string) {
-        return this.http.get<ListEntityResponse<ChatModel.Message>>(`${Constants.API.CHAT.rooms}/${room_id}/messages`)
-            .pipe(map(({ list }) => list))
+    public fetchMessages(room: string, query: ListEntityQuery) {
+        const plainQuery = new PlainQuery(query);
+        return this.http.get<ListEntityResponse<ChatModel.Message>>(`${Constants.API.CHAT.rooms}/${room}/messages?${plainQuery.asString}`)
     }
 
 }

@@ -8,9 +8,7 @@
     white-space: nowrap;
     overflow: hidden;
   }
-  img {
-    max-height: 200px;
-  }
+  border-color: transparent;
   transition: border-color 0.25s;
   will-change: border-color;
   .check-icon {
@@ -23,20 +21,22 @@
   mat-card {
     border: 2px solid transparent;
   }
-  &.checked {
-    mat-card {
-      border-color: black !important;
+  &.markable {
+    &.checked {
+      mat-card {
+        border-color: black !important;
+      }
+      .check-icon {
+        display: block;
+      }
     }
-    .check-icon {
-      display: block;
-    }
-  }
-  &:hover {
-    mat-card {
-      border-color: black;
-    }
-    .check-icon {
-      display: block;
+    &:hover {
+      mat-card {
+        border-color: black;
+      }
+      .check-icon {
+        display: block;
+      }
     }
   }
 }

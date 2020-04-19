@@ -16,7 +16,11 @@ import { MediaPickerComponent } from './media-picker/media-picker.component';
 import { SidebarModule } from '@widget/sidebar';
 import { MasonryModule } from '@widget/masonry';
 import { TableModule } from '@widget/table';
-
+import { MediaLightboxComponent } from './media-lightbox/media-lightbox.component';
+import { DirectivesModule } from '@shared/directives';
+import { PipesModule } from '@shared/pipes';
+import { FileViewerModule } from '@partials/file-viewer';
+import { InifiniteScrollingModule } from '@widget/inifinite-scroll';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,7 @@ import { TableModule } from '@widget/table';
     MediaHubGridViewComponent,
     MediaHubListViewComponent,
     MediaPickerComponent,
+    MediaLightboxComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +42,11 @@ import { TableModule } from '@widget/table';
     ReactiveFormsModule,
     SidebarModule,
     MasonryModule,
-    TableModule
+    TableModule,
+    DirectivesModule,
+    PipesModule,
+    FileViewerModule,
+    InifiniteScrollingModule
   ],
   providers: []
 })

@@ -21,20 +21,20 @@
         <mat-divider></mat-divider>
     </ng-container>
 </mat-list>
-<mat-nav-list class="flex-fill">
+<mat-nav-list dense class="flex-fill">
     <ng-container *ngFor="let folder of folders; let index = index;">
-        <mat-list-item dense (click)="onFolderClick(folder)">
-            <mat-icon mat-list-icon text-muted>
-                {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
-            </mat-icon>
-            <div mat-line class="d-flex justify-content-between align-items-center">
-                <h5 class="folder-title text-truncate"> {{folder.name}}</h5>
-                <button (click)="$event.preventDefault();$event.stopImmediatePropagation();" mat-icon-button
-                    [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
-                    <mat-icon class="text-muted">more_vert</mat-icon>
-                </button>
-            </div>
-        </mat-list-item>
+        <div class="d-flex justify-content-between align-items-center">
+            <mat-list-item (click)="onFolderClick(folder)">
+                <mat-icon mat-list-icon class="text-muted">
+                    {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
+                </mat-icon>
+                <h5 mat-line class="text-truncate"> {{folder.name}}</h5>
+            </mat-list-item>
+            <button class="action-button" (click)="$event.preventDefault();$event.stopImmediatePropagation();"
+                mat-flat-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
+                <mat-icon class="text-muted">more_vert</mat-icon>
+            </button>
+        </div>
     </ng-container>
 </mat-nav-list>
 <mat-chip-list class="px-2">
@@ -47,15 +47,15 @@
     <ng-template matMenuContent let-folder="folder" let-index="index">
         <button mat-menu-item (click)="deleteFolder(folder, index)">
             <mat-icon>delete_outline</mat-icon>
-            <span class="text-muted">Delete</span>
+            <span>Delete</span>
         </button>
         <button mat-menu-item (click)="renameFolder(folder, index)">
             <mat-icon>text_format</mat-icon>
-            <span class="text-muted">Rename</span>
+            <span>Rename</span>
         </button>
         <button mat-menu-item>
-            <mat-icon class="text-muted">notifications_off</mat-icon>
-            <span>share</span>
+            <mat-icon>notifications_off</mat-icon>
+            <span>Share</span>
         </button>
     </ng-template>
 </mat-menu>

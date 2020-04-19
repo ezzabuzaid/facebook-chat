@@ -2,9 +2,9 @@ import * as io from 'socket.io-client';
 import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
 import { Listener } from '@core/helpers/listener';
-import { ChatMessage, ChatLocalMessage } from './types';
 import { fromEvent } from 'rxjs';
 import { TokenService } from '@core/helpers/token';
+import { ChatModel } from '@shared/models';
 
 @Injectable({
     providedIn: 'root'
@@ -14,17 +14,23 @@ export class ChatManager {
         query: { token: this.tokenService.token }
     });
     public onConnect = fromEvent(this.socket, 'connect');
-    public messageListener = new Listener<any>();
+    public messageListener = new Listener<ChatModel.Message>();
 
     constructor(
         private tokenService: TokenService
-    ) { }
-
-    sendMessage(message: ChatMessage) {
-        this.socket.emit('SendMessage', message);
+    ) {
     }
 
-    sendLocalMessage<T>(message: ChatLocalMessage<T>) {
+    sendMessage(message: ChatModel.Message) {
+        this.socket.emit('SendMessage', new ChatModel.ChatOutgoingMessage(
+            message.room,
+            message.text,
+            message.order,
+            message.timestamp
+        ));
+    }
+
+    sendLocalMessage(message: ChatModel.Message) {
         this.messageListener.notify(message);
     }
 

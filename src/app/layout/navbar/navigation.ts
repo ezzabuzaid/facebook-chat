@@ -7,12 +7,14 @@ export class NavigationItem {
   icon: string;
   routerLink?: string;
   children?: NavigationItem[];
+  queryParams?= null;
   constructor(item: NavigationItem) {
     this.type = item.type;
     this.title = item.title;
     this.icon = item.icon;
     this.routerLink = item.routerLink;
     this.children = item.children;
+    this.queryParams = item.queryParams;
   }
 }
 
@@ -25,10 +27,24 @@ export default [
     type: 'item'
   }),
   new NavigationItem({
-    routerLink: `${Constants.Routing.MediaHub.withSlash}`,
     icon: 'folder',
     title: _extract('navbar_media'),
-    type: 'item'
+    type: 'collapse',
+    children: [
+      new NavigationItem({
+        routerLink: `${Constants.Routing.MediaHub.withSlash}`,
+        title: 'My folder',
+        icon: 'perm_media',
+        type: 'item'
+      }),
+      new NavigationItem({
+        routerLink: `${Constants.Routing.MediaHub.withSlash}`,
+        queryParams: { shared: true },
+        title: 'Shared folder',
+        icon: 'folder_shared',
+        type: 'item'
+      })
+    ]
   }),
   new NavigationItem({
     routerLink: `${Constants.Routing.SESSIONS.withSlash}`,

@@ -45,8 +45,11 @@ export namespace Constants {
     static MediaHub = {
       withSlash: '/media',
       withoutSlash: 'media',
-    };;
-
+    };
+    static SharedMediaHub = {
+      withSlash: '/media?shared=true',
+      withoutSlash: 'media?shared=true',
+    };
   }
 
   export class API {

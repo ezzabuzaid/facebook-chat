@@ -1,0 +1,14 @@
+<ng-container *ngIf="isFile(); else textViewer">
+    <app-file-viewer [withLoader]="false" [file]="file" class="pointer w-50" [class.ml-auto]="isSender"
+        (onUpload)="sendMessage($event.path)">
+    </app-file-viewer>
+</ng-container>
+<ng-template #textViewer>
+    <div class="p-2 position-relative rounded text-white" [matTooltipPosition]="'above'"
+        [matTooltip]="message.createdAt | timeago" [ngClass]="{
+        'bg--accent': isSender,
+        'bg--primary': !isSender
+    }">{{message.text}}</div>
+</ng-template>
+
+<div *ngIf="loading" class="loader"></div>

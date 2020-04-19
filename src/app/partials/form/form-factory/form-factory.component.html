@@ -92,7 +92,7 @@
             ...fieldOptions
         });
     } -->
-    <app-mobile-control [id]="field.id" [formControl]="field"></app-mobile-control>
+    <app-mobile-control [formControl]="field"></app-mobile-control>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.COUNTRY)">
     <app-country-control [id]="field.id" [formControl]="field"></app-country-control>

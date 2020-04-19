@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MediaModel } from '@shared/models';
-import { MediaHubManager } from '../media-hub.manager';
-import { UploadService } from '@shared/services/upload';
-import { Observable } from 'rxjs';
+import { UploadsService } from '@shared/services/upload';
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -17,11 +15,11 @@ export class MediaPickerComponent implements OnInit {
       this.onFolderClick(folders[0]);
     }))
 
-  files: MediaModel.IFile[] = [];
-  markedFiles: MediaModel.IFile[] = [];
+  files: MediaModel.File[] = [];
+  markedFiles: MediaModel.File[] = [];
 
   constructor(
-    private uploadService: UploadService,
+    private uploadService: UploadsService,
   ) { }
 
   ngOnInit(): void {
@@ -31,10 +29,10 @@ export class MediaPickerComponent implements OnInit {
     this.currentFolderID = folder._id;
     this.uploadService.searchForFiles({
       file: '',
-      folder: folder._id
+      folder: folder._id,
     })
       .subscribe(files => {
-        this.files = files;
+        this.files = files.list;
       })
   }
 

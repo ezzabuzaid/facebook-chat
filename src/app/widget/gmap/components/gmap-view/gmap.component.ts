@@ -42,11 +42,9 @@ export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnCha
 
   @Input() set currentPosition(value) {
     // TODO exception if both of position and currentPosition
-    log.warn(value);
     if (value) {
       try {
         GoogleMapService.getCurrentLocation(35, 35)
-          .pipe(tap(console.log))
           .pipe(map(cords => cords.toJSON()))
           .subscribe(position => {
             if (!this.latitude || !this.longitude) {

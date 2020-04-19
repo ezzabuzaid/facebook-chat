@@ -1,4 +1,4 @@
-import { FormControl, AbstractControlOptions, FormGroup } from '@angular/forms';
+import { FormControl, AbstractControlOptions, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
 import { Type } from '@angular/core';
 
@@ -45,6 +45,7 @@ export interface IField<Tname, T> extends FormControl {
     min?: T;
     max?: T;
     typeOf(type: EFieldType): boolean;
+    addValidator(...validator: ValidatorFn[]): void;
 }
 
 export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
@@ -72,11 +73,16 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         }: Partial<Field<Tname, T>> = {}
     ) {
         super(value, validation);
+        this.value = value;
         this.type = type || EFieldType.TEXT;
         this.section = section;
         this.label = label;
         this.id = id || AppUtils.generateAlphabeticString(5);
         this.autocomplete = autocomplete;
+    }
+
+    addValidator(...validator: ValidatorFn[]) {
+        this.setValidators(Validators.compose([this.validator, ...validator]));
     }
 
     public typeOf(type: EFieldType) {
@@ -87,14 +93,14 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
 
 export class SelectField<Tname, T = string | string[]> extends Field<Tname, T> implements IField<Tname, T> {
     public options: ISelectOption[] = [];
-    public value: T = null;
+    // public value: T = null;
     constructor(
         public name: Tname,
         option: Partial<SelectField<Tname, T>>
     ) {
         super(name, option);
         this.options = option.options;
-        this.value = option.value as any;
+        // this.value = option.value as any;
     }
 }
 export class DateField<Tname> extends Field<Tname, Date> implements IField<Tname, Date> {

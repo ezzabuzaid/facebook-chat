@@ -1,8 +1,9 @@
-import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
 import { ChatManager } from '../chat.manager';
+import { ChatCardComponent } from '../chat-card/chat-card.component';
 
 @Component({
   selector: 'app-user-card',
@@ -12,36 +13,25 @@ import { ChatManager } from '../chat.manager';
 export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IRoom> {
   public id: string;
   public data: ChatModel.IRoom = null;
+  @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
     private chatCardManager: ChatCardManager,
     private chatManager: ChatManager,
-    private elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() {
     this.chatManager.join(this.data._id);
-    this.updateScroll(this.getElement('app-chat-card-footer'), this.getElement('app-chat-card-messages'));
+    this.baseCharCard.updateContentHeight();
+  }
+
+  updateScroll() {
+    this.baseCharCard.updateContentHeight();
   }
 
   closeCard() {
     this.chatCardManager.removeCard();
     this.chatCardManager.removeButton(this.id);
-  }
-
-
-  private getElement(selector: string) {
-    const element = this.elementRef.nativeElement;
-    return element.querySelector(selector) as HTMLElement;
-  }
-
-  updateScroll(footer: HTMLElement, messagesWrapper: HTMLElement) {
-    messagesWrapper.style.setProperty('height', `calc(100% - ${footer.clientHeight}px)`)
-    messagesWrapper.scrollTo({
-      top: messagesWrapper.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    })
   }
 
   ngOnDestroy() {

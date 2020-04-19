@@ -30,6 +30,10 @@
     transform: translateY(-2px);
   }
   .textarea-wrapper {
+    overflow: hidden;
+    &:hover {
+      overflow-x: auto;
+    }
     background-color: #f1f2f5;
     textarea {
       font-size: 14px;
@@ -42,7 +46,7 @@
       }
     }
   }
-  .img-box {
+  .attachment-box {
     height: 50px;
     flex: 0 0 20%;
     mat-icon {
@@ -50,7 +54,13 @@
       height: 18px;
       width: 18px;
       top: -20%;
-      left: -15%;
+      right: 0;
+    }
+    .document-name {
+      max-width: 150px;
+      height: 50px;
+      line-height: 50px;
+      background-color: rgba(0, 0, 0, 0.12);
     }
   }
 }

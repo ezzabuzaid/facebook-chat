@@ -1,14 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ElementRef, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { ChatManager } from '../chat.manager';
-import { ChatMessage } from '../types';
-import { ChatModel, MediaModel } from '@shared/models';
-import { UploadService } from '@shared/services/upload';
-import { MediaPickerComponent } from 'app/pages/media-hub/media-picker/media-picker.component';
-import { MatDialog } from '@angular/material/dialog';
+import { ChatModel } from '@shared/models';
 import * as EmojiButton from '@joeattardi/emoji-button';
-import { WINDOW } from '@shared/common';
 import { FormControl } from '@angular/forms';
+import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
+import { TokenService } from '@core/helpers/token';
 @Component({
   selector: 'app-chat-card-footer',
   templateUrl: './chat-card-footer.component.html',
@@ -18,7 +15,7 @@ export class ChatCardFooterComponent implements OnInit {
   @Input() room: ChatModel.IRoom;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
-  @Output() onActionBarVisibilityChange = new EventEmitter(true);
+  @Output() onActionBarVisibilityChange = new EventEmitter<HTMLElement>(true);
 
   files: File[] = [];
   base64Files = [];
@@ -28,10 +25,9 @@ export class ChatCardFooterComponent implements OnInit {
 
   constructor(
     private chatManager: ChatManager,
-    private uploadsService: UploadService,
-    private dialog: MatDialog,
     private elementRef: ElementRef<HTMLElement>,
-    @Inject(WINDOW) private window: Window
+    private mediaHubManager: MediaHubManager,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
@@ -61,7 +57,6 @@ export class ChatCardFooterComponent implements OnInit {
     });
   }
 
-
   @HostListener('click')
   closeEmojiPicker() {
     if (this.emojiPicker.pickerVisible) {
@@ -70,34 +65,34 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   sendMessage() {
-    const text = this.messageFormControl.value;
+    const text = this.messageFormControl.value as string;
     if (AppUtils.isTruthy(text)) {
       this.messageFormControl.setValue('');
       if (this.external) {
         this.onSendMessage.emit(text);
       } else {
-        const message = new ChatMessage(text, this.room._id);
-        this.chatManager.sendMessage(message);
-
-        this.files.forEach(file => {
-          this.uploadsService.uploadImage(file, this.room.folder)
-            .subscribe(({ path }) => {
-              message.text = path;
-              this.chatManager.sendMessage(message);
-              this.base64Files.shift();
-              this.files.shift();
-            })
-        });
+        this.chatManager.sendLocalMessage(this.createMessage(text));
       }
     }
+    if (AppUtils.hasItemWithin(this.files)) {
+      for (const file of this.files) {
+        this.chatManager.sendLocalMessage(this.createMessage(null, file));
+      }
+      this.hideActionBar();
+    }
+  }
 
+  createMessage(text: string, file: File = null) {
+    return new ChatModel.Message({
+      text,
+      rawFile: file,
+      user: this.tokenService.decodedToken.id,
+      room: this.room._id,
+    })
   }
 
   openActionBar() {
     this.showActionBar = !this.showActionBar;
-    setTimeout(() => {
-      this.onActionBarVisibilityChange.emit(this.element);
-    });
     if (!this.showActionBar) {
       this.files = [];
       this.base64Files = [];
@@ -118,22 +113,28 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   openMediaPicker() {
-    this.dialog.open<MediaPickerComponent, any, MediaModel.IFile[]>(MediaPickerComponent, {
-      width: '1000px',
-      height: '750px',
-      panelClass: ['media-picker-dialog']
-    })
+    this.mediaHubManager.openMediaPicker()
       .afterClosed()
       .subscribe((files) => {
         files.forEach(file => {
-          const message = new ChatMessage(file.path, this.room._id);
-          this.chatManager.sendMessage(message);
+          // this.chatManager.sendMessage(new ChatMessage(this.room._id, file.path, 0));
         });
       });
   }
 
   get element() {
     return this.elementRef.nativeElement;
+
+  }
+
+  isImage(type: string) {
+    return AppUtils.isImage(type);
+  }
+
+  hideActionBar() {
+    this.showActionBar = false;
+    this.files = [];
+    this.base64Files = [];
   }
 
 }

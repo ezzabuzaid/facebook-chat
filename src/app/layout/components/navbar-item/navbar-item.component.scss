@@ -3,19 +3,14 @@
 :host {
   display: block;
   .navbar-item {
-    height: 55px;
+    height: 50px;
     width: 55px;
-    font-weight: 400;
     ::ng-deep {
       .mat-button-wrapper {
         width: 100%;
       }
     }
-    &__pin {
-      display: none;
-    }
   }
-
   &:hover {
     .navbar-item {
       &__pin {
@@ -26,6 +21,16 @@
   .navbar-item-title {
     mat-icon {
       width: 30px;
+    }
+  }
+  a {
+    text-decoration: none !important;
+  }
+  &.dense {
+    .navbar-item {
+      height: 40px;
+      width: 55px;
+      font-weight: 400;
     }
   }
 }

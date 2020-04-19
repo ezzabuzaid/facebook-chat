@@ -2,16 +2,16 @@
 
 <mat-divider></mat-divider>
 
-<app-sidebar>
+<app-sidebar name="media">
     <div sidebar-drawer>
         <app-media-hub-folders></app-media-hub-folders>
     </div>
-    <div sidebar-container class="p-3">
+    <div #sidebarContainer sidebar-container class="test p-3">
         <ng-container *ngIf="currentView === EmediaHubViews.GridView">
-            <app-media-hub-grid-view [files]="files"></app-media-hub-grid-view>
+            <app-media-hub-grid-view [parentSelector]="sidebarContainer"></app-media-hub-grid-view>
         </ng-container>
         <ng-container *ngIf="currentView === EmediaHubViews.ListView">
-            <app-media-hub-list-view [files]="files"></app-media-hub-list-view>
+            <app-media-hub-list-view [files]="[]"></app-media-hub-list-view>
         </ng-container>
     </div>
 </app-sidebar>

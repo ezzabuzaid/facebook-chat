@@ -10,7 +10,8 @@ import { WINDOW } from '@shared/common';
 export class SidebarComponent implements OnInit {
   @Input() @HostBinding('class.toggled') public closed = false;
   @Input() @HostBinding('class.right') public right = false;
-  @Input() @HostBinding('class.resizing') public resizing = false;
+  @Input() resizable = true;
+  @HostBinding('class.resizing') public resizing = false;
   @Input() public minWidth = 0;
   @Input() public maxWidth = 0;
   @Input() public name = '';
@@ -32,7 +33,18 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
-    this.resizer.style[this.right ? 'right' : 'left'] = this.window.getComputedStyle(this.element).getPropertyValue('--width');
+  }
+
+  ngAfterViewInit() {
+    if (this.resizable) {
+      const cursor = this.right ? 'w-resize' : 'e-resize';
+      this.resizer.style.setProperty('cursor', cursor);
+      this.setResizerPosition({
+        direction: this.direction,
+        offset: this.formatWidthValue(this.window.getComputedStyle(this.element).getPropertyValue('--width'))
+      });
+      this.attachEvents(this.resizer);
+    }
   }
 
   toggle(value = !this.closed) {
@@ -114,7 +126,6 @@ export class SidebarComponent implements OnInit {
       this.minWidthExceeded.emit();
     }
 
-    // this.window.getComputedStyle(this.element).setProperty('--width', `${vector.offset}px`);
     this.element.style.setProperty('--width', `${vector.offset}px`);
 
     this.initialTouchPos = null;
@@ -127,15 +138,23 @@ export class SidebarComponent implements OnInit {
       return;
     }
     const vector = this.getVector(evt);
-    if (this.isExceededMaxWidth(vector.offset) || this.isExceededMinWidth(vector.offset)) {
+    if (
+      this.isExceededMaxWidth(vector.offset)
+      ||
+      this.isExceededMinWidth(vector.offset)
+    ) {
       return;
     }
 
-    this.resizer.style.setProperty(vector.direction, `${vector.offset}px`);
+    this.setResizerPosition(vector);
 
   }
 
-  private getVector(evt) {
+  setResizerPosition(vector: Vector) {
+    this.resizer.style.setProperty(vector.direction, `${vector.offset - this.resizer.clientWidth}px`);
+  }
+
+  private getVector(evt): Vector {
     const point = { x: evt.x, y: evt.y };
     let element = this.element;
     let maxOffsetLeft = 0;
@@ -150,9 +169,9 @@ export class SidebarComponent implements OnInit {
     point.y -= maxOffsetTop;
     point.x = this.right ? this.element.offsetWidth - point.x : point.x;
 
-    const maxWidth = this.getDrawerMaxOffset('maxWidth') || this.element.offsetWidth;
-    const minWidth = this.getDrawerMaxOffset('minWidth') || 0;
-    console.log(minWidth);
+    const maxWidth = this.getDrawerOffset('maxWidth') || this.element.offsetWidth;
+    const minWidth = this.getDrawerOffset('minWidth') || 0;
+
     if (point.x >= maxWidth) {
       point.x = maxWidth;
     }
@@ -160,13 +179,13 @@ export class SidebarComponent implements OnInit {
       point.x = minWidth;
     }
     return {
-      direction: this.right ? 'right' : 'left',
+      direction: this.direction,
       offset: point.x
     };
   }
 
-  ngAfterViewInit() {
-    this.attachEvents(this.element.querySelector('.resizer'))
+  get direction() {
+    return this.right ? 'right' : 'left';
   }
 
   private pxToPercentege(pixels: number) {
@@ -175,7 +194,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private percentegeToPx(percentge: number) {
-    return percentge * 1680 / 100;
+    return percentge * this.element.clientWidth / 100;
   }
 
   get drawer() {
@@ -187,15 +206,15 @@ export class SidebarComponent implements OnInit {
   }
 
   private isExceededMaxWidth(pixels: number) {
-    const maxWidth = this.getDrawerMaxOffset('maxWidth') || false;
+    const maxWidth = this.getDrawerOffset('maxWidth') || false;
     return maxWidth && pixels >= maxWidth;
   }
 
   private isExceededMinWidth(pixels: number) {
-    return pixels < this.getDrawerMaxOffset('minWidth');
+    return pixels < this.getDrawerOffset('minWidth');
   }
 
-  private getDrawerMaxOffset(property: keyof CSSStyleDeclaration) {
+  private getDrawerOffset(property: keyof CSSStyleDeclaration) {
     return this.formatWidthValue(this.cssValue(this.drawer, property));
   }
 
@@ -213,7 +232,7 @@ export class SidebarComponent implements OnInit {
   }
 
   private cssValue(element: HTMLElement, property: keyof CSSStyleDeclaration) {
-    return this.window.getComputedStyle(element)[property];
+    return this.window.getComputedStyle(element).getPropertyValue(property as string);
   }
 
 }
@@ -222,3 +241,7 @@ interface ISidebarToggle {
   toggle: boolean;
 }
 
+interface Vector {
+  direction: 'left' | 'right';
+  offset: number;
+}

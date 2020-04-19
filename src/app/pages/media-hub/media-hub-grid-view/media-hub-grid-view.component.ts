@@ -1,6 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MediaModel } from '@shared/models';
-import { UploadService } from '@shared/services/upload';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MediaModel, ListEntityQuery } from '@shared/models';
+import { UploadsService } from '@shared/services/upload';
+import { MediaHubManager } from '../media-hub.manager';
+import { AppUtils } from '@core/helpers/utils';
+import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-media-hub-grid-view',
@@ -8,14 +12,40 @@ import { UploadService } from '@shared/services/upload';
   styleUrls: ['./media-hub-grid-view.component.scss']
 })
 export class MediaHubGridViewComponent implements OnInit {
-  @Input() files: MediaModel.IFile[] = [];
-  markedFiles: MediaModel.IFile[] = [];
+  @Input() parentSelector: HTMLElement = null;
+  files: MediaModel.File[] = [];
+  markedFiles: MediaModel.File[] = [];
+  @ViewChild(InifiniteScrollingComponent) inifiniteScrollingComponent: InifiniteScrollingComponent;
+
+  $provider = (pageQuery: ListEntityQuery) => this.uploadsService.searchForFiles(
+    new MediaModel.FileSearchQuery(
+      this.mediaHubManager.getFileName(),
+      this.mediaHubManager.getFolderID(),
+      this.mediaHubManager.getTagID(),
+      pageQuery
+    )
+  );
 
   constructor(
-    private uploadsService: UploadService
+    private uploadsService: UploadsService,
+    private mediaHubManager: MediaHubManager,
   ) { }
 
   ngOnInit() {
+    this.mediaHubManager.uploadListener
+      .listen()
+      .subscribe(event => {
+        if (AppUtils.isEmptyString(this.mediaHubManager.getFileName())) {
+          this.files.push(event);
+        }
+      });
+
+    this.mediaHubManager.onSearch()
+      .pipe(skip(1))
+      .subscribe(() => {
+        this.files = [];
+        this.inifiniteScrollingComponent.restart();
+      });
   }
 
   deleteFile(id: string, index: number) {
@@ -27,6 +57,10 @@ export class MediaHubGridViewComponent implements OnInit {
 
   addToMarkedFiles(index: number) {
     this.markedFiles.push(this.files[index]);
+  }
+
+  appendFiles(files: MediaModel.File[]) {
+    this.files.push(...files);
   }
 
 }

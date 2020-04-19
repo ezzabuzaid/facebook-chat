@@ -1,7 +1,10 @@
-<mat-icon (click)="toggleChecking()" class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
-    check</mat-icon>
+<mat-icon *ngIf="markable" (click)="toggleChecking()"
+    class="pointer check-icon position-absolute bg--accent text-white border-radius-1">
+    check
+</mat-icon>
 <mat-card>
-    <img *ngIf="isImage" mat-card-image [src]="file.fullPath" [alt]="file.name" class="shadow">
+    <app-file-viewer (onUpload)="patchFile($event)" mat-card-image [file]="file">
+    </app-file-viewer>
     <mat-card-content>
         <div class="d-flex align-items-center justify-content-between">
             <div class="w-75">
@@ -9,11 +12,12 @@
                 <span class="text-uppercase bg-secondary mr-1 roundeds p-1">{{file.type}}</span>
                 <span class="text-uppercase">{{file.size / 1000 || ''}} kb</span>
             </div>
-            <button mat-icon-button [matMenuTriggerFor]="menu">
+            <button *ngIf="showMenu" [disabled]="!!file.rawFile" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>
     </mat-card-content>
+
 </mat-card>
 <mat-menu #menu="matMenu">
     <button mat-menu-item (click)="deleteFile()">

@@ -1,32 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEventType, HttpEvent, HttpProgressEvent } from '@angular/common/http';
-import { map, filter, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { Constants } from '@core/constants';
-import { MediaModel, PlainQuery, CreateResponse, ListEntityResponse } from '@shared/models';
-import { environment } from '@environments/environment';
+import { MediaModel, PlainQuery, ListEntityResponse } from '@shared/models';
 
-interface CreateFileResponse {
-    id: string;
-    path: string;
-}
 
 @Injectable({
     providedIn: 'root'
 })
-export class UploadService {
+export class UploadsService {
 
     constructor(
         private http: HttpClient
     ) { }
 
-    uploadImage(file: File, folder_id: string) {
+    uploadImage(file: File, folder: string) {
         const fd = new FormData();
         fd.append('upload', file);
-        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.base + '/' + folder_id, fd);
+        return this.http.post<MediaModel.CreateFileResponse>(Constants.API.UPLOADS.base + '/' + folder, fd);
     }
 
     createFolder(name: string) {
-        return this.http.post<CreateFileResponse>(Constants.API.UPLOADS.folders, { name });
+        return this.http.post<MediaModel.CreateFileResponse>(Constants.API.UPLOADS.folders, { name });
     }
 
     deleteFolder(folder_id: string) {
@@ -37,7 +32,7 @@ export class UploadService {
         return this.http.delete(`${Constants.API.UPLOADS.base}/${file_id}`);
     }
 
-    updateFile(file: Partial<MediaModel.IFile>) {
+    updateFile(file: Partial<MediaModel.File>) {
         return this.http.patch(`${Constants.API.UPLOADS.base}/${file._id}`, file);
     }
 
@@ -46,20 +41,21 @@ export class UploadService {
     }
 
     getFolders() {
-        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders)
+        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders + '/user')
+            .pipe(map(({ list }) => list));
+    }
+
+    getSharedFolders() {
+        return this.http.get<ListEntityResponse<MediaModel.Folder>>(Constants.API.UPLOADS.folders + '/user/shared')
             .pipe(map(({ list }) => list));
     }
 
     public searchForFiles(query: MediaModel.FileSearchQuery) {
         const plainQuery = new PlainQuery(query);
-        return this.http.get<MediaModel.IFile[]>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
-            .pipe(map((files) => {
-                return files.map(file => {
-                    file.fullType = file.type;
-                    file.type = file.type.split('/')[1];
-                    file.fullPath = environment.serverOrigin + file.path;
-                    return file;
-                })
+        return this.http.get<ListEntityResponse<MediaModel.File>>(`${Constants.API.UPLOADS.search}?${plainQuery.asString}`)
+            .pipe(map((data) => {
+                data.list = data.list.map(file => new MediaModel.File(file));
+                return data;
             }));
     }
 

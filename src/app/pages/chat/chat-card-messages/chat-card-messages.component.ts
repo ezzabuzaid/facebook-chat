@@ -1,76 +1,75 @@
-import { Component, OnInit, Input, ElementRef } from '@angular/core';
-import { ChatModel, UsersModel } from '@shared/models';
-import { TokenService } from '@core/helpers/token';
-
+import { Component, OnInit, Input, ElementRef, QueryList, AfterViewInit, ViewChildren } from '@angular/core';
+import { ChatModel, ListEntityQuery } from '@shared/models';
 import { ChatService } from '@shared/services/chat';
 import { ChatManager } from '../chat.manager';
-import { environment } from '@environments/environment';
+import { MessageBubbleComponent } from '../message-bubble/message-bubble.component';
 
 @Component({
   selector: 'app-chat-card-messages',
   templateUrl: './chat-card-messages.component.html',
   styleUrls: ['./chat-card-messages.component.scss']
 })
-export class ChatCardMessagesComponent implements OnInit {
+export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
+  @ViewChildren(MessageBubbleComponent) messageBubbleComponents: QueryList<MessageBubbleComponent>;
   @Input() id: string = null;
   public messages: ChatModel.Message[] = [];
+  $provider = (pageQuery: ListEntityQuery) => this.chatService.fetchMessages(this.id, pageQuery)
 
   constructor(
-    private tokenService: TokenService,
     private chatService: ChatService,
     private chatManager: ChatManager,
-    private elementRef: ElementRef<HTMLElement>
+    private elementRef: ElementRef<HTMLElement>,
   ) { }
 
   ngOnInit() {
-    this.populateMessages();
-
     this.chatManager.socket
       .on('Message', message => {
         this.messages.push(message);
-        this.scrollToLastMessage('auto');
+        // this.scrollToLastMessage('auto');
+      });
+
+    this.chatManager.messageListener.listen()
+      .subscribe(message => {
+        message.order = this.getLastMessageOrder() + 1;
+        if (message.text) {
+          this.chatManager.sendMessage(message);
+        }
+        this.messages.push(message);
+        // this.scrollToLastMessage('smooth', 100);
       });
   }
 
-  populateMessages() {
-    this.chatService.fetchMessages(this.id)
-      .subscribe((messages) => {
-        this.messages = messages;
-        this.scrollToLastMessage('smooth');
-      });
+  ngAfterViewInit() {
+    this.messageBubbleComponents.changes
+      .subscribe(() => {
+        this.messageBubbleComponents.last.element.scrollIntoView();
+      })
   }
 
-  scrollToLastMessage(behavior: ScrollBehavior) {
+  trackBy(index: number, message: ChatModel.Message) {
+    return message.timestamp;
+  }
+
+  getLastMessageOrder() {
+    return this.messages[this.messages.length - 1].order;
+  }
+
+  scrollToLastMessage(behavior: ScrollBehavior, afterMS = 0) {
     setTimeout(() => {
-      const children = this.elementRef.nativeElement.children;
-      const lastElement = children.item(children.length - 1);
-      lastElement && lastElement.scrollIntoView({ behavior })
-    });
-  }
-
-  isSender(id: string) {
-    return this.tokenService.decodedToken.id === id;
-  }
-
-  isUrl(value: any) {
-    try {
-      new URL(value);
-      return true;
-    } catch (error) {
-      return false;
-    }
-  }
-
-  isImage(value: string) {
-    return /(\.jpg|\.png|\.bmp|\.gif)$/i.test(value);
-  }
-
-  populateFileURL(value: string) {
-    return environment.serverOrigin + value;
+      this.element.scroll({
+        behavior,
+        left: 0,
+        top: this.element.scrollHeight
+      });
+    }, afterMS);
   }
 
   get element() {
     return this.elementRef.nativeElement;
+  }
+
+  prependMessages(messages: ChatModel.Message[]) {
+    this.messages.unshift(...messages.reverse());
   }
 
 }

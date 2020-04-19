@@ -4,14 +4,15 @@
   display: flex;
   flex-direction: column;
   min-height: 99%;
-  .folder-title {
-    font-size: inherit;
-    margin: inherit;
-    & + mat-icon {
-      height: 20px;
-      font-size: 20px;
-      width: 20px;
-      line-height: 20px;
+  mat-list-item {
+    $button_width: 40px;
+    width: calc(100% - #{$button_width}) !important;
+    & + .action-button {
+      padding: 0;
+      height: 50px;
+      max-width: $button_width;
+      min-width: $button_width;
+      width: $button_width;
     }
   }
   mat-nav-list {

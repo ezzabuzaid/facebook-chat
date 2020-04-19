@@ -1,22 +1,67 @@
-import { Observable, of, EMPTY, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
+import { Observable, of, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 export class AppUtils {
 
-    public static isEmptyString(value: string): boolean {
-        return typeof value !== 'string' || value === '';
+    /**
+     * Checks if the givin value is url
+     * @param {string} value
+     * @returns {boolean}
+     */
+    static isUrl(value: string): boolean {
+        try {
+            new URL(value);
+            return true;
+        } catch (error) {
+            return false;
+        }
     }
 
     /**
-     *
-     * @param object check if the list has at least an item
+     * Check if the type is image
+     * @default jpg jpg jpeg png bmp gif
+     * @param type file mimetype
      */
-    public static hasItemWithin(object: any) {
+    public static isImage(type: string) {
+        return /(\.jpg|\.png|\.bmp|\.gif|\.jpeg)$/i.test(type);
+    }
+
+    /**
+     * Check if the givin value is file type
+     * File type includes the images
+     */
+    public static isFile(type: string) {
+        return AppUtils.isImage(type) || AppUtils.isPdf(type);
+    }
+
+    /**
+     * Check if the type is pdf type
+     */
+    public static isPdf(type: string) {
+        return /(.pdf|application\/pdf)/.test(type);
+    }
+
+    /**
+     * checks if the value is string or not if so it will return true if it has at least one char
+     * NOTE: the value will be trimmed before the evaluation
+     * @param value to be checked
+     */
+    public static isEmptyString(value: string): boolean {
+        return typeof value !== 'string' || value.trim() === '';
+    }
+
+    /**
+     * Check if the value has at least one item
+     * --
+     * @param object any series value
+     * @returns {boolean} indicate that the {value} is empty
+     */
+    public static hasItemWithin(object: any): boolean {
         if (Array.isArray(object)) {
             return AppUtils.isTruthy(object.length);
         }
 
         if (new Object(object) === object) {
-            return Object.keys(object).length;
+            return AppUtils.isTruthy(Object.keys(object).length);
         }
 
         return AppUtils.isFalsy(AppUtils.isEmptyString(object));
@@ -24,18 +69,27 @@ export class AppUtils {
 
     /**
      * check if the givin value is empty
+     * --
      * supported values are string, array, pojo {}
+     * @param object any series value
+     * @returns {boolean} indicate that the {value} is empty
      */
-    static isEmpty(value: any) {
+    static isEmpty(value: any): boolean {
         return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
     }
 
-    static generateAlphabeticString(stringLength = 5) {
+
+    /**
+     * generate a random alphapetic string
+     * @param {number} length the maximum length of the string
+     * @returns {string}
+     */
+    static generateAlphabeticString(length = 5): string {
         let randomString = '';
         let randomAscii: number;
         const asciiLow = 65;
         const asciiHigh = 90;
-        for (let i = 0; i < stringLength; i++) {
+        for (let i = 0; i < length; i++) {
             randomAscii = Math.floor((Math.random() * (asciiHigh - asciiLow)) + asciiLow);
             randomString += String.fromCharCode(randomAscii);
         }
@@ -73,18 +127,26 @@ export class AppUtils {
         return data.reduce((a, b) => a.concat(b), []);
     }
 
-    static readFile(file: File) {
-        return new Observable((observer: Observer<string | ArrayBuffer>) => {
+    /**
+     * Encode file to base 64 text format
+     */
+    static readFile(file: File): Observable<string> {
+        return new Observable((observer: Observer<string>) => {
             const reader = new FileReader();
             reader.addEventListener('abort', (error) => observer.error(error));
             reader.addEventListener('error', (error) => observer.error(error));
-            reader.addEventListener('progress', console.log);
-            reader.addEventListener('loadend', (e) => observer.next(reader.result));
+            reader.addEventListener('loadend', () => {
+                observer.next(reader.result as any);
+                observer.complete();
+            });
             reader.readAsDataURL(file);
         });
     }
 
-    static unsubscribe(subscription: Subject<any>) {
+    /**
+     * Complete a Subject
+     */
+    static unsubscribe<T = any>(subscription: Subject<T>) {
         subscription.next();
         subscription.complete();
     }
@@ -294,8 +356,8 @@ export function tryOrThrow<T>(cb: (...args: any) => T) {
 }
 
 export function tryOrComplete<T>(
-    condition: boolean,
-    observable: () => Observable<T> | Promise<T>,
+    condition: () => boolean,
+    observable: () => Observable<T>,
     defaultValue: T = null
 ) {
     if (condition) {
@@ -311,7 +373,7 @@ export interface KeyPairs<T> {
 }
 
 export function typeaheadOperator<T, Q>(
-    provider: (query: Q) => Observable<T>,
+    provider: (query: Q) => Observable<T> = null,
     onEmpty: () => Partial<T> = null
 ): OperatorFunction<Q, T> {
     return (source) => {
@@ -319,12 +381,12 @@ export function typeaheadOperator<T, Q>(
             filter(AppUtils.notNullOrUndefined),
             debounceTime(400),
             distinctUntilChanged(),
-            switchMap((value) => {
-                if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
-                    return of<T>(onEmpty() as any);
-                }
-                return provider(value);
-            })
+            // switchMap((value) => {
+            //     if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
+            //         return of<T>(onEmpty() as any);
+            //     }
+            //     return provider(value);
+            // })
         );
     };
 }

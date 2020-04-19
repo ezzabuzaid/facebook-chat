@@ -37,7 +37,6 @@ export class DialogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    console.log(this.options.width);
     this.hostWidth = this.options.width || this.config.width;
   }
 
