@@ -51,7 +51,8 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
   }
 
   getLastMessageOrder() {
-    return this.messages[this.messages.length - 1].order;
+    const message = this.messages[this.messages.length - 1];
+    return message && message.order || -1;
   }
 
   scrollToLastMessage(behavior: ScrollBehavior, afterMS = 0) {
