@@ -27,7 +27,7 @@ export class UserService extends Listener<boolean> {
     return this.http
       .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.login, payload)
       .pipe(
-        tap((data) => {
+        tap(() => {
           this.notify(this.isAuthenticated);
         })
       );
@@ -49,11 +49,17 @@ export class UserService extends Listener<boolean> {
       }))
   }
 
-  public logout() {
+  public logout(redirectUrl = undefined) {
+    console.log(redirectUrl);
     this.navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}/${this.getDeviceUUID()}`);
-    this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash);
+    this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
+      queryParams: {
+        // [Constants.Application.REDIRECT_URL]: redirectUrl || undefined,
+        fuck: 'test'
+      },
+    });
     this.tokenService.deleteToken();
-    this.state.next(this.isAuthenticated);
+    this.notify(this.isAuthenticated);
   }
 
   public get isAuthenticated() {

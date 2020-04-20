@@ -5,6 +5,7 @@ export namespace Constants {
     static readonly LANGUAGE_KEY = 'language';
     static REFRESH_TOKEN_KEY = 'refresh_token';
     static DEVICE_UUID = 'x-device-uuid';
+    static REDIRECT_URL = 'redirectUrl';
   }
 
   export class Routing {

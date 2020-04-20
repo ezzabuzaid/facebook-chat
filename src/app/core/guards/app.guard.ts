@@ -23,7 +23,7 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authenticate();
+    return this.authenticate(state.url);
   }
 
   canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
@@ -32,15 +32,26 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.authenticate();
+    return this.authenticate(state.url);
   }
 
 
-  public authenticate() {
+  public authenticate(redirectUrl: string = undefined) {
     if (!this.userService.isAuthenticated) {
-      this.userService.logout();
+      this.userService.logout(redirectUrl);
       return false;
     }
     return true;
   }
+
+  // private authenticate(redirectUrl = undefined) {
+  // if (!this.userService.isAuthenticated) {
+  //   this.router.navigate([RoutesConstants.LOGIN.withSlash], {
+  //     queryParams: { [ApplicationConstants.REDIRECT_URL]: redirectUrl || undefined }
+  //   });
+  //   return false;
+  // }
+  // return true;
+  // }
+
 }
