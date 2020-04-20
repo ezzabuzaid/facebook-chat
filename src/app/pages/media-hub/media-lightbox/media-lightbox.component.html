@@ -9,7 +9,7 @@
                 <mat-icon>fullscreen</mat-icon>
             </button>
         </nav>
-        <div class="file-wrapper text-center">
+        <div class="file-wrapper text-center flex-fill">
             <ng-container>
                 <object *ngIf="dialogData.file.isPdf()"
                     [attr.data]="(dialogData.file.fullPath) | safe:'resourceUrl'"></object>

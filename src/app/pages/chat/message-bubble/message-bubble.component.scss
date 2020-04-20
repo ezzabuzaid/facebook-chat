@@ -3,6 +3,13 @@
     &.sender {
         align-self: flex-end;
     }
+
+    app-file-viewer {
+        &.is-image {
+            width: 50%;
+        }
+    }
+
     .loader,
     .loader::after {
         border-radius: 50%;

@@ -18,6 +18,8 @@ export class MediaHubFoldersComponent implements OnInit {
   createFolderActive = false;
   $tags = this.uploadsService.getTags();
 
+  isShared = false;
+
   constructor(
     private uploadsService: UploadsService,
     private mediaHubManager: MediaHubManager,
@@ -28,6 +30,7 @@ export class MediaHubFoldersComponent implements OnInit {
   ngOnInit() {
     this.routeUtility.onQueryParamChange('shared')
       .pipe(switchMap((value) => {
+        this.isShared = value;
         return value
           ? this.uploadsService.getSharedFolders()
           : this.uploadsService.getFolders()

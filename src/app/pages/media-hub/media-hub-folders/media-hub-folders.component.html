@@ -6,7 +6,7 @@
         </button>
     </div>
     <mat-divider></mat-divider>
-    <ng-container *ngIf="createFolderActive">
+    <ng-container *ngIf="createFolderActive && !isShared">
         <div class="px-3">
             <mat-form-field appearance="legacy">
                 <mat-hint>Folder name...</mat-hint>
@@ -30,8 +30,9 @@
                 </mat-icon>
                 <h5 mat-line class="text-truncate"> {{folder.name}}</h5>
             </mat-list-item>
-            <button class="action-button" (click)="$event.preventDefault();$event.stopImmediatePropagation();"
-                mat-flat-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
+            <button *ngIf="!isShared" class="action-button"
+                (click)="$event.preventDefault();$event.stopImmediatePropagation();" mat-flat-button
+                [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
                 <mat-icon class="text-muted">more_vert</mat-icon>
             </button>
         </div>

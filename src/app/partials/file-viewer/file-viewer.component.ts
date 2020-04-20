@@ -20,9 +20,9 @@ export class FileViewerComponent implements OnInit {
   @Input() withLoader = true;
   @Input() lightBox = true;
   @Input() file: MediaModel.File;
-  isImage = null;
   @HostBinding('class.uploading') loading = false;
   path: Observable<string>;
+  @HostBinding('class.is-image') isImage = null;
 
 
   constructor(

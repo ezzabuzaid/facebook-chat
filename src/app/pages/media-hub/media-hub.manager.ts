@@ -52,6 +52,7 @@ export class MediaHubManager {
         );
         return this.router.navigate(['.'], {
             relativeTo: this.routeUtility.route,
+            queryParamsHandling: 'merge',
             queryParams: {
                 folder: defaultQuery.folder,
                 file: defaultQuery.file,

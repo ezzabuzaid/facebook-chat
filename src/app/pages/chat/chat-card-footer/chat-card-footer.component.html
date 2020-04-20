@@ -32,7 +32,8 @@
                 <img *ngIf="isImage(file.name); else documentType" class="img-fluid h-100 border-radius-1"
                     [src]="base64Files[index] | async">
                 <ng-template #documentType>
-                    <p class="bg-white px-2 mb-0 border-radius-1 text-truncate document-name">{{file.name}}</p>
+                    <p class="bg-white px-2 mb-0 border-radius-1 text-truncate document-name shadow-sm">{{file.name}}
+                    </p>
                 </ng-template>
             </div>
         </div>

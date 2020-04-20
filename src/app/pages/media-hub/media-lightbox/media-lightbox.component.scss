@@ -44,7 +44,7 @@
         }
     }
     footer {
-        height: 14%;
+        height: 100px;
         @include scrollbar_theme(3px, 3px, gray);
         .footer-file {
             border: 3px solid transparent;
