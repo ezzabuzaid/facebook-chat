@@ -117,6 +117,7 @@ export class ChatCardFooterComponent implements OnInit {
       .afterClosed()
       .subscribe((files) => {
         files.forEach(file => {
+          this.chatManager.sendLocalMessage(this.createMessage(file.path));
           // this.chatManager.sendMessage(new ChatMessage(this.room._id, file.path, 0));
         });
       });
