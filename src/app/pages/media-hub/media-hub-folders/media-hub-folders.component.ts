@@ -95,12 +95,17 @@ export class MediaHubFoldersComponent implements OnInit {
           return this.uploadsService.updateFolder({ name, _id: folder._id });
         }))
       .subscribe();
-  };
+  }
+
   deleteFolder(folder: MediaModel.Folder, index: number) {
     this.uploadsService.deleteFolder(folder._id)
       .subscribe(data => {
         this.folders.splice(index, 1);
       });
+  }
+
+  preventDefaults(event: Event) {
+    AppUtils.preventBubblingAndCapturing(event);
   }
 
 }

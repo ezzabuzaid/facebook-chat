@@ -61,8 +61,7 @@ export class MediaCardComponent implements OnInit {
     this.file = event;
   }
 
-  tagFile(event: Event, tag: MediaModel.Tag) {
-    // AppUtils.preventBubblingAndCapturing(event);
+  tagFile(tag: MediaModel.Tag) {
     this.uploadsService.updateFile({ tag: tag.id, _id: this.file._id }).subscribe();
   }
 
