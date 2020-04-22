@@ -62,7 +62,9 @@ export class MediaHubFoldersComponent implements OnInit {
     this.mediaHubManager.search({
       folder: this.currentFolderID,
       file: undefined,
-      tag: undefined
+      tag: undefined,
+      page: 0,
+      size: 10
     });
   }
 
@@ -71,7 +73,9 @@ export class MediaHubFoldersComponent implements OnInit {
     this.mediaHubManager.search({
       folder: undefined,
       file: undefined,
-      tag: tag.id
+      tag: tag.id,
+      page: 0,
+      size: 10
     });
   }
 

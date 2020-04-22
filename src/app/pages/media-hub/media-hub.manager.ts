@@ -31,7 +31,8 @@ export class MediaHubManager {
     onSearch() {
         return merge(
             this.routeUtility.onQueryParamChange('file').pipe(filter(AppUtils.isTruthy)),
-            this.onFolderChange().pipe(filter(AppUtils.isTruthy))
+            this.routeUtility.onQueryParamChange('tag').pipe(filter(AppUtils.isTruthy)),
+            this.onFolderChange().pipe(filter(AppUtils.isTruthy)),
         )
             .pipe(
                 takeUntil(this.subscription),
@@ -48,7 +49,8 @@ export class MediaHubManager {
         const defaultQuery = query || new MediaModel.FileSearchQuery(
             this.getFileName(),
             this.getFolderID(),
-            this.getTagID()
+            this.getTagID(),
+            {}
         );
         return this.router.navigate(['.'], {
             relativeTo: this.routeUtility.route,

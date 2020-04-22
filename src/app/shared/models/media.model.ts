@@ -10,7 +10,17 @@ export namespace MediaModel {
         }
     }
 
-    export class File extends IModel {
+    export interface IFile extends IModel {
+        type: string;
+        size: number;
+        name: string;
+        path: string;
+        user: string;
+        folder: string;
+        tag: string;
+    }
+
+    export class File extends IModel implements IFile {
         fullType: string;
         rawFile: FileList[0];
         type: string;
@@ -19,8 +29,10 @@ export namespace MediaModel {
         path: string;
         user: string;
         folder: string;
+        tag: string;
+
         constructor(object: Partial<File>) {
-            super();
+            super(object);
             this.path = object.path && object.path.split('?')[0];
             this.fullType = object.fullType ?? object.type;
             this.type = object.type.includes('/') ? object.type.split('/')[1] : object.type;
@@ -28,9 +40,6 @@ export namespace MediaModel {
             this.name = object.name;
             this.user = object.user;
             this.folder = object.folder;
-            this._id = object._id;
-            this.createdAt = object.createdAt || this.createdAt;
-            this.updatedAt = object.updatedAt || this.updatedAt;
             this.rawFile = object.rawFile;
         }
 

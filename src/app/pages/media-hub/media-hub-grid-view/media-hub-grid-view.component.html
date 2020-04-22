@@ -1,5 +1,5 @@
-<app-inifinite-scrolling [scrollContainerSelector]="parentSelector" (dataChange)="appendFiles($event)"
-    [provider]="$provider">
+<app-inifinite-scrolling [fetchOnInit]="false" [scrollContainerSelector]="parentSelector"
+    (dataChange)="appendFiles($event)" [provider]="$provider">
     <app-masonry>
         <app-masonry-item *ngFor="let file of files; let index = index;">
             <app-media-card (onDelete)="deleteFile($event, index)" class="item" [file]="file"

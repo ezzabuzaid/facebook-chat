@@ -5,6 +5,7 @@ import { MediaHubManager } from '../media-hub.manager';
 import { AppUtils } from '@core/helpers/utils';
 import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 import { skip } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-media-hub-grid-view',
@@ -29,6 +30,7 @@ export class MediaHubGridViewComponent implements OnInit {
   constructor(
     private uploadsService: UploadsService,
     private mediaHubManager: MediaHubManager,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -41,10 +43,18 @@ export class MediaHubGridViewComponent implements OnInit {
       });
 
     this.mediaHubManager.onSearch()
-      .pipe(skip(1))
+      // .pipe(skip(1))
       .subscribe(() => {
         this.files = [];
-        this.inifiniteScrollingComponent.restart();
+        if (
+          this.mediaHubManager.getFolderID()
+          ||
+          this.mediaHubManager.getTagID()
+        ) {
+          this.inifiniteScrollingComponent.restart();
+        } else {
+          this.snackbar.open('Please select either folder or tag');
+        }
       });
   }
 

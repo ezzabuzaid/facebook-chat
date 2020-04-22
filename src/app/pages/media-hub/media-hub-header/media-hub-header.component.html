@@ -7,7 +7,7 @@
     </div>
     <div class="actions d-flex align-items-center">
         <app-file-control (onChange)="uploadFiles($event)">
-            <button mat-stroked-button tabindex="-1" [disabled]="!($folder | async)">Upload</button>
+            <button mat-stroked-button tabindex="-1">Upload</button>
         </app-file-control>
         <!-- <div class="d-flex align-items-center mx-2">
             <button mat-flat-button (click)="changeView(EMediaHubViews.GridView)">

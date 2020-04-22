@@ -65,7 +65,7 @@ export class InifiniteScrollingComponent implements OnInit {
 
   restart(enable = true) {
     this.isLastFetchDone = true;
-    this.lastQuery = new ListEntityQuery({ page: 1, size: 10 });
+    this.lastQuery = new ListEntityQuery({ page: 0, size: 10 });
     this.currentLength = -1;
     this.enable = enable;
     this.populateItems();

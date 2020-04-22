@@ -19,13 +19,19 @@
     </mat-card-content>
 
 </mat-card>
-<mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="deleteFile()">
-        <mat-icon>delete_outline</mat-icon>
-        <span class="text-muted">Delete</span>
-    </button>
-    <button mat-menu-item (click)="renameFile()">
-        <mat-icon>text_format</mat-icon>
-        <span class="text-muted">Rename</span>
-    </button>
+<mat-menu #menu="matMenu" class="card-menu">
+    <mat-nav-list>
+        <mat-list-item (click)="renameFile()">
+            <mat-icon>text_format</mat-icon>
+            <span class="text-muted">Rename</span>
+        </mat-list-item>
+        <mat-list-item (click)="deleteFile()">
+            <mat-icon>delete_outline</mat-icon>
+            <span class="text-muted">Delete</span>
+        </mat-list-item>
+        <h3 matSubheader>Tags</h3>
+        <button (click)="tagFile($event, tag)" mat-icon-button *ngFor="let tag of ($tags | async)"
+            class="border-radius-10 tag-circle mx-1" [style.background-color]="tag.color">
+        </button>
+    </mat-nav-list>
 </mat-menu>

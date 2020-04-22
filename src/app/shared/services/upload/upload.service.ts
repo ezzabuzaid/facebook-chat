@@ -32,7 +32,7 @@ export class UploadsService {
         return this.http.delete(`${Constants.API.UPLOADS.base}/${file_id}`);
     }
 
-    updateFile(file: Partial<MediaModel.File>) {
+    updateFile(file: Partial<MediaModel.IFile>) {
         return this.http.patch(`${Constants.API.UPLOADS.base}/${file._id}`, file);
     }
 
@@ -60,7 +60,11 @@ export class UploadsService {
     }
 
     getTags() {
-        return this.http.get<MediaModel.Tag[]>(`${Constants.API.UPLOADS.tags}`);
+        return this.http
+            .configure({
+                LOCAL_CACHE: true
+            })
+            .get<MediaModel.Tag[]>(`${Constants.API.UPLOADS.tags}`);
     }
 
 }
