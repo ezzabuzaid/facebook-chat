@@ -1,20 +1,24 @@
-import { Component, OnInit, Input, ElementRef, QueryList, AfterViewInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, QueryList, AfterViewInit, ViewChildren, OnDestroy } from '@angular/core';
 import { ChatModel, ListEntityQuery } from '@shared/models';
 import { ChatService } from '@shared/services/chat';
 import { ChatManager } from '../chat.manager';
 import { MessageBubbleComponent } from '../message-bubble/message-bubble.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-chat-card-messages',
   templateUrl: './chat-card-messages.component.html',
   styleUrls: ['./chat-card-messages.component.scss']
 })
-export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
+export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren(MessageBubbleComponent) messageBubbleComponents: QueryList<MessageBubbleComponent>;
   @Input() id: string = null;
   public messages: ChatModel.Message[] = [];
   $provider = (pageQuery: ListEntityQuery) => this.chatService.fetchMessages(this.id, pageQuery)
 
+  public subscription = new Subject();
   constructor(
     private chatService: ChatService,
     private chatManager: ChatManager,
@@ -25,7 +29,6 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
     this.chatManager.socket
       .on('Message', message => {
         this.messages.push(message);
-        // this.scrollToLastMessage('auto');
       });
 
     this.chatManager.messageListener.listen()
@@ -35,12 +38,12 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
           this.chatManager.sendMessage(message);
         }
         this.messages.push(message);
-        // this.scrollToLastMessage('smooth', 100);
       });
   }
 
   ngAfterViewInit() {
     this.messageBubbleComponents.changes
+      .pipe(takeUntil(this.subscription))
       .subscribe(() => {
         this.messageBubbleComponents.last.element.scrollIntoView();
       })
@@ -52,17 +55,7 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
 
   getLastMessageOrder() {
     const message = this.messages[this.messages.length - 1];
-    return message && message.order || -1;
-  }
-
-  scrollToLastMessage(behavior: ScrollBehavior, afterMS = 0) {
-    setTimeout(() => {
-      this.element.scroll({
-        behavior,
-        left: 0,
-        top: this.element.scrollHeight
-      });
-    }, afterMS);
+    return message ? message.order ?? -1 : -1;
   }
 
   get element() {
@@ -71,6 +64,10 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit {
 
   prependMessages(messages: ChatModel.Message[]) {
     this.messages.unshift(...messages.reverse());
+  }
+
+  ngOnDestroy() {
+    AppUtils.unsubscribe(this.subscription)
   }
 
 }

@@ -67,7 +67,7 @@ export class ChatCardFooterComponent implements OnInit {
     if (AppUtils.isTruthy(text)) {
       this.messageFormControl.setValue('');
       if (this.external) {
-        this.onSendMessage.emit(this.createMessage(text));
+        this.onSendMessage.emit(text);
       } else {
         this.chatManager.sendLocalMessage(this.createMessage(text));
       }
@@ -111,7 +111,7 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   openMediaPicker() {
-    this.mediaHubManager.openMediaPicker()
+    this.mediaHubManager.openMediaPicker(this.room._id)
       .afterClosed()
       .pipe(filter(AppUtils.hasItemWithin))
       .subscribe((files) => {
