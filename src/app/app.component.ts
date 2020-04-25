@@ -1,4 +1,4 @@
-import { Component, Inject, PLATFORM_ID, Renderer2, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, Renderer2, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Logger } from '@core/helpers/logger';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +21,7 @@ const log = new Logger('AppComponent');
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
@@ -102,13 +102,6 @@ export class AppComponent implements OnInit {
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
 
-      window.addEventListener('unload', (event) => {
-        if (this.userService.oneTimeLogin()) {
-          this.userService.logout();
-          return "";
-        }
-      });
-
       this.serviceWorkerUtils.checkEveryHour(0.001).subscribe();
       this.serviceWorkerUtils.updateAvailable
         .pipe(switchMap(() => this.snackbar.open('An update is available', 'Activate!').onAction()))
@@ -157,6 +150,14 @@ export class AppComponent implements OnInit {
 
   get isBrowser() {
     return isPlatformBrowser(this.platformId);
+  }
+
+  @HostListener('window:unload')
+  ngOnDestroy() {
+    if (this.userService.oneTimeLogin()) {
+      this.userService.logout();
+      return "";
+    }
   }
 
 }

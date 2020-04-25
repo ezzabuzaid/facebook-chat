@@ -1,5 +1,5 @@
 import { Observable, of, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { filter, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 export class AppUtils {
 
     /**
@@ -372,21 +372,13 @@ export interface KeyPairs<T> {
     [key: string]: T;
 }
 
-export function typeaheadOperator<T, Q>(
-    provider: (query: Q) => Observable<T> = null,
-    onEmpty: () => Partial<T> = null
-): OperatorFunction<Q, T> {
+export function typeaheadOperator<T, Q>(provider: (query: Q) => Observable<T> = null): OperatorFunction<Q, T> {
     return (source) => {
         return source.pipe(
             filter(AppUtils.notNullOrUndefined),
             debounceTime(400),
             distinctUntilChanged(),
-            // switchMap((value) => {
-            //     if (AppUtils.notNullOrUndefined(onEmpty) && AppUtils.isEmptyString(value)) {
-            //         return of<T>(onEmpty() as any);
-            //     }
-            //     return provider(value);
-            // })
+            provider ? switchMap(provider) : tap()
         );
     };
 }
