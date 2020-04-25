@@ -54,11 +54,11 @@ export class MediaHubManager {
         );
         return this.router.navigate(['.'], {
             relativeTo: this.routeUtility.route,
-            queryParamsHandling: 'merge',
             queryParams: {
                 folder: defaultQuery.folder,
                 file: defaultQuery.file,
-                tag: defaultQuery.tag
+                tag: defaultQuery.tag,
+                shared: this.isShared()
             }
         })
     }
@@ -78,11 +78,20 @@ export class MediaHubManager {
         return this.routeUtility.getQueryParam('tag') || undefined;
     }
 
-    openMediaPicker() {
+    isShared() {
+        return AppUtils.isTruthy(this.routeUtility.getQueryParam('shared'));
+    }
+
+    viewChange() {
+        return this.routeUtility.onQueryParamChange('shared');
+    }
+
+    openMediaPicker(folder: string) {
         return this.dialog.open<MediaPickerComponent, any, MediaModel.File[]>(MediaPickerComponent, {
             width: '1000px',
             height: '750px',
-            panelClass: ['media-dialog']
+            panelClass: ['media-dialog'],
+            data: { folder }
         })
     }
 

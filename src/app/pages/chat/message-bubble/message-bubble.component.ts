@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ChatManager } from '../chat.manager';
 import { TokenService } from '@core/helpers/token';
 import { ChatModel, MediaModel } from '@shared/models';
@@ -21,10 +21,24 @@ export class MessageBubbleComponent implements OnInit {
   constructor(
     private chatManager: ChatManager,
     private tokenService: TokenService,
-    private elementRef: ElementRef<HTMLElement>
+    private elementRef: ElementRef<HTMLElement>,
+    private cdf: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+    if (this.message.timestamp) {
+      this.loading = true;
+      const listener = this.chatManager.socket
+        .on(`saved_${this.message.timestamp}`, (id) => {
+          this.loading = false;
+          this.message._id = id;
+          listener.removeAllListeners();
+        })
+      this.cdf.markForCheck();
+    }
+    this.isSender = this.tokenService.decodedToken.id === this.message.user;
+    this.cdf.markForCheck();
+
     if (this.message.rawFile) {
       this.file = new MediaModel.File({
         path: null,
@@ -45,17 +59,6 @@ export class MessageBubbleComponent implements OnInit {
         folder: this.message.room,
       });
     }
-
-    if (this.message.timestamp) {
-      this.loading = true;
-      const listener = this.chatManager.socket
-        .on(`saved_${this.message.timestamp}`, (id) => {
-          this.loading = false;
-          this.message._id = id;
-          listener.removeAllListeners();
-        })
-    }
-    this.isSender = this.tokenService.decodedToken.id === this.message.user;
   }
 
   sendMessage(text: string) {
