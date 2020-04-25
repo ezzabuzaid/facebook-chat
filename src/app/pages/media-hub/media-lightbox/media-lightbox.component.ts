@@ -1,11 +1,7 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MediaModel, ListEntityResponse, ListEntityQuery } from '@shared/models';
+import { MediaModel, ListEntityQuery } from '@shared/models';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UploadsService } from '@shared/services/upload';
-import { Observable } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
-import { typeaheadOperator } from '@core/helpers/utils';
-import { MediaHubManager } from '../media-hub.manager';
 import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 export interface ILightBoxData {
   file: MediaModel.File,

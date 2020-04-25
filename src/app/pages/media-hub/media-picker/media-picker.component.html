@@ -1,20 +1,29 @@
 <app-sidebar>
     <div sidebar-drawer>
         <mat-nav-list class="h-100" dense>
-            <mat-list-item *ngFor="let folder of ($folders | async)" (click)="onFolderClick(folder)">
+            <mat-list-item *ngFor="let folder of ($folders | async)" (click)="selectFolder(folder._id)">
                 <mat-icon mat-list-icon text-muted>
                     {{currentFolderID !== folder._id ? 'folder' : 'folder_open'}}
                 </mat-icon>
-                <h4 mat-line class=""> {{folder.name}}</h4>
+                <h4 mat-line> {{folder.name}}</h4>
             </mat-list-item>
         </mat-nav-list>
     </div>
     <div sidebar-container #sidebarContainer class="p-3 d-flex flex-column justify-content-between">
-        <app-media-hub-grid-view [parentSelector]="sidebarContainer" *ngIf="currentFolderID">
-        </app-media-hub-grid-view>
+        <app-inifinite-scrolling [scrollContainerSelector]="sidebarContainer" (dataChange)="appendFiles($event)"
+            [provider]="$provider">
+            <app-masonry>
+                <app-masonry-item *ngFor="let file of files; let index = index;">
+                    <app-media-card [showMenu]="false" [lightBox]="false" class="item" [file]="file"
+                        (onMarkChange)="addToMarkedFiles(index);">
+                    </app-media-card>
+                </app-masonry-item>
+            </app-masonry>
+        </app-inifinite-scrolling>
         <footer class="text-right">
-            <button mat-flat-button [mat-dialog-close]="markedFiles" [disabled]="!markedFiles.length"
-                color="primary">Insert</button>
+            <button mat-flat-button [mat-dialog-close]="markedFiles" [disabled]="!markedFiles.length" color="primary">
+                Insert
+            </button>
         </footer>
     </div>
 </app-sidebar>

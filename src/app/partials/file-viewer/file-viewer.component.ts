@@ -1,9 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostBinding, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostBinding, HostListener, AfterViewInit } from '@angular/core';
 import { UploadsService } from '@shared/services/upload';
-import { AppUtils } from '@core/helpers/utils';
 import { MediaModel } from '@shared/models';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
-import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-file-viewer',
@@ -21,9 +19,7 @@ export class FileViewerComponent implements OnInit {
   @Input() lightBox = true;
   @Input() file: MediaModel.File;
   @HostBinding('class.uploading') loading = false;
-  path: Observable<string>;
   @HostBinding('class.is-image') isImage = null;
-
 
   constructor(
     private uploadService: UploadsService,
@@ -31,26 +27,23 @@ export class FileViewerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isImage = AppUtils.isImage(this.file.name);
+    this.isImage = this.file.isImage();
     if (this.file.rawFile) {
       this.loading = true;
-      this.path = AppUtils.readFile(this.file.rawFile)
       this.uploadService.uploadImage(this.file.rawFile, this.file.folder)
         .subscribe((uploadedFile) => {
           this.loading = false;
           this.file.rawFile = null;
           this.file.path = uploadedFile.path;
           this.file._id = uploadedFile.id;
-          this.path = of(this.file.fullPath);
           this.onUpload.emit(this.file);
+          this.isImage = this.file.isImage();
         });
-    } else {
-      this.path = of(this.file.fullPath);
     }
   }
 
   @HostListener('click')
-  async openLightbox() {
+  openLightbox() {
     if (this.lightBox && !this.file.rawFile) {
       this.mediaHubManager.openLightbox({
         file: this.file,

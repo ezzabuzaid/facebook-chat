@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MediaModel } from '@shared/models';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MediaModel, ListEntityQuery } from '@shared/models';
 import { UploadsService } from '@shared/services/upload';
-import { tap } from 'rxjs/operators';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 
 @Component({
   selector: 'app-media-picker',
@@ -9,35 +10,40 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./media-picker.component.scss']
 })
 export class MediaPickerComponent implements OnInit {
-  currentFolderID = null;
-  $folders = this.uploadService.getFolders()
-    .pipe(tap(folders => {
-      this.onFolderClick(folders[0]);
-    }))
-
+  @ViewChild(InifiniteScrollingComponent) inifiniteScrollingComponent: InifiniteScrollingComponent;
+  currentFolderID = this.data.folder;
+  tagID = undefined;
+  $folders = this.uploadService.getFolders();
   files: MediaModel.File[] = [];
   markedFiles: MediaModel.File[] = [];
+  $provider = (pageQuery: ListEntityQuery) => this.uploadService.searchForFiles(
+    new MediaModel.FileSearchQuery(
+      undefined,
+      this.currentFolderID,
+      this.tagID,
+      pageQuery
+    )
+  );
 
   constructor(
     private uploadService: UploadsService,
+    @Inject(MAT_DIALOG_DATA) private data: { folder: string }
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit() { }
 
-  onFolderClick(folder: MediaModel.Folder) {
-    this.currentFolderID = folder._id;
-    this.uploadService.searchForFiles({
-      file: '',
-      folder: folder._id,
-    })
-      .subscribe(files => {
-        this.files = files.list;
-      })
+  selectFolder(folder_id: string) {
+    this.currentFolderID = folder_id;
+    this.inifiniteScrollingComponent.restart();
+    this.files = [];
   }
 
   addToMarkedFiles(index: number) {
     this.markedFiles.push(this.files[index]);
+  }
+
+  appendFiles(files: MediaModel.File[]) {
+    this.files.push(...files);
   }
 
 }

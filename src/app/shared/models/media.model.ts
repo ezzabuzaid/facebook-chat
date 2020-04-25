@@ -1,6 +1,7 @@
 import { IModel, ListEntityQuery } from './response.model';
 import { environment } from '@environments/environment';
 import { AppUtils } from '@core/helpers/utils';
+import { of } from 'rxjs';
 export namespace MediaModel {
     export class Folder extends IModel {
         name: string;
@@ -33,9 +34,8 @@ export namespace MediaModel {
 
         constructor(object: Partial<File>) {
             super(object);
-            this.path = object.path && object.path.split('?')[0];
-            this.fullType = object.fullType ?? object.type;
-            this.type = object.type.includes('/') ? object.type.split('/')[1] : object.type;
+            this.path = object.path;
+            this.type = object.type;
             this.size = object.size;
             this.name = object.name;
             this.user = object.user;
@@ -44,16 +44,25 @@ export namespace MediaModel {
         }
 
         get fullPath() {
-            return environment.serverOrigin + this.path;
+            return `${environment.serverOrigin}${this.path ? this.path.split('?')[0] : ''}`;
+        }
+
+        get shortType() {
+            return this.type.split('/')[1];
         }
 
         isImage() {
-            return AppUtils.isImage(this.path);
+            return AppUtils.isImage(this.fullPath);
         }
 
         isPdf() {
-            return AppUtils.isPdf(this.path);
+            return AppUtils.isPdf(this.fullPath);
         }
+
+        get src() {
+            return this.path && !this.rawFile ? of(this.fullPath) : AppUtils.readFile(this.rawFile);
+        }
+
     }
 
     export class FileSearchQuery extends ListEntityQuery {

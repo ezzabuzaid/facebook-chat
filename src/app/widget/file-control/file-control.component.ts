@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, HostListener, ViewChild, ElementRef, Input } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 
 @Component({
@@ -7,13 +7,16 @@ import { AppUtils } from '@core/helpers/utils';
   styleUrls: ['./file-control.component.scss']
 })
 export class FileControlComponent implements OnInit {
+  @Input() disabled = false;
   public id = AppUtils.generateAlphabeticString();
   @Output() public onChange = new EventEmitter<FileList>();
 
   @ViewChild('fileInput') private input: ElementRef<HTMLInputElement>;
 
   @HostListener('click') openFileChooser() {
-    this.input.nativeElement.click();
+    if (!this.disabled) {
+      this.input.nativeElement.click();
+    }
   }
 
   constructor() { }

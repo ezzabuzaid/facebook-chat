@@ -1,5 +1,5 @@
-<img class="img-fluid mh-100 rounded" *ngIf="isImage; else placeholder" [src]="path | async">
+<img class="img-fluid mh-100 rounded" *ngIf="file?.isImage(); else placeholder" [src]="file?.src | async">
 <ng-template #placeholder>
-    <div class="placeholder p-2">{{file.name}}</div>
+    <div class="placeholder p-2">{{file?.name}}</div>
 </ng-template>
 <div *ngIf="withLoader && loading" class="loader"></div>
