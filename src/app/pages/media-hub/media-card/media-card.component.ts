@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, HostBinding, ViewEncaps
 import { MediaModel } from '@shared/models';
 import { UploadsService } from '@shared/services/upload';
 import { PopupManager } from '@widget/popup';
-import { switchMap, filter, share } from 'rxjs/operators';
+import { switchMap, filter } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 
 @Component({

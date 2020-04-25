@@ -5,7 +5,6 @@ import { MediaModel } from '@shared/models';
 import { MediaHubManager } from '../media-hub.manager';
 import { PopupManager } from '@widget/popup';
 import { switchMap, filter } from 'rxjs/operators';
-import { RouteUtility } from '@shared/common';
 
 @Component({
   selector: 'app-media-hub-folders',
@@ -18,22 +17,20 @@ export class MediaHubFoldersComponent implements OnInit {
   createFolderActive = false;
   $tags = this.uploadsService.getTags();
 
-  isShared = false;
+  $sharedView = this.mediaHubManager.viewChange();
 
   constructor(
     private uploadsService: UploadsService,
     private mediaHubManager: MediaHubManager,
     private popupManager: PopupManager,
-    private routeUtility: RouteUtility
   ) { }
 
   ngOnInit() {
-    this.routeUtility.onQueryParamChange('shared')
+    this.$sharedView
       .pipe(switchMap((value) => {
-        this.isShared = value;
         return value
           ? this.uploadsService.getSharedFolders()
-          : this.uploadsService.getFolders()
+          : this.uploadsService.getUserFolders()
       }))
       .subscribe(data => {
         this.folders = data;
@@ -57,7 +54,7 @@ export class MediaHubFoldersComponent implements OnInit {
     this.createFolderActive = !this.createFolderActive;
   }
 
-  onFolderClick(folder: MediaModel.Folder) {
+  filterByFolder(folder: MediaModel.Folder) {
     this.currentFolderID = folder._id;
     this.mediaHubManager.search({
       folder: this.currentFolderID,
