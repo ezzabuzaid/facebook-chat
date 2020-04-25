@@ -6,16 +6,8 @@
         </mat-form-field>
     </div>
     <div class="actions d-flex align-items-center">
-        <app-file-control (onChange)="uploadFiles($event)">
-            <button mat-stroked-button tabindex="-1">Upload</button>
+        <app-file-control (onChange)="uploadFiles($event)" [disabled]="$sharedView | async">
+            <button mat-stroked-button tabindex="-1" [disabled]="$sharedView | async">Upload</button>
         </app-file-control>
-        <!-- <div class="d-flex align-items-center mx-2">
-            <button mat-flat-button (click)="changeView(EMediaHubViews.GridView)">
-                <mat-icon>grid_on</mat-icon>
-            </button>
-            <button mat-flat-button (click)="changeView(EMediaHubViews.ListView)">
-                <mat-icon>list</mat-icon>
-            </button>
-        </div> -->
     </div>
 </header>

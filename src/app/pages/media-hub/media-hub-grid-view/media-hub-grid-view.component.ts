@@ -4,7 +4,6 @@ import { UploadsService } from '@shared/services/upload';
 import { MediaHubManager } from '../media-hub.manager';
 import { AppUtils } from '@core/helpers/utils';
 import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
-import { skip } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -43,7 +42,6 @@ export class MediaHubGridViewComponent implements OnInit {
       });
 
     this.mediaHubManager.onSearch()
-      // .pipe(skip(1))
       .subscribe(() => {
         this.files = [];
         if (

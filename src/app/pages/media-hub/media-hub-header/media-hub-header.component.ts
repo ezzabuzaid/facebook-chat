@@ -4,7 +4,6 @@ import { FormControl } from '@angular/forms';
 import { takeUntil, skip } from 'rxjs/operators';
 import { MediaModel } from '@shared/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -16,7 +15,7 @@ export class MediaHubHeaderComponent implements OnInit {
   @Output() onViewChange = new EventEmitter<MediaHubViews>();
   EMediaHubViews = MediaHubViews;
   $folder = this.mediaHubManager.onFolderChange();
-
+  $sharedView = this.mediaHubManager.viewChange();
   constructor(
     private mediaHubManager: MediaHubManager,
     private snackbar: MatSnackBar
@@ -26,15 +25,11 @@ export class MediaHubHeaderComponent implements OnInit {
     this.searchControl.valueChanges
       .pipe(takeUntil(this.mediaHubManager.subscription))
       .subscribe((searchText) => {
-        if (AppUtils.isTruthy(searchText)) {
-          this.mediaHubManager.search({
-            file: searchText,
-            folder: this.mediaHubManager.getFolderID(),
-            tag: this.mediaHubManager.getTagID()
-          });
-        } else {
-          this.snackbar.open('Please select either folder or tag');
-        }
+        this.mediaHubManager.search({
+          file: searchText,
+          folder: this.mediaHubManager.getFolderID(),
+          tag: this.mediaHubManager.getTagID()
+        });
       })
 
     this.mediaHubManager.onFolderChange()
@@ -68,9 +63,10 @@ export class MediaHubHeaderComponent implements OnInit {
     }
   }
 
-
   changeView(view: MediaHubViews) {
     this.onViewChange.emit(view);
   }
+
+
 
 }
