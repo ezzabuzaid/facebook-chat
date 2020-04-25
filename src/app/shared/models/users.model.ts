@@ -4,7 +4,8 @@ import { Field, Form, EFieldType, SelectField, ngTableSetting } from '@shared/co
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models/portal.model';
 import { AppUtils } from '@core/helpers/utils';
-// TODO: create user profile page
+import { ListEntityQuery } from './response.model';
+
 const writeForm = new Form<UsersModel.IUser>([
     new Field('username', {
         validation: {
@@ -41,6 +42,12 @@ export namespace UsersModel {
         role: number;
         createdAt: string;
         updatedAt: string;
+    }
+
+    export class SearchForUserQuery extends ListEntityQuery {
+        constructor(public username: string, pageQuery: ListEntityQuery) {
+            super(pageQuery);
+        }
     }
 
 

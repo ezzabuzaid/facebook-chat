@@ -38,9 +38,10 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   ) { }
 
   ngOnInit() {
-    this.$users = this.autocompleteControl.valueChanges.pipe(
-      filter(value => AppUtils.isFalsy(AppUtils.isEmptyString(value))),
-      typeaheadOperator((value) => this.usersService.searchForUsers(value)),
+    this.$users = (this.autocompleteControl.valueChanges as Observable<string>).pipe(
+      filter(AppUtils.hasItemWithin),
+      typeaheadOperator(),
+      switchMap((value) => this.usersService.searchForUsers(value)),
       map(users => users.filter(user => {
         return this.selectedUsers.findIndex(selectedUser => selectedUser._id === user._id) === -1
       }))

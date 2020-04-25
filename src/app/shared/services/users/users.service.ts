@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UsersModel, ListEntityResponse } from '@shared/models';
+import { UsersModel, ListEntityResponse, ListEntityQuery, PlainQuery } from '@shared/models';
 import { map } from 'rxjs/operators';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
@@ -20,8 +20,10 @@ export class UsersService {
             .pipe(map(({ list }) => list));
     }
 
-    public searchForUsers(name: string) {
-        return this.http.get<UsersModel.IUser[]>(`${Constants.API.USERS.search}?username=${name}`);
+    public searchForUsers(username: string) {
+        const plainQuery = new PlainQuery<UsersModel.SearchForUserQuery>({ username, page: 0, size: 20 });
+        return this.http.get<ListEntityResponse<UsersModel.IUser>>(`${Constants.API.USERS.search}?${plainQuery.asString}`)
+            .pipe(map(({ list }) => list));
     }
 
     public getUsersWithoutMe() {

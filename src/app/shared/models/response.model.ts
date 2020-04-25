@@ -15,8 +15,8 @@ export class IModel {
     updatedAt = new Date().toISOString();
     constructor(payload: Partial<IModel> = {}) {
         this._id = payload._id;
-        this.createdAt = payload.createdAt;
-        this.updatedAt = payload.updatedAt;
+        this.createdAt = payload.createdAt || new Date().toISOString();
+        this.updatedAt = payload.updatedAt || new Date().toISOString();
     }
 }
 

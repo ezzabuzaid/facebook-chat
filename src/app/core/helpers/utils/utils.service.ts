@@ -1,4 +1,4 @@
-import { Observable, of, throwError, Observer, Subject, OperatorFunction } from 'rxjs';
+import { Observable, of, throwError, Observer, Subject, OperatorFunction, MonoTypeOperatorFunction } from 'rxjs';
 import { filter, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 export class AppUtils {
 
@@ -372,13 +372,12 @@ export interface KeyPairs<T> {
     [key: string]: T;
 }
 
-export function typeaheadOperator<T, Q>(provider: (query: Q) => Observable<T> = null): OperatorFunction<Q, T> {
+export function typeaheadOperator<T>(): MonoTypeOperatorFunction<T> {
     return (source) => {
         return source.pipe(
             filter(AppUtils.notNullOrUndefined),
             debounceTime(400),
-            distinctUntilChanged(),
-            provider ? switchMap(provider) : tap()
+            distinctUntilChanged<T>()
         );
     };
 }
