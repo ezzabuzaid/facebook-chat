@@ -1,4 +1,4 @@
-@import 'mixins';
+@import "mixins";
 
 :host {
   width: 100%;
@@ -61,6 +61,16 @@
       height: 50px;
       line-height: 50px;
       background-color: rgba(0, 0, 0, 0.12);
+    }
+  }
+  ::ng-deep {
+    .emoji-picker__content {
+      h2 {
+        display: none !important;
+      }
+      .emoji-picker__tabs {
+        display: none !important;
+      }
     }
   }
 }

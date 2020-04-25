@@ -6,6 +6,7 @@ import * as EmojiButton from '@joeattardi/emoji-button';
 import { FormControl } from '@angular/forms';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 import { TokenService } from '@core/helpers/token';
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-chat-card-footer',
   templateUrl: './chat-card-footer.component.html',
@@ -20,7 +21,16 @@ export class ChatCardFooterComponent implements OnInit {
   files: File[] = [];
   base64Files = [];
   showActionBar = false;
-  emojiPicker = new EmojiButton();
+  emojiPicker = new EmojiButton({
+    position: 'top',
+    autoHide: false,
+    showSearch: false,
+    autoFocusSearch: false,
+    showRecents: false,
+    showPreview: false,
+    categories: ['smileys'],
+    theme: 'auto'
+  });
   messageFormControl = new FormControl('');
 
   constructor(
@@ -31,12 +41,9 @@ export class ChatCardFooterComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const callback = emoji => {
-      this.messageFormControl.setValue(
-        this.messageFormControl.value + emoji
-      )
-    }
-    this.emojiPicker.on('emoji', callback);
+    this.emojiPicker.on('emoji', emoji => {
+      this.messageFormControl.setValue(this.messageFormControl.value + emoji)
+    });
     this.messageFormControl.valueChanges
       .subscribe(value => {
         this.onActionBarVisibilityChange.emit(this.element);
@@ -45,16 +52,7 @@ export class ChatCardFooterComponent implements OnInit {
 
   openEmojiPicker(event) {
     AppUtils.preventBubblingAndCapturing(event);
-    this.emojiPicker.showPicker(this.element, {
-      position: 'top',
-      autoHide: false,
-      showSearch: false,
-      autoFocusSearch: false,
-      showRecents: false,
-      showPreview: false,
-      categories: ['smileys'],
-      theme: 'auto'
-    });
+    this.emojiPicker.showPicker(this.element);
   }
 
   @HostListener('click')
@@ -69,7 +67,7 @@ export class ChatCardFooterComponent implements OnInit {
     if (AppUtils.isTruthy(text)) {
       this.messageFormControl.setValue('');
       if (this.external) {
-        this.onSendMessage.emit(text);
+        this.onSendMessage.emit(this.createMessage(text));
       } else {
         this.chatManager.sendLocalMessage(this.createMessage(text));
       }
@@ -115,10 +113,10 @@ export class ChatCardFooterComponent implements OnInit {
   openMediaPicker() {
     this.mediaHubManager.openMediaPicker()
       .afterClosed()
+      .pipe(filter(AppUtils.hasItemWithin))
       .subscribe((files) => {
         files.forEach(file => {
           this.chatManager.sendLocalMessage(this.createMessage(file.path));
-          // this.chatManager.sendMessage(new ChatMessage(this.room._id, file.path, 0));
         });
       });
   }
