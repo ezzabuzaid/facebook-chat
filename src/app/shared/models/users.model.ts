@@ -25,10 +25,6 @@ const writeForm = new Form<UsersModel.IUser>([
     new Field('mobile', {
         type: EFieldType.TEL,
         label: 'placeholder_mobile',
-    }),
-    new SelectField('role', {
-        type: EFieldType.TEXT,
-        label: 'Role',
     })
 ]);
 export namespace UsersModel {
