@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';
 import { FormWidgetManager } from '../form.manager';
 import { AppUtils } from '@core/helpers/utils';
+import { Form } from '@shared/common';
 
 @Component({
   selector: 'app-form-container',
@@ -13,9 +14,10 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   @HostBinding('class.loading') public loading = false;
   @Output() public onSubmit = new EventEmitter();
   @Input() public title: string = null;
+  @Input() formGroup: Form<any>;
 
   public progressListener = this.formWidgetManager.listen().pipe(share());
-  private _subscription = new Subject();
+  private subscription = new Subject();
 
   constructor(
     private formWidgetManager: FormWidgetManager
@@ -23,19 +25,22 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.progressListener
-      .pipe(takeUntil(this._subscription))
+      .pipe(takeUntil(this.subscription))
       .subscribe(show => {
         this.loading = show;
       });
+
   }
 
   submit() {
-    this.onSubmit.emit(null);
+    this.onSubmit.emit({
+      value: this.formGroup.value,
+      valid: this.formGroup.valid
+    });
   }
 
   ngOnDestroy() {
-    AppUtils.unsubscribe(this._subscription);
+    AppUtils.unsubscribe(this.subscription);
   }
-
 
 }

@@ -15,8 +15,8 @@ import { Constants } from '@core/constants';
 })
 export class CrudManagerComponent implements OnInit {
   public modules = [
-    TodosModel.MODULE,
-    UsersModel.MODULE,
+    // TodosModel.MODULE,
+    // UsersModel.MODULE,
   ];
 
   public currentModule: IModule<any, any, any> = null;

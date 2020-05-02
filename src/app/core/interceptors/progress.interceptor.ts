@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
-import { MatSnackBarRef, MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ECustomHeaders, getHeader, HttpMethod } from '../http/http.model';
 import { FormWidgetManager } from '@partials/form';
 import { ProgressBarManager } from '@widget/progress-bar';
@@ -12,7 +12,7 @@ export class ProgressInterceptor implements HttpInterceptor {
     private showSnackbar = true;
     constructor(
         private snackbar: MatSnackBar,
-        private formWidgetService: FormWidgetManager,
+        private formWidgetManager: FormWidgetManager,
         private progressBarManager: ProgressBarManager,
     ) { }
 
@@ -23,7 +23,7 @@ export class ProgressInterceptor implements HttpInterceptor {
         }
 
         if (getHeader(req.headers, ECustomHeaders.FORM_PROGRESS_BAR)) {
-            this.formWidgetService.notify(true);
+            this.formWidgetManager.notify(true);
         }
 
         if (getHeader(req.headers, ECustomHeaders.PROGRESS_BAR)) {
@@ -49,7 +49,7 @@ export class ProgressInterceptor implements HttpInterceptor {
                     }),
                 finalize(() => {
                     this.progressBarManager.notify(false);
-                    this.formWidgetService.notify(false);
+                    this.formWidgetManager.notify(false);
                 }),
             );
     }

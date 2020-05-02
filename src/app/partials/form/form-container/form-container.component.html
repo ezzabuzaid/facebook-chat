@@ -5,14 +5,16 @@
 <mat-card>
     <mat-card-header class="py-3 text-uppercase">
         <mat-card-title>{{ title}}</mat-card-title>
-        <ng-content select="[form-header]"></ng-content>
+        <mat-card-subtitle>
+            <ng-content select="[form-header]"></ng-content>
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <ng-content select="[form-body]"></ng-content>
     </mat-card-content>
     <mat-card-actions>
         <div class="text-center">
-            <button color="primary" (click)="submit()" mat-raised-button>Submit</button>
+            <button color="primary" (click)="submit()" [disabled]="formGroup?.invalid" mat-raised-button>Submit</button>
         </div>
         <ng-content select="[form-footer]"></ng-content>
     </mat-card-actions>

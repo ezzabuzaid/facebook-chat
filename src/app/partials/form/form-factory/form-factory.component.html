@@ -5,16 +5,7 @@
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.PASSWORD)">
-    <!-- TODO: provide style object in Field class, it should be flutter like style, 
-        new Field(
-            style: {
-                prefix:,
-                suffix:,
-            },
-        );
-        and split the field to be base class in order to RawField to extend it.
-        RawField shouldn't have the style object.
-    -->
+
     <mat-form-field>
         <mat-label>{{field.label}}</mat-label>
         <input [id]="field.id" #input type="password" [autocomplete]="field.autocomplete" matInput
@@ -98,3 +89,13 @@
     <app-country-control [id]="field.id" [formControl]="field"></app-country-control>
 </ng-container>
 <!-- TODO: Setup datetime type -->
+<!-- TODO: provide style object in Field class, it should be flutter like style, 
+            new Field(
+                style: {
+                    prefix:,
+                    suffix:,
+                },
+            );
+            and split the field to be base class in order to RawField to extend it.
+            RawField shouldn't have the style object.
+        -->
