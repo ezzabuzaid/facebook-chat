@@ -1,4 +1,13 @@
-import { createValidator } from './index';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+export function createValidator(errorName: string, validator: (control: AbstractControl) => boolean): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+        if (control) {
+            return validator(control) ? null : { [errorName]: true };
+        }
+        return null;
+    };
+}
 
 
 export const ContainsUppercase = () => createValidator('uppercase', (control) => /[A-Z]/.test(control.value));

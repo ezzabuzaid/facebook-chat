@@ -44,7 +44,7 @@
 }
 
 // All scss mixins must be here, expand the mixins into folder if the file has a huge line
-@mixin fab_button($dimension: 35px) {
+@mixin circular_button($dimension: 35px) {
   width: $dimension;
   height: $dimension;
   border-radius: $dimension;
@@ -164,9 +164,6 @@
       box-shadow: none;
       border: none;
     }
-  }
-  .fab-button {
-    @include fab_button;
   }
   button {
     &:focus {

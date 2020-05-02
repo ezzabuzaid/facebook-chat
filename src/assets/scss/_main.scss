@@ -1,6 +1,6 @@
-@import "functions";
-@import "mixins";
-@import "variables";
+@import 'functions';
+@import 'mixins';
+@import 'variables';
 
 html,
 body {
@@ -81,40 +81,45 @@ mat-chip-list {
   }
 }
 
-@for $offset from 0 through 100 {
+@for $index from 0 through 50 {
+  $offset: $index * 2;
   .right-#{$offset} {
     right: #{$offset}px !important;
   }
 }
-@for $offset from 0 through 100 {
+@for $index from 0 through 50 {
+  $offset: $index * 2;
   .left-#{$offset} {
     left: #{$offset}px !important;
   }
 }
 
-@for $offset from 0 through 100 {
+@for $index from 0 through 50 {
+  $offset: $index * 2;
   .top-#{$offset} {
     top: #{$offset}px !important;
   }
 }
 
-@for $offset from 0 through 100 {
+@for $index from 0 through 50 {
+  $offset: $index * 2;
   .bottom-#{$offset} {
     bottom: #{$offset}px !important;
   }
 }
 
 @each $prop, $abbrev in (height: h, width: w) {
-  @for $i from 0 through 500 {
-    @if $i != 100 and $i != 50 and $i != 25 {
-      .min-#{$abbrev}-#{$i} {
-        min-#{$prop}: #{$i}px !important;
+  @for $i from 0 through 200 {
+    @if $i != 100 and $i != 50 {
+      $offset: $i * 2;
+      .min-#{$abbrev}-#{$offset} {
+        min-#{$prop}: #{$offset}px !important;
       }
-      .max-#{$abbrev}-#{$i} {
-        max-#{$prop}: #{$i}px !important;
+      .max-#{$abbrev}-#{$offset} {
+        max-#{$prop}: #{$offset}px !important;
       }
-      .#{$abbrev}-#{$i} {
-        #{$prop}: #{$i}px !important;
+      .#{$abbrev}-#{$offset} {
+        #{$prop}: #{$offset}px !important;
       }
     }
   }
@@ -139,5 +144,15 @@ mat-chip-list {
         border-#{$side}-style: $style;
       }
     }
+  }
+}
+
+@each $position in sticky, fixed {
+  .#{$position}-bar {
+    position: $position;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
   }
 }

@@ -1,9 +1,0 @@
-@import 'mixins';
-:host {
-  display: block;
-  height: 100%;
-  width: 100%;
-  nav {
-    @include fixed_bar(sticky, 80px);
-  }
-}
