@@ -1,16 +1,16 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
+@import "functions";
+@import "mixins";
+@import "variables";
 
 html,
 body {
   height: 100%;
   user-select: none;
-}
-
-body {
   margin: 0;
   background-color: #f1f2f5;
+  &.no-connection {
+    background-color: #d5dfe799;
+  }
 }
 
 .backdrop {
@@ -29,30 +29,115 @@ body {
 .overflow-auto {
   overflow: auto;
 }
-
 .pointer {
   cursor: pointer !important;
 }
-
 .center-absolute {
   @include center_absolute();
 }
-
 .center-flex {
   @include center_flex();
 }
-
 .center-block {
   @include center_block();
 }
 
+@include scrollbar_theme();
+
 mat-form-field {
   width: 100%;
 }
+mat-chip-list {
+  user-select: none;
+}
 
-body {
-  &.no-connection {
-    background-color: #d5dfe799;
+.break-word {
+  word-break: break-word;
+}
+
+.shadow {
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.11) !important;
+}
+
+.vertical-align-bottom {
+  vertical-align: bottom !important;
+}
+
+@for $weight from 1 through 9 {
+  .font-weight-#{$weight * 100} {
+    font-weight: #{$weight * 100} !important;
   }
 }
-@include scrollbar_theme();
+
+@for $size from 1 through 20 {
+  .font-size-#{$size} {
+    font-size: #{$size}px !important;
+  }
+}
+
+@for $lineHeight from 1 through 60 {
+  .line-height-#{$lineHeight * 2} {
+    line-height: #{$lineHeight * 2}px !important;
+  }
+}
+
+@for $offset from 0 through 100 {
+  .right-#{$offset} {
+    right: #{$offset}px !important;
+  }
+}
+@for $offset from 0 through 100 {
+  .left-#{$offset} {
+    left: #{$offset}px !important;
+  }
+}
+
+@for $offset from 0 through 100 {
+  .top-#{$offset} {
+    top: #{$offset}px !important;
+  }
+}
+
+@for $offset from 0 through 100 {
+  .bottom-#{$offset} {
+    bottom: #{$offset}px !important;
+  }
+}
+
+@each $prop, $abbrev in (height: h, width: w) {
+  @for $i from 0 through 500 {
+    @if $i != 100 and $i != 50 and $i != 25 {
+      .min-#{$abbrev}-#{$i} {
+        min-#{$prop}: #{$i}px !important;
+      }
+      .max-#{$abbrev}-#{$i} {
+        max-#{$prop}: #{$i}px !important;
+      }
+      .#{$abbrev}-#{$i} {
+        #{$prop}: #{$i}px !important;
+      }
+    }
+  }
+}
+
+@for $flips from 1 to 7 {
+  $rotate_dig: $flips * 30;
+  .rotate--#{$rotate_dig} {
+    transform: rotate(calc(#{$rotate_dig} * 1deg));
+  }
+}
+@for $size from 0 to 20 {
+  @each $side in top, right, bottom, left {
+    .border--#{$side}-#{$size} {
+      border-width: #{$size}px !important;
+    }
+    .border--#{$side}-transparent {
+      border-#{$side}-color: transparent !important;
+    }
+    @each $style in solid, dotted, dashed {
+      .border--#{$side}-#{$style} {
+        border-#{$side}-style: $style;
+      }
+    }
+  }
+}
