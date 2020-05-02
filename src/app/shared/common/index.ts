@@ -1,6 +1,7 @@
-import { FormControl, AbstractControlOptions, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, AbstractControlOptions, FormGroup, ValidatorFn, Validators, AbstractControl } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
 import { Type } from '@angular/core';
+import { fromEvent } from 'rxjs';
 
 export * from './material.module';
 export * from './breakpoints';
@@ -32,9 +33,9 @@ export interface ISelectOption {
     value: string;
 }
 
-export interface IField<Tname, T> extends FormControl {
+export interface IField<fieldName, T> extends FormControl {
     id: string;
-    name: Tname;
+    name: fieldName;
     type: EFieldType;
     label: string;
     value: T;
@@ -89,6 +90,15 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         return this.type === type;
     }
 
+    getElement() {
+        return document.getElementById(this.id);
+    }
+
+    on(eventName: keyof HTMLElementEventMap) {
+        return fromEvent(this.getElement(), eventName);
+    }
+
+
 }
 
 export class SelectField<Tname, T = string | string[]> extends Field<Tname, T> implements IField<Tname, T> {
@@ -131,6 +141,25 @@ export class Form<T> extends FormGroup {
     getComponent<Y>(component: Type<Y>): Y {
         return null as Y;
     }
+
+    // @ts-ignore
+    get(name: keyof T): Field<keyof T, T[keyof T]> {
+        return super.get(name as any) as any;
+    }
+
+    // @ts-ignore
+    getError(name: keyof T, errorName: string) {
+        return this.get(name).hasError(errorName);
+    }
+
+    getName(name: keyof T) {
+        return name;
+    }
+
+    getControlValue(name: keyof T, defaultValue?: T[keyof T]) {
+        return this.get(name).value || defaultValue;
+    }
+
 }
 
 export interface IComponentField {
@@ -138,3 +167,4 @@ export interface IComponentField {
 }
 
 // TODO: export this file as library
+
