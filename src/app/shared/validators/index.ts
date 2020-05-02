@@ -1,20 +1,21 @@
-export * from './equal.validator';
-export * from './number-only.validator';
-export * from './phonenumber-associated-with-country.validator';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+export * from './equal.validator';
+export * from './string.validator';
+export * from './numbers.validator';
+export * from './phonenumber.validator';
 
 export class ValidationPattern {
    static ENGLISH_ARABIC_LETTER = /^[\w\s\u0621-\u064A]+$/;
-   static NUMBER_ONLY = /^\d+$/;
+   static CONTAINS_DIGITS = /^\d+$/;
 }
 
-export class FieldValidation {
-   // NOTE: use google lib for phonenumber instead
-   static MOBILE = [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(ValidationPattern.NUMBER_ONLY)];
 
-   static EMAIL = [Validators.email];
-   static USERNAME = [Validators.pattern(ValidationPattern.ENGLISH_ARABIC_LETTER), Validators.minLength(8), Validators.maxLength(16)];
-   static PASSWORD = [Validators.required, Validators.minLength(6), Validators.maxLength(16), Validators.pattern(/\d/)];
+export function createValidator(errorName: string, validator: (control: AbstractControl) => boolean): ValidatorFn {
+   return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if (control) {
+         return validator(control) ? null : { [errorName]: true };
+      }
+      return null;
+   };
 }
-
