@@ -2,32 +2,32 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { AppUtils } from '../utils';
 import { tap } from 'rxjs/operators';
 
-export class Listener<T> {
+export class SubjectFactory<T> {
     public value = null;
-    protected state: Subject<T> = null;
+    protected subject: Subject<T> = null;
     constructor(defaultValue: T = null) {
         if (AppUtils.isNullorUndefined(defaultValue)) {
-            this.state = new Subject<T>();
+            this.subject = new Subject<T>();
         } else {
-            this.state = new BehaviorSubject<T>(defaultValue);
+            this.subject = new BehaviorSubject<T>(defaultValue);
             this.value = defaultValue;
         }
+        this.listen().pipe(tap(data => {
+            this.value = data;
+        }));
     }
 
     public listen() {
-        return this.state.asObservable()
-            .pipe(tap(data => {
-                this.value = data;
-            }));
+        return this.subject.asObservable();
     }
 
     public notify(value: T) {
-        this.state.next(value as any);
+        this.subject.next(value as any);
     }
 
     public dispose() {
-        this.state.next();
-        this.state.complete();
+        this.subject.next();
+        this.subject.complete();
     }
 
 }

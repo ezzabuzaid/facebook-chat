@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { AppUtils } from '@core/helpers/utils';
-import { Listener } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/listener';
 import { environment } from '@environments/environment';
 import { NAVIGATOR, WINDOW } from '@shared/common';
 import { PortalModel } from '@shared/models';
@@ -13,7 +13,7 @@ import { PortalModel } from '@shared/models';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends Listener<boolean> {
+export class UserService extends SubjectFactory<boolean> {
 
   constructor(
     private http: HttpClient,

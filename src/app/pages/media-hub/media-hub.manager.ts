@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Listener } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/listener';
 import { Router } from '@angular/router';
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { merge, Subject } from 'rxjs';
@@ -16,7 +16,7 @@ import { MediaLightboxComponent, ILightBoxData } from './media-lightbox/media-li
 export class MediaHubManager {
 
     subscription = new Subject();
-    uploadListener = new Listener<MediaModel.File>();
+    uploadListener = new SubjectFactory<MediaModel.File>();
 
     constructor(
         private routeUtility: RouteUtility,

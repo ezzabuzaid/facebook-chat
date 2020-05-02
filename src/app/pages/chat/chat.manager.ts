@@ -1,7 +1,7 @@
 import * as io from 'socket.io-client';
 import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
-import { Listener } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/listener';
 import { fromEvent } from 'rxjs';
 import { TokenService } from '@core/helpers/token';
 import { ChatModel } from '@shared/models';
@@ -14,7 +14,7 @@ export class ChatManager {
         query: { token: this.tokenService.token }
     });
     public onConnect = fromEvent(this.socket, 'connect');
-    public messageListener = new Listener<ChatModel.Message>();
+    public messageListener = new SubjectFactory<ChatModel.Message>();
 
     constructor(
         private tokenService: TokenService

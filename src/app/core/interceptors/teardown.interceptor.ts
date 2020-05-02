@@ -8,12 +8,12 @@ import { UserService } from '@shared/user';
 import { TokenService } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { AppUtils, tryOrComplete } from '@core/helpers/utils';
-import { Listener } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/listener';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
     private isRefreshing = false;
-    private requestQueue = new Listener(false);
+    private requestQueue = new SubjectFactory(false);
 
     constructor(
         private userService: UserService,
