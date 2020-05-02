@@ -1,40 +1,40 @@
 <ng-container *ngIf="field.typeOf(types.TEXT)">
     <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
-        <input [id]="field.id" type="text" [autocomplete]="field.autocomplete" matInput [formControl]="field">
+        <mat-label>{{field.label | translate}}</mat-label>
+        <input [id]="field.id" type="text" [attr.autocomplete]="field.autocomplete" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.PASSWORD)">
-
     <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
-        <input [id]="field.id" #input type="password" [autocomplete]="field.autocomplete" matInput
+        <mat-label>{{field.label | translate}}</mat-label>
+        <input [id]="field.id" #input type="password" [attr.autocomplete]="field.autocomplete" matInput
             [formControl]="field">
         <mat-icon class="pointer text-muted" [togglePasswod]="input" matSuffix>lock</mat-icon>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.TEXTAREA)">
     <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
+        <mat-label>{{field.label | translate}}</mat-label>
         <textarea [id]="field.id" matInput [formControl]="field"></textarea>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.EMAIL)">
     <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
-        <input [id]="field.id" type="email" matInput [autocomplete]="field.autocomplete || 'email'"
+        <mat-label>{{field.label | translate}}</mat-label>
+        <input [id]="field.id" type="email" matInput [attr.autocomplete]="field.autocomplete || 'email'"
             [formControl]="field">
+        <mat-error *ngIf="field.hasError('email')">Please enter correct email</mat-error>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.NUMBER)">
     <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
+        <mat-label>{{field.label | translate}}</mat-label>
         <input [id]="field.id" type="number" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.DATE)">
     <mat-form-field>
-        <mat-label>{{ field.label }}</mat-label>
+        <mat-label>{{ field.label | translate }}</mat-label>
         <input [id]="field.id" matInput [max]="field.max" [min]="field.min" (focus)="datePicker.open()"
             [matDatepicker]="datePicker" [formControl]="field">
         <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
@@ -42,47 +42,28 @@
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.CHECKBOX)">
-    <mat-label>{{field.label}}</mat-label>
+    <mat-label>{{field.label | translate}}</mat-label>
     <mat-checkbox [id]="field.id" [formControl]="field"></mat-checkbox>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.SELECT)">
     <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
-        <mat-select [id]="field.id" [formControl]="field">
-            <mat-option *ngFor="let option of field.options" [value]="option.value">
-                {{option.title}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-</ng-container>
-<ng-container *ngIf="field.typeOf(types.MULTIPLE)">
-    <mat-form-field>
-        <mat-label>{{field.label}}</mat-label>
-        <mat-select [id]="field.id" [formControl]="field" [multiple]="true">
-            <mat-option *ngFor="let option of field.options" [value]="option.value">
+        <mat-label>{{field.label | translate}}</mat-label>
+        <mat-select [multiple]="field.multiple" [id]="field.id" [formControl]="field">
+            <mat-option *ngFor="let option of (field.options | async)" [value]="option.value">
                 {{option.title}}
             </mat-option>
         </mat-select>
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.RADIO)">
-    <mat-label>{{field.label}}</mat-label>
+    <mat-label>{{field.label | translate}}</mat-label>
     <mat-radio-group [id]="field.id" class="d-flex flex-column">
-        <mat-radio-button *ngFor="let option of field.options" [value]="option.value">
+        <mat-radio-button *ngFor="let option of (field.options | async)" [value]="option.value">
             {{option.title}}
         </mat-radio-button>
     </mat-radio-group>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.TEL)">
-    <!-- TODO: {
-        new RawField({
-            component: MobileControlComponent,
-            onceComponentCreated(instance: MobileControlComponent){
-
-            },
-            ...fieldOptions
-        });
-    } -->
     <app-mobile-control [formControl]="field"></app-mobile-control>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.COUNTRY)">
@@ -99,3 +80,12 @@
             and split the field to be base class in order to RawField to extend it.
             RawField shouldn't have the style object.
         -->
+<!-- TODO: {
+            new RawField({
+                component: MobileControlComponent,
+                onceComponentCreated(instance: MobileControlComponent){
+    
+                },
+                ...fieldOptions
+            });
+        } -->

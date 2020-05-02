@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MobileControlModule } from '@widget/mobile-control';
 import { CountryControlModule } from '@widget/country-control';
 import { DirectivesModule } from '@shared/directives';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { DirectivesModule } from '@shared/directives';
     ReactiveFormsModule,
     MobileControlModule,
     CountryControlModule,
-    DirectivesModule
+    DirectivesModule,
+    TranslateModule.forChild()
   ],
 })
 export class FormModule { }
