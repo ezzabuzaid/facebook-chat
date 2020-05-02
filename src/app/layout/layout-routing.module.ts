@@ -22,10 +22,10 @@ const routes: Routes = [
         path: Constants.Routing.MediaHub.withoutSlash,
         loadChildren: () => import('../pages/media-hub/media-hub.module').then(module => module.MediaHubModule)
       },
-      {
-        path: ':moduleName',
-        loadChildren: () => import('../pages/generic-crud/generic-crud.module').then(module => module.GenericCrudModule)
-      },
+      // {
+      //   path: ':moduleName',
+      //   loadChildren: () => import('../pages/generic-crud/generic-crud.module').then(module => module.GenericCrudModule)
+      // },
     ]
   }
 ];

@@ -11,11 +11,11 @@ const routes = [
   },
   {
     path: Constants.Routing.Portal.withoutSlash,
-    loadChildren: () => import('./pages/portal/portal.module').then(e => e.PortalModule)
+    loadChildren: () => import('./pages/portal/portal.module').then(({ PortalModule }) => PortalModule)
   },
   {
     path: '',
-    loadChildren: () => import('./layout/layout.module').then(e => e.LayoutModule)
+    loadChildren: () => import('./layout/layout.module').then(({ LayoutModule }) => LayoutModule)
   },
   {
     path: Constants.Routing.NOT_FOUND.withoutSlash,

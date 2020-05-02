@@ -4,27 +4,27 @@ import { Constants } from '@core/constants';
 import { IModule } from './generic-module';
 
 const writeForm = new Form<TodosModel.ITodo>([
-    new Field('title', {
-        validation: { validators: [Validators.required] },
-        value: null,
-        type: EFieldType.TEXT,
-        label: 'Title',
-        section: 'name',
-    }),
-    new SelectField('userId', {
-        validation: {
-            validators: [Validators.required]
-        },
-        value: null,
-        type: EFieldType.SELECT,
-        label: 'Users',
-        options: [{ title: 'User 1', value: 'option' }]
-    }),
-    new Field('completed', {
-        value: false,
-        type: EFieldType.CHECKBOX,
-        label: 'Radio Select',
-    })
+    // new Field('title', {
+    //     validation: { validators: [Validators.required] },
+    //     value: null,
+    //     type: EFieldType.TEXT,
+    //     label: 'Title',
+    //     section: 'name',
+    // }),
+    // new SelectField('userId', {
+    //     validation: {
+    //         validators: [Validators.required]
+    //     },
+    //     value: null,
+    //     type: EFieldType.SELECT,
+    //     label: 'Users',
+    //     options: [{ title: 'User 1', value: 'option' }]
+    // }),
+    // new Field('completed', {
+    //     value: false,
+    //     type: EFieldType.CHECKBOX,
+    //     label: 'Radio Select',
+    // })
 ]);
 
 export namespace TodosModel {
@@ -41,15 +41,15 @@ export namespace TodosModel {
             DEFAULT_URL: false,
         },
         endpoint: 'https://jsonplaceholder.typicode.com/todos',
-        create: {
-            title: 'Create Todo',
-            form: writeForm,
-        },
-        update: {
-            // TODO: an option for dialog
-            title: 'Update Todo',
-            form: writeForm
-        },
+        // create: {
+        //     title: 'Create Todo',
+        //     form: writeForm,
+        // },
+        // update: {
+        //     // TODO: an option for dialog
+        //     title: 'Update Todo',
+        //     form: writeForm
+        // },
         read: {
             title: 'Todos list',
             settings: ngTableSetting<ITodo>({

@@ -5,19 +5,19 @@ export interface IModule<Tread, Tcreate, Tupdate> {
     name: string;
     httpConfiguration?: Partial<CustomHeaders>;
     endpoint?: string;
-    create: {
+    create?: {
         endpoint?: string;
         title: string;
         form: Form<Tcreate>;
         dialog?: boolean
     };
-    update: {
+    update?: {
         endpoint?: string;
         title: string;
         form: Form<Tupdate>;
         dialog?: boolean
     };
-    read: {
+    read?: {
         endpoint?: string;
         title: string;
         settings: ISetting<Tread>
