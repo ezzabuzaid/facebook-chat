@@ -1,7 +1,7 @@
 import { FormControl, AbstractControlOptions, FormGroup, ValidatorFn, Validators, AbstractControl } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
 import { Type } from '@angular/core';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 
 export * from './material.module';
 export * from './breakpoints';
@@ -16,7 +16,6 @@ export enum EFieldType {
     TEXT,
     TEXTAREA,
     SELECT,
-    MULTIPLE,
     PASSWORD,
     EMAIL,
     DATE,
@@ -33,7 +32,7 @@ export interface ISelectOption {
     value: string;
 }
 
-export interface IField<fieldName, T> extends FormControl {
+export interface IField<T, fieldName> extends FormControl {
     id: string;
     name: fieldName;
     type: EFieldType;
@@ -41,7 +40,8 @@ export interface IField<fieldName, T> extends FormControl {
     value: T;
     section: string;
     validation: AbstractControlOptions;
-    options?: ISelectOption[];
+    options?: Observable<ISelectOption[]>;
+    multiple?: boolean,
     autocomplete?: string;
     min?: T;
     max?: T;
@@ -49,7 +49,7 @@ export interface IField<fieldName, T> extends FormControl {
     addValidator(...validator: ValidatorFn[]): void;
 }
 
-export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
+export class Field<T, fieldName> extends FormControl implements IField<T, fieldName> {
     public type: EFieldType = null;
     public section: string = null;
     public label: string = null;
@@ -62,7 +62,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
         updateOn: 'change'
     };
     constructor(
-        public name: Tname,
+        public name: fieldName,
         {
             validation = null,
             value = null,
@@ -71,7 +71,7 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
             section,
             id,
             autocomplete
-        }: Partial<Field<Tname, T>> = {}
+        }: Partial<IField<T, fieldName>> = {}
     ) {
         super(value, validation);
         this.value = value;
@@ -101,25 +101,25 @@ export class Field<Tname, T> extends FormControl implements IField<Tname, T> {
 
 }
 
-export class SelectField<Tname, T = string | string[]> extends Field<Tname, T> implements IField<Tname, T> {
-    public options: ISelectOption[] = [];
-    // public value: T = null;
+export class SelectField<T, fieldName> extends Field<T[], fieldName> implements IField<T[], fieldName> {
+    public options: Observable<ISelectOption[]> = null;
+    public multiple = false;
     constructor(
-        public name: Tname,
-        option: Partial<SelectField<Tname, T>>
+        public name: fieldName,
+        option: Partial<SelectField<T, fieldName>>
     ) {
         super(name, option);
         this.options = option.options;
-        // this.value = option.value as any;
+        this.multiple = option.multiple;
     }
 }
-export class DateField<Tname> extends Field<Tname, Date> implements IField<Tname, Date> {
+export class DateField<fieldName> extends Field<Date, fieldName> implements IField<Date, fieldName> {
     public min: Date;
     public max: Date;
     public value: Date = null;
     constructor(
-        public name: Tname,
-        option: Partial<DateField<Tname>>
+        public name: fieldName,
+        option: Partial<DateField<fieldName>>
     ) {
         super(name, option);
         this.value = option.value;
@@ -127,15 +127,20 @@ export class DateField<Tname> extends Field<Tname, Date> implements IField<Tname
 }
 
 export class Form<T> extends FormGroup {
-    // TODO: Check if two fields has the same name
     constructor(
-        public fields: IField<keyof T, T[keyof T]>[],
+        public fields: IField<T[keyof T], keyof T>[],
         validation?: AbstractControlOptions,
     ) {
-        super({}, validation);
-        this.fields.forEach((field) => {
-            this.addControl(field.name as any, field);
-        });
+        super((() => {
+            return fields.reduce((acc, field) => {
+                if (AppUtils.isNullorUndefined(acc[field.name as string])) {
+                    acc[field.name as string] = field;
+                    return acc;
+                }
+                throw new TypeError(`${field.name} field already registered`);
+            }, {});
+        })(), validation);
+
     }
 
     getComponent<Y>(component: Type<Y>): Y {
@@ -147,13 +152,13 @@ export class Form<T> extends FormGroup {
         return super.get(name as any) as any;
     }
 
-    // @ts-ignore
-    getError(name: keyof T, errorName: string) {
-        return this.get(name).hasError(errorName);
-    }
 
     getName(name: keyof T) {
         return name;
+    }
+
+    hasControlError(name: keyof T, errorName: string) {
+        return this.get(name).hasError(errorName);
     }
 
     getControlValue(name: keyof T, defaultValue?: T[keyof T]) {
@@ -166,5 +171,4 @@ export interface IComponentField {
     field: Field<any, any>;
 }
 
-// TODO: export this file as library
 
