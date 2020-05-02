@@ -1,14 +1,14 @@
 
-import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
-import { Form, Field, SelectField, EFieldType } from '@shared/common';
-import { AppUtils } from '@core/helpers/utils';
+import { Form, Field, EFieldType } from '@shared/common';
 import { Constants } from '@core/constants';
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models';
 import { Observable, merge } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
+import { ContainsUppercase, ContainsLowercase, ContainsSpecialCharacter, ContainsNumber, Between } from '@shared/validators';
 
 @Component({
   selector: 'app-register',
@@ -29,27 +29,29 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       type: EFieldType.EMAIL,
       autocomplete: 'email',
       label: 'placeholder_email',
-      validation: { validators: [Validators.required] }
+      validation: { validators: [Validators.required, Validators.email] }
     }),
     new Field('password', {
       type: EFieldType.PASSWORD,
-      autocomplete: 'new-password',
+      autocomplete: 'off',
       label: 'placeholder_password',
-      validation: { validators: [Validators.required] }
+      validation: {
+        validators: [
+          Validators.required,
+          Between(8, 16),
+          ContainsUppercase(),
+          ContainsLowercase(),
+          ContainsSpecialCharacter(),
+          ContainsNumber()
+        ]
+      }
     }),
     new Field('mobile', {
       type: EFieldType.TEL,
       autocomplete: 'mobile',
       label: 'placeholder_mobile',
       validation: { validators: [Validators.required] }
-    }),
-    new SelectField<keyof PortalModel.IRegister, PortalModel.ERoles>('role', {
-      type: EFieldType.SELECT,
-      label: 'placeholder_role',
-      validation: { validators: [Validators.required] },
-      value: PortalModel.ERoles.SUPERADMIN,
-      options: AppUtils.mapEnumToValueAnd(PortalModel.ERoles),
-    }),
+    })
   ]);
   $passwordVisible: Observable<boolean> = null;
 
@@ -67,6 +69,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     );
   }
 
+
+
   register({ valid, value }) {
     if (valid) {
       this.userService.register(value)
@@ -78,3 +82,5 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
 
 }
+
+
