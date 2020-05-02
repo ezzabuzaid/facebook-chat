@@ -8,4 +8,3 @@ export function NumberOnly(): ValidatorFn {
         return null;
     };
 }
-
