@@ -5,10 +5,10 @@ import { CustomHeaders } from '../http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, switchMap, tap, filter, take } from 'rxjs/operators';
 import { UserService } from '@shared/user';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { AppUtils, tryOrComplete } from '@core/helpers/utils';
-import { SubjectFactory } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
@@ -18,7 +18,7 @@ export class TeardownInterceptor implements HttpInterceptor {
     constructor(
         private userService: UserService,
         private snackbar: MatSnackBar,
-        private tokenService: TokenService,
+        private tokenService: TokenHelper,
     ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

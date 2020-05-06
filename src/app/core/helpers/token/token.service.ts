@@ -13,7 +13,8 @@ const REFRESH_TOKEN_KEY = Constants.Application.REFRESH_TOKEN_KEY;
   providedIn: 'root'
 })
 
-export class TokenService {
+export class TokenHelper {
+
   private get storage() {
     return this.oneTimeLogin ? this.session : this.local;
   }

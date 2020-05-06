@@ -3,7 +3,7 @@ import { TestBed } from "@angular/core/testing";
 import { CacheDatabase, HttpCacheEntry, HttpCacheHelper } from "./cache.helper";
 import { HttpResponse } from "@angular/common/http";
 
-describe('HttpCacheService', () => {
+xdescribe('HttpCacheService', () => {
   let service: HttpCacheHelper = null;
   let storage: AsyncDatabase = null;
   const COLLECTION_NAME = 'TEST';

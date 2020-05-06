@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsersModel, ListEntityResponse, ListEntityQuery, PlainQuery } from '@shared/models';
 import { map } from 'rxjs/operators';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 
 @Injectable({
@@ -12,7 +12,7 @@ import { Constants } from '@core/constants';
 export class UsersService {
     constructor(
         private http: HttpClient,
-        private tokenService: TokenService
+        private tokenService: TokenHelper
     ) { }
 
     public getUsers() {

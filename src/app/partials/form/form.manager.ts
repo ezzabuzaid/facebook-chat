@@ -1,4 +1,4 @@
-import { SubjectFactory } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 import { Injectable } from '@angular/core';
 
 @Injectable({

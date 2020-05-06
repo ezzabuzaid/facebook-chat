@@ -2,10 +2,10 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { AppUtils } from '@core/helpers/utils';
-import { SubjectFactory } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 import { environment } from '@environments/environment';
 import { NAVIGATOR, WINDOW } from '@shared/common';
 import { PortalModel } from '@shared/models';
@@ -17,7 +17,7 @@ export class UserService extends SubjectFactory<boolean> {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService,
+    private tokenService: TokenHelper,
     private router: Router,
     @Inject(NAVIGATOR) private navigator: Navigator,
     @Inject(WINDOW) private window: Window,

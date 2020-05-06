@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 
 export class SubjectFactory<T> {
     public value = null;
-    protected subject: Subject<T> = null;
+    public subject: Subject<T> = null;
     constructor(defaultValue: T = null) {
         if (AppUtils.isNullorUndefined(defaultValue)) {
             this.subject = new Subject<T>();
