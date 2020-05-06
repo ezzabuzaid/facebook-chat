@@ -21,6 +21,7 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml'],
+    browserNoActivityTimeout: 400000,
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -30,3 +31,4 @@ module.exports = function (config) {
     restartOnFileChange: true
   });
 };
+
