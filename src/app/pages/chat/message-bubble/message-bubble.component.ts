@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ChatManager } from '../chat.manager';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { ChatModel, MediaModel } from '@shared/models';
 import { AppUtils } from '@core/helpers/utils';
 
@@ -20,7 +20,7 @@ export class MessageBubbleComponent implements OnInit {
   file: MediaModel.File = null;
   constructor(
     private chatManager: ChatManager,
-    private tokenService: TokenService,
+    private tokenService: TokenHelper,
     private elementRef: ElementRef<HTMLElement>,
     private cdf: ChangeDetectorRef
   ) { }

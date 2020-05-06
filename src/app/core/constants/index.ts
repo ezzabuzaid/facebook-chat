@@ -51,6 +51,7 @@ export namespace Constants {
       withSlash: '/media?shared=true',
       withoutSlash: 'media?shared=true',
     };
+    static DEFAULT = Routing.SESSIONS;
   }
 
   export class API {

@@ -5,7 +5,7 @@ import { ChatModel } from '@shared/models';
 import * as EmojiButton from '@joeattardi/emoji-button';
 import { FormControl } from '@angular/forms';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-chat-card-footer',
@@ -37,7 +37,7 @@ export class ChatCardFooterComponent implements OnInit {
     private chatManager: ChatManager,
     private elementRef: ElementRef<HTMLElement>,
     private mediaHubManager: MediaHubManager,
-    private tokenService: TokenService
+    private tokenService: TokenHelper
   ) { }
 
   ngOnInit() {

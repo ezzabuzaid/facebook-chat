@@ -1,12 +1,11 @@
 <div class="container h-100">
   <div class="row align-items-center justify-content-center h-100">
     <div class="col-12 col-md-8 col-lg-5">
-      <app-form-container title="Login in to continue" [formGroup]="form"
-        (onSubmit)="login($event, rememberMeCheckBox)">
+      <app-form-container title="Login in to continue" [formGroup]="form" (onSubmit)="login($event)">
         <span form-header>Angular Buildozer</span>
         <section form-body>
           <app-field-factory *ngFor="let field of form.fields" [field]="field"></app-field-factory>
-          <mat-checkbox id="rememberMe" [checked]="true" #rememberMeCheckBox>Remember me!</mat-checkbox>
+          <app-field-factory [field]="rememberMeCheckBox"></app-field-factory>
         </section>
         <section form-footer>
           <a mat-button class="text-nounderline mt-2" id="registerButton" [routerLink]="['../', 'register']">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LanguageService, ELanguage } from '@core/helpers/language';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
 import { UserService } from '@shared/user';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 
 @Component({
@@ -17,7 +17,7 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private languageService: LanguageService,
     private sidebarService: SidebarService,
-    private tokenService: TokenService,
+    private tokenService: TokenHelper,
     private userService: UserService
   ) { }
 

@@ -1,6 +1,6 @@
-import { Component, OnInit, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ChatModel } from '@shared/models';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { IChatCard } from '..';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatCardManager } from '../chat-card.manager';
@@ -19,7 +19,7 @@ export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<Chat
   @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
-    private tokenService: TokenService,
+    private tokenService: TokenHelper,
     private dialog: MatDialog,
     private chatCardManager: ChatCardManager,
     private chatManager: ChatManager,

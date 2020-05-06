@@ -1,11 +1,11 @@
 
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
 import { Field, Form, EFieldType } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { MatCheckbox } from '@angular/material/checkbox';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { PortalModel } from '@shared/models';
 
@@ -18,6 +18,11 @@ import { PortalModel } from '@shared/models';
   }
 })
 export class LoginComponent implements OnInit {
+  rememberMeCheckBox = new Field('name', {
+    type: EFieldType.CHECKBOX,
+    value: true,
+    label: 'Remember me!'
+  });
   form = new Form<PortalModel.ILoginRequest>([
     new Field('username', {
       label: 'placeholder_username',
@@ -36,20 +41,22 @@ export class LoginComponent implements OnInit {
     })
   ]);
 
+
+
   constructor(
     private portalService: UserService,
-    private tokenHelper: TokenService,
+    private tokenHelper: TokenHelper,
     private router: Router
   ) { }
 
   ngOnInit() { }
 
-  login({ valid, value }, rememberMeCheckBox: MatCheckbox) {
+  login({ valid, value }) {
     if (valid) {
       this.portalService.login(value)
         .subscribe(data => {
-          this.tokenHelper.setToken(data.token, data.refreshToken, rememberMeCheckBox.checked);
-          this.router.navigateByUrl(Constants.Routing.SESSIONS.withSlash);
+          this.tokenHelper.setToken(data.token, data.refreshToken, this.rememberMeCheckBox.value);
+          this.router.navigateByUrl(Constants.Routing.DEFAULT.withSlash);
         });
     }
   }

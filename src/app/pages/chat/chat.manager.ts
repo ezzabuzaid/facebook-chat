@@ -1,9 +1,9 @@
 import * as io from 'socket.io-client';
 import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
-import { SubjectFactory } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 import { fromEvent } from 'rxjs';
-import { TokenService } from '@core/helpers/token';
+import { TokenHelper } from '@core/helpers/token';
 import { ChatModel } from '@shared/models';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class ChatManager {
     public messageListener = new SubjectFactory<ChatModel.Message>();
 
     constructor(
-        private tokenService: TokenService
+        private tokenService: TokenHelper
     ) {
     }
 

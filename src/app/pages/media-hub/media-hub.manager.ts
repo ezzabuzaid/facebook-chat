@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SubjectFactory } from '@core/helpers/listener';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 import { Router } from '@angular/router';
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { merge, Subject } from 'rxjs';
