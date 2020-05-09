@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }),
     new Field('password', {
       type: EFieldType.PASSWORD,
-      autocomplete: 'off',
+      autocomplete: 'new-password',
       label: 'placeholder_password',
       validation: {
         validators: [

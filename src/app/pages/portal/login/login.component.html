@@ -6,9 +6,12 @@
         <section form-body>
           <app-field-factory *ngFor="let field of form.fields" [field]="field"></app-field-factory>
           <app-field-factory [field]="rememberMeCheckBox"></app-field-factory>
+          <a mat-button [routerLink]="['../', 'forgot']">
+            <small class="text-muted">{{ 'forgot_password' | translate }}</small>
+          </a>
         </section>
         <section form-footer>
-          <a mat-button class="text-nounderline mt-2" id="registerButton" [routerLink]="['../', 'register']">
+          <a mat-button id="registerButton" [routerLink]="['../', 'register']">
             <small class="text--accent">{{ 'button_signup' | translate }}</small>
           </a>
         </section>

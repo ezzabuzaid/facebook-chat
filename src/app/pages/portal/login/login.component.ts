@@ -1,10 +1,8 @@
-
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
 import { Field, Form, EFieldType } from '@shared/common';
 import { Validators } from '@angular/forms';
-import { MatCheckbox } from '@angular/material/checkbox';
 import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { PortalModel } from '@shared/models';
@@ -21,7 +19,7 @@ export class LoginComponent implements OnInit {
   rememberMeCheckBox = new Field('name', {
     type: EFieldType.CHECKBOX,
     value: true,
-    label: 'Remember me!'
+    label: 'Remember me!',
   });
   form = new Form<PortalModel.ILoginRequest>([
     new Field('username', {
