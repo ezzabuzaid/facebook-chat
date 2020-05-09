@@ -37,6 +37,7 @@ export interface IField<T, fieldName> extends FormControl {
     name: fieldName;
     type: EFieldType;
     label: string;
+    hint: string;
     value: T;
     section: string;
     validation: AbstractControlOptions;
@@ -53,6 +54,7 @@ export class Field<T, fieldName> extends FormControl implements IField<T, fieldN
     public type: EFieldType = null;
     public section: string = null;
     public label: string = null;
+    public hint: string;
     public value: T = null;
     public id = null;
     public autocomplete = '';
@@ -70,7 +72,8 @@ export class Field<T, fieldName> extends FormControl implements IField<T, fieldN
             label,
             section,
             id,
-            autocomplete
+            autocomplete,
+            hint
         }: Partial<IField<T, fieldName>> = {}
     ) {
         super(value, validation);
@@ -80,6 +83,7 @@ export class Field<T, fieldName> extends FormControl implements IField<T, fieldN
         this.label = label;
         this.id = id || AppUtils.generateAlphabeticString(5);
         this.autocomplete = autocomplete;
+        this.hint = hint;
     }
 
     addValidator(...validator: ValidatorFn[]) {

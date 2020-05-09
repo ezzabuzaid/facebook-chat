@@ -1,12 +1,14 @@
 <ng-container *ngIf="field.typeOf(types.TEXT)">
     <mat-form-field>
         <mat-label>{{field.label | translate}}</mat-label>
+        <mat-hint>{{field.hint}}</mat-hint>
         <input [id]="field.id" type="text" [attr.autocomplete]="field.autocomplete" matInput [formControl]="field">
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.PASSWORD)">
     <mat-form-field>
         <mat-label>{{field.label | translate}}</mat-label>
+        <mat-hint>{{field.hint}}</mat-hint>
         <input [id]="field.id" #input type="password" [attr.autocomplete]="field.autocomplete" matInput
             [formControl]="field">
         <mat-icon class="pointer text-muted" [togglePasswod]="input" matSuffix>lock</mat-icon>
@@ -42,8 +44,7 @@
     </mat-form-field>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.CHECKBOX)">
-    <mat-label>{{field.label | translate}}</mat-label>
-    <mat-checkbox [id]="field.id" [formControl]="field"></mat-checkbox>
+    <mat-checkbox [id]="field.id" [formControl]="field">{{field.label | translate}}</mat-checkbox>
 </ng-container>
 <ng-container *ngIf="field.typeOf(types.SELECT)">
     <mat-form-field>
