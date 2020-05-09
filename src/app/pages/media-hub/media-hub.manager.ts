@@ -79,7 +79,7 @@ export class MediaHubManager {
     }
 
     isShared() {
-        return AppUtils.isTruthy(this.routeUtility.getQueryParam('shared'));
+        return this.routeUtility.getQueryParam('shared');
     }
 
     viewChange() {

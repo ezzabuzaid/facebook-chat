@@ -9,6 +9,10 @@ export namespace Constants {
   }
 
   export class Routing {
+    static readonly FORGOT_PASSWORD = {
+      withSlash: '/portal/forgot',
+      withoutSlash: 'forgot'
+    };
     static readonly LOGIN = {
       withSlash: '/portal/login',
       withoutSlash: 'login'

@@ -1,4 +1,4 @@
-@import 'mixins';
+@import "mixins";
 
 :host {
   width: 100%;
@@ -47,7 +47,7 @@
     }
   }
   .attachment-box {
-    height: 50px;
+    height: 60px;
     flex: 0 0 20%;
     mat-icon {
       font-size: 18px;

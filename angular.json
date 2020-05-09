@@ -96,7 +96,7 @@
             ],
             "outputHashing": "media",
             "sourceMap": false,
-            "optimization": true,
+            "optimization": false,
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/assets/scss"
