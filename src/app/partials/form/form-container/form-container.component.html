@@ -10,6 +10,7 @@
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
+        <app-field-factory *ngFor="let field of formGroup.fields" [field]="field"></app-field-factory>
         <ng-content select="[form-body]"></ng-content>
     </mat-card-content>
     <mat-card-actions>

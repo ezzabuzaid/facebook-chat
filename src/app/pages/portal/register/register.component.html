@@ -2,8 +2,7 @@
   <div class="row align-items-center justify-content-center h-100">
     <div class="col-12 col-md-8 col-lg-6">
       <app-form-container title="Register in our system" (onSubmit)="register($event)" [formGroup]="form">
-        <section form-body>
-          <app-field-factory *ngFor="let field of form.fields" [field]="field"></app-field-factory>
+        <ng-container ngProjectAs="form-body">
           <ng-container *ngIf="$passwordVisible | async">
             <div [ngClass]="[form.hasControlError('password', 'uppercase') ? 'text-danger':'text-success']"
               class="d-flex align-items-center">
@@ -41,7 +40,7 @@
               <span>at least one number</span>
             </div>
           </ng-container>
-        </section>
+        </ng-container>
       </app-form-container>
     </div>
   </div>

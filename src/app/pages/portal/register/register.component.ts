@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       type: EFieldType.PASSWORD,
       autocomplete: 'new-password',
       label: 'placeholder_password',
+      value: '',
       validation: {
         validators: [
           Validators.required,
