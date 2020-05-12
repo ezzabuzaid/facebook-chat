@@ -21,6 +21,12 @@ export class NavigationItem {
 
 export default [
   new NavigationItem({
+    routerLink: `${Constants.Routing.HOME.withSlash}`,
+    icon: 'home',
+    title: _extract('navbar_home'),
+    type: 'item'
+  }),
+  new NavigationItem({
     routerLink: `${Constants.Routing.Users.withSlash}`,
     icon: 'person',
     title: _extract('navbar_users'),

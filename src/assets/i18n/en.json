@@ -30,6 +30,7 @@
 	"navbar_users": "Users",
 	"navbar_sessions": "Sessions",
 	"navbar_media": "Media hub",
+	"navbar_home": "navbar_home",
 	"placeholder_confirm_password": "Confirm passord",
 	"placeholder_fullname": "Fullname",
 	"placeholder_email": "Email",
