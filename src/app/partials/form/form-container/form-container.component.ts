@@ -15,7 +15,8 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   @Output() public onSubmit = new EventEmitter();
   @Input() public title: string = null;
   @Input() formGroup: Form<any>;
-
+  fields = [];
+  sections = [];
   public progressListener = this.formWidgetManager.listen().pipe(share());
   private subscription = new Subject();
 
@@ -29,7 +30,26 @@ export class FormContainerComponent implements OnInit, OnDestroy {
       .subscribe(show => {
         this.loading = show;
       });
-
+    const flatten = (fields: any[]) => {
+      return fields.reduce((acc, field) => {
+        if (this.isForm(field)) {
+          acc.push(...flatten(field['fields']));
+        } else {
+          acc.push(field);
+        }
+        return acc;
+      }, []);
+    }
+    this.fields = flatten(this.formGroup.fields)
+      .sort((a, b) => a.section - b.section)
+      .reduce((acc, curr) => {
+        if (!acc[curr.section]) {
+          this.sections.push(curr.section);
+          acc[curr.section] = [];
+        }
+        acc[curr.section].push(curr);
+        return acc;
+      }, {});
   }
 
   submit() {
@@ -41,6 +61,10 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     AppUtils.unsubscribe(this.subscription);
+  }
+
+  isForm(field: any) {
+    return field instanceof Form;
   }
 
 }

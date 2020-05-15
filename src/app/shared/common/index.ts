@@ -39,7 +39,7 @@ export interface IField<T, fieldName> extends FormControl {
     label: string;
     hint: string;
     value: T;
-    section: string;
+    section: number;
     validation: AbstractControlOptions;
     options?: Observable<ISelectOption[]>;
     multiple?: boolean,
@@ -52,7 +52,7 @@ export interface IField<T, fieldName> extends FormControl {
 
 export class Field<T, fieldName> extends FormControl implements IField<T, fieldName> {
     public type: EFieldType = null;
-    public section: string = null;
+    public section: number = null;
     public label: string = null;
     public hint: string;
     public value: T = null;
@@ -79,8 +79,8 @@ export class Field<T, fieldName> extends FormControl implements IField<T, fieldN
         super(value, validation);
         this.value = value;
         this.type = type || EFieldType.TEXT;
-        this.section = section;
-        this.label = label;
+        this.section = section ?? 0;
+        this.label = label ?? (this.name as any);
         this.id = id || AppUtils.generateAlphabeticString(5);
         this.autocomplete = autocomplete;
         this.hint = hint;
@@ -131,8 +131,9 @@ export class DateField<fieldName> extends Field<Date, fieldName> implements IFie
 }
 
 export class Form<T> extends FormGroup {
+    public name: string;
     constructor(
-        public fields: IField<T[keyof T], keyof T>[],
+        public fields: (IField<T[keyof T], keyof T> | Form<any>)[],
         validation?: AbstractControlOptions,
     ) {
         super((() => {
@@ -144,7 +145,11 @@ export class Form<T> extends FormGroup {
                 throw new TypeError(`${field.name} field already registered`);
             }, {});
         })(), validation);
+    }
 
+    withName(name: string) {
+        this.name = name;
+        return this;
     }
 
     getComponent<Y>(component: Type<Y>): Y {
@@ -170,9 +175,13 @@ export class Form<T> extends FormGroup {
     }
 
 }
-
 export interface IComponentField {
     field: Field<any, any>;
 }
 
+export class FieldSet {
+    constructor() {
+
+    }
+}
 
