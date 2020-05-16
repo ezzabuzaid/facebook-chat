@@ -12,7 +12,7 @@ import { PortalModel } from '@shared/models';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   host: {
-    class: 'bg--primary'
+    class: 'bg--primary d-block h-100'
   }
 })
 export class LoginComponent implements OnInit {
@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
     new Field('username', {
       label: 'placeholder_username',
       autocomplete: 'username',
+      section: 0,
       validation: {
         validators: Validators.required
       }
@@ -32,14 +33,13 @@ export class LoginComponent implements OnInit {
     new Field('password', {
       label: 'placeholder_passowrd',
       type: EFieldType.PASSWORD,
+      section: 1,
       autocomplete: 'current-password',
       validation: {
         validators: Validators.required
       }
     })
   ]);
-
-
 
   constructor(
     private portalService: UserService,
