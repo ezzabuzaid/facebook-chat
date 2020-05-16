@@ -1,8 +1,8 @@
 <div class="container h-100">
   <div class="row align-items-center justify-content-center h-100">
-    <div class="col-12 col-md-8 col-lg-6">
+    <div class="col-12 col-md-10">
       <app-form-container title="Register in our system" (onSubmit)="register($event)" [formGroup]="form">
-        <ng-container ngProjectAs="form-body">
+        <ng-container ngProjectAs="[form-body]">
           <ng-container *ngIf="$passwordVisible | async">
             <div [ngClass]="[form.hasControlError('password', 'uppercase') ? 'text-danger':'text-success']"
               class="d-flex align-items-center">
@@ -41,6 +41,7 @@
             </div>
           </ng-container>
         </ng-container>
+        <button form-footer color="primary" mat-button [routerLink]="['../', 'login']">Login</button>
       </app-form-container>
     </div>
   </div>

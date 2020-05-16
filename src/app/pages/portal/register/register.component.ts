@@ -2,11 +2,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
-import { Form, Field, EFieldType } from '@shared/common';
+import { LookupsService } from '@shared/services/lookups';
+import { Form, Field, EFieldType, SelectField, DateField, SelectOption } from '@shared/common';
 import { Constants } from '@core/constants';
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models';
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { ContainsUppercase, ContainsLowercase, ContainsSpecialCharacter, ContainsNumber, Between } from '@shared/validators';
 
@@ -15,7 +16,7 @@ import { ContainsUppercase, ContainsLowercase, ContainsSpecialCharacter, Contain
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   host: {
-    class: 'bg--primary'
+    class: 'bg--primary d-block h-100'
   }
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
@@ -52,10 +53,63 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       autocomplete: 'mobile',
       label: 'placeholder_mobile',
       validation: { validators: [Validators.required] }
-    })
+    }),
+    new Form<PortalModel.IProfile>([
+      new Field('firstName', {
+        label: 'placeholder_firstname',
+        section: 1,
+        validation: {
+          validators: [Validators.required]
+        }
+      }),
+      new Field('lastName', {
+        label: 'placeholder_lastname',
+        section: 1,
+        validation: {
+          validators: [Validators.required]
+        }
+      }),
+      new Field('nationality', {
+        label: 'Nationality',
+        type: EFieldType.COUNTRY,
+        section: 3,
+        validation: {
+          validators: [Validators.required]
+        }
+      }),
+      new Field('placeOfBirth', {
+        label: 'Place of birth',
+        type: EFieldType.COUNTRY,
+        section: 3,
+        validation: {
+          validators: [Validators.required]
+        }
+      }),
+      new DateField('dateOfBrith', {
+        label: 'Date of birth',
+        section: 3,
+        max: new Date(),
+        validation: {
+          validators: [Validators.required]
+        }
+      }),
+      new SelectField('gender', {
+        label: 'Gender',
+        section: 3,
+        options: of([new SelectOption('Male', 0), new SelectOption('Female', 1)]),
+        validation: {
+          validators: [Validators.required]
+        }
+      }),
+      new Field('occupation', {
+        label: 'Occupation',
+        section: 3
+      }),
+    ]).withName('profile')
   ]);
-  $passwordVisible: Observable<boolean> = null;
 
+
+  $passwordVisible: Observable<boolean> = null;
   constructor(
     private router: Router,
     private userService: UserService,
