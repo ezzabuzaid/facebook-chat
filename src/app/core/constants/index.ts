@@ -65,7 +65,7 @@ export namespace Constants {
         return this.folders + '/tags';
       },
       get folders() {
-        return 'folders'
+        return this.base + '/folders'
       },
       get files() {
         return this.folders + '/files'
@@ -79,6 +79,9 @@ export namespace Constants {
       base: 'portal',
       get refreshtoken() {
         return this.base + '/refreshtoken'
+      },
+      get accountexist() {
+        return this.base + '/accountexist'
       },
       get login() {
         return this.base + '/login'

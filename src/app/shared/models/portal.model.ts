@@ -12,11 +12,28 @@ export namespace PortalModel {
         username: string;
         email: string;
     }
+    export interface IProfile {
+        firstName: string;
+        lastName: string;
+        country: string;
+        city: string;
+        nationality: string;
+        placeOfBirth: string;
+        dateOfBrith: Date;
+        gender: string;
+        occupation: string;
+    }
+    export interface IForgotPassword {
+        firstName: string;
+        lastName: string;
+        placeOfBirth: string;
+        dateOfBrith: Date;
+        email: string;
+    }
     export interface ILoginRequest {
         username: string;
         password: string;
     }
-
     export interface ITokenClaim {
         role: string;
         id: string;

@@ -123,8 +123,13 @@ export class AppUtils {
         return string;
     }
 
-    static flattenArray(data: any[]) {
-        return data.reduce((a, b) => a.concat(b), []);
+    static flattenArray(ary: any[]) {
+        return ary.reduce(function (a, b) {
+            if (Array.isArray(b)) {
+                return a.concat(AppUtils.flattenArray(b))
+            }
+            return a.concat(b)
+        }, [])
     }
 
     /**

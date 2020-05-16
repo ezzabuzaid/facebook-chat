@@ -27,9 +27,11 @@ export enum EFieldType {
     COUNTRY,
 }
 
-export interface ISelectOption {
-    title: string;
-    value: string;
+export class SelectOption {
+    constructor(
+        public value: string,
+        public key: string | number
+    ) { }
 }
 
 export interface IField<T, fieldName> extends FormControl {
@@ -41,7 +43,7 @@ export interface IField<T, fieldName> extends FormControl {
     value: T;
     section: number;
     validation: AbstractControlOptions;
-    options?: Observable<ISelectOption[]>;
+    options?: Observable<SelectOption[]>;
     multiple?: boolean,
     autocomplete?: string;
     min?: T;
@@ -105,14 +107,15 @@ export class Field<T, fieldName> extends FormControl implements IField<T, fieldN
 
 }
 
-export class SelectField<T, fieldName> extends Field<T[], fieldName> implements IField<T[], fieldName> {
-    public options: Observable<ISelectOption[]> = null;
+export class SelectField<T, fieldName> extends Field<T, fieldName> implements IField<T, fieldName> {
+    public options: Observable<SelectOption[]> = null;
     public multiple = false;
     constructor(
         public name: fieldName,
         option: Partial<SelectField<T, fieldName>>
     ) {
         super(name, option);
+        this.type = EFieldType.SELECT;
         this.options = option.options;
         this.multiple = option.multiple;
     }
@@ -127,6 +130,9 @@ export class DateField<fieldName> extends Field<Date, fieldName> implements IFie
     ) {
         super(name, option);
         this.value = option.value;
+        this.type = EFieldType.DATE;
+        this.min = option.min;
+        this.max = option.max;
     }
 }
 
