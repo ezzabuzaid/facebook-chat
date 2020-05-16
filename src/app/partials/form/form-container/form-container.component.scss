@@ -22,6 +22,7 @@ $zIndex: 99;
   app-field-factory {
     min-width: calc(100% / 3);
     flex-grow: 1;
+    flex-basis: 25%;
   }
 }
 mat-progress-bar {

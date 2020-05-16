@@ -4,7 +4,10 @@ import { share, takeUntil } from 'rxjs/operators';
 import { FormWidgetManager } from '../form.manager';
 import { AppUtils } from '@core/helpers/utils';
 import { Form } from '@shared/common';
-
+export interface SubmitEvent {
+  value: any,
+  valid: boolean;
+}
 @Component({
   selector: 'app-form-container',
   templateUrl: './form-container.component.html',
@@ -12,7 +15,7 @@ import { Form } from '@shared/common';
 })
 export class FormContainerComponent implements OnInit, OnDestroy {
   @HostBinding('class.loading') public loading = false;
-  @Output() public onSubmit = new EventEmitter();
+  @Output() public onSubmit = new EventEmitter<SubmitEvent>();
   @Input() public title: string = null;
   @Input() formGroup: Form<any>;
   fields = [];
