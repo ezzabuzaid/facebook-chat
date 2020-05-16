@@ -13,7 +13,6 @@ import { IField, WINDOW } from '@shared/common';
   }],
 })
 export class CountryControlComponent implements OnInit, ControlValueAccessor {
-  @Input() public placeholder: string = null;
   @Input() public formControl: IField<any, string> = null;
   public countries = [];
 
