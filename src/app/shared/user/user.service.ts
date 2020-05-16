@@ -49,9 +49,16 @@ export class UserService extends SubjectFactory<boolean> {
       }))
   }
 
+  public checkIfAccountIsExist(payload: PortalModel.IRegister) {
+    return this.http.post(Constants.API.PORTAL.accountexist, payload);
+  }
+
   public logout(redirectUrl = undefined) {
     console.log(redirectUrl);
-    this.navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}/${this.getDeviceUUID()}`);
+    let blob = new Blob([JSON.stringify({})], {
+      [Constants.Application.DEVICE_UUID]: this.getDeviceUUID()
+    });
+    this.navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}`, blob);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
       queryParams: {
         // [Constants.Application.REDIRECT_URL]: redirectUrl || undefined,
