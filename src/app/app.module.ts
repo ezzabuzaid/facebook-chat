@@ -14,7 +14,6 @@ import { HttpService } from '@core/http';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { StaticPagesModule } from './pages/static/static-pages.module';
 import { PopupModule } from '@widget/popup';
-import { ProgressBarModule } from '@widget/progress-bar';
 import { isPlatformBrowser } from '@angular/common';
 
 
@@ -50,7 +49,6 @@ export const sessionStorageFactory = (injector: Injector) => {
     CoreModule,
     PopupModule,
     StaticPagesModule,
-    ProgressBarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
