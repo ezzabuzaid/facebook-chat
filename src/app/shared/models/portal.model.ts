@@ -27,8 +27,7 @@ export namespace PortalModel {
         firstName: string;
         lastName: string;
         placeOfBirth: string;
-        dateOfBrith: Date;
-        email: string;
+        username: Date;
     }
     export interface ILoginRequest {
         username: string;
@@ -46,9 +45,13 @@ export namespace PortalModel {
         ) { }
     }
 
-
     export interface ILoginResponse {
         refreshToken: string;
         token: string;
+    }
+
+    export interface AccountVerifiedResponse {
+        emailVerified: boolean;
+        mobileVerified: boolean;
     }
 }

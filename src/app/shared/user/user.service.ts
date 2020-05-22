@@ -50,7 +50,7 @@ export class UserService extends SubjectFactory<boolean> {
   }
 
   public checkIfAccountIsExist(payload: PortalModel.IRegister) {
-    return this.http.post(Constants.API.PORTAL.accountexist, payload);
+    return this.http.post<PortalModel.AccountVerifiedResponse>(Constants.API.PORTAL.ACCOUNT_VERIFIED, payload);
   }
 
   public logout(redirectUrl = undefined) {
