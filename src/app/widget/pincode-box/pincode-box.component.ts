@@ -1,27 +1,47 @@
-import { Component, OnInit, ViewChildren, QueryList, ViewChild, ElementRef, InjectionToken, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild, ElementRef, InjectionToken, inject, ViewEncapsulation, Inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-export const PincodeBoxDialog = new InjectionToken('PincodeBoxDialog');
+export type PincodeBoxDialogHandler = (data: PincodeBoxData) => MatDialogRef<PincodeBoxComponent>;
+
+export interface PincodeBoxData {
+  type: 'account' | 'mobile' | 'email',
+  proxy: 'sms' | 'email'
+}
+
+export const PincodeBoxDialog = new InjectionToken('PincodeBoxDialog', {
+  providedIn: 'root',
+  factory: () => {
+    const dialog = inject(MatDialog);
+    return (data: PincodeBoxData) => dialog.open(PincodeBoxComponent, {
+      data: data,
+      width: '600px'
+    })
+  }
+});
 
 @Component({
   selector: 'app-pincode-box',
   templateUrl: './pincode-box.component.html',
-  styleUrls: ['./pincode-box.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./pincode-box.component.scss']
 })
 export class PincodeBoxComponent implements OnInit {
   @ViewChildren('codeInput') private inputsList: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChild('confirmButton') private confirmButton: MatButton;
   inputCount = new Array(6);
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: PincodeBoxData
+  ) { }
 
   ngOnInit() { }
 
-  onKeyup(index: number) {
+  moveToNextField(index: number) {
     const nextInputIndex = index + 1;
     if (nextInputIndex === this.inputCount.length) {
-      this.confirmButton.focus();
+      setTimeout(() => {
+        this.confirmButton.focus();
+      });
     } else {
       const input = this.getInput(nextInputIndex);
       input.focus();
@@ -29,7 +49,7 @@ export class PincodeBoxComponent implements OnInit {
     }
   }
 
-  onBackspace(index: number) {
+  moveToPrevField(index: number) {
     const previousInputIndex = index - 1;
     if (previousInputIndex >= 0) {
       this.getInput(previousInputIndex).focus();
