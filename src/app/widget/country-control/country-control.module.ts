@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CountryControlComponent } from './country-control.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { MaterialModule } from '@shared/common';
   imports: [
     CommonModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule.forChild()
   ]
 })
 export class CountryControlModule { }

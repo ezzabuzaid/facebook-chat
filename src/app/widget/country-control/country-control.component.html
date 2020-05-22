@@ -1,6 +1,6 @@
 <mat-form-field>
-    <mat-label>{{formControl.label}}</mat-label>
-    <mat-select matInput [formControl]="formControl" (valueChange)="updateModel($event?.value)">
+    <mat-label>{{formControl?.label | translate}}</mat-label>
+    <mat-select matInput [formControl]="formControl" (selectionChange)="updateModel($event?.value)">
         <mat-select-trigger>
             <div class="iti__flag-box">
                 <div class="iti__flag iti__{{currentCountry?.iso2?.toLowerCase()}}"></div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef, Inject } from '@angular/core';
+import { Component, OnInit, Input, forwardRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { IField, WINDOW } from '@shared/common';
 
@@ -25,6 +25,7 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
 
   set value(value) {
     this._value = value;
+    this.currentCountry = this.getCountry();
     this.notifyValueChange();
   }
 
@@ -47,16 +48,15 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
 
   public updateModel(value: string) {
     this.value = value;
-    this.currentCountry = this.getCountry();
   }
 
   public getCountry() {
-    return this.countries.find(el => el.code === this.formControl.value);
+    return this.countries.find(el => el.iso2 === this.formControl.value);
   }
 
   writeValue(value: string) {
     if (value) {
-      this._value = value;
+      this.value = value;
     }
   }
 
