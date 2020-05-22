@@ -35,7 +35,7 @@ export class CustomHeaders {
     [ECustomHeaders.DEFAULT_URL] = true;
     [ECustomHeaders.SNACKBAR] = true;
     [ECustomHeaders.PROGRESS_BAR] = true;
-    [ECustomHeaders.FORM_PROGRESS_BAR] = false;
+    [ECustomHeaders.FORM_PROGRESS_BAR] = true;
     [ECustomHeaders.LOCAL_CACHE] = false;
     [ECustomHeaders.FULL_RESPONSE] = false;
     [ECustomHeaders.CACHE_CATEGORY] = 'local_cache';
