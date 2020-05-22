@@ -86,16 +86,8 @@ const materialImports = [
             useValue: {
                 duration: 3000,
                 verticalPosition: 'bottom',
-                horizontalPosition: 'center',
+                horizontalPosition: 'left',
             }
-        },
-        {
-            provide: MAT_DIALOG_DEFAULT_OPTIONS,
-            useValue: {
-                width: '500px',
-                disableClose: false,
-                closeOnNavigation: true
-            } as MatDialogConfig<any>
         }
     ]
 })
