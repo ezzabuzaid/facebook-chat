@@ -13,6 +13,8 @@ export class LookupsService {
     ) { }
 
     getNationalities() {
-        return this.http.get<SelectOption[]>('lookups/nationalities').pipe(tap(console.log))
+        return this.http
+            .configure({ LOCAL_CACHE: true })
+            .get<SelectOption[]>('lookups/nationalities');
     }
 }
