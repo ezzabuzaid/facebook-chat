@@ -35,11 +35,10 @@ export class ProgressInterceptor implements HttpInterceptor {
                 tap(
                     (response) => {
                         if (response instanceof HttpResponse && this.showSnackbar) {
-                            let text = 'Updated';
-                            if (req.method === 'POST') {
-                                text = 'Created';
+                            const { message = null } = response.body;
+                            if (message) {
+                                this.snackbar.open(message);
                             }
-                            this.snackbar.open(text);
                         }
                     },
                     (error) => {
