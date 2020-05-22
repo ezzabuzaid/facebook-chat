@@ -4,8 +4,8 @@ import { share, takeUntil } from 'rxjs/operators';
 import { FormWidgetManager } from '../form.manager';
 import { AppUtils } from '@core/helpers/utils';
 import { Form } from '@shared/common';
-export interface SubmitEvent {
-  value: any,
+export interface SubmitEvent<T = any> {
+  value: T,
   valid: boolean;
 }
 @Component({
@@ -18,6 +18,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   @Output() public onSubmit = new EventEmitter<SubmitEvent>();
   @Input() public title: string = null;
   @Input() formGroup: Form<any>;
+  @Input() external = false;
   fields = [];
   sections = [];
   public progressListener = this.formWidgetManager.listen().pipe(share());
@@ -33,26 +34,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
       .subscribe(show => {
         this.loading = show;
       });
-    const flatten = (fields: any[]) => {
-      return fields.reduce((acc, field) => {
-        if (this.isForm(field)) {
-          acc.push(...flatten(field['fields']));
-        } else {
-          acc.push(field);
-        }
-        return acc;
-      }, []);
-    }
-    this.fields = flatten(this.formGroup.fields)
-      .sort((a, b) => a.section - b.section)
-      .reduce((acc, curr) => {
-        if (!acc[curr.section]) {
-          this.sections.push(curr.section);
-          acc[curr.section] = [];
-        }
-        acc[curr.section].push(curr);
-        return acc;
-      }, {});
+    this.fields = this.groupBySection(this.sortBySection(this.flattenFields(this.formGroup?.fields || [])));
   }
 
   submit() {
@@ -68,6 +50,31 @@ export class FormContainerComponent implements OnInit, OnDestroy {
 
   isForm(field: any) {
     return field instanceof Form;
+  }
+
+  private flattenFields(fields: any[]) {
+    return fields.reduce((acc, field) => {
+      if (this.isForm(field)) {
+        acc.push(...this.flattenFields(field['fields']));
+      } else {
+        acc.push(field);
+      }
+      return acc;
+    }, []);
+  }
+
+  private groupBySection(fields: any[]) {
+    return fields.reduce((acc, curr) => {
+      if (!acc[curr.section]) {
+        this.sections.push(curr.section);
+        acc[curr.section] = [];
+      }
+      acc[curr.section].push(curr);
+      return acc;
+    }, {})
+  }
+  private sortBySection(fields: any[]) {
+    return fields.sort((a, b) => a.section - b.section);
   }
 
 }
