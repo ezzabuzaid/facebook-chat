@@ -48,10 +48,18 @@ export class AppUtils {
     public static isEmptyString(value: string): boolean {
         return typeof value !== 'string' || value.trim() === '';
     }
+    /**
+     * check if the givin value is object literal
+     * 
+     * @param value the predecited value
+     */
+    static isObject(value: any): boolean {
+        return new Object(value) === value;
+    }
 
     /**
      * Check if the value has at least one item
-     * --
+     * 
      * @param object any series value
      * @returns {boolean} indicate that the {value} is empty
      */
@@ -60,7 +68,7 @@ export class AppUtils {
             return AppUtils.isTruthy(object.length);
         }
 
-        if (new Object(object) === object) {
+        if (AppUtils.isObject(object)) {
             return AppUtils.isTruthy(Object.keys(object).length);
         }
 
@@ -195,6 +203,17 @@ export class AppUtils {
             }, []);
     }
 
+    static duration(minutes: number) {
+        const date = new Date();
+        date.setMinutes(date.getMinutes() + minutes);
+        return date.getTime();
+    }
+
+    /**
+     * Convert numeric days to seconds
+     *
+     * @param days number of days to convert
+     */
     static daysToSeconds(days: number) {
         const d = new Date();
         const a = new Date();
@@ -202,8 +221,16 @@ export class AppUtils {
         return a.getTime() - d.getTime();
     }
 
-    static isDateElapsed(lastUpdate: number, maxAge: number) {
-        return lastUpdate < Date.now() - maxAge;
+    /**
+     * Check if the specicifed date elapsed the {maxAge}
+     *
+     * If max age not provided the current date will be used instead
+     *
+     * @param date the date to check
+     * @param maxAge default to current date
+     */
+    static isDateElapsed(date: number, maxAge = Date.now()) {
+        return date < Date.now() - maxAge;
     }
 
     /**
@@ -236,7 +263,7 @@ export class AppUtils {
                     return acc;
                 }
                 const lastIndex = thisArray.length - 1 === index;
-                return acc += `${curr}=${obj[curr]}${lastIndex ? '' : '&'}`;
+                return acc += `${ curr }=${ obj[curr] }${ lastIndex ? '' : '&' }`;
             }, '');
     }
 
