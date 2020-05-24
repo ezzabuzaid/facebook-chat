@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { CustomHeaders } from '../http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, switchMap, tap, filter, take } from 'rxjs/operators';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { AppUtils, tryOrComplete } from '@core/helpers/utils';
@@ -15,7 +15,7 @@ export class TeardownInterceptor implements HttpInterceptor {
     private isRefreshing = false;
     private requestQueue = new SubjectFactory(false);
 
-    constructor(
+    constructor (
         private userService: UserService,
         private snackbar: MatSnackBar,
         private tokenService: TokenHelper,
@@ -24,9 +24,9 @@ export class TeardownInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = this.removeHeaders(req.headers, ...Object.keys(new CustomHeaders()) as any);
         if (this.userService.isAuthenticated) {
-            headers = headers.set('Authorization', `${this.tokenService.token}`);
+            headers = headers.set('Authorization', `${ this.tokenService.token }`);
         }
-        headers = headers.set(Constants.Application.DEVICE_UUID, `${this.userService.getDeviceUUID()}`);
+        headers = headers.set(Constants.Application.DEVICE_UUID, `${ this.userService.getDeviceUUID() }`);
 
         // const retryCount = 0;
         return next.handle(req.clone({ headers }))

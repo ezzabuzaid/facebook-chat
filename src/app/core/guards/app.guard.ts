@@ -9,13 +9,13 @@ import {
   UrlTree
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
-  constructor(
+  constructor (
     private userService: UserService
   ) { }
 

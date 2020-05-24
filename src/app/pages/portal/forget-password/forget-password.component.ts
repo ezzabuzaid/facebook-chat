@@ -3,7 +3,7 @@ import { Form, Field, EFieldType, DateField, _extract } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models';
 import { SubmitEvent } from '@partials/form';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { PincodeBoxDialog, PincodeBoxDialogHandler } from '@widget/pincode-box/pincode-box.component';
 
 @Component({
@@ -71,7 +71,7 @@ export class ForgetPasswordComponent implements OnInit {
 
   steps = [false, false, false];
 
-  constructor(
+  constructor (
     private userService: UserService,
     @Inject(PincodeBoxDialog) private openPinCodeDialog: PincodeBoxDialogHandler
   ) { }

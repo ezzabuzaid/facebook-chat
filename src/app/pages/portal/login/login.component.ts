@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { Field, Form, EFieldType } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { TokenHelper } from '@core/helpers/token';
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     })
   ]);
 
-  constructor(
+  constructor (
     private portalService: UserService,
     private tokenHelper: TokenHelper,
     private router: Router

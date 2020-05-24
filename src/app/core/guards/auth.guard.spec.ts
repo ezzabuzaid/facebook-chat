@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AppGuard } from './app.guard';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 
 describe('AuthGuard', () => {
   let guardService: AppGuard = null;

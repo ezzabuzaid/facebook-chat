@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import navigation from './navigation';
 import { DOCUMENT } from '@angular/common';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { AppUtils } from '@core/helpers/utils';
 import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 
@@ -13,7 +13,7 @@ import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 export class NavbarComponent {
   public navigationMenu = navigation;
 
-  constructor(
+  constructor (
     @Inject(DOCUMENT) private document: Document,
     private userService: UserService,
     private sidebarService: SidebarService

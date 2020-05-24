@@ -1,7 +1,7 @@
 
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { Form, Field, EFieldType, SelectField, DateField, SelectOption } from '@shared/common';
 import { Constants } from '@core/constants';
 import { Validators } from '@angular/forms';
@@ -111,7 +111,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
 
   $passwordVisible: Observable<boolean> = null;
-  constructor(
+  constructor (
     private router: Router,
     private userService: UserService,
   ) { }

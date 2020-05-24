@@ -12,7 +12,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { AppUtils } from '@core/helpers/utils';
 import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { partition } from 'rxjs';
 
 const log = new Logger('AppComponent');
@@ -23,7 +23,7 @@ const log = new Logger('AppComponent');
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  constructor(
+  constructor (
     private router: Router,
     private route: ActivatedRoute,
     private translateService: TranslateService,

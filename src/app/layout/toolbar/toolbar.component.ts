@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageService, ELanguage } from '@core/helpers/language';
 import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 
@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   public user = this.tokenService.decodedToken;
   routes = Constants.Routing;
   languageEnum = ELanguage;
-  constructor(
+  constructor (
     private languageService: LanguageService,
     private sidebarService: SidebarService,
     private tokenService: TokenHelper,

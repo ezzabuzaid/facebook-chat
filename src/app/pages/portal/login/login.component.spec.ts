@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
-import { UserService } from '@shared/user';
+import { UserService } from '@shared/account';
 import { TranslateTestingModule } from 'test/mocks';
 import { asyncData, TestUtility } from 'test/fixture';
 import { FormModule } from '@partials/form';
