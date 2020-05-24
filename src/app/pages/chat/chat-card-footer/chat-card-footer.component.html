@@ -41,7 +41,8 @@
             <textarea class="border-0 border-radius-1" [formControl]="messageFormControl" placeholder="Write a message"
                 cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
                 cdkAutosizeMaxRows="4"></textarea>
-            <mat-icon class="pointer align-self-end" (click)="openEmojiPicker($event)">tag_faces</mat-icon>
+            <mat-icon class="pointer align-self-end position-relative bottom-8" (click)="openEmojiPicker($event)">
+                tag_faces</mat-icon>
         </div>
     </div>
     <button mat-icon-button class="ml-auto send-button" (click)="sendMessage()">

@@ -30,6 +30,10 @@ export class ChatManager {
         ));
     }
 
+    streamVideo(videoStream: ChatModel.VideoStream) {
+        this.socket.emit('StreamOffer', videoStream);
+    }
+
     sendLocalMessage(message: ChatModel.Message) {
         this.messageListener.notify(message);
     }

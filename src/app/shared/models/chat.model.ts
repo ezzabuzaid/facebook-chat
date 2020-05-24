@@ -38,6 +38,12 @@ export namespace ChatModel {
             this.rawFile = content.rawFile;
         }
     }
+    export class VideoStream {
+        constructor(
+            public negotiation: RTCSessionDescriptionInit,
+            public id: string
+        ) { }
+    }
 
     export class ChatOutgoingMessage {
         constructor(

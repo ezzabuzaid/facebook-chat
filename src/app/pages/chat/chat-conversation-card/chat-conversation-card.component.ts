@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
 import { ChatManager } from '../chat.manager';
 import { ChatCardComponent } from '../chat-card/chat-card.component';
-
+import { NAVIGATOR } from '@shared/common';
 @Component({
   selector: 'app-user-card',
   templateUrl: './chat-conversation-card.component.html',
@@ -18,11 +18,31 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
   constructor(
     private chatCardManager: ChatCardManager,
     private chatManager: ChatManager,
+    @Inject(NAVIGATOR) private navigator: Navigator
   ) { }
 
-  ngOnInit() {
+  async  ngOnInit() {
     this.chatManager.join(this.data._id);
     this.baseCharCard.updateContentHeight();
+    this.navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false,
+    })
+    this.chatManager.socket.on('StreamAnswer', (videoStream: ChatModel.VideoStream) => {
+      console.log('Streaming', videoStream);
+      // const peerConnection = new RTCPeerConnection();
+
+      // await peerConnection.setRemoteDescription(
+      //   new RTCSessionDescription(data.offer)
+      // );
+      // const answer = await peerConnection.createAnswer();
+      // await peerConnection.setLocalDescription(new RTCSessionDescription(answer));
+
+      // socket.emit("make-answer", {
+      //   answer,
+      //   to: data.socket
+      // });
+    })
   }
 
   updateScroll() {
@@ -36,6 +56,13 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
 
   ngOnDestroy() {
     this.chatManager.leave(this.data._id);
+  }
+
+  async callUser() {
+    const peerConnection = new RTCPeerConnection();
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(new RTCSessionDescription(offer));
+    this.chatManager.streamVideo(new ChatModel.VideoStream(offer, this.data._id));
   }
 
 }

@@ -4,7 +4,7 @@
     </app-file-viewer>
 </ng-container>
 <ng-template #textViewer>
-    <div class="p-2 position-relative rounded text-white" [matTooltipPosition]="'above'"
+    <div class="p-2 position-relative rounded text-white text-break" [matTooltipPosition]="'above'"
         [matTooltip]="message.createdAt | timeago" [ngClass]="{
         'bg--accent': isSender,
         'bg--primary': !isSender
