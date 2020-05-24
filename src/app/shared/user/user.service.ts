@@ -53,6 +53,10 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.post<PortalModel.AccountVerifiedResponse>(Constants.API.PORTAL.ACCOUNT_VERIFIED, payload);
   }
 
+  public sendEmailForgotPassword(email: string) {
+    return this.http.post(Constants.API.PORTAL.RESET_PASSWORD_EMAIL, { email });
+  }
+
   public logout(redirectUrl = undefined) {
     console.log(redirectUrl);
     let blob = new Blob([JSON.stringify({})], {

@@ -80,8 +80,11 @@ export namespace Constants {
       get refreshtoken() {
         return this.base + '/refreshtoken'
       },
-      get accountexist() {
-        return this.base + '/accountexist'
+      get RESET_PASSWORD_EMAIL() {
+        return this.base + '/sendresetpasswordemail/'
+      },
+      get ACCOUNT_VERIFIED() {
+        return this.base + '/accountverified'
       },
       get login() {
         return this.base + '/login'

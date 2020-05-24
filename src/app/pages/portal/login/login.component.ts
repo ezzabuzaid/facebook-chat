@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
       label: 'placeholder_passowrd',
       type: EFieldType.PASSWORD,
       section: 1,
+      hint: 'at least 8 charachter',
       autocomplete: 'current-password',
       validation: {
         validators: Validators.required

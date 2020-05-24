@@ -2,7 +2,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/user';
-import { LookupsService } from '@shared/services/lookups';
 import { Form, Field, EFieldType, SelectField, DateField, SelectOption } from '@shared/common';
 import { Constants } from '@core/constants';
 import { Validators } from '@angular/forms';
@@ -10,6 +9,7 @@ import { PortalModel } from '@shared/models';
 import { Observable, merge, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { ContainsUppercase, ContainsLowercase, ContainsSpecialCharacter, ContainsNumber, Between } from '@shared/validators';
+import { SubmitEvent } from '@partials/form';
 
 @Component({
   selector: 'app-register',
@@ -52,6 +52,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       type: EFieldType.TEL,
       autocomplete: 'mobile',
       label: 'placeholder_mobile',
+      value: 792807794,
       validation: { validators: [Validators.required] }
     }),
     new Form<PortalModel.IProfile>([
@@ -126,7 +127,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
 
 
-  register({ valid, value }) {
+  register({ valid, value }: SubmitEvent<PortalModel.IRegister>) {
     if (valid) {
       this.userService.register(value)
         .subscribe(() => {

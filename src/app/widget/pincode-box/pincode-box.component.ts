@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, ViewChild, ElementRef, InjectionToken, inject, ViewEncapsulation, Inject } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild, ElementRef, InjectionToken, inject, ViewEncapsulation, Inject, Optional, Input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -29,9 +29,10 @@ export class PincodeBoxComponent implements OnInit {
   @ViewChildren('codeInput') private inputsList: QueryList<ElementRef<HTMLInputElement>>;
   @ViewChild('confirmButton') private confirmButton: MatButton;
   inputCount = new Array(6);
+  @Input() _inputData: PincodeBoxData;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: PincodeBoxData
+    @Optional() @Inject(MAT_DIALOG_DATA) private _dialogData: PincodeBoxData
   ) { }
 
   ngOnInit() { }
@@ -58,6 +59,10 @@ export class PincodeBoxComponent implements OnInit {
 
   getInput(index: number) {
     return this.inputsList.toArray()[index].nativeElement;
+  }
+
+  get data() {
+    return this._inputData ?? this._dialogData;
   }
 
 }
