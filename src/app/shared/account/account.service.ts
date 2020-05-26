@@ -53,8 +53,12 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.post<PortalModel.AccountVerifiedResponse>(Constants.API.PORTAL.ACCOUNT_VERIFIED, payload);
   }
 
-  public sendEmailForgotPassword(email: string) {
-    return this.http.post(Constants.API.PORTAL.RESET_PASSWORD_EMAIL, { email });
+  public sendPincode(payload: PortalModel.ISendPincode) {
+    return this.http.post(Constants.API.PORTAL.SEND_PINCODE, payload);
+  }
+
+  public checkPincode(pincode: string) {
+    return this.http.post(Constants.API.PORTAL.CHECK_PINCODE, { pincode });
   }
 
   public logout(redirectUrl = undefined) {
@@ -62,7 +66,7 @@ export class UserService extends SubjectFactory<boolean> {
     let blob = new Blob([JSON.stringify({})], {
       [Constants.Application.DEVICE_UUID]: this.getDeviceUUID()
     });
-    this.navigator.sendBeacon(`${environment.endpointUrl}${Constants.API.PORTAL.logout}`, blob);
+    this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
       queryParams: {
         // [Constants.Application.REDIRECT_URL]: redirectUrl || undefined,

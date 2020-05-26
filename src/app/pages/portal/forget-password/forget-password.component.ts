@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Form, Field, EFieldType, DateField, _extract } from '@shared/common';
+import { Form, Field, EFieldType, _extract } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models';
 import { SubmitEvent } from '@partials/form';
@@ -15,7 +15,7 @@ import { PincodeBoxDialog, PincodeBoxDialogHandler } from '@widget/pincode-box/p
   }
 })
 export class ForgetPasswordComponent implements OnInit {
-  form = new Form<PortalModel.IForgotPassword>([
+  verificationForm = new Form<PortalModel.IForgotPassword>([
     new Field('username', {
       label: _extract('placeholder_username'),
       autocomplete: 'username',
@@ -54,7 +54,6 @@ export class ForgetPasswordComponent implements OnInit {
       }
     }),
   ]);
-
   forgotPasswordForm = new Form([
     new Field('email', {
       type: EFieldType.EMAIL,
@@ -67,17 +66,19 @@ export class ForgetPasswordComponent implements OnInit {
     })
   ]);
 
-  accountVerifiedResponse: PortalModel.AccountVerifiedResponse = null;
+  accountVerificationResponse: PortalModel.AccountVerifiedResponse = null;
 
   steps = [false, false, false];
 
-  constructor (
+  constructor(
     private userService: UserService,
     @Inject(PincodeBoxDialog) private openPinCodeDialog: PincodeBoxDialogHandler
   ) { }
 
   ngOnInit() {
     this.goToStep(1);
+    this.verificationForm.patchValue({ "username": "profile", "firstName": "ezz", "lastName": "abuzaid", "placeOfBirth": "jo" });
+    this.forgotPasswordForm.patchValue({ email: 'admin@admin.com' })
   }
 
   checkUser(event: SubmitEvent) {
@@ -85,34 +86,38 @@ export class ForgetPasswordComponent implements OnInit {
       this.userService.checkIfAccountIsExist(event.value)
         .subscribe((response) => {
           this.goToStep(2);
-          this.accountVerifiedResponse = response;
+          this.accountVerificationResponse = response;
         });
     }
   }
 
-  submitVerification() {
-    if (this.isEmailVerification) {
-      this.userService
-        .sendEmailForgotPassword(this.forgotPasswordForm.get('email').value)
-        .subscribe(() => {
-          this.goToStep(3);
-        })
-    } else {
-      this.openPinCodeDialog({
-        proxy: 'sms',
-        type: 'account'
-      });
-    }
+  sendPincode(event: SubmitEvent) {
+    this.userService
+      .sendPincode({
+        type: this.sendPincodeType,
+        ...event.value
+      })
+      .subscribe(() => {
+        this.goToStep(3);
+      })
   }
 
-  get isEmailVerification() {
-    return this.forgotPasswordForm.get('email');
+  get sendPincodeType() {
+    return this.forgotPasswordForm.get('email') ? 'email' : 'sms';
+  }
+
+  checkPincode(pincode: string) {
+    console.log(pincode);
+    this.userService.checkPincode(pincode)
+      .subscribe(() => {
+        this.goToStep(4);
+      })
   }
 
   goToStep(index: number) {
     this.steps.fill(false);
     this.forgotPasswordForm.reset();
-    this.form.reset();
+    this.verificationForm.reset();
     this.steps[index - 1] = true;
   }
 

@@ -54,4 +54,10 @@ export namespace PortalModel {
         emailVerified: boolean;
         mobileVerified: boolean;
     }
+
+    export interface ISendPincode {
+        type: 'email' | 'sms';
+        mobile?: string;
+        email?: string;
+    }
 }

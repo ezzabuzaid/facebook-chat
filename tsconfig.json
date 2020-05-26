@@ -18,6 +18,7 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "pretty": true,
+    "strictBindCallApply": true,
     "typeRoots": [
       "node_modules/@types"
     ],

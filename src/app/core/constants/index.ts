@@ -80,11 +80,14 @@ export namespace Constants {
       get refreshtoken() {
         return this.base + '/refreshtoken'
       },
-      get RESET_PASSWORD_EMAIL() {
-        return this.base + '/sendresetpasswordemail/'
+      get SEND_PINCODE() {
+        return this.base + '/sendpincode/'
+      },
+      get CHECK_PINCODE() {
+        return this.base + '/checkpincode/'
       },
       get ACCOUNT_VERIFIED() {
-        return this.base + '/accountverified'
+        return this.base + '/checkaccountverification'
       },
       get login() {
         return this.base + '/login'
@@ -105,16 +108,16 @@ export namespace Constants {
         return this.base + 'rooms';
       },
       get groups() {
-        return `${this.base}${this.rooms}/groups`;
+        return `${ this.base }${ this.rooms }/groups`;
       },
       get conversation() {
-        return `${this.base}${this.rooms}/conversations`;
+        return `${ this.base }${ this.rooms }/conversations`;
       },
       get messages() {
-        return `${this.base}${this.rooms}/messages`;
+        return `${ this.base }${ this.rooms }/messages`;
       },
       get members() {
-        return `${this.rooms}/members`;
+        return `${ this.rooms }/members`;
       },
     };
 
