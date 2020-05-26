@@ -16,7 +16,8 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <button mat-flat-button color="primary" class="d-block mx-auto px-5 py-2 my-4" #confirmButton>Confirm</button>
+        <button mat-flat-button color="primary" class="d-block mx-auto px-5 py-2 my-4" #confirmButton
+            (click)="submit()">Confirm</button>
         <div class="d-flex flex-column align-items-center mt-3">
             <span class="text-muted">Didn't receive the code?</span>
             <button mat-button>Send code again!</button>
