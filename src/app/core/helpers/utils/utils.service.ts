@@ -176,7 +176,7 @@ export class AppUtils {
             const later = () => {
                 timeout = null;
                 if (!immediate) {
-                    func.apply(this, arguments);
+                    func.apply(this, Array.from(arguments));
                 }
             };
 
@@ -184,7 +184,7 @@ export class AppUtils {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
             if (callNow) {
-                func.apply(this, arguments);
+                func.apply(this, Array.from(arguments));
             }
         };
     }

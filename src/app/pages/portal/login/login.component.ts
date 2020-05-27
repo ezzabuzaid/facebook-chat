@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/account';
-import { Field, Form, EFieldType } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { PortalModel } from '@shared/models';
+import { Field, EFieldType, Form } from '@partials/form';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     new Field('username', {
       label: 'placeholder_username',
       autocomplete: 'username',
-      section: 0,
       validation: {
         validators: Validators.required
       }
@@ -33,8 +32,6 @@ export class LoginComponent implements OnInit {
     new Field('password', {
       label: 'placeholder_passowrd',
       type: EFieldType.PASSWORD,
-      section: 1,
-      hint: 'at least 8 charachter',
       autocomplete: 'current-password',
       validation: {
         validators: Validators.required
@@ -42,7 +39,7 @@ export class LoginComponent implements OnInit {
     })
   ]);
 
-  constructor (
+  constructor(
     private portalService: UserService,
     private tokenHelper: TokenHelper,
     private router: Router

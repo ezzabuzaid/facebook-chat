@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, forwardRef } from '@angular/core';
-import { IField, EFieldType } from '@shared/common';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IField, EFieldType } from '../field-factory';
 
 @Component({
   selector: 'app-field-factory',

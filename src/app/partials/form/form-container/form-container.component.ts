@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';
 import { FormWidgetManager } from '../form.manager';
 import { AppUtils } from '@core/helpers/utils';
-import { Form } from '@shared/common';
+import { Form } from '../field-factory';
 export interface SubmitEvent<T = any> {
   value: T,
   valid: boolean;

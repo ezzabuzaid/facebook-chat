@@ -2,14 +2,13 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/account';
-import { Form, Field, EFieldType, SelectField, DateField, SelectOption } from '@shared/common';
 import { Constants } from '@core/constants';
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models';
 import { Observable, merge, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { ContainsUppercase, ContainsLowercase, ContainsSpecialCharacter, ContainsNumber, Between } from '@shared/validators';
-import { SubmitEvent } from '@partials/form';
+import { SubmitEvent, Form, Field, EFieldType, DateField, SelectField, SelectOption } from '@partials/form';
 
 @Component({
   selector: 'app-register',
@@ -37,6 +36,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       autocomplete: 'new-password',
       label: 'placeholder_password',
       value: '',
+      hint: 'at least 8 charachter',
       validation: {
         validators: [
           Validators.required,
@@ -111,7 +111,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
 
   $passwordVisible: Observable<boolean> = null;
-  constructor (
+  constructor(
     private router: Router,
     private userService: UserService,
   ) { }

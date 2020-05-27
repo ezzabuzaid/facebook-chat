@@ -102,7 +102,7 @@ export class Logger {
       try {
         object = JSON.parse(object);
       } catch (error) { }
-      return [`${color}`, JSON.stringify(object)];
+      return [`${ color }`, JSON.stringify(object)];
     });
   }
 
@@ -138,7 +138,7 @@ export class Logger {
     this.log(console.error, LogLevel.Error, objects, false);
   }
 
-  private log(func: () => void, level: LogLevel, objects: any[], colorize = true) {
+  private log(func: (value: any) => void, level: LogLevel, objects: any[], colorize = true) {
     if (level <= Logger.level) {
       let flating = [];
       if (colorize) {

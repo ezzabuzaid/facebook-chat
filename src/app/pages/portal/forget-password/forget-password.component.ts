@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Form, Field, EFieldType, _extract } from '@shared/common';
+import { _extract } from '@shared/common';
 import { Validators } from '@angular/forms';
 import { PortalModel } from '@shared/models';
-import { SubmitEvent } from '@partials/form';
+import { SubmitEvent, Form, Field, EFieldType } from '@partials/form';
 import { UserService } from '@shared/account';
 import { PincodeBoxDialog, PincodeBoxDialogHandler } from '@widget/pincode-box/pincode-box.component';
 

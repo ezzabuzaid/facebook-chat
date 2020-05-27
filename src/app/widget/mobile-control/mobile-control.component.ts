@@ -5,8 +5,8 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { PhoneNumberAssociatedWithCountryValidator } from '@shared/validators';
 import { AppUtils } from '@core/helpers/utils';
-import { IField } from '@shared/common';
 import { Observable, from } from 'rxjs';
+import { IField } from '@partials/form';
 
 @Component({
   selector: 'app-mobile-control',

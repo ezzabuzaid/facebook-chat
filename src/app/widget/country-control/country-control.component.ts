@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, forwardRef, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { IField, WINDOW } from '@shared/common';
+import { WINDOW } from '@shared/common';
+import { IField } from '@partials/form';
 
 @Component({
   selector: 'app-country-control',
