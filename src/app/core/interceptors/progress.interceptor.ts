@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ECustomHeaders, getHeader, HttpMethod } from '../http/http.model';
+import { HttpMethod, RequestData } from '../http/http.model';
 import { FormWidgetManager } from '@partials/form';
 import { ProgressBarManager } from '@widget/progress-bar';
 
@@ -14,23 +14,19 @@ export class ProgressInterceptor implements HttpInterceptor {
         private snackbar: MatSnackBar,
         private formWidgetManager: FormWidgetManager,
         private progressBarManager: ProgressBarManager,
+        private requestData: RequestData
     ) { }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.showSnackbar = getHeader(req.headers, ECustomHeaders.SNACKBAR) && req.method !== HttpMethod.GET;
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        this.showSnackbar = this.requestData.get(request, 'SNACKBAR') && request.method !== HttpMethod.GET;
         if (this.showSnackbar) {
             Promise.resolve(null).then(() => this.snackbar.open('Please wait', '', { duration: 500000 }));
         }
 
-        if (getHeader(req.headers, ECustomHeaders.FORM_PROGRESS_BAR)) {
-            this.formWidgetManager.notify(true);
-        }
+        this.formWidgetManager.notify(this.requestData.get(request, 'FORM_PROGRESS_BAR'));
+        this.progressBarManager.notify(this.requestData.get(request, 'PROGRESS_BAR'));
 
-        if (getHeader(req.headers, ECustomHeaders.PROGRESS_BAR)) {
-            this.progressBarManager.notify(true);
-        }
-
-        return next.handle(req.clone())
+        return next.handle(request.clone())
             .pipe(
                 tap(
                     (response) => {

@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { getHeader, ECustomHeaders } from '../http/http.model';
-import { AppUtils } from '@core/helpers/utils';
+import { RequestData } from '../http/http.model';
 
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
 
-  constructor() { }
+  constructor(
+    private requestData: RequestData
+  ) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let url = environment.endpointUrl + req.url;
-    if (AppUtils.isFalsy(getHeader(req.headers, ECustomHeaders.DEFAULT_URL))) {
-      url = req.url;
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let url = request.url;
+    if (this.requestData.get(request, 'DEFAULT_URL')) {
+      url = environment.endpointUrl + request.url;
     }
-    return next.handle(req.clone({ url }));
+    return next.handle(request.clone({ url }));
   }
 
 }

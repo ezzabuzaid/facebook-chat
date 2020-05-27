@@ -1,4 +1,5 @@
-import { HttpInterceptor, HttpHeaders } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 declare module '@angular/common/http/http' {
 
@@ -9,36 +10,78 @@ declare module '@angular/common/http/http' {
          * Configure request object.
          * @return The new instance.
          */
-        configure(obj: Partial<CustomHeaders>): HttpClient;
+        configure(obj: Partial<RequestOptions>): HttpClient;
 
     }
 
 }
 
 export interface ISetupInterceptor extends HttpInterceptor {
-    configure: (obj: CustomHeaders) => void;
+    /**
+     * Pass the data to setup interceptor in order to pass it along with the request
+     */
+    configure: (data: RequestOptions) => void;
 }
 
 export interface ModifiableInterceptor {
     name: string;
 }
-export enum ECustomHeaders {
-    DEFAULT_URL = 'DEFAULT_URL',
-    SNACKBAR = 'SNACKBAR',
-    LOCAL_CACHE = 'LOCAL_CACHE',
-    CACHE_CATEGORY = 'CACHE_CATEGORY',
-    FULL_RESPONSE = 'FULL_RESPONSE',
-    FORM_PROGRESS_BAR = 'FORM_PROGRESS',
-    PROGRESS_BAR = 'PROGRESS_BAR'
+
+export class RequestOptions {
+    /**
+     * Weather if the request should prefixed the request url with the default
+     */
+    DEFAULT_URL = true;
+    /**
+     * Weather to show response message in a snackbar
+     */
+    SNACKBAR = true;
+    /**
+     * Indicates if the progress bar should be shown for the request latency
+     */
+    PROGRESS_BAR = true;
+    /**
+     * Special progress to show when using form container
+     * 
+     * FYI, the progress bae will be shown in all form container in the same view although the another form didn't ask to
+     */
+    FORM_PROGRESS_BAR = true;
+    /**
+     * Returns the whole resoponse
+     * 
+     * the default is to return only the data property from the reponse
+     */
+    FULL_RESPONSE = false;
+    /**
+     * Enable saving the request response in web storage
+     */
+    LOCAL_CACHE = false;
+    /**
+     * Name of the object store that will be used to save the response
+     * @requires LOCAL_CACHE to be true
+     */
+    CACHE_CATEGORY = 'local_cache';
 }
-export class CustomHeaders {
-    [ECustomHeaders.DEFAULT_URL] = true;
-    [ECustomHeaders.SNACKBAR] = true;
-    [ECustomHeaders.PROGRESS_BAR] = true;
-    [ECustomHeaders.FORM_PROGRESS_BAR] = true;
-    [ECustomHeaders.LOCAL_CACHE] = false;
-    [ECustomHeaders.FULL_RESPONSE] = false;
-    [ECustomHeaders.CACHE_CATEGORY] = 'local_cache';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class RequestData {
+    private states = new WeakMap<HttpRequest<any>, Partial<RequestOptions>>();
+
+    get<T = boolean>(request: HttpRequest<any>, property: keyof RequestOptions) {
+        return this.states.get(request)[property] as unknown as T;
+    }
+
+    set(request: HttpRequest<any>, data: Partial<RequestOptions>) {
+        this.states.set(request, data);
+        return this;
+    }
+
+    delete(request: HttpRequest<any>) {
+        this.states.delete(request);
+        return this;
+    }
 }
 
 export enum HttpMethod {
@@ -48,8 +91,4 @@ export enum HttpMethod {
     DELETE = 'DELETE',
     HEAD = 'HEAD',
     OPTIONS = 'OPTIONS',
-}
-
-export function getHeader<T = boolean>(headers: HttpHeaders, name: ECustomHeaders): T {
-    return JSON.parse(headers.get(name));
 }

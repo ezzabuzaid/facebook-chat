@@ -5,13 +5,20 @@ import { LanguageService } from './language.service';
 
 @Injectable()
 export class LanguageLoader implements TranslateLoader {
-    constructor(private injector: Injector) { }
+
+    constructor(
+        private injector: Injector
+    ) { }
 
     getTranslation() {
         const http = this.injector.get(HttpClient);
         const languageService = this.injector.get(LanguageService);
         return http
-            .configure({ DEFAULT_URL: false })
-            .get(`assets/i18n/${languageService.language}.json`);
+            .configure({
+                DEFAULT_URL: false,
+                LOCAL_CACHE: true,
+                CACHE_CATEGORY: 'language'
+            })
+            .get(`assets/i18n/${ languageService.language }.json`);
     }
 }

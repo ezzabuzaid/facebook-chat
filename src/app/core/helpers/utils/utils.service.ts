@@ -348,7 +348,21 @@ export class AppUtils {
         return key.split('.').reduce((acc, curr) => (acc || {})[curr], obj);
     }
 
+    /**
+     * Check if the givin value if is falsy type
+     * 
+     * the same as using !value
+     */
     static isFalsy(value: any) {
+        return !!!value;
+    }
+
+    /**
+     * Check if the givin value if is falsy type
+     *
+     * the same as using !value
+     */
+    static not(value: any) {
         return !!!value;
     }
 

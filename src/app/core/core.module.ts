@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
@@ -12,7 +12,6 @@ import {
 } from './interceptors';
 import { CacheDatabase } from './helpers/cache';
 import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
-
 
 @NgModule({
   imports: [
