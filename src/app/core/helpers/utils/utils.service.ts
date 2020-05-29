@@ -406,7 +406,7 @@ export function tryOrComplete<T>(
     observable: () => Observable<T>,
     defaultValue: T = null
 ) {
-    if (condition) {
+    if (condition()) {
         return observable();
     }
     return of(defaultValue);

@@ -17,18 +17,19 @@ export class UserService extends SubjectFactory<boolean> {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenHelper,
+    private tokenHelper: TokenHelper,
     private router: Router,
     @Inject(NAVIGATOR) private navigator: Navigator,
     @Inject(WINDOW) private window: Window,
   ) { super(); }
 
-  public login(payload: PortalModel.ILoginRequest) {
+  public login(payload: PortalModel.ILoginRequest, rememberMe: boolean) {
     return this.http
       .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.login, payload)
       .pipe(
-        tap(() => {
+        tap((data) => {
           this.notify(this.isAuthenticated);
+          this.tokenHelper.setToken(data.token, data.refreshToken, rememberMe);
         })
       );
   }
@@ -41,11 +42,11 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http
       .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
         this.getDeviceUUID(),
-        this.tokenService.token,
-        this.tokenService.refreshToken,
+        this.tokenHelper.token,
+        this.tokenHelper.refreshToken,
       ))
-      .pipe(tap(({ refreshToken, token }) => {
-        this.tokenService.setToken(token, refreshToken);
+      .pipe(tap((data) => {
+        this.tokenHelper.setToken(data.token, data.refreshToken, this.tokenHelper.oneTimeLogin);
       }))
   }
 
@@ -73,26 +74,22 @@ export class UserService extends SubjectFactory<boolean> {
         fuck: 'test'
       },
     });
-    this.tokenService.deleteToken();
+    this.tokenHelper.deleteToken();
     this.notify(this.isAuthenticated);
   }
 
   public get isAuthenticated() {
-    return this.tokenService.isLogged && AppUtils.isFalsy(this.tokenService.isExpired);
+    return this.tokenHelper.isLogged && AppUtils.isFalsy(this.tokenHelper.isExpired);
   }
 
   getDeviceUUID() {
     let guid = this.navigator.mimeTypes.length as any;
     guid += this.navigator.userAgent.replace(/\D+/g, '');
-    guid += this.navigator.plugins.length;
-    guid += this.window.screen.height || '';
-    guid += this.window.innerWidth || '';
-    guid += this.window.devicePixelRatio || '';
     return guid;
   }
 
   oneTimeLogin() {
-    return this.tokenService.oneTimeLogin;
+    return this.tokenHelper.oneTimeLogin;
   }
 
 }

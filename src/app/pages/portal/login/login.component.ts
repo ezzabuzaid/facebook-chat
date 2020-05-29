@@ -49,9 +49,9 @@ export class LoginComponent implements OnInit {
 
   login({ valid, value }) {
     if (valid) {
-      this.portalService.login(value)
-        .subscribe(data => {
-          this.tokenHelper.setToken(data.token, data.refreshToken, this.rememberMeCheckBox.value);
+      this.portalService
+        .login(value, this.rememberMeCheckBox.value)
+        .subscribe(() => {
           this.router.navigateByUrl(Constants.Routing.DEFAULT.withSlash);
         });
     }
