@@ -34,7 +34,7 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
             return of();
         }
 
-        return next.handle(request.clone())
+        return next.handle(request)
             .pipe(
                 map((response: HttpResponse<any>) => {
                     const fullResponse = this.requestData.get(request, 'FULL_RESPONSE');

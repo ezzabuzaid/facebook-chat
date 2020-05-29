@@ -26,7 +26,7 @@ export class ProgressInterceptor implements HttpInterceptor {
         this.formWidgetManager.notify(this.requestData.get(request, 'FORM_PROGRESS_BAR'));
         this.progressBarManager.notify(this.requestData.get(request, 'PROGRESS_BAR'));
 
-        return next.handle(request.clone())
+        return next.handle(request)
             .pipe(
                 tap(
                     (response) => {

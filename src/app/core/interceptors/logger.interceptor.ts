@@ -19,7 +19,6 @@ export class LoggerInterceptor implements HttpInterceptor {
       .pipe(
         tap(event => {
           if (event instanceof HttpResponse) {
-            console.log(request.urlWithParams, this.requestData.get(request, 'DEFAULT_URL'))
             const elapsed = Date.now() - started;
             log.info(`${ request.method } Request for ${ request.urlWithParams } took ${ elapsed } ms. and the body is`, request.body);
           }

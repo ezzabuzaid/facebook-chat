@@ -82,6 +82,13 @@ export class RequestData {
         this.states.delete(request);
         return this;
     }
+
+    reset(oldRequest: HttpRequest<any>, newRequest: HttpRequest<any>) {
+        const options = this.states.get(oldRequest);
+        this.set(newRequest, options);
+        return newRequest;
+    }
+
 }
 
 export enum HttpMethod {

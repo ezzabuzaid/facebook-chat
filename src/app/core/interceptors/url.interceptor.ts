@@ -16,7 +16,7 @@ export class UrlInterceptor implements HttpInterceptor {
     if (this.requestData.get(request, 'DEFAULT_URL')) {
       url = environment.endpointUrl + request.url;
     }
-    return next.handle(request.clone({ url }));
+    return next.handle(this.requestData.reset(request, request.clone({ url })));
   }
 
 }

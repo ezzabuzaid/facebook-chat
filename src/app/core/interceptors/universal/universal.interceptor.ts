@@ -8,15 +8,15 @@ const isAbsoluteURL = new RegExp('^(?:[a-z]+:)?//', 'i');
 
 @Injectable()
 export class UniversalInterceptor implements HttpInterceptor {
-    constructor(@Optional() @Inject(REQUEST) protected request: Request) { }
+    constructor(@Optional() @Inject(REQUEST) protected serverRequest: Request) { }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler) {
-        if (AppUtils.isTruthy(this.request) && AppUtils.isFalsy(isAbsoluteURL.test(req.url))) {
-            const protocolHost = `${this.request.protocol}://${this.request.host}`;
-            const pathSeparator = req.url.startsWith('/') ? '' : '/';
-            const url = protocolHost + pathSeparator + req.url;
-            return next.handle(req.clone({ url }));
+    intercept(request: HttpRequest<any>, next: HttpHandler) {
+        if (AppUtils.isTruthy(this.serverRequest) && AppUtils.isFalsy(isAbsoluteURL.test(request.url))) {
+            const protocolHost = `${ this.serverRequest.protocol }://${ this.serverRequest.host }`;
+            const pathSeparator = request.url.startsWith('/') ? '' : '/';
+            const url = protocolHost + pathSeparator + request.url;
+            return next.handle(request.clone({ url }));
         }
-        return next.handle(req);
+        return next.handle(request);
     }
 }
