@@ -32,13 +32,13 @@ export class SelectOption {
     ) { }
 }
 
-export interface IField<T> {
+export interface IField<tvalue = any, tname = string> extends FormControl {
     id?: string;
-    name?: FieldName<T>;
+    name?: tname;
     type?: EFieldType;
     label?: string;
     hint?: string;
-    value?: FieldValue<T, FieldName<T>>;
+    value: tvalue;
     section?: number;
     validation?: AbstractControlOptions;
     options?: Observable<SelectOption[]>;
@@ -49,21 +49,21 @@ export interface IField<T> {
     typeOf(type: EFieldType): boolean;
     addValidator(...validator: ValidatorFn[]): void;
 }
-type Options<T> = Partial<Properties<IField<T>>>;
+type Options<tvalue, tname> = Partial<Properties<IField<tvalue, tname>>>;
 
-export class Field<T> extends FormControl implements IField<T> {
+export class Field<tvalue = any, tname = string> extends FormControl implements IField<tvalue, tname> {
     static incremntalSection = -1;
     public type: EFieldType = null;
     public section: number = null;
     public label: string = null;
     public hint: string;
-    public value: FieldValue<T, FieldName<T>> = null;
+    public value: tvalue = null;
     public id = null;
     public autocomplete = '';
 
     constructor(
-        public name: FieldName<T>,
-        options: Options<T> = {}
+        public name: tname,
+        options: Options<tvalue, tname> = {}
     ) {
         super(null, options.validation ?? {
             validators: [],
@@ -79,8 +79,8 @@ export class Field<T> extends FormControl implements IField<T> {
         this.hint = options.hint;
     }
 
-    static Password<T>(name: FieldName<T>, options?: Options<T>) {
-        return new Field<T>(name, {
+    static Password<tvalue = string, tname = any>(name: tname, options?: Options<tvalue, tname>) {
+        return new Field<tvalue, tname>(name, {
             type: EFieldType.PASSWORD,
             autocomplete: 'current-password',
             label: 'placeholder_passowrd',
@@ -91,8 +91,8 @@ export class Field<T> extends FormControl implements IField<T> {
         })
     }
 
-    static Email<T>(name: FieldName<T>, options?: Options<T>) {
-        return new Field<T>(name, {
+    static Email<tvalue = string, tname = any>(name: tname, options?: Options<tvalue, tname>) {
+        return new Field<tvalue, tname>(name, {
             type: EFieldType.EMAIL,
             autocomplete: 'email',
             label: 'placeholder_email',
@@ -119,36 +119,36 @@ export class Field<T> extends FormControl implements IField<T> {
 
 
 }
-export class SelectField<T> extends Field<T> implements IField<T> {
+export class SelectField<tvalue, tname> extends Field<tvalue, tname>   {
     public options: Observable<SelectOption[]> = null;
     public multiple = false;
     constructor(
-        public name: FieldName<T>,
-        option: Properties<IField<T>>
+        public name: tname,
+        options: Options<tvalue, tname> = {}
     ) {
-        super(name, option);
+        super(name, options);
         this.type = EFieldType.SELECT;
-        this.options = option.options;
-        this.multiple = option.multiple;
+        this.options = options.options;
+        this.multiple = options.multiple;
     }
 }
-export class DateField<T = any> extends Field<T> implements IField<T> {
+export class DateField<tvalue = Date, tname = any> extends Field<Date, tname> implements IField<Date, tname> {
     public min?: Date;
     public max?: Date;
     constructor(
-        public name: FieldName<T>,
-        option: Properties<IField<T>>
+        public name: tname,
+        options: Options<Date, tname> = {}
     ) {
-        super(name, option);
+        super(name, options);
         this.type = EFieldType.DATE;
-        this.min = option.min;
-        this.max = option.max;
+        this.min = options.min;
+        this.max = options.max;
     }
 }
 export class Form<T> extends FormGroup {
     public name: string;
     constructor(
-        public fields: (IField<T> | Form<any>)[],
+        public fields: (IField<FieldValue<T, FieldName<T>>, FieldName<T>> | Form<any>)[],
         validation?: AbstractControlOptions,
     ) {
         super((() => {

@@ -14,7 +14,7 @@ import { IField, EFieldType } from '../field-factory';
 })
 
 export class FieldFactoryComponent implements OnInit {
-  @Input() field: IField<any, any>;
+  @Input() field: IField<any>;
   types = EFieldType;
 
   constructor() { }

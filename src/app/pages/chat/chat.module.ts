@@ -8,8 +8,6 @@ import { ChatGroupCardComponent } from './chat-group-card/chat-group-card.compon
 import { FormModule } from '@partials/form';
 import { UploadFileModule } from '@widget/upload-file';
 
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
 import { ChatGroupMembersComponent } from './chat-group-members/chat-group-members.component';
 import { ChatCreateCardComponent } from './chat-create-card/chat-create-card.component';
@@ -46,8 +44,6 @@ import { InifiniteScrollingModule } from '@widget/inifinite-scroll';
     FormModule,
     TimeagoModule.forRoot(),
     UploadFileModule,
-    PickerModule,
-    EmojiModule,
     FileControlModule,
     PipesModule,
     FileViewerModule,

@@ -14,7 +14,7 @@ import { IField } from '@partials/form';
   }],
 })
 export class CountryControlComponent implements OnInit, ControlValueAccessor {
-  @Input() public formControl: IField<any, string> = null;
+  @Input() public formControl: IField<any> = null;
   public countries = [];
 
   private _value: string;

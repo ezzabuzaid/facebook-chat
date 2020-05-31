@@ -24,7 +24,7 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
 
   @Input() private code: string = null;
   @Input() private autoDetectCountry = true;
-  @Input() public formControl: IField<any, string> = null;
+  @Input() public formControl: IField<string> = null;
 
   @ViewChild('phoneField', { static: true }) private phoneField: ElementRef<HTMLElement>;
 

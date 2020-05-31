@@ -54,7 +54,7 @@ export class ForgetPasswordComponent implements OnInit {
       }
     }),
   ]);
-  forgotPasswordForm = new Form([
+  forgotPasswordForm = new Form<{ email: string, mobile: string }>([
     new Field('email', {
       type: EFieldType.EMAIL,
       autocomplete: 'email',

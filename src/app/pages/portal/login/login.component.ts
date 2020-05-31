@@ -4,7 +4,7 @@ import { UserService } from '@shared/account';
 import { Validators } from '@angular/forms';
 import { Constants } from '@core/constants';
 import { PortalModel } from '@shared/models';
-import { Field, EFieldType, Form } from '@partials/form';
+import { Field, EFieldType, Form, } from '@partials/form';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ import { Field, EFieldType, Form } from '@partials/form';
   }
 })
 export class LoginComponent implements OnInit {
-  rememberMeCheckBox = new Field('name', {
+  rememberMeCheckBox = new Field<boolean>('name', {
     type: EFieldType.CHECKBOX,
     value: true,
     label: 'Remember me!',
