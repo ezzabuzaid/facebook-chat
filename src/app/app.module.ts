@@ -1,21 +1,20 @@
+import { isPlatformBrowser } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Injector, PLATFORM_ID } from '@angular/core';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { CoreModule } from '@core/core.module';
+import { LanguageLoader } from '@core/helpers/language';
+import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { IRequestOptions } from '@shared/common';
+import { PopupModule } from '@widget/popup';
+import { RequestOptionsModule } from '@ezzabuzaid/ngx-request-options';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CoreModule } from '@core/core.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { LanguageLoader } from '@core/helpers/language';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { HttpService } from '@core/http';
-import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { StaticPagesModule } from './pages/static/static-pages.module';
-import { PopupModule } from '@widget/popup';
-import { isPlatformBrowser } from '@angular/common';
-
 
 export const localStorageFactory = (injector: Injector) => {
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
@@ -35,7 +34,12 @@ export const sessionStorageFactory = (injector: Injector) => {
   } as Partial<SessionStorage>;
 };
 
-
+@NgModule({
+  imports: [
+    HttpClientModule,
+    RequestOptionsModule.forRoot<IRequestOptions>(new IRequestOptions())
+  ]
+})
 @NgModule({
   declarations: [
     AppComponent
@@ -49,6 +53,7 @@ export const sessionStorageFactory = (injector: Injector) => {
     CoreModule,
     PopupModule,
     StaticPagesModule,
+    RequestOptionsModule.forRoot<IRequestOptions>(new IRequestOptions()),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -57,10 +62,6 @@ export const sessionStorageFactory = (injector: Injector) => {
     })
   ],
   providers: [
-    {
-      provide: HttpClient,
-      useClass: HttpService
-    },
     {
       provide: LocalStorage,
       useFactory: localStorageFactory,
@@ -75,3 +76,13 @@ export const sessionStorageFactory = (injector: Injector) => {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+declare module '@angular/common/http/http' {
+  // Augment HttpClient with the added `configure` method
+  export interface HttpClient {
+    /**
+     * Configure request options.
+     */
+    configure(options: Partial<IRequestOptions>): HttpClient;
+  }
+}

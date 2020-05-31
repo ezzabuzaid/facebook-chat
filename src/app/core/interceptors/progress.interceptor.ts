@@ -3,9 +3,10 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { HttpMethod, RequestData } from '../http/http.model';
 import { FormWidgetManager } from '@partials/form';
 import { ProgressBarManager } from '@widget/progress-bar';
+import { IRequestOptions } from '@shared/common';
+import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
 
 @Injectable()
 export class ProgressInterceptor implements HttpInterceptor {
@@ -14,17 +15,17 @@ export class ProgressInterceptor implements HttpInterceptor {
         private snackbar: MatSnackBar,
         private formWidgetManager: FormWidgetManager,
         private progressBarManager: ProgressBarManager,
-        private requestData: RequestData
+        private requestOptions: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.showSnackbar = this.requestData.get(request, 'SNACKBAR') && request.method !== HttpMethod.GET;
+        this.showSnackbar = this.requestOptions.get(request, 'SNACKBAR') && request.method !== 'GET';
         if (this.showSnackbar) {
             Promise.resolve(null).then(() => this.snackbar.open('Please wait', '', { duration: 500000 }));
         }
 
-        this.formWidgetManager.notify(this.requestData.get(request, 'FORM_PROGRESS_BAR'));
-        this.progressBarManager.notify(this.requestData.get(request, 'PROGRESS_BAR'));
+        this.formWidgetManager.notify(this.requestOptions.get(request, 'FORM_PROGRESS_BAR'));
+        this.progressBarManager.notify(this.requestOptions.get(request, 'PROGRESS_BAR'));
 
         return next.handle(request)
             .pipe(

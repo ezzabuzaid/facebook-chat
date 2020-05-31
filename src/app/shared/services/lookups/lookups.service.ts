@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { SelectOption } from '@shared/common';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs/operators';
+import { SelectOption } from '@partials/form';
 
 @Injectable({
     providedIn: 'root'

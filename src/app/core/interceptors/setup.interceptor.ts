@@ -1,33 +1,27 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { ISetupInterceptor, ModifiableInterceptor, RequestOptions, RequestData } from '../http/http.model';
-import { map, finalize } from 'rxjs/operators';
-import { AppUtils } from '@core/helpers/utils';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { isPlatformBrowser } from '@angular/common';
-import { Connectivity } from '@shared/common';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppUtils } from '@core/helpers/utils';
+import { Connectivity, IRequestOptions } from '@shared/common';
+import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
-export class SetupInterceptor implements ISetupInterceptor, ModifiableInterceptor {
-    public name = SetupInterceptor.name;
-    private dataForNextRequest: Partial<RequestOptions> = new RequestOptions();
+export class SetupInterceptor implements HttpInterceptor {
 
     constructor(
         private snackbar: MatSnackBar,
         @Inject(PLATFORM_ID) private platformId: any,
         private connectivity: Connectivity,
-        private requestData: RequestData
+        private requestData: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.requestData.set(request, this.dataForNextRequest);
-        this.configure(new RequestOptions());
-
-
         if (isPlatformBrowser(this.platformId)) {
             if (this.connectivity.isOffline) {
-                this.snackbar.open('The internet connection is not active, please check your connection');
+                this.snackbar.open('Internet connection is not active, please check your connection');
                 return of();
             }
         } else {
@@ -43,15 +37,9 @@ export class SetupInterceptor implements ISetupInterceptor, ModifiableIntercepto
                         return response.clone({ body: response.body.data });
                     }
                     return response;
-                }),
-                finalize(() => {
-                    this.requestData.delete(request);
                 })
             );
     }
 
-    configure(obj: Partial<RequestOptions>) {
-        this.dataForNextRequest = obj;
-    }
 
 }

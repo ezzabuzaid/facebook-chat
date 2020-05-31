@@ -1,14 +1,15 @@
-import { Injectable, } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { RequestOptions, RequestData } from '../http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, switchMap, tap, filter, take } from 'rxjs/operators';
-import { UserService } from '@shared/account';
-import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
-import { AppUtils, tryOrComplete } from '@core/helpers/utils';
 import { SubjectFactory } from '@core/helpers/subject-factory';
+import { TokenHelper } from '@core/helpers/token';
+import { AppUtils, tryOrComplete } from '@core/helpers/utils';
+import { UserService } from '@shared/account';
+import { IRequestOptions } from '@shared/common';
+import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
+import { Observable, throwError } from 'rxjs';
+import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
@@ -19,7 +20,7 @@ export class TeardownInterceptor implements HttpInterceptor {
         private userService: UserService,
         private snackbar: MatSnackBar,
         private tokenService: TokenHelper,
-        private requestData: RequestData
+        private requestData: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

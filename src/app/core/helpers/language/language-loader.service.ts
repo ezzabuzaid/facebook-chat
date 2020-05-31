@@ -17,7 +17,7 @@ export class LanguageLoader implements TranslateLoader {
             .configure({
                 DEFAULT_URL: false,
                 LOCAL_CACHE: true,
-                CACHE_CATEGORY: 'language'
+                // CACHE_CATEGORY: 'language'
             })
             .get(`assets/i18n/${ languageService.language }.json`);
     }
