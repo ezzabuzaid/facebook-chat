@@ -25,17 +25,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       autocomplete: 'username',
       validation: { validators: [Validators.required] }
     }),
-    new Field('email', {
-      type: EFieldType.EMAIL,
-      autocomplete: 'email',
-      label: 'placeholder_email',
-      validation: { validators: [Validators.required, Validators.email] }
-    }),
-    new Field('password', {
-      type: EFieldType.PASSWORD,
+    Field.Email('email'),
+    Field.Password('password', {
       autocomplete: 'new-password',
-      label: 'placeholder_password',
-      value: '',
       hint: 'at least 8 charachter',
       validation: {
         validators: [

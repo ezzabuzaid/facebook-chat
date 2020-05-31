@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@shared/account';
 import { Validators } from '@angular/forms';
-import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
 import { PortalModel } from '@shared/models';
 import { Field, EFieldType, Form } from '@partials/form';
@@ -26,22 +25,14 @@ export class LoginComponent implements OnInit {
       label: 'placeholder_username',
       autocomplete: 'username',
       validation: {
-        validators: Validators.required
+        validators: [Validators.required]
       }
     }),
-    new Field('password', {
-      label: 'placeholder_passowrd',
-      type: EFieldType.PASSWORD,
-      autocomplete: 'current-password',
-      validation: {
-        validators: Validators.required
-      }
-    })
+    Field.Password('password')
   ]);
 
   constructor(
     private portalService: UserService,
-    private tokenHelper: TokenHelper,
     private router: Router
   ) { }
 
