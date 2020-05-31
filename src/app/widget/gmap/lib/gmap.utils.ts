@@ -1,8 +1,8 @@
-import { of, Observable, zip } from 'rxjs';
-import { GoogleMapService } from './gmap.service';
+import { Observable, of, zip } from 'rxjs';
 // import { GoogleMap } from './gmap.main';
-import { map, catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { GmapModel } from '../gmap.model';
+import { GoogleMapService } from './gmap.service';
 
 export class GoogleMapUtils {
     static sameCity(placeId, position) {

@@ -1,5 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, HostBinding, Inject, InjectionToken, OnDestroy } from '@angular/core';
-import { trigger, state, transition, style, animate } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, HostBinding, Inject, InjectionToken, OnDestroy, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { ModelDialog } from './dialog.types';
 export const GLOBAL_CONFIG_FOR_DIALOG = new InjectionToken<ModelDialog.DialogProperites>('GLOBAL_CONFIG_FOR_DIALOG');
 

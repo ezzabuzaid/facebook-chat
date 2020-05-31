@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MasonryComponent } from './masonry.component';
+import { NgModule } from '@angular/core';
 import { MasonryItemComponent } from './masonry-item/masonry-item.component';
+import { MasonryComponent } from './masonry.component';
 
 
 

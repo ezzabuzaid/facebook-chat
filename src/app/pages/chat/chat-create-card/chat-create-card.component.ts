@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ChatCardManager, IChatCard } from '../chat-card.manager';
-import { UsersService } from '@shared/services/users';
-import { UsersModel, ChatModel } from '@shared/models';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { map, filter, share, switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
-import { ChatService } from '@shared/services/chat';
-import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
-import { PopupManager } from '@widget/popup';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
+import { ChatModel, UsersModel } from '@shared/models';
+import { ChatService } from '@shared/services/chat';
+import { UsersService } from '@shared/services/users';
+import { PopupManager } from '@widget/popup';
+import { Observable, of } from 'rxjs';
+import { filter, map, share, switchMap } from 'rxjs/operators';
+import { ChatCardManager, IChatCard } from '../chat-card.manager';
+import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
 import { ChatGroupCardComponent } from '../chat-group-card/chat-group-card.component';
 
 @Component({
@@ -30,11 +30,11 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   $room: Observable<ChatModel.IRoom> = null;
 
   constructor(
-    private chatCardManager: ChatCardManager,
-    private usersService: UsersService,
-    private chatService: ChatService,
-    private popupManager: PopupManager,
-    private snackbar: MatSnackBar
+    private readonly chatCardManager: ChatCardManager,
+    private readonly usersService: UsersService,
+    private readonly chatService: ChatService,
+    private readonly popupManager: PopupManager,
+    private readonly snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -62,7 +62,9 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
 
   removeUser(index: number) {
     this.selectedUsers.splice(index, 1);
-    this.selectedUsers.length && this.checkForRoom();
+    if (this.selectedUsers.length) {
+      this.checkForRoom();
+    }
   }
 
   checkForRoom() {

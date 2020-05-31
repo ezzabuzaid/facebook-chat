@@ -1,27 +1,32 @@
-import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
-import { AppUtils } from '@core/helpers/utils';
 import { SubjectFactory } from '@core/helpers/subject-factory';
+import { TokenHelper } from '@core/helpers/token';
+import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
-import { NAVIGATOR, WINDOW } from '@shared/common';
+import { NAVIGATOR } from '@shared/common';
 import { PortalModel } from '@shared/models';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends SubjectFactory<boolean> {
 
+  public get isAuthenticated() {
+    return this.tokenHelper.isLogged && AppUtils.isFalsy(this.tokenHelper.isExpired);
+  }
+
   constructor(
-    private http: HttpClient,
-    private tokenHelper: TokenHelper,
-    private router: Router,
-    @Inject(NAVIGATOR) private navigator: Navigator,
-    @Inject(WINDOW) private window: Window,
-  ) { super(); }
+    private readonly http: HttpClient,
+    private readonly tokenHelper: TokenHelper,
+    private readonly router: Router,
+    @Inject(NAVIGATOR) private readonly navigator: Navigator,
+  ) {
+    super();
+  }
 
   public login(payload: PortalModel.ILoginRequest, rememberMe: boolean) {
     return this.http
@@ -62,9 +67,9 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.post(Constants.API.PORTAL.CHECK_PINCODE, { pincode });
   }
 
-  public logout(redirectUrl = undefined) {
+  public logout(redirectUrl?) {
     console.log(redirectUrl);
-    let blob = new Blob([JSON.stringify({})], {
+    const blob = new Blob([JSON.stringify({})], {
       [Constants.Application.DEVICE_UUID]: this.getDeviceUUID()
     });
     this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
@@ -76,10 +81,6 @@ export class UserService extends SubjectFactory<boolean> {
     });
     this.tokenHelper.deleteToken();
     this.notify(this.isAuthenticated);
-  }
-
-  public get isAuthenticated() {
-    return this.tokenHelper.isLogged && AppUtils.isFalsy(this.tokenHelper.isExpired);
   }
 
   getDeviceUUID() {

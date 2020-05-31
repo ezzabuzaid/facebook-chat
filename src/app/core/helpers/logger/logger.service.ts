@@ -87,6 +87,8 @@ export class Logger {
    */
   static outputs: LogOutput[] = [];
 
+  constructor(private readonly header?: string) { }
+
   /**
    * Enables production mode.
    * Sets logging level to LogLevel.Warning.
@@ -94,8 +96,6 @@ export class Logger {
   static enableProductionMode() {
     Logger.level = LogLevel.Warning;
   }
-
-  constructor(private header?: string) { }
 
   private mapObjects(objects, color) {
     return objects.map(object => {

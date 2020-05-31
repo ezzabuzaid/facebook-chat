@@ -1,4 +1,4 @@
-import { Directive, TemplateRef, ViewContainerRef, Input, Renderer2 } from '@angular/core';
+import { Directive, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[appFlipCardFab]',
@@ -7,9 +7,9 @@ import { Directive, TemplateRef, ViewContainerRef, Input, Renderer2 } from '@ang
 export class FlipCardFabDirective {
   isPresented = false;
   constructor(
-    private template: TemplateRef<any>,
-    private vcf: ViewContainerRef,
-    private renderer: Renderer2
+    private readonly template: TemplateRef<any>,
+    private readonly vcf: ViewContainerRef,
+    private readonly renderer: Renderer2
   ) { }
 
   addCard() {

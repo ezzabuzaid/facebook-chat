@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MediaModel, ListEntityQuery } from '@shared/models';
-import { UploadsService } from '@shared/services/upload';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ListEntityQuery, MediaModel } from '@shared/models';
+import { UploadsService } from '@shared/services/upload';
 import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 
 @Component({
@@ -16,6 +16,11 @@ export class MediaPickerComponent implements OnInit {
   $folders = this.uploadService.getFolders();
   files: MediaModel.File[] = [];
   markedFiles: MediaModel.File[] = [];
+
+  constructor(
+    private readonly uploadService: UploadsService,
+    @Inject(MAT_DIALOG_DATA) private readonly data: { folder: string }
+  ) { }
   $provider = (pageQuery: ListEntityQuery) => this.uploadService.searchForFiles(
     new MediaModel.FileSearchQuery(
       undefined,
@@ -24,11 +29,6 @@ export class MediaPickerComponent implements OnInit {
       pageQuery
     )
   );
-
-  constructor(
-    private uploadService: UploadsService,
-    @Inject(MAT_DIALOG_DATA) private data: { folder: string }
-  ) { }
 
   ngOnInit() { }
 

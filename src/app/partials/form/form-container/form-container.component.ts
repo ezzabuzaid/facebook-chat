@@ -1,9 +1,9 @@
-import { Component, OnInit, EventEmitter, OnDestroy, Output, HostBinding, Input } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AppUtils } from '@core/helpers/utils';
 import { Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';
-import { FormWidgetManager } from '../form.manager';
-import { AppUtils } from '@core/helpers/utils';
 import { Form } from '../field-factory';
+import { FormWidgetManager } from '../form.manager';
 export interface SubmitEvent<T = any> {
   value: T,
   valid: boolean;
@@ -14,6 +14,7 @@ export interface SubmitEvent<T = any> {
   styleUrls: ['./form-container.component.scss']
 })
 export class FormContainerComponent implements OnInit, OnDestroy {
+  private readonly subscription = new Subject();
   @HostBinding('class.loading') public loading = false;
   @Output() public onSubmit = new EventEmitter<SubmitEvent>();
   @Input() public title: string = null;
@@ -22,10 +23,9 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   fields = [];
   sections = [];
   public progressListener = this.formWidgetManager.listen().pipe(share());
-  private subscription = new Subject();
 
   constructor(
-    private formWidgetManager: FormWidgetManager
+    private readonly formWidgetManager: FormWidgetManager
   ) { }
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class FormContainerComponent implements OnInit, OnDestroy {
   private flattenFields(fields: any[]) {
     return fields.reduce((acc, field) => {
       if (this.isForm(field)) {
-        acc.push(...this.flattenFields(field['fields']));
+        acc.push(...this.flattenFields(field.fields));
       } else {
         acc.push(field);
       }

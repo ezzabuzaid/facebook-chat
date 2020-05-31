@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NAVIGATOR } from '@shared/common';
 import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
-import { IChatCard } from '../index';
-import { ChatManager } from '../chat.manager';
 import { ChatCardComponent } from '../chat-card/chat-card.component';
-import { NAVIGATOR } from '@shared/common';
+import { ChatManager } from '../chat.manager';
+import { IChatCard } from '../index';
 @Component({
   selector: 'app-user-card',
   templateUrl: './chat-conversation-card.component.html',
@@ -16,9 +16,9 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
   @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
-    private chatCardManager: ChatCardManager,
-    private chatManager: ChatManager,
-    @Inject(NAVIGATOR) private navigator: Navigator
+    private readonly chatCardManager: ChatCardManager,
+    private readonly chatManager: ChatManager,
+    @Inject(NAVIGATOR) private readonly navigator: Navigator
   ) { }
 
   async  ngOnInit() {

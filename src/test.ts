@@ -1,21 +1,19 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
-import 'zone.js/dist/zone-testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NgModule } from '@angular/core';
 import { getTestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpService } from '@core/http';
-import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
-import { NgModule } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { CoreModule } from '@core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@shared/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CoreModule } from '@core/core.module';
+import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
+import { MaterialModule } from '@shared/common';
+import 'zone.js/dist/zone-testing';
 
 @NgModule({
   imports: [
@@ -27,10 +25,6 @@ import { RouterTestingModule } from '@angular/router/testing';
     RouterTestingModule.withRoutes([])
   ],
   providers: [
-    {
-      provide: HttpClient,
-      useClass: HttpService
-    },
     LocalStorage,
     SessionStorage
   ],

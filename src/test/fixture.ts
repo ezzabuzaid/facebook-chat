@@ -1,16 +1,14 @@
 
-import { Type } from '@angular/core';
-import { defer, from, Subject } from 'rxjs';
-import { tick, ComponentFixture, TestBed } from '@angular/core/testing';
-import { environment } from '@environments/environment';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { HttpMethod } from '@core/http';
+import { Type } from '@angular/core';
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { environment } from '@environments/environment';
+import { defer, Subject } from 'rxjs';
 declare const expect: any;
 
 /**
  * Create async observable that emits-once and completes
- * @param data
  */
 export function asyncData<T>(data: T = null) {
     return defer(() => Promise.resolve(data));
@@ -33,7 +31,7 @@ export function assertPost(url: string, body = null) {
 
     const mockRequest = httpMock.expectOne(apiUrl(url));
     mockRequest.flush(body);
-    expect(mockRequest.request.method).toBe(HttpMethod.POST);
+    expect(mockRequest.request.method).toBe('POST');
     return mockRequest;
 }
 
@@ -42,20 +40,20 @@ export function assertGet<T>(url: string, body: T, callback: (request: TestReque
     const mockRequest = httpMock.expectOne(apiUrl(url));
     callback(mockRequest);
     mockRequest.flush(body);
-    expect(mockRequest.request.method).toBe(HttpMethod.GET);
+    expect(mockRequest.request.method).toBe('GET');
     return mockRequest;
 }
 
 export function getTableHeaderCell(element: HTMLElement, columnName: string) {
-    return element.querySelector(`.mat-header-cell.mat-column-${columnName}`);
+    return element.querySelector(`.mat-header-cell.mat-column-${ columnName }`);
 }
 
 export function getTableBodyCells(element: HTMLElement, columnName: string) {
-    return element.querySelectorAll<HTMLTableDataCellElement>(`.mat-cell.mat-column-${columnName}`);
+    return element.querySelectorAll<HTMLTableDataCellElement>(`.mat-cell.mat-column-${ columnName }`);
 }
 
 export function getTableCell(element: HTMLTableRowElement, columnName: string) {
-    return element.querySelector(`.mat-column-${columnName}`);
+    return element.querySelector(`.mat-column-${ columnName }`);
 }
 
 export function checkCell(tableRow: HTMLTableRowElement, index, name: string, title: string) {

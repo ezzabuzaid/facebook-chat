@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { FlipCardFabDirective } from '../flip-card-fab.directive';
 
 @Component({

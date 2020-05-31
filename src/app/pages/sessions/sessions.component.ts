@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
-import { SessionsService } from '@shared/services/sessions';
+import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SessionsModel } from '@shared/models';
-import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { SessionsService } from '@shared/services/sessions';
 
 @Component({
   selector: 'app-sessions',
@@ -12,7 +12,7 @@ export class SessionsComponent implements OnInit, AfterContentInit {
   sessions: SessionsModel.ISession[] = [];
   @ViewChild(MatPaginator) matPaginator: MatPaginator;
   constructor(
-    private sessionsService: SessionsService
+    private readonly sessionsService: SessionsService
   ) { }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'semi-table-actions',
@@ -8,7 +8,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 export class TableActionComponent implements OnInit {
   @Input() position: 'start' | 'end' = 'start';
   // TODO: append th that respects the position
-  @Input() title: string = '';
+  @Input() title = '';
 
   constructor() { }
 

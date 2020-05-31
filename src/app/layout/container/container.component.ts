@@ -1,13 +1,13 @@
+import { animate, animateChild, group, query, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChatModel } from '@shared/models';
-import { UsersService } from '@shared/services/users';
 import { ChatService } from '@shared/services/chat';
+import { UsersService } from '@shared/services/users';
 import { ChatCardManager, ChatGroupCardComponent } from 'app/pages/chat';
-import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 import { ChatConversationCardComponent } from 'app/pages/chat/chat-conversation-card/chat-conversation-card.component';
+import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button/chat-floating-button.component';
-import { trigger, transition, style, query, animateChild, animate, group } from '@angular/animations';
 
 @Component({
   selector: 'app-container',
@@ -43,14 +43,14 @@ import { trigger, transition, style, query, animateChild, animate, group } from 
   ]
 })
 export class ContainerComponent implements OnInit {
+  @ViewChild(RouterOutlet, { static: true }) private readonly outlet: RouterOutlet;
   public $users = this.usersService.getUsersWithoutMe();
   public $groups = this.chatService.getGroups();
   public $conversations = this.chatService.getConversations();
-  @ViewChild(RouterOutlet, { static: true }) private outlet: RouterOutlet;
   constructor(
-    private usersService: UsersService,
-    private chatCardManager: ChatCardManager,
-    private chatService: ChatService,
+    private readonly usersService: UsersService,
+    private readonly chatCardManager: ChatCardManager,
+    private readonly chatService: ChatService,
   ) { }
 
   ngOnInit() {
@@ -67,10 +67,10 @@ export class ContainerComponent implements OnInit {
     });
   }
 
-  openGroupChatCard(group: ChatModel.IRoom) {
+  openGroupChatCard(room: ChatModel.IRoom) {
     this.chatCardManager.open(ChatGroupCardComponent, {
-      id: group._id,
-      data: group
+      id: room._id,
+      data: room
     });
   }
 

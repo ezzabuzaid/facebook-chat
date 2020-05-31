@@ -1,6 +1,6 @@
-import { Observable, Observer, fromEventPattern } from 'rxjs';
-import { GmapModel } from '../gmap.model';
+import { fromEventPattern, Observable, Observer } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GmapModel } from '../gmap.model';
 
 export class GoogleMapService {
     /**
@@ -89,7 +89,7 @@ export class GoogleMapService {
     ) {
         // !Disable autocomplete submit event
         google.maps.event.addDomListener(input, 'keydown', (event) => {
-            if (event['keyCode'] === 13) {
+            if (event.keyCode === 13) {
                 event.preventDefault();
             }
         });

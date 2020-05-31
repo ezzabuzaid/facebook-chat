@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '@shared/services/users';
 import { UsersModel } from '@shared/models';
+import { UsersService } from '@shared/services/users';
 
 @Component({
   selector: 'app-users-list',
@@ -11,7 +11,7 @@ export class UsersListComponent implements OnInit {
   public $users = this.usersService.getUsers();
 
   constructor(
-    private usersService: UsersService
+    private readonly usersService: UsersService
   ) { }
 
   ngOnInit() { }

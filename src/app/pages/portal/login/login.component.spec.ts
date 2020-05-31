@@ -1,17 +1,17 @@
-import { LoginComponent } from './login.component';
-import { async, TestBed, fakeAsync, flush } from '@angular/core/testing';
-import { MaterialModule } from '@shared/common';
-import { RegisterComponent } from '../register/register.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { async, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Constants } from '@core/constants';
-import { UserService } from '@shared/account';
-import { TranslateTestingModule } from 'test/mocks';
-import { asyncData, TestUtility } from 'test/fixture';
-import { FormModule } from '@partials/form';
-import { PortalModel } from '@shared/models';
 import { TokenHelper } from '@core/helpers/token';
+import { FormModule } from '@partials/form';
+import { UserService } from '@shared/account';
+import { MaterialModule } from '@shared/common';
+import { PortalModel } from '@shared/models';
+import { asyncData, TestUtility } from 'test/fixture';
+import { TranslateTestingModule } from 'test/mocks';
+import { RegisterComponent } from '../register/register.component';
+import { LoginComponent } from './login.component';
 
 fdescribe('LoginComponent', () => {
     let component: LoginComponent;
@@ -64,13 +64,6 @@ fdescribe('LoginComponent', () => {
 
 
             describe('LoggedInSuccessfully', () => {
-                test('ShouldSaveTheToken')
-                    .Givin()
-                    .When(() => component.login({ valid: true, value: null }))
-                    .Then(() => {
-                        flush();
-                        expect(TestBed.inject(TokenHelper).setToken).toHaveBeenCalledWith(loginResponse.token, loginResponse.refreshToken, component.rememberMeCheckBox.value);
-                    });
                 test('ShouldNavigateToDefaultPage')
                     .Givin()
                     .When(() => component.login({ valid: true, value: null }))

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LanguageService, ELanguage } from '@core/helpers/language';
-import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
-import { UserService } from '@shared/account';
-import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
+import { ELanguage, LanguageService } from '@core/helpers/language';
+import { TokenHelper } from '@core/helpers/token';
+import { UserService } from '@shared/account';
+import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,10 +15,10 @@ export class ToolbarComponent implements OnInit {
   routes = Constants.Routing;
   languageEnum = ELanguage;
   constructor (
-    private languageService: LanguageService,
-    private sidebarService: SidebarService,
-    private tokenService: TokenHelper,
-    private userService: UserService
+    private readonly languageService: LanguageService,
+    private readonly sidebarService: SidebarService,
+    private readonly tokenService: TokenHelper,
+    private readonly userService: UserService
   ) { }
 
   ngOnInit() { }

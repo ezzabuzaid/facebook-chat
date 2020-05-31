@@ -1,6 +1,6 @@
-import { Directive, OnInit, Input, Host, ElementRef, Renderer2 } from '@angular/core';
-import { TableManager } from '../table.service';
+import { Directive, ElementRef, Host, Input, OnInit, Renderer2 } from '@angular/core';
 import { FilterTypes } from '../index';
+import { TableManager } from '../table.service';
 
 @Directive({
   selector: '[tableFilter]'
@@ -11,9 +11,9 @@ export class TableFilterDirective implements OnInit {
   @Input() type: FilterTypes = null;
 
   constructor(
-    @Host() private tableService: TableManager,
+    @Host() private readonly tableService: TableManager,
     public elRef: ElementRef<HTMLInputElement>,
-    private renderer: Renderer2
+    private readonly renderer: Renderer2
   ) { }
 
   ngOnInit() {

@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
-import { AppUtils } from '@core/helpers/utils';
-import { ChatManager } from '../chat.manager';
-import { ChatModel } from '@shared/models';
-import * as EmojiButton from '@joeattardi/emoji-button';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 import { TokenHelper } from '@core/helpers/token';
+import { AppUtils } from '@core/helpers/utils';
+import * as EmojiButton from '@joeattardi/emoji-button';
+import { ChatModel } from '@shared/models';
+import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 import { filter } from 'rxjs/operators';
+import { ChatManager } from '../chat.manager';
 @Component({
   selector: 'app-chat-card-footer',
   templateUrl: './chat-card-footer.component.html',
@@ -34,10 +34,10 @@ export class ChatCardFooterComponent implements OnInit {
   messageFormControl = new FormControl('');
 
   constructor(
-    private chatManager: ChatManager,
-    private elementRef: ElementRef<HTMLElement>,
-    private mediaHubManager: MediaHubManager,
-    private tokenService: TokenHelper
+    private readonly chatManager: ChatManager,
+    private readonly elementRef: ElementRef<HTMLElement>,
+    private readonly mediaHubManager: MediaHubManager,
+    private readonly tokenService: TokenHelper
   ) { }
 
   ngOnInit() {

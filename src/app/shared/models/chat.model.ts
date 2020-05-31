@@ -14,8 +14,7 @@ export namespace ChatModel {
         single: boolean;
     }
 
-    export interface IGroup extends IRoom {
-    }
+    export interface IGroup extends IRoom { }
 
     export interface IConversation extends IRoom {
         user1: UsersModel.IUser;

@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ApplicationRef, Injector, EmbeddedViewRef, ComponentRef, Injectable, Type } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 
 export interface IChatCard<T> {
@@ -23,15 +23,15 @@ export class ChatCardManager {
     public static count = 0;
 
     private buttonComponent: Component<any> = null;
-    private buttons = new Map<string, ComponentRef<IChatCard<any>>>();
-    private componentsRef = new Map<string, ComponentRef<IChatCard<any>>>();
-    private components = new Map<string, Component<any>>();
+    private readonly buttons = new Map<string, ComponentRef<IChatCard<any>>>();
+    private readonly componentsRef = new Map<string, ComponentRef<IChatCard<any>>>();
+    private readonly components = new Map<string, Component<any>>();
     private currentOpenedCardID: string = null;
 
     constructor(
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private appRef: ApplicationRef,
-        private injector: Injector,
+        private readonly componentFactoryResolver: ComponentFactoryResolver,
+        private readonly appRef: ApplicationRef,
+        private readonly injector: Injector,
     ) { }
 
     get currentCard() {

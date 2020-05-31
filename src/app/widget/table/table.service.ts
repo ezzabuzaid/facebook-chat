@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
 import { Injectable, TemplateRef } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class TableManager {

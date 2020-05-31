@@ -1,14 +1,14 @@
 
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from '@shared/account';
-import { Constants } from '@core/constants';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Constants } from '@core/constants';
+import { DateField, EFieldType, Field, Form, SelectField, SelectOption, SubmitEvent } from '@partials/form';
+import { UserService } from '@shared/account';
 import { PortalModel } from '@shared/models';
-import { Observable, merge, of } from 'rxjs';
+import { Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase } from '@shared/validators';
+import { merge, Observable, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import { ContainsUppercase, ContainsLowercase, ContainsSpecialCharacter, ContainsNumber, Between } from '@shared/validators';
-import { SubmitEvent, Form, Field, EFieldType, DateField, SelectField, SelectOption } from '@partials/form';
 
 @Component({
   selector: 'app-register',
@@ -104,8 +104,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   $passwordVisible: Observable<boolean> = null;
   constructor(
-    private router: Router,
-    private userService: UserService,
+    private readonly router: Router,
+    private readonly userService: UserService,
   ) { }
 
   ngOnInit() { }

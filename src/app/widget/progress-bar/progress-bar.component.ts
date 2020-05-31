@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProgressBarManager } from './progress-bar.manager';
 import { delay } from 'rxjs/operators';
+import { ProgressBarManager } from './progress-bar.manager';
 
 @Component({
   selector: 'app-progress-bar',
@@ -10,7 +10,7 @@ import { delay } from 'rxjs/operators';
 export class ProgressBarComponent implements OnInit {
   public $visible = this.progressBarManager.listen().pipe(delay(0));
   constructor(
-    private progressBarManager: ProgressBarManager
+    private readonly progressBarManager: ProgressBarManager
   ) { }
 
   ngOnInit() { }

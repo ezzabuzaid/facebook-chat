@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FullscreenDirective } from './fullscreen.directive';
+import { HoverDirective } from './hover.directive';
 import { TextAreaAutoResizeDirective } from './text-area-auto-resize.directive';
 import { TogglePasswodDirective } from './toggle-passwod.directive';
-import { HoverDirective } from './hover.directive';
-import { FullscreenDirective } from './fullscreen.directive';
 
 @NgModule({
   imports: [

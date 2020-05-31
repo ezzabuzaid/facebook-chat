@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
 import { IChatCard } from '../index';
-import { ChatModel } from '@shared/models';
 
 @Component({
   selector: 'app-chat-floating-button',
@@ -13,7 +13,7 @@ export class ChatFloatingButtonComponent implements OnInit, IChatCard<ChatModel.
   id: string;
 
   constructor(
-    private chatCardManager: ChatCardManager
+    private readonly chatCardManager: ChatCardManager
   ) { }
 
   ngOnInit() { }

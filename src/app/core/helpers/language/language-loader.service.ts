@@ -1,13 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 import { LanguageService } from './language.service';
 
 @Injectable()
 export class LanguageLoader implements TranslateLoader {
 
     constructor(
-        private injector: Injector
+        private readonly injector: Injector
     ) { }
 
     getTranslation() {

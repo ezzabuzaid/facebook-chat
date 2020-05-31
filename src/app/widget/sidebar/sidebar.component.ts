@@ -1,13 +1,31 @@
-import { Component, OnInit, ElementRef, Input, HostBinding, Output, EventEmitter, Inject } from '@angular/core';
-import { SidebarService } from './sidebar.service';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, Input, OnInit, Output } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { WINDOW } from '@shared/common';
+import { SidebarService } from './sidebar.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterViewInit {
+
+  get element() {
+    return this.elementRef.nativeElement;
+  }
+
+  get direction() {
+    return this.right ? 'right' : 'left';
+  }
+
+  get drawer() {
+    return this.element.querySelector('[sidebar-drawer]') as HTMLElement;
+  }
+
+  get resizer() {
+    return this.element.querySelector('.resizer') as HTMLElement;
+  }
+
+  private initialTouchPos;
   @Input() @HostBinding('class.toggled') public closed = false;
   @Input() @HostBinding('class.right') public right = false;
   @Input() resizable = true;
@@ -19,17 +37,11 @@ export class SidebarComponent implements OnInit {
   @Output() onToggle = new EventEmitter<ISidebarToggle>();
   @Output() maxWidthExceeded = new EventEmitter<number>();
   @Output() minWidthExceeded = new EventEmitter<number>();
-
-  private initialTouchPos;
   constructor(
-    private sidebarService: SidebarService,
-    private elementRef: ElementRef<HTMLElement>,
-    @Inject(WINDOW) private window: Window,
+    private readonly sidebarService: SidebarService,
+    private readonly elementRef: ElementRef<HTMLElement>,
+    @Inject(WINDOW) private readonly window: Window,
   ) { }
-
-  get element() {
-    return this.elementRef.nativeElement;
-  }
 
   ngOnInit() {
     this.sidebarService.registerSidebar(this.name, this);
@@ -126,7 +138,7 @@ export class SidebarComponent implements OnInit {
       this.minWidthExceeded.emit();
     }
 
-    this.element.style.setProperty('--width', `${vector.offset}px`);
+    this.element.style.setProperty('--width', `${ vector.offset }px`);
 
     this.initialTouchPos = null;
   }
@@ -151,7 +163,7 @@ export class SidebarComponent implements OnInit {
   }
 
   setResizerPosition(vector: Vector) {
-    this.resizer.style.setProperty(vector.direction, `${vector.offset - this.resizer.clientWidth}px`);
+    this.resizer.style.setProperty(vector.direction, `${ vector.offset - this.resizer.clientWidth }px`);
   }
 
   private getVector(evt): Vector {
@@ -184,10 +196,6 @@ export class SidebarComponent implements OnInit {
     };
   }
 
-  get direction() {
-    return this.right ? 'right' : 'left';
-  }
-
   private pxToPercentege(pixels: number) {
     const screenWidth = this.window.screen.width;
     return pixels / screenWidth * 100;
@@ -195,14 +203,6 @@ export class SidebarComponent implements OnInit {
 
   private percentegeToPx(percentge: number) {
     return percentge * this.element.clientWidth / 100;
-  }
-
-  get drawer() {
-    return this.element.querySelector('[sidebar-drawer]') as HTMLElement;
-  }
-
-  get resizer() {
-    return this.element.querySelector('.resizer') as HTMLElement;
   }
 
   private isExceededMaxWidth(pixels: number) {

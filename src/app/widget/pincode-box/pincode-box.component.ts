@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewChildren, QueryList, ViewChild, ElementRef, InjectionToken, inject, ViewEncapsulation, Inject, Optional, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component, ElementRef, EventEmitter, inject, Inject,
+  InjectionToken, Input, OnInit, Optional, Output, QueryList, ViewChild, ViewChildren
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export type PincodeBoxDialogHandler = (data: PincodeBoxData) => MatDialogRef<PincodeBoxComponent>;
 
@@ -14,7 +17,7 @@ export const PincodeBoxDialog = new InjectionToken('PincodeBoxDialog', {
   factory: () => {
     const dialog = inject(MatDialog);
     return (data: PincodeBoxData) => dialog.open(PincodeBoxComponent, {
-      data: data,
+      data,
       width: '600px'
     })
   }
@@ -26,14 +29,14 @@ export const PincodeBoxDialog = new InjectionToken('PincodeBoxDialog', {
   styleUrls: ['./pincode-box.component.scss']
 })
 export class PincodeBoxComponent implements OnInit {
-  @ViewChildren('codeInput') private inputsList: QueryList<ElementRef<HTMLInputElement>>;
-  @ViewChild('confirmButton') private confirmButton: MatButton;
+  @ViewChildren('codeInput') private readonly inputsList: QueryList<ElementRef<HTMLInputElement>>;
+  @ViewChild('confirmButton') private readonly confirmButton: MatButton;
   inputCount = new Array(6);
   @Input('data') _inputData: PincodeBoxData;
   @Output() onSubmit = new EventEmitter();
 
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) private _dialogData: PincodeBoxData
+    @Optional() @Inject(MAT_DIALOG_DATA) private readonly _dialogData: PincodeBoxData
   ) { }
 
   ngOnInit() { }

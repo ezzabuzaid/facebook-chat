@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ScrollDetectionComponent } from './scroll-detection.component';
+import { NgModule } from '@angular/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ScrollDetectionComponent } from './scroll-detection.component';
 
 @NgModule({
   imports: [

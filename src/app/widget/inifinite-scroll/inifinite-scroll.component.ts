@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, AfterContentInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ListEntityQuery, ListEntityResponse } from '@shared/models';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { AppUtils } from '@core/helpers/utils';
 
 @Component({
   selector: 'app-inifinite-scrolling',
@@ -12,6 +11,7 @@ import { AppUtils } from '@core/helpers/utils';
 export class InifiniteScrollingComponent implements OnInit, OnDestroy {
   private isLastFetchDone = true;
   private subscription: Subscription = null;
+  // @ts-ignore
   private currentLength = -1;
 
   /**
@@ -25,7 +25,7 @@ export class InifiniteScrollingComponent implements OnInit, OnDestroy {
   @Input() public provider: (query: ListEntityQuery) => Observable<ListEntityResponse<any>>;
 
   /**
-   * The parent selector, usually the selector of the element that has scrolling 
+   * The parent selector, usually the selector of the element that has scrolling
    * @required
    */
   @Input() public scrollContainerSelector: string | HTMLElement = null;
@@ -37,22 +37,18 @@ export class InifiniteScrollingComponent implements OnInit, OnDestroy {
 
   /**
    * Weather should fetch data or not
-   * @default true
    */
   @Input() public enable = true;
 
   /**
-   * @default 'down'
    */
   @Input() public direction: 'up' | 'down' = 'down';
   /**
    * If true the provider will be used inside {ngOnInit} lifecycle
-   * @default true
    */
   @Input() public fetchOnInit = true;
   /**
    * Indicate in which direction should the fetching done
-   * @default false
    */
   @Input() horizontal = false;
 
@@ -110,7 +106,9 @@ export class InifiniteScrollingComponent implements OnInit, OnDestroy {
   }
 
   private unsubscribe() {
-    this.subscription && this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }

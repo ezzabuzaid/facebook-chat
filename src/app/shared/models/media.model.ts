@@ -1,7 +1,7 @@
-import { IModel, ListEntityQuery } from './response.model';
-import { environment } from '@environments/environment';
 import { AppUtils } from '@core/helpers/utils';
+import { environment } from '@environments/environment';
 import { of } from 'rxjs';
+import { IModel, ListEntityQuery } from './response.model';
 export namespace MediaModel {
     export class Folder extends IModel {
         name: string;
@@ -22,6 +22,18 @@ export namespace MediaModel {
     }
 
     export class File extends IModel implements IFile {
+
+        get fullPath() {
+            return `${environment.serverOrigin}${this.path ? this.path.split('?')[0] : ''}`;
+        }
+
+        get shortType() {
+            return this.type.split('/')[1];
+        }
+
+        get src() {
+            return this.path && !this.rawFile ? of(this.fullPath) : AppUtils.readFile(this.rawFile);
+        }
         fullType: string;
         rawFile: FileList[0];
         type: string;
@@ -43,24 +55,12 @@ export namespace MediaModel {
             this.rawFile = object.rawFile;
         }
 
-        get fullPath() {
-            return `${environment.serverOrigin}${this.path ? this.path.split('?')[0] : ''}`;
-        }
-
-        get shortType() {
-            return this.type.split('/')[1];
-        }
-
         isImage() {
             return AppUtils.isImage(this.fullPath);
         }
 
         isPdf() {
             return AppUtils.isPdf(this.fullPath);
-        }
-
-        get src() {
-            return this.path && !this.rawFile ? of(this.fullPath) : AppUtils.readFile(this.rawFile);
         }
 
     }

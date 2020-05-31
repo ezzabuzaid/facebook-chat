@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import { AppUtils } from '@core/helpers/utils';
 import { MediaModel } from '@shared/models';
 import { UploadsService } from '@shared/services/upload';
 import { PopupManager } from '@widget/popup';
-import { switchMap, filter } from 'rxjs/operators';
-import { AppUtils } from '@core/helpers/utils';
+import { filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-media-card',
@@ -22,8 +22,8 @@ export class MediaCardComponent implements OnInit {
   $tags = this.uploadsService.getTags();
 
   constructor(
-    private popupManager: PopupManager,
-    private uploadsService: UploadsService,
+    private readonly popupManager: PopupManager,
+    private readonly uploadsService: UploadsService,
   ) { }
 
   ngOnInit() {

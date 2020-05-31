@@ -1,12 +1,12 @@
 import {
-  Component, OnInit, ViewChild, ElementRef, forwardRef,
-  Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, Inject, PLATFORM_ID
+  ChangeDetectionStrategy, Component, ElementRef, forwardRef, Inject,
+  Input, OnChanges, OnInit, PLATFORM_ID, SimpleChanges, ViewChild
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { PhoneNumberAssociatedWithCountryValidator } from '@shared/validators';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
-import { Observable, from } from 'rxjs';
 import { IField } from '@partials/form';
+import { PhoneNumberAssociatedWithCountryValidator } from '@shared/validators';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-mobile-control',
@@ -20,18 +20,18 @@ import { IField } from '@partials/form';
   }]
 })
 export class MobileControlComponent implements OnInit, OnChanges, ControlValueAccessor {
-  private intlTelInstance = null;
-
-  @Input() private code: string = null;
-  @Input() private autoDetectCountry = true;
-  @Input() public formControl: IField<string> = null;
-
-  @ViewChild('phoneField', { static: true }) private phoneField: ElementRef<HTMLElement>;
 
   get selectedCountryCode() {
     const country = this.intlTelInstance.getSelectedCountryData();
     return country && country.dialCode;
   }
+  private intlTelInstance = null;
+
+  @Input() private code: string = null;
+  @Input() private readonly autoDetectCountry = true;
+
+  @ViewChild('phoneField', { static: true }) private readonly phoneField: ElementRef<HTMLElement>;
+  @Input() public formControl: IField<string> = null;
 
   onChange: (value: string) => {};
   onTouched: () => {};

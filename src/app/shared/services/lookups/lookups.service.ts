@@ -8,7 +8,7 @@ import { SelectOption } from '@partials/form';
 export class LookupsService {
 
     constructor(
-        private http: HttpClient
+        private readonly http: HttpClient
     ) { }
 
     getNationalities() {

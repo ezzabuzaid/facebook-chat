@@ -1,4 +1,4 @@
-import { Directive, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { TableManager } from '../table.service';
 
 // tslint:disable

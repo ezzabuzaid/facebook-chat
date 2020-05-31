@@ -1,5 +1,5 @@
-import { Directive, HostListener, Input, Inject, ElementRef, Output, EventEmitter } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Directive, ElementRef, EventEmitter, HostListener, Inject, Input, Output } from '@angular/core';
 
 @Directive({
   selector: '[fullscreen]'
@@ -9,8 +9,8 @@ export class FullscreenDirective {
   @Output() onChange = new EventEmitter();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private elementRef: ElementRef<HTMLElement>
+    @Inject(DOCUMENT) private readonly document: Document,
+    private readonly elementRef: ElementRef<HTMLElement>
   ) { }
 
   @HostListener('click')
@@ -28,14 +28,14 @@ export class FullscreenDirective {
         break;
     }
     const requestFullScreen =
-      docEl.requestFullscreen || docEl['mozRequestFullScreen'] ||
-      docEl['webkitRequestFullScreen'] || docEl['msRequestFullscreen'];
+      docEl.requestFullscreen || docEl.mozRequestFullScreen ||
+      docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
     const cancelFullScreen =
-      this.document.exitFullscreen || this.document['mozCancelFullScreen'] ||
-      this.document['webkitExitFullscreen'] || this.document['msExitFullscreen'];
+      this.document.exitFullscreen || this.document.mozCancelFullScreen ||
+      this.document.webkitExitFullscreen || this.document.msExitFullscreen;
     if (
-      !this.document.fullscreenElement && !this.document['mozFullScreenElement'] &&
-      !this.document['webkitFullscreenElement'] && !this.document['msFullscreenElement']
+      !this.document.fullscreenElement && !this.document.mozFullScreenElement &&
+      !this.document.webkitFullscreenElement && !this.document.msFullscreenElement
     ) {
       requestFullScreen.call(docEl);
       this.onChange.emit();

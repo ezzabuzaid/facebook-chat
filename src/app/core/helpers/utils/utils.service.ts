@@ -1,16 +1,13 @@
-import { Observable, of, throwError, Observer, Subject, OperatorFunction, MonoTypeOperatorFunction } from 'rxjs';
-import { filter, debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
+import { MonoTypeOperatorFunction, Observable, Observer, of, Subject, throwError } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 export class AppUtils {
 
     /**
      * Checks if the givin value is url
-     * @param {string} value
-     * @returns {boolean}
      */
     static isUrl(value: string): boolean {
         try {
-            new URL(value);
-            return true;
+            return AppUtils.isTruthy(new URL(value));
         } catch (error) {
             return false;
         }
@@ -18,8 +15,8 @@ export class AppUtils {
 
     /**
      * Check if the type is image
-     * @default jpg jpg jpeg png bmp gif
-     * @param type file mimetype
+     *
+     * @param type file mimetypes like jpg jpg jpeg png bmp gif
      */
     public static isImage(type: string) {
         return /(\.jpg|\.png|\.bmp|\.gif|\.jpeg)$/i.test(type);
@@ -50,7 +47,7 @@ export class AppUtils {
     }
     /**
      * check if the givin value is object literal
-     * 
+     *
      * @param value the predecited value
      */
     static isObject(value: any): boolean {
@@ -59,9 +56,9 @@ export class AppUtils {
 
     /**
      * Check if the value has at least one item
-     * 
+     *
      * @param object any series value
-     * @returns {boolean} indicate that the {value} is empty
+     * @returns indicate that the {value} is empty
      */
     public static hasItemWithin(object: any): boolean {
         if (Array.isArray(object)) {
@@ -76,11 +73,10 @@ export class AppUtils {
     }
 
     /**
-     * check if the givin value is empty
-     * --
+     * Check if the givin value is empty
+     *
      * supported values are string, array, pojo {}
      * @param object any series value
-     * @returns {boolean} indicate that the {value} is empty
      */
     static isEmpty(value: any): boolean {
         return AppUtils.isFalsy(AppUtils.hasItemWithin(value));
@@ -89,8 +85,7 @@ export class AppUtils {
 
     /**
      * generate a random alphapetic string
-     * @param {number} length the maximum length of the string
-     * @returns {string}
+     * @param length the maximum length of the string
      */
     static generateAlphabeticString(length = 5): string {
         let randomString = '';
@@ -132,7 +127,7 @@ export class AppUtils {
     }
 
     static flattenArray(ary: any[]) {
-        return ary.reduce(function (a, b) {
+        return ary.reduce((a, b) => {
             if (Array.isArray(b)) {
                 return a.concat(AppUtils.flattenArray(b))
             }
@@ -235,8 +230,6 @@ export class AppUtils {
 
     /**
      * merge and return unique list from two lists
-     * @param concatTo
-     * @param filterFrom 
      * @param key to filter upon
      */
     static mergeListOfObjects<T>(concatTo: Partial<T>[], filterFrom: Partial<T>[], key: keyof T) {
@@ -254,7 +247,6 @@ export class AppUtils {
     /**
      * convert an object with key:value to query param string
      * null and undefined values will be omited
-     * @param obj
      */
     static convertObjectToQueryParams(obj: any) {
         return Object.keys(obj)
@@ -350,7 +342,7 @@ export class AppUtils {
 
     /**
      * Check if the givin value if is falsy type
-     * 
+     *
      * the same as using !value
      */
     static isFalsy(value: any) {

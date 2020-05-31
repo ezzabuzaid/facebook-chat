@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { SubjectFactory } from '@core/helpers/subject-factory';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { map, filter, takeUntil } from 'rxjs/operators';
-import { merge, Subject } from 'rxjs';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 import { AppUtils, typeaheadOperator } from '@core/helpers/utils';
 import { RouteUtility } from '@shared/common';
 import { MediaModel } from '@shared/models';
+import { merge, Subject } from 'rxjs';
+import { filter, map, takeUntil } from 'rxjs/operators';
+import { ILightBoxData, MediaLightboxComponent } from './media-lightbox/media-lightbox.component';
 import { MediaPickerComponent } from './media-picker/media-picker.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MediaLightboxComponent, ILightBoxData } from './media-lightbox/media-lightbox.component';
 
 @Injectable({
     providedIn: 'root'
@@ -19,9 +19,9 @@ export class MediaHubManager {
     uploadListener = new SubjectFactory<MediaModel.File>();
 
     constructor(
-        private routeUtility: RouteUtility,
-        private router: Router,
-        private dialog: MatDialog
+        private readonly routeUtility: RouteUtility,
+        private readonly router: Router,
+        private readonly dialog: MatDialog
     ) { }
 
     onFolderChange() {
@@ -100,7 +100,7 @@ export class MediaHubManager {
             width: '100vw',
             height: '100vh',
             panelClass: ['media-dialog'],
-            data: data
+            data
         })
     }
 }

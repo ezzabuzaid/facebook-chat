@@ -1,18 +1,18 @@
 import {
-  Injectable,
-  Type,
-  Injector,
   ApplicationRef,
   ComponentFactoryResolver,
-  EmbeddedViewRef,
   ComponentRef,
-  RendererFactory2,
+  EmbeddedViewRef,
+  Inject,
+  Injectable,
+  Injector,
   Renderer2,
-  Inject
+  RendererFactory2,
+  Type
 } from '@angular/core';
 import { Backdrop } from './backdrop.utils';
+import { DialogComponent, GLOBAL_CONFIG_FOR_DIALOG } from './dialog.component';
 import { ModelDialog } from './dialog.types';
-import { GLOBAL_CONFIG_FOR_DIALOG, DialogComponent } from './dialog.component';
 @Injectable()
 export class DialogService {
   /**
@@ -22,14 +22,14 @@ export class DialogService {
   // create a sperate class for dialog creator and dialog reference
   private dialogComponentRef: ComponentRef<DialogComponent> = null;
   private contnetComponentRef: ComponentRef<{}> = null;
-  private renderer: Renderer2 = null;
+  private readonly renderer: Renderer2 = null;
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private appRef: ApplicationRef,
-    private injector: Injector,
-    private backdrop: Backdrop,
-    private rendererFactory2: RendererFactory2,
-    @Inject(GLOBAL_CONFIG_FOR_DIALOG) private config
+    private readonly componentFactoryResolver: ComponentFactoryResolver,
+    private readonly appRef: ApplicationRef,
+    private readonly injector: Injector,
+    private readonly backdrop: Backdrop,
+    private readonly rendererFactory2: RendererFactory2,
+    @Inject(GLOBAL_CONFIG_FOR_DIALOG) private readonly config
   ) {
     this.renderer = this.rendererFactory2.createRenderer(null, null);
   }

@@ -1,19 +1,19 @@
-import { Component, Inject, PLATFORM_ID, Renderer2, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { environment } from '@environments/environment';
-import { Logger } from '@core/helpers/logger';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { LanguageService, ELanguage } from '@core/helpers/language';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
-import { SeoService } from '@shared/services/seo/seo.service';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { switchMap, tap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ELanguage, LanguageService } from '@core/helpers/language';
+import { Logger } from '@core/helpers/logger';
+import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { AppUtils } from '@core/helpers/utils';
+import { environment } from '@environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '@shared/account';
 import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
-import { UserService } from '@shared/account';
+import { SeoService } from '@shared/services/seo/seo.service';
 import { partition } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 const log = new Logger('AppComponent');
 @Component({
@@ -23,21 +23,21 @@ const log = new Logger('AppComponent');
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  constructor (
-    private router: Router,
-    private route: ActivatedRoute,
-    private translateService: TranslateService,
-    private languageService: LanguageService,
-    private renderer: Renderer2,
-    private seoService: SeoService,
-    private snackbar: MatSnackBar,
-    private serviceWorkerUtils: ServiceWorkerUtils,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: any,
-    @Inject(NAVIGATOR) private navigator: Navigator,
-    private analyticService: AnalyticsService,
-    private userService: UserService,
-    private connectivity: Connectivity
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly translateService: TranslateService,
+    private readonly languageService: LanguageService,
+    private readonly renderer: Renderer2,
+    private readonly seoService: SeoService,
+    private readonly snackbar: MatSnackBar,
+    private readonly serviceWorkerUtils: ServiceWorkerUtils,
+    @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(PLATFORM_ID) private readonly platformId: any,
+    @Inject(NAVIGATOR) private readonly navigator: Navigator,
+    private readonly analyticService: AnalyticsService,
+    private readonly userService: UserService,
+    private readonly connectivity: Connectivity
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -156,7 +156,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.userService.oneTimeLogin()) {
       this.userService.logout();
-      return "";
+      return '';
     }
   }
 

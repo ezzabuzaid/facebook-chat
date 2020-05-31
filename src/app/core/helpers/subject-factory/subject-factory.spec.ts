@@ -1,7 +1,7 @@
+import { fakeAsync } from '@angular/core/testing';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AppUtils } from '../utils';
 import { SubjectFactory } from './subject-factory';
-import { fakeAsync } from '@angular/core/testing';
-import { Subject, BehaviorSubject } from 'rxjs';
 xdescribe('SubjectFactory', () => {
     describe('should create subject if the initial value equal to', () => {
         [null, undefined].forEach(value => {

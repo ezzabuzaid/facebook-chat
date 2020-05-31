@@ -1,10 +1,10 @@
-import * as io from 'socket.io-client';
-import { environment } from '@environments/environment';
 import { Injectable } from '@angular/core';
 import { SubjectFactory } from '@core/helpers/subject-factory';
-import { fromEvent } from 'rxjs';
 import { TokenHelper } from '@core/helpers/token';
+import { environment } from '@environments/environment';
 import { ChatModel } from '@shared/models';
+import { fromEvent } from 'rxjs';
+import * as io from 'socket.io-client';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +17,7 @@ export class ChatManager {
     public messageListener = new SubjectFactory<ChatModel.Message>();
 
     constructor(
-        private tokenService: TokenHelper
+        private readonly tokenService: TokenHelper
     ) {
     }
 

@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GmapComponent } from './components/gmap-view/gmap.component';
-import { GmapAutocompleteComponent } from './components/gmap-autocomplete/gmap-autocomplete.component';
-import { MaterialModule } from '@shared/common';
+import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '@shared/common';
+import { GmapAutocompleteComponent } from './components/gmap-autocomplete/gmap-autocomplete.component';
+import { GmapComponent } from './components/gmap-view/gmap.component';
 
 @NgModule({
   imports: [

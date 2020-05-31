@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ContainerComponent } from '@layout/container/container.component';
-import { AppGuard } from '@core/guards';
+import { RouterModule, Routes } from '@angular/router';
 import { Constants } from '@core/constants';
+import { AppGuard } from '@core/guards';
+import { ContainerComponent } from '@layout/container/container.component';
 
 const routes: Routes = [
   {

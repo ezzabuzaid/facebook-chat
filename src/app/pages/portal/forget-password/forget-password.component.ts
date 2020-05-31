@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { _extract } from '@shared/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { PortalModel } from '@shared/models';
-import { SubmitEvent, Form, Field, EFieldType } from '@partials/form';
+import { EFieldType, Field, Form, SubmitEvent } from '@partials/form';
 import { UserService } from '@shared/account';
+import { _extract } from '@shared/common';
+import { PortalModel } from '@shared/models';
 import { PincodeBoxDialog, PincodeBoxDialogHandler } from '@widget/pincode-box/pincode-box.component';
 
 @Component({
@@ -71,13 +71,13 @@ export class ForgetPasswordComponent implements OnInit {
   steps = [false, false, false];
 
   constructor(
-    private userService: UserService,
-    @Inject(PincodeBoxDialog) private openPinCodeDialog: PincodeBoxDialogHandler
+    private readonly userService: UserService,
+    @Inject(PincodeBoxDialog) private readonly openPinCodeDialog: PincodeBoxDialogHandler
   ) { }
 
   ngOnInit() {
     this.goToStep(1);
-    this.verificationForm.patchValue({ "username": "profile", "firstName": "ezz", "lastName": "abuzaid", "placeOfBirth": "jo" });
+    this.verificationForm.patchValue({ username: 'profile', firstName: 'ezz', lastName: 'abuzaid', placeOfBirth: 'jo' });
     this.forgotPasswordForm.patchValue({ email: 'admin@admin.com' })
   }
 

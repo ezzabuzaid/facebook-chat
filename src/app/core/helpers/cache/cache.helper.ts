@@ -1,6 +1,6 @@
-import { Injectable, InjectionToken, Inject } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { AsyncDatabase, AsyncCollection } from '@ezzabuzaid/document-storage';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { AsyncCollection, AsyncDatabase } from '@ezzabuzaid/document-storage';
 import { AppUtils } from '../utils';
 export const CacheDatabase = new InjectionToken<AsyncDatabase>('CacheDatabase');
 
@@ -31,14 +31,14 @@ export class HttpCacheEntry {
 export class HttpCacheHelper {
     private collection: AsyncCollection<HttpCacheEntry> = null;
 
+    constructor(
+        @Inject(CacheDatabase) private readonly storage: AsyncDatabase
+    ) { }
+
 
     public populate(name: string) {
         this.collection = this.storage.collection<HttpCacheEntry>(name);
     }
-
-    constructor(
-        @Inject(CacheDatabase) private storage: AsyncDatabase
-    ) { }
 
     removeOutdatedEntries() {
         this.collection.getAll()

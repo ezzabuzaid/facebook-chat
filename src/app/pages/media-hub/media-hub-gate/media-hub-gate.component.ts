@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MediaModel } from '@shared/models';
-import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { RouteUtility } from '@shared/common';
+import { MediaModel } from '@shared/models';
+import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-hub-gate',
@@ -15,7 +15,7 @@ export class MediaHubGateComponent implements OnInit, OnDestroy {
   currentView = MediaHubViews.GridView;
 
   constructor(
-    private mediaManager: MediaHubManager
+    private readonly mediaManager: MediaHubManager
   ) { }
 
   ngOnInit() { }

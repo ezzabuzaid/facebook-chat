@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { DisplayColumns } from '@shared/common';
+import { ListEntityQuery, ListEntityResponse } from '@shared/models';
 import { Observable } from 'rxjs';
-import { ListEntityResponse, ListEntityQuery } from '@shared/models';
-import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
 
 @Component({

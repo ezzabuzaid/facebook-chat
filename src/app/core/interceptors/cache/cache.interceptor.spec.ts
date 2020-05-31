@@ -2,9 +2,9 @@
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { CacheInterceptor } from './cache.interceptor';
-import { HttpCacheHelper } from './../../helpers/cache';
 import { SetupInterceptor } from '../setup.interceptor';
+import { HttpCacheHelper } from './../../helpers/cache';
+import { CacheInterceptor } from './cache.interceptor';
 
 
 xdescribe(`CacheInterceptor`, () => {

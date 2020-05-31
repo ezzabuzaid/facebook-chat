@@ -13,13 +13,13 @@ export class IRequestOptions {
     PROGRESS_BAR = true;
     /**
      * Special progress to show when using form container
-     * 
+     *
      * FYI, the progress bae will be shown in all form container in the same view although the another form didn't ask to
      */
     FORM_PROGRESS_BAR = true;
     /**
      * Returns the whole resoponse
-     * 
+     *
      * the default is to return only the data property from the reponse
      */
     FULL_RESPONSE = false;
@@ -29,7 +29,8 @@ export class IRequestOptions {
     LOCAL_CACHE = false;
     /**
      * Name of the object store that will be used to save the response
-     * @requires LOCAL_CACHE to be true
+     *
+     * requires LOCAL_CACHE to be true
      */
     CACHE_CATEGORY = 'local_cache';
 }

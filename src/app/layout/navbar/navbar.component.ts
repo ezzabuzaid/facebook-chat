@@ -1,9 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import navigation from './navigation';
 import { DOCUMENT } from '@angular/common';
-import { UserService } from '@shared/account';
+import { Component, Inject } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
+import { UserService } from '@shared/account';
 import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
+import navigation from './navigation';
 
 @Component({
   selector: 'app-navbar',
@@ -14,9 +14,9 @@ export class NavbarComponent {
   public navigationMenu = navigation;
 
   constructor (
-    @Inject(DOCUMENT) private document: Document,
-    private userService: UserService,
-    private sidebarService: SidebarService
+    @Inject(DOCUMENT) private readonly document: Document,
+    private readonly userService: UserService,
+    private readonly sidebarService: SidebarService
   ) { }
 
   logout() {

@@ -5,22 +5,22 @@ import { Constants } from '@core/constants';
 import { SubjectFactory } from '@core/helpers/subject-factory';
 import { TokenHelper } from '@core/helpers/token';
 import { AppUtils, tryOrComplete } from '@core/helpers/utils';
+import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
 import { UserService } from '@shared/account';
 import { IRequestOptions } from '@shared/common';
-import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
 import { Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TeardownInterceptor implements HttpInterceptor {
     private isRefreshing = false;
-    private requestQueue = new SubjectFactory(false);
+    private readonly requestQueue = new SubjectFactory(false);
 
     constructor(
-        private userService: UserService,
-        private snackbar: MatSnackBar,
-        private tokenService: TokenHelper,
-        private requestData: RequestOptions<IRequestOptions>
+        private readonly userService: UserService,
+        private readonly snackbar: MatSnackBar,
+        private readonly tokenService: TokenHelper,
+        private readonly requestData: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

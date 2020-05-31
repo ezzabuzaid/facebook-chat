@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnDestroy, HostBinding } from '@angular/core';
-import { SidebarService, RegisterdSidebar } from 'app/widget/sidebar';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Subject } from 'rxjs';
-import { MEDIA_BREAKPOINTS } from '@shared/common';
-import { NavigationItem } from '@layout/navbar/navigation';
+import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
+import { NavigationItem } from '@layout/navbar/navigation';
+import { MEDIA_BREAKPOINTS } from '@shared/common';
+import { RegisterdSidebar, SidebarService } from 'app/widget/sidebar';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-navbar-item',
@@ -12,21 +12,21 @@ import { AppUtils } from '@core/helpers/utils';
   styleUrls: ['./navbar-item.component.scss']
 })
 export class NavbarItemComponent implements OnInit, OnDestroy {
-  @Input() public item: NavigationItem;
-  @Input() public collapse = false;
-  @Input() @HostBinding('class.dense') dense = false;
-  private subscribtion = new Subject();
-
-  constructor(
-    private sidebarService: SidebarService,
-    private breakpointObserver: BreakpointObserver
-  ) { }
-
-  ngOnInit() { }
 
   public get toggled() {
     return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).closed;
   }
+  private readonly subscribtion = new Subject();
+  @Input() public item: NavigationItem;
+  @Input() public collapse = false;
+  @Input() @HostBinding('class.dense') dense = false;
+
+  constructor(
+    private readonly sidebarService: SidebarService,
+    private readonly breakpointObserver: BreakpointObserver
+  ) { }
+
+  ngOnInit() { }
 
   toggleNavbar() {
     if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md')) && !this.collapse) {

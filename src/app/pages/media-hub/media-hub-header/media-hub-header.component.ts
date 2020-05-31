@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { takeUntil, skip } from 'rxjs/operators';
-import { MediaModel } from '@shared/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MediaModel } from '@shared/models';
+import { skip, takeUntil } from 'rxjs/operators';
+import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -17,8 +17,8 @@ export class MediaHubHeaderComponent implements OnInit {
   $folder = this.mediaHubManager.onFolderChange();
   $sharedView = this.mediaHubManager.viewChange();
   constructor(
-    private mediaHubManager: MediaHubManager,
-    private snackbar: MatSnackBar
+    private readonly mediaHubManager: MediaHubManager,
+    private readonly snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {

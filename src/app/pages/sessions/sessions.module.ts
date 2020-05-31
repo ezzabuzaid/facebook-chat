@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
+import { PageWrapperModule } from '@partials/page-wrapper';
+import { MaterialModule } from '@shared/common';
+import { TableModule } from '@widget/table/table.module';
 import { SessionsRoutingModule } from './sessions-routing.module';
 import { SessionsComponent } from './sessions.component';
-import { TableModule } from '@widget/table/table.module';
-import { MaterialModule } from '@shared/common';
-import { PageWrapperModule } from '@partials/page-wrapper';
 
 
 @NgModule({

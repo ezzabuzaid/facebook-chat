@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FieldFactoryComponent } from './form-factory/form-factory.component';
-import { FormContainerComponent } from './form-container/form-container.component';
-import { MaterialModule } from '@shared/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MobileControlModule } from '@widget/mobile-control';
-import { CountryControlModule } from '@widget/country-control';
-import { DirectivesModule } from '@shared/directives';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '@shared/common';
+import { DirectivesModule } from '@shared/directives';
+import { CountryControlModule } from '@widget/country-control';
+import { MobileControlModule } from '@widget/mobile-control';
+import { FormContainerComponent } from './form-container/form-container.component';
+import { FieldFactoryComponent } from './form-factory/form-factory.component';
 
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ChatModel, SessionsModel, PlainQuery, ListEntityQuery, ListEntityResponse } from '@shared/models';
 import { Constants } from '@core/constants';
+import { ChatModel, ListEntityQuery, ListEntityResponse, PlainQuery, SessionsModel } from '@shared/models';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +9,7 @@ import { Constants } from '@core/constants';
 
 export class SessionsService {
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
     public deactiveSession(payload: {

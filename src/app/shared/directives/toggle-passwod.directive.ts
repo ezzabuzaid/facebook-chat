@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[togglePasswod]'
@@ -7,8 +7,8 @@ export class TogglePasswodDirective {
   @Input() togglePasswod: HTMLInputElement;
 
   constructor(
-    private elRef: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
+    private readonly elRef: ElementRef<HTMLElement>,
+    private readonly renderer: Renderer2,
   ) { }
 
   @HostListener('click') toggleType() {

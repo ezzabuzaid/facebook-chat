@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { MediaModel, ListEntityQuery } from '@shared/models';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ListEntityQuery, MediaModel } from '@shared/models';
 import { UploadsService } from '@shared/services/upload';
 import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 export interface ILightBoxData {
@@ -18,17 +18,17 @@ export class MediaLightboxComponent implements OnInit {
   $folders = this.uploadService.getFolders();
   $tags = this.uploadService.getTags();
   files: MediaModel.File[] = [];
-  $provider = (pageQuery: ListEntityQuery) => this.uploadsService.searchForFiles(
-    new MediaModel.FileSearchQuery(null, this.dialogData.folder, this.dialogData.tag, pageQuery)
-  );
   @ViewChild(InifiniteScrollingComponent) inifiniteScrollingComponent: InifiniteScrollingComponent;
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: ILightBoxData,
-    @Inject(MatDialogRef) private dialogRef: MatDialogRef<MediaLightboxComponent>,
-    private uploadService: UploadsService,
-    private cdf: ChangeDetectorRef,
-    private uploadsService: UploadsService
+    @Inject(MatDialogRef) private readonly dialogRef: MatDialogRef<MediaLightboxComponent>,
+    private readonly uploadService: UploadsService,
+    private readonly cdf: ChangeDetectorRef,
+    private readonly uploadsService: UploadsService
   ) { }
+  $provider = (pageQuery: ListEntityQuery) => this.uploadsService.searchForFiles(
+    new MediaModel.FileSearchQuery(null, this.dialogData.folder, this.dialogData.tag, pageQuery)
+  );
 
   ngOnInit() { }
 

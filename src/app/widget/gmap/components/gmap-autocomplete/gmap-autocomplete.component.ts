@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, OnDestroy, Inject, AfterViewInit } from '@angular/core';
-import { Subject, fromEventPattern, concat } from 'rxjs';
+import { AfterViewInit, Component, ElementRef, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GoogleMapService } from 'app/widget/gmap/lib/gmap.service';
+import { concat, fromEventPattern, Subject } from 'rxjs';
+import { skip, takeUntil } from 'rxjs/operators';
 import { GmapComponent } from '../gmap-view/gmap.component';
-import { takeUntil, skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-gmap-autocomplete',
@@ -10,8 +10,8 @@ import { takeUntil, skip } from 'rxjs/operators';
   styleUrls: ['./gmap-autocomplete.component.scss'],
 })
 export class GmapAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
-  private unsubscribeAll = new Subject();
-  private mapReady = new Subject();
+  private readonly unsubscribeAll = new Subject();
+  private readonly mapReady = new Subject();
   _input: HTMLInputElement = null;
   _position;
   autocomplete: google.maps.places.Autocomplete = null;
@@ -34,7 +34,7 @@ export class GmapAutocompleteComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   constructor(
-    @Inject(GmapComponent) private gmap: GmapComponent
+    @Inject(GmapComponent) private readonly gmap: GmapComponent
   ) { }
 
   ngOnInit() {

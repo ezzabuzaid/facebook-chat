@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserService } from '@shared/account';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
+import { EFieldType, Field, Form, } from '@partials/form';
+import { UserService } from '@shared/account';
 import { PortalModel } from '@shared/models';
-import { Field, EFieldType, Form, } from '@partials/form';
 
 @Component({
   selector: 'app-login',
@@ -32,8 +32,8 @@ export class LoginComponent implements OnInit {
   ]);
 
   constructor(
-    private portalService: UserService,
-    private router: Router
+    private readonly portalService: UserService,
+    private readonly router: Router
   ) { }
 
   ngOnInit() { }

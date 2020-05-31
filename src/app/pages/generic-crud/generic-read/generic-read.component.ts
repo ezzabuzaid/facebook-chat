@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppUtils } from '@core/helpers/utils';
 import { Subject } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { GenericCrudModel } from '../generic-crud.model';
 
@@ -14,16 +14,16 @@ import { GenericCrudModel } from '../generic-crud.model';
   styleUrls: ['./generic-read.component.scss'],
 })
 export class GenericReadComponent implements OnInit, OnDestroy {
+  @ViewChild(MatPaginator, { static: true }) private readonly paginator: MatPaginator;
+
+  private readonly _subscribtion = new Subject();
   @Input() public module = null;
   @Input() public endpoint = null;
-  @ViewChild(MatPaginator, { static: true }) private paginator: MatPaginator;
-
-  private _subscribtion = new Subject();
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private http: HttpClient
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly http: HttpClient
   ) { }
 
   fetchData() {

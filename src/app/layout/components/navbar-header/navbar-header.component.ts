@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { SidebarService, RegisterdSidebar } from '@widget/sidebar';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UsersService } from '@shared/services/users';
+import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 
 @Component({
   selector: 'app-navbar-header',
@@ -10,8 +10,8 @@ import { UsersService } from '@shared/services/users';
 export class NavbarHeaderComponent implements OnInit {
   $user = this.usersService.getCurrentUser();
   constructor(
-    private sidebarService: SidebarService,
-    private usersService: UsersService
+    private readonly sidebarService: SidebarService,
+    private readonly usersService: UsersService
   ) { }
 
   public get toggled() {

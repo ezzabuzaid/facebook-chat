@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs';
-import { AppUtils } from '../utils';
 import { tap } from 'rxjs/operators';
+import { AppUtils } from '../utils';
 
 export class SubjectFactory<T> {
     public value = null;

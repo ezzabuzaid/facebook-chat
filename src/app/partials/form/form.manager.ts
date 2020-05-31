@@ -1,5 +1,5 @@
-import { SubjectFactory } from '@core/helpers/subject-factory';
 import { Injectable } from '@angular/core';
+import { SubjectFactory } from '@core/helpers/subject-factory';
 
 @Injectable({
     providedIn: 'root'

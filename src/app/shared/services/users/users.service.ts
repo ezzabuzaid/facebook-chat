@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UsersModel, ListEntityResponse, ListEntityQuery, PlainQuery } from '@shared/models';
-import { map } from 'rxjs/operators';
-import { TokenHelper } from '@core/helpers/token';
 import { Constants } from '@core/constants';
+import { TokenHelper } from '@core/helpers/token';
+import { ListEntityQuery, ListEntityResponse, PlainQuery, UsersModel } from '@shared/models';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +11,8 @@ import { Constants } from '@core/constants';
 
 export class UsersService {
     constructor(
-        private http: HttpClient,
-        private tokenService: TokenHelper
+        private readonly http: HttpClient,
+        private readonly tokenService: TokenHelper
     ) { }
 
     public getUsers() {

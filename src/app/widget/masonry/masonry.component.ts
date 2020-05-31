@@ -1,18 +1,18 @@
-import { Component, OnInit, ElementRef, Input, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
-import { MasonryItemComponent } from './masonry-item/masonry-item.component';
+import { AfterContentInit, Component, ContentChildren, ElementRef, Input, OnInit, QueryList } from '@angular/core';
 import { Observable } from 'rxjs';
+import { MasonryItemComponent } from './masonry-item/masonry-item.component';
 @Component({
   selector: 'app-masonry',
   templateUrl: './masonry.component.html',
   styleUrls: ['./masonry.component.scss']
 })
 export class MasonryComponent implements OnInit, AfterContentInit {
-  @Input() gridGap: string = '1rem';
+  @Input() gridGap = '1rem';
 
   @ContentChildren(MasonryItemComponent) items: QueryList<MasonryItemComponent>;
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>
+    private readonly elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() { }
@@ -24,9 +24,9 @@ export class MasonryComponent implements OnInit, AfterContentInit {
       /**
        * Set appropriate spanning to any masonry item
        *
-       * Get different properties we already set for the masonry, calculate 
-       * height or spanning for any cell of the masonry grid based on its 
-       * content-wrapper's height, the (row) gap of the grid, and the size 
+       * Get different properties we already set for the masonry, calculate
+       * height or spanning for any cell of the masonry grid based on its
+       * content-wrapper's height, the (row) gap of the grid, and the size
        * of the implicit row tracks.
        *
        * @param item Object A brick/tile/cell inside the masonry
@@ -53,7 +53,7 @@ export class MasonryComponent implements OnInit, AfterContentInit {
       /**
        * Apply spanning to all the masonry items
        *
-       * Loop through all the items and apply the spanning to them using 
+       * Loop through all the items and apply the spanning to them using
        * `resizeMasonryItem()` function.
        *
        * @uses resizeMasonryItem
@@ -74,7 +74,7 @@ export class MasonryComponent implements OnInit, AfterContentInit {
         }
       }
       /**
-       * Resize the items when all the images inside the masonry grid 
+       * Resize the items when all the images inside the masonry grid
        * finish loading. This will ensure that all the content inside our
        * masonry items is visible.
        *
@@ -82,8 +82,8 @@ export class MasonryComponent implements OnInit, AfterContentInit {
        */
 
       /* Resize all the grid items on the load and resize events */
-      var masonryEvents = ['load', 'resize'];
-      masonryEvents.forEach(function (event) {
+      const masonryEvents = ['load', 'resize'];
+      masonryEvents.forEach((event) => {
         window.addEventListener(event, resizeAllMasonryItems);
       });
       resizeAllMasonryItems();

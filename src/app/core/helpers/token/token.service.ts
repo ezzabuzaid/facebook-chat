@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Constants } from '@core/constants';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
-import { AppUtils } from '../utils';
 import { PortalModel } from '@shared/models';
+import { AppUtils } from '../utils';
 
 const helper = new JwtHelperService();
 const TOKEN_KEY = Constants.Application.TOKEN_KEY;
@@ -19,29 +19,12 @@ export class TokenHelper {
     return this.oneTimeLogin ? this.session : this.local;
   }
 
-  constructor(
-    private local: LocalStorage,
-    private session: SessionStorage,
-  ) { }
-
   get token() {
     return this.storage.get<string>(TOKEN_KEY);
   }
 
   get refreshToken() {
     return this.storage.get<string>(REFRESH_TOKEN_KEY);
-  }
-
-  setToken(token: string, refreshToken: string, rememberMe = false) {
-    this.oneTimeLogin = rememberMe;
-    this.storage.set(REFRESH_TOKEN_KEY, refreshToken);
-    this.storage.set(TOKEN_KEY, token);
-  }
-
-  deleteToken() {
-    this.storage.delete(TOKEN_KEY);
-    this.storage.delete(REFRESH_TOKEN_KEY);
-    this.local.delete('ontTime');
   }
 
   get decodedToken(): PortalModel.ITokenClaim {
@@ -66,6 +49,23 @@ export class TokenHelper {
 
   set oneTimeLogin(value: boolean) {
     this.local.set('oneTime', AppUtils.inverse(value));
+  }
+
+  constructor(
+    private readonly local: LocalStorage,
+    private readonly session: SessionStorage,
+  ) { }
+
+  setToken(token: string, refreshToken: string, rememberMe = false) {
+    this.oneTimeLogin = rememberMe;
+    this.storage.set(REFRESH_TOKEN_KEY, refreshToken);
+    this.storage.set(TOKEN_KEY, token);
+  }
+
+  deleteToken() {
+    this.storage.delete(TOKEN_KEY);
+    this.storage.delete(REFRESH_TOKEN_KEY);
+    this.local.delete('ontTime');
   }
 
 }

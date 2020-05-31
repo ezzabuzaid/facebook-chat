@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ElementRef, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-chat-card',
@@ -8,7 +8,7 @@ import { Component, OnInit, Renderer2, ElementRef, AfterContentInit } from '@ang
 export class ChatCardComponent implements OnInit, AfterContentInit {
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>
+    private readonly elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() { }

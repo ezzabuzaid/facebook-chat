@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostBinding, HostListener, AfterViewInit } from '@angular/core';
-import { UploadsService } from '@shared/services/upload';
+import { AfterViewInit, Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 import { MediaModel } from '@shared/models';
+import { UploadsService } from '@shared/services/upload';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';
 
 @Component({
@@ -22,8 +22,8 @@ export class FileViewerComponent implements OnInit {
   @HostBinding('class.is-image') isImage = null;
 
   constructor(
-    private uploadService: UploadsService,
-    private mediaHubManager: MediaHubManager,
+    private readonly uploadService: UploadsService,
+    private readonly mediaHubManager: MediaHubManager,
   ) { }
 
   ngOnInit() {

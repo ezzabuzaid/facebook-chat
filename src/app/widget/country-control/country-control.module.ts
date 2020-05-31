@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CountryControlComponent } from './country-control.component';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '@shared/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from '@shared/common';
+import { CountryControlComponent } from './country-control.component';
 
 @NgModule({
   declarations: [

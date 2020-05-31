@@ -1,22 +1,22 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  TemplateRef,
-  ChangeDetectionStrategy,
-  ContentChild,
   AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  ContentChild,
+  Input,
   OnDestroy,
-  ViewChildren,
+  OnInit,
   QueryList,
+  TemplateRef,
   TrackByFunction,
+  ViewChildren,
 } from '@angular/core';
-import { TableManager, IColumnSetting } from '../table.service';
-import { TableActionComponent } from '../table-actions/table-actions.component';
-import { Subject } from 'rxjs';
-import { TableFilterDirective } from '../directive/filter.directive';
 import { AppUtils } from '@core/helpers/utils';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TableFilterDirective } from '../directive/filter.directive';
+import { TableActionComponent } from '../table-actions/table-actions.component';
+import { IColumnSetting, TableManager } from '../table.service';
 
 @Component({
   selector: 'semi-table',
@@ -25,22 +25,6 @@ import { takeUntil } from 'rxjs/operators';
   viewProviders: [TableManager]
 })
 export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
-  private _dataSource: any[] = [];
-  private _tempDataSource: any[] = [];
-  private locked = false;
-
-  public filterableColumns: IColumnSetting[] = [];
-
-  private _unsubscribe = new Subject();
-
-  @Input() nativeTableClass: string = null;
-  @Input() dense: boolean = true;
-  @Input() trackByFn: TrackByFunction<any> = null;
-
-  @ContentChild(TemplateRef) tableBody: any;
-
-  @ContentChild(TableActionComponent, { read: TableActionComponent }) public actionComponent: TableActionComponent;
-  @ViewChildren(TableFilterDirective) tableFilterDirective: QueryList<TableFilterDirective>;
 
   @Input()
   get dataSource() {
@@ -52,16 +36,32 @@ export class TableComponent implements OnInit, AfterContentInit, OnDestroy {
       this._dataSource = list;
     }
   }
+  private _dataSource: any[] = [];
+  private _tempDataSource: any[] = [];
+  private locked = false;
+
+  private readonly _unsubscribe = new Subject();
+
+  public filterableColumns: IColumnSetting[] = [];
+
+  @Input() nativeTableClass: string = null;
+  @Input() dense = true;
+  @Input() trackByFn: TrackByFunction<any> = null;
+
+  @ContentChild(TemplateRef) tableBody: any;
+
+  @ContentChild(TableActionComponent, { read: TableActionComponent }) public actionComponent: TableActionComponent;
+  @ViewChildren(TableFilterDirective) tableFilterDirective: QueryList<TableFilterDirective>;
+
+  constructor(
+    private readonly tableManager: TableManager,
+  ) { }
 
   registerColumn(columnSetting: IColumnSetting) {
     if (!this.locked) {
       this.filterableColumns.push(columnSetting.key ? columnSetting : null);
     }
   }
-
-  constructor(
-    private tableManager: TableManager,
-  ) { }
 
   ngOnInit() {
     const toLowerCase = (value: string) => String(value).toLowerCase();

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { GenericCrudModel } from '../generic-crud.model';
 import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { AppUtils, PickAttr } from '@core/helpers/utils';
 import { IModule } from '@shared/models/generic-module';
-import { PickAttr, AppUtils } from '@core/helpers/utils';
+import { GenericCrudModel } from '../generic-crud.model';
 
 @Component({
   selector: 'app-generic-write',
@@ -14,7 +14,7 @@ export class GenericWriteComponent implements OnInit {
   @Input() module: PickAttr<IModule<any, any, any>, 'update'> = null;
 
   constructor(
-    private http: HttpClient
+    private readonly http: HttpClient
   ) { }
 
   ngOnInit() {

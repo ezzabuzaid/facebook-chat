@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UploadsService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
 import { MediaModel } from '@shared/models';
-import { MediaHubManager } from '../media-hub.manager';
+import { UploadsService } from '@shared/services/upload';
 import { PopupManager } from '@widget/popup';
-import { switchMap, filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
+import { MediaHubManager } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-hub-folders',
@@ -20,9 +20,9 @@ export class MediaHubFoldersComponent implements OnInit {
   $sharedView = this.mediaHubManager.viewChange();
 
   constructor(
-    private uploadsService: UploadsService,
-    private mediaHubManager: MediaHubManager,
-    private popupManager: PopupManager,
+    private readonly uploadsService: UploadsService,
+    private readonly mediaHubManager: MediaHubManager,
+    private readonly popupManager: PopupManager,
   ) { }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class MediaHubFoldersComponent implements OnInit {
           this.toggleFolderCreation();
           this.folders.push(new MediaModel.Folder({
             _id: id,
-            name: name
+            name
           }));
         })
     }

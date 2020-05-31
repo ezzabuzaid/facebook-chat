@@ -1,7 +1,7 @@
 
-import { FormControl, AbstractControlOptions, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { AppUtils } from '@core/helpers/utils';
 import { Type } from '@angular/core';
+import { AbstractControlOptions, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AppUtils } from '@core/helpers/utils';
 import { fromEvent, Observable } from 'rxjs';
 
 type FieldName<T> = keyof T extends string ? keyof T : never;

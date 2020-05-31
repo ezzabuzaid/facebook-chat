@@ -1,7 +1,7 @@
 /// <reference types="@types/googlemaps" />
-import { GmapModel, Google } from '../gmap.model';
 import { fromEventPattern } from 'rxjs';
-import { tap, switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
+import { GmapModel, Google } from '../gmap.model';
 import { GoogleMapService } from './gmap.service';
 // import { GoogleMapMarker } from './marker';
 

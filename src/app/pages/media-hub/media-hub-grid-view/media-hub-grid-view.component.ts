@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { MediaModel, ListEntityQuery } from '@shared/models';
-import { UploadsService } from '@shared/services/upload';
-import { MediaHubManager } from '../media-hub.manager';
-import { AppUtils } from '@core/helpers/utils';
-import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AppUtils } from '@core/helpers/utils';
+import { ListEntityQuery, MediaModel } from '@shared/models';
+import { UploadsService } from '@shared/services/upload';
+import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
+import { MediaHubManager } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-hub-grid-view',
@@ -17,6 +17,12 @@ export class MediaHubGridViewComponent implements OnInit {
   markedFiles: MediaModel.File[] = [];
   @ViewChild(InifiniteScrollingComponent) inifiniteScrollingComponent: InifiniteScrollingComponent;
 
+  constructor(
+    private readonly uploadsService: UploadsService,
+    private readonly mediaHubManager: MediaHubManager,
+    private readonly snackbar: MatSnackBar
+  ) { }
+
   $provider = (pageQuery: ListEntityQuery) => this.uploadsService.searchForFiles(
     new MediaModel.FileSearchQuery(
       this.mediaHubManager.getFileName(),
@@ -25,12 +31,6 @@ export class MediaHubGridViewComponent implements OnInit {
       pageQuery
     )
   );
-
-  constructor(
-    private uploadsService: UploadsService,
-    private mediaHubManager: MediaHubManager,
-    private snackbar: MatSnackBar
-  ) { }
 
   ngOnInit() {
     this.mediaHubManager.uploadListener

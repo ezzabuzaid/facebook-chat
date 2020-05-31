@@ -2,9 +2,9 @@
 type ColumnType = 'string' | 'number' | 'html' | 'custom';
 type Columns<T> = {
     [p in keyof T]?: {
+        [key: string]: any;
         type: ColumnType,
         filter?: boolean | IFilter;
-        filterFunction?: () => any;
         sort?: boolean;
         sortDirection?: 'asc' | 'desc';
         class?: string;
@@ -12,8 +12,8 @@ type Columns<T> = {
         title?: string,
         editable?: false,
         addable?: false,
-        valuePrepareFunction?: (column: T[p], row: T) => any
-        [key: string]: any;
+        filterFunction?(): any;
+        valuePrepareFunction?(column: T[p], row: T): any;
     }
 };
 interface IFilter {
@@ -56,7 +56,7 @@ export interface ISetting<T> {
         class?: string;
     };
     noDataMessage?: string;
-    rowClassFunction?: (row: { data: T }) => string;
+    rowClassFunction?(row: { data: T }): string;
 }
 export function ngTableSetting<T>(setting: ISetting<T>) {
     const config = {

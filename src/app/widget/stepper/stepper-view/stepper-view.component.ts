@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { CdkStepper } from '@angular/cdk/stepper';
 import { Directionality } from '@angular/cdk/bidi';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-stepper',
   templateUrl: './stepper-view.component.html',
@@ -12,8 +12,8 @@ import { Directionality } from '@angular/cdk/bidi';
 export class StepperViewComponent extends CdkStepper implements OnInit {
 
   constructor(
-    private dir: Directionality,
-    private cd: ChangeDetectorRef
+    private readonly dir: Directionality,
+    private readonly cd: ChangeDetectorRef
   ) {
     super(dir, cd);
   }

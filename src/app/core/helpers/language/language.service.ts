@@ -1,9 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { Constants } from '@core/constants';
 import { LocalStorage } from '@ezzabuzaid/document-storage';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subject } from 'rxjs';
 
 export enum Direction {
   LTR = 'ltr',
@@ -26,14 +26,14 @@ export class LanguageChange {
   providedIn: 'root'
 })
 export class LanguageService {
-  private directionChange = new Subject<LanguageChange>();
-  private supportedLanguage: ELanguage[] = [ELanguage.EN, ELanguage.AR];
-  private defaultLanguage: ELanguage = ELanguage.EN;
+  private readonly directionChange = new Subject<LanguageChange>();
+  private readonly supportedLanguage: ELanguage[] = [ELanguage.EN, ELanguage.AR];
+  private readonly defaultLanguage: ELanguage = ELanguage.EN;
 
   constructor(
-    private translateService: TranslateService,
-    private localStorage: LocalStorage,
-    @Inject(DOCUMENT) private document: Document
+    private readonly translateService: TranslateService,
+    private readonly localStorage: LocalStorage,
+    @Inject(DOCUMENT) private readonly document: Document
   ) {
     this.translateService.addLangs(this.supportedLanguage);
   }

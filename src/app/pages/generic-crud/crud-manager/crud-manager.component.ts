@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GenericCrudModel } from '../generic-crud.model';
+import { Constants } from '@core/constants';
+import { AppUtils } from '@core/helpers/utils';
 import { TodosModel, UsersModel } from '@shared/models';
 import { IModule } from '@shared/models/generic-module';
 import { delay, tap } from 'rxjs/operators';
-import { AppUtils } from '@core/helpers/utils';
-import { Constants } from '@core/constants';
+import { GenericCrudModel } from '../generic-crud.model';
 
 
 @Component({
@@ -25,8 +25,8 @@ export class CrudManagerComponent implements OnInit {
   public operation = null;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
   ) {
     this.route.params
       .pipe(

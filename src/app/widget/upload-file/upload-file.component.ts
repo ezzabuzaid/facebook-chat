@@ -1,9 +1,9 @@
-import { Component, OnInit, forwardRef, Input, HostListener, HostBinding, Output, EventEmitter } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, EventEmitter, forwardRef, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UploadsService } from '@shared/services/upload';
 import { AppUtils } from '@core/helpers/utils';
+import { TranslateService } from '@ngx-translate/core';
+import { UploadsService } from '@shared/services/upload';
 
 @Component({
   selector: 'app-upload-file',
@@ -18,28 +18,28 @@ import { AppUtils } from '@core/helpers/utils';
   ]
 })
 export class UploadFileComponent implements OnInit, ControlValueAccessor {
-  constructor(
-    private uploadFileService: UploadsService,
-    private snackBar: MatSnackBar,
-    private translateService: TranslateService
-  ) { }
-
-  public id = AppUtils.generateAlphabeticString();
-  public value: string = null;
-
-  @Input() private external = false;
-  @Output() onUpload = new EventEmitter();
-
-  @Input() private size = 4;
-  @Input() private supported = ['jpeg', 'png', 'gif'];
-  @Input() type: EUploadFileType = 'verbose';
 
   @HostBinding('class.box') get isBox() { return this.type === 'box'; }
   @HostBinding('class.verpose') get isVerpose() { return this.type === 'verbose'; }
 
+  @Input() private readonly external = false;
+
+  @Input() private readonly size = 4;
+  @Input() private readonly supported = ['jpeg', 'png', 'gif'];
+
+  public id = AppUtils.generateAlphabeticString();
+  public value: string = null;
+  @Output() onUpload = new EventEmitter();
+  @Input() type: EUploadFileType = 'verbose';
+
   @HostBinding('class.drag-over') public dragOverClass = false;
 
   changeValue: (value: string) => void = null;
+  constructor(
+    private readonly uploadFileService: UploadsService,
+    private readonly snackBar: MatSnackBar,
+    private readonly translateService: TranslateService
+  ) { }
 
 
   @HostListener('dragover', ['$event']) onDragOver(event: DragEvent) {

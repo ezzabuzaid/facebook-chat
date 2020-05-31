@@ -1,5 +1,5 @@
-import { _extract } from '@shared/common';
 import { Constants } from '@core/constants';
+import { _extract } from '@shared/common';
 import { GenericCrudModel } from 'app/pages/generic-crud/generic-crud.model';
 export class NavigationItem {
   type: 'item' | 'collapse';

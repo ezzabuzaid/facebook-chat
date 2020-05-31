@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-masonry-item',
@@ -8,7 +8,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 export class MasonryItemComponent implements OnInit {
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>
+    private readonly elementRef: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit() { }

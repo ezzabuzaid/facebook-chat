@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Inject, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Inject } from '@angular/core';
 import { FlipCardComponent } from './flip-card/flip-card.component';
 
 @Directive({
@@ -8,7 +8,7 @@ export class FlipCardDirective {
 
   constructor(
     public elRef: ElementRef,
-    @Inject(FlipCardComponent) private parent: FlipCardComponent
+    @Inject(FlipCardComponent) private readonly parent: FlipCardComponent
   ) { }
 
   @HostListener('click') filpCard() {

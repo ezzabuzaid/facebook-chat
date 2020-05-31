@@ -1,8 +1,8 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { first, mergeMap, tap, concatMap, switchMap } from 'rxjs/operators';
-import { interval, concat } from 'rxjs';
 import { Logger } from '@core/helpers/logger';
+import { concat, interval } from 'rxjs';
+import { concatMap, first, mergeMap, switchMap, tap } from 'rxjs/operators';
 
 const log = new Logger('ServiceWorkerUtils');
 @Injectable({
@@ -12,8 +12,8 @@ export class ServiceWorkerUtils {
   updateAvailable = this.updates.available;
   updateActivated = this.updates.activated;
   constructor(
-    private updates: SwUpdate,
-    private applicationRef: ApplicationRef
+    private readonly updates: SwUpdate,
+    private readonly applicationRef: ApplicationRef
   ) { }
 
   checkEveryHour(hour = 5) {

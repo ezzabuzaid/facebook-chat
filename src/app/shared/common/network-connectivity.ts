@@ -1,18 +1,14 @@
-import { merge, of, fromEvent } from 'rxjs';
-import { mapTo, share } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
+import { AppUtils } from '@core/helpers/utils';
+import { fromEvent, merge, of } from 'rxjs';
+import { mapTo, share } from 'rxjs/operators';
 import { NAVIGATOR } from './navigator';
 import { WINDOW } from './window';
-import { AppUtils } from '@core/helpers/utils';
 
 @Injectable({
     providedIn: 'root'
 })
 export class Connectivity {
-    constructor(
-        @Inject(NAVIGATOR) private navigator: Navigator,
-        @Inject(WINDOW) private window: Window,
-    ) { }
 
     get isOnline() {
         return this.navigator.onLine;
@@ -21,6 +17,10 @@ export class Connectivity {
     get isOffline() {
         return AppUtils.inverse(this.navigator.onLine);
     }
+    constructor(
+        @Inject(NAVIGATOR) private readonly navigator: Navigator,
+        @Inject(WINDOW) private readonly window: Window,
+    ) { }
 
     observe() {
         return merge(

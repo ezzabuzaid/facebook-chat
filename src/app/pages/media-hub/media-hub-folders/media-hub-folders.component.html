@@ -30,7 +30,7 @@
                 </mat-icon>
                 <h5 mat-line class="text-truncate"> {{folder.name}}</h5>
             </mat-list-item>
-            <button *ngIf="!($sharedView | async)" class="action-button" (click)="preventDefaults($event)"
+            <button *ngIf="$sharedView | async === false" class="action-button" (click)="preventDefaults($event)"
                 mat-flat-button [matMenuTriggerFor]="menu" [matMenuTriggerData]="{folder: folder, index: index}">
                 <mat-icon class="text-muted">more_vert</mat-icon>
             </button>

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 
@@ -12,13 +12,13 @@ import { Constants } from '@core/constants';
 export class PageNotFoundComponent implements AfterViewInit {
 
   constructor(
-    private router: Router
+    private readonly router: Router
   ) { }
 
   ngAfterViewInit() {
     const flickering = () => {
       for (let i = 0; i < pix.length; i += 4) {
-        let color = (Math.random() * 255) + 50;
+        const color = (Math.random() * 255) + 50;
         pix[i] = color;
         pix[i + 1] = color;
         pix[i + 2] = color;

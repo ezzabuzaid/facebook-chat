@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, forwardRef, Inject, ChangeDetectionStrategy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { WINDOW } from '@shared/common';
+import { ChangeDetectionStrategy, Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IField } from '@partials/form';
+import { WINDOW } from '@shared/common';
 
 @Component({
   selector: 'app-country-control',
@@ -14,15 +14,6 @@ import { IField } from '@partials/form';
   }],
 })
 export class CountryControlComponent implements OnInit, ControlValueAccessor {
-  @Input() public formControl: IField<any> = null;
-  public countries = [];
-
-  private _value: string;
-  public currentCountry = null;
-
-  constructor(
-    @Inject(WINDOW) private window: Window
-  ) { }
 
   set value(value) {
     this._value = value;
@@ -34,8 +25,17 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
     return this._value;
   }
 
+  private _value: string;
+  @Input() public formControl: IField<any> = null;
+  public countries = [];
+  public currentCountry = null;
+
   onChange: (value) => {};
   onTouched: () => {};
+
+  constructor(
+    @Inject(WINDOW) private readonly window: Window
+  ) { }
 
   notifyValueChange() {
     if (this.onChange) {
@@ -44,7 +44,7 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this.countries = this.window['intlTelInputGlobals'].getCountryData()
+    this.countries = this.window.intlTelInputGlobals.getCountryData()
   }
 
   public updateModel(value: string) {

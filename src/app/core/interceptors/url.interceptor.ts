@@ -1,14 +1,14 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from 'environments/environment';
 import { IRequestOptions } from '@shared/common';
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
 
-  constructor(private requestOptions: RequestOptions<IRequestOptions>) { }
+  constructor(private readonly requestOptions: RequestOptions<IRequestOptions>) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let url = request.url;

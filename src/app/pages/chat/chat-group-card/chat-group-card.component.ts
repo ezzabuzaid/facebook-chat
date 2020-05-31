@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ChatModel } from '@shared/models';
-import { TokenHelper } from '@core/helpers/token';
-import { IChatCard } from '..';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TokenHelper } from '@core/helpers/token';
+import { ChatModel } from '@shared/models';
+import { IChatCard } from '..';
 import { ChatCardManager } from '../chat-card.manager';
+import { ChatCardComponent } from '../chat-card/chat-card.component';
 import { ChatGroupMembersComponent } from '../chat-group-members/chat-group-members.component';
 import { ChatManager } from '../chat.manager';
-import { ChatCardComponent } from '../chat-card/chat-card.component';
 
 @Component({
   selector: 'app-group-chat-card',
@@ -19,10 +19,10 @@ export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<Chat
   @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
-    private tokenService: TokenHelper,
-    private dialog: MatDialog,
-    private chatCardManager: ChatCardManager,
-    private chatManager: ChatManager,
+    private readonly tokenService: TokenHelper,
+    private readonly dialog: MatDialog,
+    private readonly chatCardManager: ChatCardManager,
+    private readonly chatManager: ChatManager,
   ) { }
 
   ngOnInit() {

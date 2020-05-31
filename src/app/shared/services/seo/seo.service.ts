@@ -1,6 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +8,9 @@ import { DOCUMENT } from '@angular/common';
 export class SeoService {
 
   constructor(
-    private titleService: Title,
-    private metaService: Meta,
-    @Inject(DOCUMENT) private document: Document,
+    private readonly titleService: Title,
+    private readonly metaService: Meta,
+    @Inject(DOCUMENT) private readonly document: Document,
   ) { }
 
   set title(value: string) {

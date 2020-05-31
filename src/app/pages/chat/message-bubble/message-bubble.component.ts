@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, HostBinding, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { ChatManager } from '../chat.manager';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
 import { TokenHelper } from '@core/helpers/token';
-import { ChatModel, MediaModel } from '@shared/models';
 import { AppUtils } from '@core/helpers/utils';
+import { ChatModel, MediaModel } from '@shared/models';
+import { ChatManager } from '../chat.manager';
 
 @Component({
   selector: 'app-message-bubble',
@@ -16,20 +16,20 @@ import { AppUtils } from '@core/helpers/utils';
 export class MessageBubbleComponent implements OnInit {
   @Input() message: ChatModel.Message;
   public loading = false;
-  @HostBinding('class.sender') isSender: boolean = false;
+  @HostBinding('class.sender') isSender = false;
   file: MediaModel.File = null;
   constructor(
-    private chatManager: ChatManager,
-    private tokenService: TokenHelper,
-    private elementRef: ElementRef<HTMLElement>,
-    private cdf: ChangeDetectorRef
+    private readonly chatManager: ChatManager,
+    private readonly tokenService: TokenHelper,
+    private readonly elementRef: ElementRef<HTMLElement>,
+    private readonly cdf: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     if (this.message.timestamp) {
       this.loading = true;
       const listener = this.chatManager.socket
-        .on(`saved_${this.message.timestamp}`, (id) => {
+        .on(`saved_${ this.message.timestamp }`, (id) => {
           this.loading = false;
           this.message._id = id;
           listener.removeAllListeners();

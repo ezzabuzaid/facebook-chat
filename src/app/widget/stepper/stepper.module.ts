@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '@shared/common';
 import { StepComponent } from './step/step.component';
 import { StepperViewComponent } from './stepper-view/stepper-view.component';
-import { MaterialModule } from '@shared/common';
 
 @NgModule({
   declarations: [

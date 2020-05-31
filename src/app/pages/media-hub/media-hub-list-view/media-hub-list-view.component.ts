@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UploadsService } from '@shared/services/upload';
+import { Component, Input, OnInit } from '@angular/core';
 import { MediaModel } from '@shared/models';
+import { UploadsService } from '@shared/services/upload';
 
 @Component({
   selector: 'app-media-hub-list-view',
@@ -11,7 +11,7 @@ export class MediaHubListViewComponent implements OnInit {
   @Input() files: MediaModel.File[] = [];
 
   constructor(
-    private uploadsService: UploadsService
+    private readonly uploadsService: UploadsService
   ) { }
 
   ngOnInit() { }

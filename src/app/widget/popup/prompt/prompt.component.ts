@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IPromptPopup } from '../popup.manager';
 import { MatDialogRef } from '@angular/material/dialog';
+import { IPromptPopup } from '../popup.manager';
 
 @Component({
   selector: 'app-prompt',
@@ -10,7 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class PromptComponent implements OnInit {
   public data: IPromptPopup = null;
   constructor(
-    private ref: MatDialogRef<any>
+    private readonly ref: MatDialogRef<any>
   ) { }
 
   ngOnInit() { }

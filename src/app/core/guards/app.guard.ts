@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
+  CanActivate,
+  CanActivateChild,
   CanLoad,
   Route,
-  CanActivateChild,
+  RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
 import { UserService } from '@shared/account';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
-  constructor (
-    private userService: UserService
+  constructor(
+    private readonly userService: UserService
   ) { }
 
   canActivate(
@@ -36,7 +36,7 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   }
 
 
-  public authenticate(redirectUrl: string = undefined) {
+  public authenticate(redirectUrl?: string) {
     if (!this.userService.isAuthenticated) {
       this.userService.logout(redirectUrl);
       return false;

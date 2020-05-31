@@ -1,14 +1,14 @@
+import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AlertComponent } from './alert/alert.component';
-import { PromptComponent } from './prompt/prompt.component';
 import { ConfirmComponent } from './confirm/confirm.component';
-import { Injectable } from '@angular/core';
+import { PromptComponent } from './prompt/prompt.component';
 
 @Injectable()
 export class PopupManager {
-  private defaultConfig: MatDialogConfig<any> = { width: '450px' };
+  private readonly defaultConfig: MatDialogConfig<any> = { width: '450px' };
   constructor(
-    private dialog: MatDialog
+    private readonly dialog: MatDialog
   ) { }
 
   alert(config: MatDialogConfig<PopupData> = {}) {

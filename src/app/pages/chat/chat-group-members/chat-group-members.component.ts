@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { ChatService } from '@shared/services/chat';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChatModel } from '@shared/models';
+import { ChatService } from '@shared/services/chat';
 
 @Component({
   selector: 'app-chat-members',
@@ -12,8 +12,8 @@ export class ChatGroupMembersComponent implements OnInit {
   $members = this.chatService.getGroupMembers(this.data._id);
 
   constructor(
-    private chatService: ChatService,
-    @Inject(MAT_DIALOG_DATA) private data: ChatModel.IGroup
+    private readonly chatService: ChatService,
+    @Inject(MAT_DIALOG_DATA) private readonly data: ChatModel.IGroup
   ) { }
 
   ngOnInit() {

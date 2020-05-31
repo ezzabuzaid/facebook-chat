@@ -1,4 +1,4 @@
-import { Directive, HostListener, Renderer2, ElementRef, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appTextAreaAutoResize]'
@@ -6,8 +6,8 @@ import { Directive, HostListener, Renderer2, ElementRef, OnInit } from '@angular
 export class TextAreaAutoResizeDirective implements OnInit {
   initialHeight;
   constructor(
-    private renderer: Renderer2,
-    private elRef: ElementRef<HTMLTextAreaElement>
+    private readonly renderer: Renderer2,
+    private readonly elRef: ElementRef<HTMLTextAreaElement>
   ) { }
 
   ngOnInit() {

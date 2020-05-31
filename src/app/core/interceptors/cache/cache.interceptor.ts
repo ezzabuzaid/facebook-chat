@@ -3,16 +3,16 @@ import { Injectable } from '@angular/core';
 import { HttpCacheHelper } from '@core/helpers/cache';
 import { Logger } from '@core/helpers/logger';
 import { AppUtils } from '@core/helpers/utils';
-import { IRequestOptions } from '@shared/common';
 import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
+import { IRequestOptions } from '@shared/common';
 import { from, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 const log = new Logger('CacheInterceptor');
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
     constructor(
-        private cacheHelper: HttpCacheHelper,
-        private requestOptions: RequestOptions<IRequestOptions>
+        private readonly cacheHelper: HttpCacheHelper,
+        private readonly requestOptions: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

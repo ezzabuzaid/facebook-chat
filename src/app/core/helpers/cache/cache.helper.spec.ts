@@ -1,7 +1,7 @@
-import { AsyncDatabase, AsyncCollection } from "@ezzabuzaid/document-storage";
-import { TestBed } from "@angular/core/testing";
-import { CacheDatabase, HttpCacheEntry, HttpCacheHelper } from "./cache.helper";
-import { HttpResponse } from "@angular/common/http";
+import { HttpResponse } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
+import { AsyncCollection, AsyncDatabase } from '@ezzabuzaid/document-storage';
+import { CacheDatabase, HttpCacheEntry, HttpCacheHelper } from './cache.helper';
 
 xdescribe('HttpCacheService', () => {
   let service: HttpCacheHelper = null;

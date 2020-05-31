@@ -1,18 +1,18 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
-  ChangeDetectionStrategy,
-  OnChanges, SimpleChanges,
+  OnInit, SimpleChanges,
 } from '@angular/core';
+import { Logger } from '@core/helpers/logger';
 import { Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { GoogleMapService } from '../../lib/gmap.service';
 import { Google } from '../../gmap.model';
 import { GoogleMap } from '../../lib/gmap.main';
-import { Logger } from '@core/helpers/logger';
+import { GoogleMapService } from '../../lib/gmap.service';
 
 const log = new Logger('GmapComponent');
 
@@ -23,7 +23,7 @@ const log = new Logger('GmapComponent');
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GmapComponent extends GoogleMap implements OnInit, OnDestroy, OnChanges {
-  private unsubscribeAll = new Subject();
+  private readonly unsubscribeAll = new Subject();
   // @ViewChild('search') private searchContainer: ElementRef<HTMLInputElement>;
   // @Input() search = false;
   // @Input() private dragMarkerWithMap = false;

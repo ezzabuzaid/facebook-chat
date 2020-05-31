@@ -1,6 +1,6 @@
+import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { distinctUntilKeyChanged, pluck, share } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'

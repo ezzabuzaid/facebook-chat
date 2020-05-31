@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ChatModel, ListEntityResponse, PlainQuery, ListEntityQuery } from '@shared/models';
 import { Constants } from '@core/constants';
+import { ChatModel, ListEntityQuery, ListEntityResponse, PlainQuery } from '@shared/models';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 export class ChatService {
     constructor(
-        private http: HttpClient,
+        private readonly http: HttpClient,
     ) { }
 
     public createRoom(message: string, name: string, members: string[]) {

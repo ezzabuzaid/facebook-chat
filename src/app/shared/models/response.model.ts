@@ -39,9 +39,9 @@ export class PlainQuery<T> {
 
 export class ListEntityResponse<T> {
     list: T[] = [];
-    length: number = 0;
-    totalCount: number = 0;
-    pages: number = 0;
+    length = 0;
+    totalCount = 0;
+    pages = 0;
 }
 
 export class ListEntityQuery {

@@ -1,21 +1,21 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap, finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormWidgetManager } from '@partials/form';
-import { ProgressBarManager } from '@widget/progress-bar';
-import { IRequestOptions } from '@shared/common';
 import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
+import { FormWidgetManager } from '@partials/form';
+import { IRequestOptions } from '@shared/common';
+import { ProgressBarManager } from '@widget/progress-bar';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ProgressInterceptor implements HttpInterceptor {
     private showSnackbar = true;
     constructor(
-        private snackbar: MatSnackBar,
-        private formWidgetManager: FormWidgetManager,
-        private progressBarManager: ProgressBarManager,
-        private requestOptions: RequestOptions<IRequestOptions>
+        private readonly snackbar: MatSnackBar,
+        private readonly formWidgetManager: FormWidgetManager,
+        private readonly progressBarManager: ProgressBarManager,
+        private readonly requestOptions: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
