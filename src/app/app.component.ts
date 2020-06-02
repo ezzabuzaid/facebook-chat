@@ -1,13 +1,11 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ELanguage, LanguageService } from '@core/helpers/language';
 import { Logger } from '@core/helpers/logger';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
-import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '@shared/account';
 import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
@@ -15,7 +13,6 @@ import { SeoService } from '@shared/services/seo/seo.service';
 import { partition } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
-const log = new Logger('AppComponent');
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -24,9 +21,6 @@ const log = new Logger('AppComponent');
 export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly translateService: TranslateService,
     private readonly languageService: LanguageService,
     private readonly renderer: Renderer2,
     private readonly seoService: SeoService,
@@ -83,7 +77,6 @@ export class AppComponent implements OnInit, OnDestroy {
     //         // the service worker should focus the opened if it was in foreground
     //         // after that sh
     //     });
-
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({
       title: 'Angular Buildozer Boilerplate',

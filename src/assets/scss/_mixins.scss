@@ -22,11 +22,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 @mixin center_flex {
   display: flex !important;
   align-items: center;
   justify-content: center;
 }
+
 @mixin center_block {
   display: block;
   margin: auto;
@@ -42,7 +44,6 @@
   }
 }
 
-// All scss mixins must be here, expand the mixins into folder if the file has a huge line
 @mixin circular_button($dimension: 35px) {
   width: $dimension;
   height: $dimension;

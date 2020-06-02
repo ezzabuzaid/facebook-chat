@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy, Component, ElementRef, forwardRef, Inject,
-  Input, OnChanges, OnInit, PLATFORM_ID, SimpleChanges, ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AppUtils } from '@core/helpers/utils';
 import { IField } from '@partials/form';

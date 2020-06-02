@@ -28,14 +28,14 @@ export class FullscreenDirective {
         break;
     }
     const requestFullScreen =
-      docEl.requestFullscreen || docEl.mozRequestFullScreen ||
-      docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+      docEl.requestFullscreen || docEl['mozRequestFullScreen'] ||
+      docEl['webkitRequestFullScreen'] || docEl['msRequestFullscreen'];
     const cancelFullScreen =
-      this.document.exitFullscreen || this.document.mozCancelFullScreen ||
-      this.document.webkitExitFullscreen || this.document.msExitFullscreen;
+      this.document.exitFullscreen || this.document['mozCancelFullScreen'] ||
+      this.document['webkitExitFullscreen'] || this.document['msExitFullscreen'];
     if (
-      !this.document.fullscreenElement && !this.document.mozFullScreenElement &&
-      !this.document.webkitFullscreenElement && !this.document.msFullscreenElement
+      !this.document.fullscreenElement && !this.document['mozFullScreenElement'] &&
+      !this.document['webkitFullscreenElement'] && !this.document['msFullscreenElement']
     ) {
       requestFullScreen.call(docEl);
       this.onChange.emit();

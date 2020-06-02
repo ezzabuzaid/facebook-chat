@@ -1,17 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InjectionToken, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
 import { CacheDatabase } from './helpers/cache';
-import {
-  CacheInterceptor,
-  LoggerInterceptor,
-  ProgressInterceptor,
-  SetupInterceptor,
-  TeardownInterceptor,
-  UniversalInterceptor,
-  UrlInterceptor
-} from './interceptors';
+import { LoggerInterceptor, ProgressInterceptor, SetupInterceptor, TeardownInterceptor, UniversalInterceptor, UrlInterceptor } from './interceptors';
 
 @NgModule({
   imports: [

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from '@shared/services/users';
 import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 

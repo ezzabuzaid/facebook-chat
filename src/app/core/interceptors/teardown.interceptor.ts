@@ -31,7 +31,7 @@ export class TeardownInterceptor implements HttpInterceptor {
 
 
         // const retryCount = 0;
-        return next.handle(this.requestData.reset(request, request.clone({ headers })))
+        return next.handle(this.requestData.clone(request, { headers }))
             .pipe(
                 // TODO: implement retry with backoff operator
                 // retryWhen((source) => {

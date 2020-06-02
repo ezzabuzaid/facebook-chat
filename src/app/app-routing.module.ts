@@ -25,11 +25,13 @@ const routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules,
-    initialNavigation: 'enabled',
-    paramsInheritanceStrategy: 'always',
-  })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+      initialNavigation: 'enabled',
+      paramsInheritanceStrategy: 'always',
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

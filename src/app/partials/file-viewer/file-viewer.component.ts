@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output } from '@angular/core';
 import { MediaModel } from '@shared/models';
 import { UploadsService } from '@shared/services/upload';
 import { MediaHubManager } from 'app/pages/media-hub/media-hub.manager';

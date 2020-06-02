@@ -1,9 +1,9 @@
-@import 'mixins';
+@use 'mixins';
 :host {
     position: relative;
     display: block;
     &.uploading {
-        @include backdrop(absolute, 0);
+        @include mixins.backdrop(absolute, 0);
         .loader,
         .loader::after {
             border-radius: 50%;

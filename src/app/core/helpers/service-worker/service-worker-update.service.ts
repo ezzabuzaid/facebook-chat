@@ -1,8 +1,8 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { Logger } from '@core/helpers/logger';
-import { concat, interval } from 'rxjs';
-import { concatMap, first, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { first, switchMap, tap } from 'rxjs/operators';
 
 const log = new Logger('ServiceWorkerUtils');
 @Injectable({

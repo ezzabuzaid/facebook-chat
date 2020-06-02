@@ -1,10 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { EFieldType, Field, Form, SubmitEvent } from '@partials/form';
 import { UserService } from '@shared/account';
 import { _extract } from '@shared/common';
 import { PortalModel } from '@shared/models';
-import { PincodeBoxDialog, PincodeBoxDialogHandler } from '@widget/pincode-box/pincode-box.component';
 
 @Component({
   selector: 'app-forget-password',
@@ -72,7 +71,6 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(
     private readonly userService: UserService,
-    @Inject(PincodeBoxDialog) private readonly openPinCodeDialog: PincodeBoxDialogHandler
   ) { }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 :host {
     app-sidebar {
         --width: 300px;
@@ -45,7 +45,7 @@
     }
     footer {
         height: 100px;
-        @include scrollbar_theme(3px, 3px, gray);
+        @include mixins.scrollbar_theme(3px, 3px, gray);
         .footer-file {
             border: 3px solid transparent;
             transition: border-color 0.15s;

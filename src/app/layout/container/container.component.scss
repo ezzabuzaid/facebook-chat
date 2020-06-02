@@ -1,15 +1,12 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
-@import '~@angular/material/theming';
+@use 'mixins';
 
 :host {
   app-toolbar {
-    @include fixed_bar(sticky);
+    @include mixins.fixed_bar(sticky);
   }
 
   .router-container {
-    @include overflowHeight(1px);
+    @include mixins.overflowHeight(1px);
   }
   app-sidebar {
     --width: 275px;

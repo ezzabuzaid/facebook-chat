@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 :host {
   background-color: #fff;
   display: block;
@@ -16,6 +16,6 @@
 
   app-sidebar {
     --width: 25%;
-    @include overflowHeight(15px);
+    @include mixins.overflowHeight(15px);
   }
 }

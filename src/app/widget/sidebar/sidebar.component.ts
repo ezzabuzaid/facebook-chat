@@ -196,6 +196,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     };
   }
 
+  // @ts-ignore
   private pxToPercentege(pixels: number) {
     const screenWidth = this.window.screen.width;
     return pixels / screenWidth * 100;

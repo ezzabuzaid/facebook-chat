@@ -35,12 +35,6 @@ export const sessionStorageFactory = (injector: Injector) => {
 };
 
 @NgModule({
-  imports: [
-    HttpClientModule,
-    RequestOptionsModule.forRoot<IRequestOptions>(new IRequestOptions())
-  ]
-})
-@NgModule({
   declarations: [
     AppComponent
   ],
@@ -53,7 +47,15 @@ export const sessionStorageFactory = (injector: Injector) => {
     CoreModule,
     PopupModule,
     StaticPagesModule,
-    RequestOptionsModule.forRoot<IRequestOptions>(new IRequestOptions()),
+    RequestOptionsModule.forRoot<IRequestOptions>({
+      DEFAULT_URL: true,
+      SNACKBAR: false,
+      PROGRESS_BAR: true,
+      FORM_PROGRESS_BAR: true,
+      FULL_RESPONSE: true,
+      LOCAL_CACHE: false,
+      CACHE_CATEGORY: 'local_cache'
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

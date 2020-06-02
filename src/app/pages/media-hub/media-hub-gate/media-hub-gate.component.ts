@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { RouteUtility } from '@shared/common';
-import { MediaModel } from '@shared/models';
 import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 
 @Component({

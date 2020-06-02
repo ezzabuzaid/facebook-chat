@@ -1,7 +1,6 @@
-@import 'mixins';
-@import 'variables';
+@use 'variables';
 $toolbar-height: map-get(
-  $map: $layout_dimensions,
+  $map: variables.$layout_dimensions,
   $key: toolbar-height,
 );
 :host {

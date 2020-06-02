@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IField } from '@partials/form';
 import { WINDOW } from '@shared/common';
@@ -44,7 +44,7 @@ export class CountryControlComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this.countries = this.window.intlTelInputGlobals.getCountryData()
+    this.countries = this.window['intlTelInputGlobals'].getCountryData()
   }
 
   public updateModel(value: string) {

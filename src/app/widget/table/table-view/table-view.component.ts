@@ -1,16 +1,4 @@
-import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  Component,
-  ContentChild,
-  Input,
-  OnDestroy,
-  OnInit,
-  QueryList,
-  TemplateRef,
-  TrackByFunction,
-  ViewChildren,
-} from '@angular/core';
+import { AfterContentInit, Component, ContentChild, Input, OnDestroy, OnInit, QueryList, TemplateRef, TrackByFunction, ViewChildren } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
