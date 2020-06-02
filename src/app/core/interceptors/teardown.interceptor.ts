@@ -20,7 +20,7 @@ export class TeardownInterceptor implements HttpInterceptor {
         private readonly userService: UserService,
         private readonly snackbar: MatSnackBar,
         private readonly tokenService: TokenHelper,
-        private readonly requestData: RequestOptions<IRequestOptions>
+        private readonly requestOptions: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,7 +31,7 @@ export class TeardownInterceptor implements HttpInterceptor {
 
 
         // const retryCount = 0;
-        return next.handle(this.requestData.clone(request, { headers }))
+        return next.handle(this.requestOptions.clone(request, { headers }))
             .pipe(
                 // TODO: implement retry with backoff operator
                 // retryWhen((source) => {

@@ -12,6 +12,7 @@ export class UrlInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let url = request.url;
+    console.log(this.requestOptions);
     if (this.requestOptions.get(request, 'DEFAULT_URL')) {
       url = environment.endpointUrl + request.url;
     }

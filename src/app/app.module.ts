@@ -7,7 +7,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { CoreModule } from '@core/core.module';
 import { LanguageLoader } from '@core/helpers/language';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
-import { RequestOptionsModule } from '@ezzabuzaid/ngx-request-options';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IRequestOptions } from '@shared/common';
 import { PopupModule } from '@widget/popup';
@@ -47,15 +46,6 @@ export const sessionStorageFactory = (injector: Injector) => {
     CoreModule,
     PopupModule,
     StaticPagesModule,
-    RequestOptionsModule.forRoot<IRequestOptions>({
-      DEFAULT_URL: true,
-      SNACKBAR: false,
-      PROGRESS_BAR: true,
-      FORM_PROGRESS_BAR: true,
-      FULL_RESPONSE: true,
-      LOCAL_CACHE: false,
-      CACHE_CATEGORY: 'local_cache'
-    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
