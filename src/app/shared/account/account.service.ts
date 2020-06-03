@@ -15,17 +15,13 @@ import { tap } from 'rxjs/operators';
 })
 export class UserService extends SubjectFactory<boolean> {
 
-  public get isAuthenticated() {
-    return this.tokenHelper.isLogged && AppUtils.isFalsy(this.tokenHelper.isExpired);
-  }
-
   constructor(
     private readonly http: HttpClient,
     private readonly tokenHelper: TokenHelper,
     private readonly router: Router,
     @Inject(NAVIGATOR) private readonly navigator: Navigator,
   ) {
-    super();
+    super(tokenHelper.isAuthenticated);
   }
 
   public login(payload: PortalModel.ILoginRequest, rememberMe: boolean) {
@@ -33,7 +29,7 @@ export class UserService extends SubjectFactory<boolean> {
       .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.login, payload)
       .pipe(
         tap((data) => {
-          this.notify(this.isAuthenticated);
+          this.notify(this.tokenHelper.isAuthenticated);
           this.tokenHelper.setToken(data.token, data.refreshToken, rememberMe);
         })
       );
@@ -73,10 +69,14 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.post(Constants.API.PORTAL.RESET_PASSWORD, payload);
   }
 
+  public sendVerificationEmail() {
+    return this.http.get(Constants.API.PORTAL.sendverificationemail);
+  }
+
   public logout(redirectUrl?) {
     console.log(redirectUrl);
     const blob = new Blob([JSON.stringify({})], {
-      [Constants.Application.DEVICE_UUID]: this.getDeviceUUID()
+      [Constants.Application.DEVICE_UUID as any]: this.getDeviceUUID()
     });
     this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
@@ -86,7 +86,7 @@ export class UserService extends SubjectFactory<boolean> {
       },
     });
     this.tokenHelper.deleteToken();
-    this.notify(this.isAuthenticated);
+    this.notify(this.tokenHelper.isAuthenticated);
   }
 
   getDeviceUUID() {

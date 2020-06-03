@@ -1,9 +1,10 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 import { ELanguage, LanguageService } from '@core/helpers/language';
 import { Logger } from '@core/helpers/logger';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
+import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { UserService } from '@shared/account';
@@ -11,7 +12,7 @@ import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { SeoService } from '@shared/services/seo/seo.service';
 import { partition } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -30,8 +31,9 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private readonly platformId: any,
     @Inject(NAVIGATOR) private readonly navigator: Navigator,
     private readonly analyticService: AnalyticsService,
+    private readonly connectivity: Connectivity,
     private readonly userService: UserService,
-    private readonly connectivity: Connectivity
+    private readonly tokenHelper: TokenHelper
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -92,6 +94,7 @@ export class AppComponent implements OnInit, OnDestroy {
       Logger.enableProductionMode();
     }
 
+
     if (this.isBrowser && environment.production) {
       this.analyticService.recordPageNavigation();
 
@@ -103,13 +106,24 @@ export class AppComponent implements OnInit, OnDestroy {
         });
       this.serviceWorkerUtils.updateActivated
         .subscribe((updte) => {
-          this.snackbar.open('The application has been updated');
+          this.snackbar.open('The application has been updated', 'Close');
         });
     }
 
     if (this.isBrowser) {
-
       this.languageService.populate(ELanguage.EN);
+
+      this.userService.listen()
+        .pipe(filter(() => this.tokenHelper.isLogged))
+        .subscribe(() => {
+          if (AppUtils.not(this.tokenHelper.decodedToken.verified)) {
+            console.log(this.tokenHelper.decodedToken);
+            this.snackbar.open('Please verify your account', 'Send Email', { duration: Number.MAX_VALUE })
+              .onAction()
+              .pipe(switchMap(() => this.userService.sendVerificationEmail()))
+              .subscribe();
+          }
+        });
 
       // TODO PWA Checks if install popup should be appear
       const isIos = () => /iphone|ipad|ipod/.test(this.navigator.userAgent.toLowerCase());
@@ -121,18 +135,19 @@ export class AppComponent implements OnInit, OnDestroy {
       const [$offline, $online] = partition(this.connectivity.observe(), AppUtils.isFalsy);
       const noConnectionClass = 'backdrop';
       const affectedElement = this.document.body;
+      let noInternetConnectionSnackbar: MatSnackBarRef<any> = null;
       $online.subscribe(() => {
-        this.snackbar.dismiss();
+        noInternetConnectionSnackbar?.dismiss();
         this.renderer.removeClass(affectedElement, noConnectionClass);
       })
       $offline.pipe(
         switchMap(() => {
           this.renderer.addClass(affectedElement, noConnectionClass);
-          return this.snackbar.open(
+          noInternetConnectionSnackbar = this.snackbar.open(
             'No connection, please check you internet!',
             'Refresh!',
             { duration: 1000 * 1000 })
-            .onAction();
+          return noInternetConnectionSnackbar.onAction();
         }),
         tap(() => location.reload())
       )

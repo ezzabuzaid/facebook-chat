@@ -5,6 +5,8 @@ import { Constants } from '@core/constants';
 import { EFieldType, Field, Form, } from '@partials/form';
 import { UserService } from '@shared/account';
 import { PortalModel } from '@shared/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private readonly portalService: UserService,
-    private readonly router: Router
+    private readonly router: Router,
   ) { }
 
   ngOnInit() { }

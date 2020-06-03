@@ -19,14 +19,14 @@ export class TeardownInterceptor implements HttpInterceptor {
     constructor(
         private readonly userService: UserService,
         private readonly snackbar: MatSnackBar,
-        private readonly tokenService: TokenHelper,
+        private readonly tokenHelper: TokenHelper,
         private readonly requestOptions: RequestOptions<IRequestOptions>
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = request.headers.set(Constants.Application.DEVICE_UUID, `${ this.userService.getDeviceUUID() }`);
-        if (this.userService.isAuthenticated) {
-            headers = headers.set('Authorization', `${ this.tokenService.token }`);
+        if (this.tokenHelper.isAuthenticated) {
+            headers = headers.set('Authorization', `${ this.tokenHelper.token }`);
         }
 
 

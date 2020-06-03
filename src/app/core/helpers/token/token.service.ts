@@ -44,11 +44,11 @@ export class TokenHelper {
   }
 
   get oneTimeLogin() {
-    return this.local.get<boolean>('oneTime');
+    return this.local.get<boolean>(Constants.Application.ONE_TIME);
   }
 
   set oneTimeLogin(value: boolean) {
-    this.local.set('oneTime', AppUtils.inverse(value));
+    this.local.set(Constants.Application.ONE_TIME, AppUtils.inverse(value));
   }
 
   constructor(
@@ -65,7 +65,11 @@ export class TokenHelper {
   deleteToken() {
     this.storage.delete(TOKEN_KEY);
     this.storage.delete(REFRESH_TOKEN_KEY);
-    this.local.delete('ontTime');
+    this.local.delete(Constants.Application.ONE_TIME);
+  }
+
+  public get isAuthenticated() {
+    return this.isLogged && AppUtils.not(this.isExpired);
   }
 
 }

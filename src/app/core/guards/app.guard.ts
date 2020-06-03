@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  CanActivateChild,
-  CanLoad,
-  Route,
-  RouterStateSnapshot,
-  UrlTree
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { TokenHelper } from '@core/helpers/token';
 import { UserService } from '@shared/account';
 import { Observable } from 'rxjs';
 
@@ -16,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   constructor(
+    private readonly tokenHelper: TokenHelper,
     private readonly userService: UserService
   ) { }
 
@@ -37,7 +31,7 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
 
 
   public authenticate(redirectUrl?: string) {
-    if (!this.userService.isAuthenticated) {
+    if (!this.tokenHelper.isAuthenticated) {
       this.userService.logout(redirectUrl);
       return false;
     }

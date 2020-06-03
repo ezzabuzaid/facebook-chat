@@ -36,6 +36,7 @@ export namespace PortalModel {
     export interface ITokenClaim {
         role: string;
         id: string;
+        verified: boolean;
     }
     export class RefreshToken {
         constructor(

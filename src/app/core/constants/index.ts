@@ -3,9 +3,10 @@ export namespace Constants {
     static readonly TOKEN_KEY = 'token';
     static readonly APPLICATION_NAME = 'Angular Buildozer';
     static readonly LANGUAGE_KEY = 'language';
-    static REFRESH_TOKEN_KEY = 'refresh_token';
-    static DEVICE_UUID = 'x-device-uuid';
-    static REDIRECT_URL = 'redirectUrl';
+    static readonly ONE_TIME = 'oneTime';
+    static readonly REFRESH_TOKEN_KEY = 'refresh_token';
+    static readonly DEVICE_UUID = 'x-device-uuid';
+    static readonly REDIRECT_URL = 'redirectUrl';
   }
 
   export class Routing {
@@ -88,6 +89,9 @@ export namespace Constants {
       },
       get RESET_PASSWORD() {
         return this.base + '/resetpassword/'
+      },
+      get sendverificationemail() {
+        return this.base + '/sendverificationemail'
       },
       get ACCOUNT_VERIFIED() {
         return this.base + '/checkaccountverification'
