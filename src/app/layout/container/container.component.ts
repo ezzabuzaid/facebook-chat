@@ -1,6 +1,5 @@
 import { animate, animateChild, group, query, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { ChatService } from '@shared/services/chat';
 import { UsersService } from '@shared/services/users';
@@ -43,7 +42,6 @@ import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button
   ]
 })
 export class ContainerComponent implements OnInit {
-  @ViewChild(RouterOutlet, { static: true }) private readonly outlet: RouterOutlet;
   public $users = this.usersService.getUsersWithoutMe();
   public $groups = this.chatService.getGroups();
   public $conversations = this.chatService.getConversations();
@@ -54,9 +52,6 @@ export class ContainerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.outlet.activateEvents.subscribe(component => {
-
-    });
     this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
   }
 

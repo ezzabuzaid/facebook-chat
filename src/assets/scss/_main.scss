@@ -1,6 +1,6 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
+@import "functions";
+@import "mixins";
+@import "variables";
 
 html,
 body {
@@ -61,6 +61,13 @@ mat-chip-list {
 
 .vertical-align-bottom {
   vertical-align: bottom !important;
+}
+
+.sticky-bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  background-color: #fff;
 }
 
 @for $weight from 1 through 9 {
