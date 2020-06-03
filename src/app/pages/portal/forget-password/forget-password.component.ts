@@ -26,7 +26,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       label: _extract('placeholder_username'),
       autocomplete: 'username',
       section: 0,
-      value: 'profile',
       validation: {
         validators: Validators.required
       }
@@ -35,7 +34,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       label: _extract('placeholder_firstname'),
       autocomplete: 'given-name',
       section: 2,
-      value: 'ezz',
       validation: {
         validators: Validators.required
       }
@@ -44,7 +42,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       label: _extract('placeholder_lastname'),
       autocomplete: 'family-name',
       section: 2,
-      value: 'abuzaid',
       validation: {
         validators: Validators.required
       }
@@ -54,7 +51,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       autocomplete: 'country-name',
       type: EFieldType.COUNTRY,
       section: 1,
-      value: 'jo',
       validation: {
         validators: [Validators.required]
       }

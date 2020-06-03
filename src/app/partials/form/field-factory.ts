@@ -72,11 +72,16 @@ export class Field<tvalue = any, tname = string> extends FormControl implements 
         });
         this.value = null;
         this.type = options.type || EFieldType.TEXT;
-        this.section = options.section ?? ++Field.incremntalSection;
         this.label = options.label ?? (this.name as any);
         this.id = options.id || AppUtils.generateAlphabeticString(5);
         this.autocomplete = options.autocomplete;
         this.hint = options.hint;
+        if (options.section) {
+            this.section = options.section
+            Field.incremntalSection += options.section;
+        } else {
+            this.section = ++Field.incremntalSection;
+        }
     }
 
     static Password<tvalue = string, tname = any>(name: tname, options?: Options<tvalue, tname>) {

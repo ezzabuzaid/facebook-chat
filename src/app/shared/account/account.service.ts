@@ -7,7 +7,7 @@ import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { NAVIGATOR } from '@shared/common';
-import { PortalModel } from '@shared/models';
+import { PortalModel, ResponseModel } from '@shared/models';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -40,7 +40,9 @@ export class UserService extends SubjectFactory<boolean> {
   }
 
   register(payload: PortalModel.IRegister) {
-    return this.http.post(Constants.API.USERS.base, payload);
+    return this.http
+      .configure({ FULL_RESPONSE: true })
+      .post<ResponseModel<unknown>>(Constants.API.USERS.base, payload);
   }
 
   refreshToken() {

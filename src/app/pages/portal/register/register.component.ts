@@ -9,6 +9,7 @@ import { PortalModel } from '@shared/models';
 import { Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase } from '@shared/validators';
 import { merge, Observable, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -106,6 +107,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly router: Router,
     private readonly userService: UserService,
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() { }
@@ -117,12 +119,11 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     );
   }
 
-
-
   register({ valid, value }: SubmitEvent<PortalModel.IRegister>) {
     if (valid) {
       this.userService.register(value)
-        .subscribe(() => {
+        .subscribe(({ message }) => {
+          this.snackbar.open(message, 'Close', { duration: Number.MAX_VALUE });
           this.router.navigate([Constants.Routing.LOGIN.withSlash]);
         });
     }

@@ -21,7 +21,7 @@ export class ProgressInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.showSnackbar = this.requestOptions.get(request, 'SNACKBAR') && request.method !== 'GET';
         if (this.showSnackbar) {
-            Promise.resolve(null).then(() => this.snackbar.open('Please wait', '', { duration: 500000 }));
+            Promise.resolve(null).then(() => this.snackbar.open('Please wait', '', { duration: Number.MAX_VALUE }));
         }
 
         this.formWidgetManager.notify(this.requestOptions.get(request, 'FORM_PROGRESS_BAR'));
