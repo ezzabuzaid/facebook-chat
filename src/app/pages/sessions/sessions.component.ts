@@ -1,5 +1,5 @@
-import { AfterContentInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Component, OnInit } from '@angular/core';
+import { ActionColumn, DataGrid, DisplayColumn, Icon } from '@partials/datagrid/column';
 import { SessionsModel } from '@shared/models';
 import { SessionsService } from '@shared/services/sessions';
 
@@ -8,27 +8,35 @@ import { SessionsService } from '@shared/services/sessions';
   templateUrl: './sessions.component.html',
   styleUrls: ['./sessions.component.scss']
 })
-export class SessionsComponent implements OnInit, AfterContentInit {
-  sessions: SessionsModel.ISession[] = [];
-  @ViewChild(MatPaginator) matPaginator: MatPaginator;
+export class SessionsComponent implements OnInit {
+  dataGrid = new DataGrid<SessionsModel.ISession>({
+    provider: (query) => this.sessionsService.getSessions(query),
+    actionColumn: new ActionColumn({
+      position: 'start',
+      icons: [
+        new Icon('block', (session) => {
+          this.deactivateSession(session)
+        })
+      ]
+    }),
+    columns: [
+      new DisplayColumn<SessionsModel.ISession>({
+        key: 'user',
+        title: 'User',
+        mapper: (row) => row.user.username
+      }),
+      new DisplayColumn({ key: 'device_uuid', title: 'Device' }),
+      new DisplayColumn({ key: 'active', title: 'Active' }),
+      new DisplayColumn({ key: 'createdAt', title: 'Created At' }),
+      new DisplayColumn({ key: 'updatedAt', title: 'Updated At', format: 'full' }),
+    ]
+  });
+
   constructor(
     private readonly sessionsService: SessionsService
   ) { }
 
-  ngOnInit() {
-  }
-
-  ngAfterContentInit() {
-    this.fetchData();
-  }
-
-  fetchData(page = 0, size = 10) {
-    return this.sessionsService.getSessions({ page, size })
-      .subscribe(data => {
-        this.sessions = data.list;
-        this.matPaginator.length = data.totalCount;
-      });
-  }
+  ngOnInit() { }
 
   deactivateSession(session: SessionsModel.ISession) {
     this.sessionsService.deactiveSession({
@@ -39,10 +47,6 @@ export class SessionsComponent implements OnInit, AfterContentInit {
         session.active = false;
         session.updatedAt = new Date().toISOString();
       });
-  }
-
-  onPaginate(event: PageEvent) {
-    this.fetchData(event.pageIndex, event.pageSize);
   }
 
 }

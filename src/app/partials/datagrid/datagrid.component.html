@@ -1,12 +1,35 @@
 <table mat-table [dataSource]="dataSource" matSort class="w-100 border">
-
-    <ng-container *ngFor="let column of columns">
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{dataGrid.actionColumn.title | translate}} </th>
+        <td mat-cell *matCellDef="let element">
+            <ng-container *ngFor="let icon of dataGrid.actionColumn?.icons">
+                <button mat-icon-button (click)="icon?.action(element)">
+                    <mat-icon>block</mat-icon>
+                </button>
+            </ng-container>
+        </td>
+    </ng-container>
+    <ng-container *ngFor="let column of dataGrid?.columns">
         <ng-container [matColumnDef]="column.key">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.title | translate}} </th>
-            <td mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
+            <th mat-header-cell *matHeaderCellDef> {{column.title | translate}} </th>
+            <td mat-cell *matCellDef="let element">
+                <ng-container [ngSwitch]="column.typeOf(resolveValue(column, element))">
+                    <ng-container *ngSwitchCase="EColumnTypes.TEXT">
+                        {{resolveValue(column, element)}}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="EColumnTypes.BOOLEAN">
+                        <mat-checkbox disabled [checked]="resolveValue(column, element)"></mat-checkbox>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="EColumnTypes.DATE">
+                        <span>{{resolveValue(column, element) | date: column?.format}}</span>
+                    </ng-container>
+                </ng-container>
+                <ng-template #emptyColumn>
+                    <span>Unavailable</span>
+                </ng-template>
+            </td>
         </ng-container>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayColumns;"></tr>
 </table>

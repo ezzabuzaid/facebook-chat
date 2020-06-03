@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 import { EFieldType, Field, Form, } from '@partials/form';
 import { UserService } from '@shared/account';
 import { PortalModel } from '@shared/models';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { switchMap } from 'rxjs/operators';
 
 @Component({

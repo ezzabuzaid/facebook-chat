@@ -1,6 +1,7 @@
 
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 import { DateField, EFieldType, Field, Form, SelectField, SelectOption, SubmitEvent } from '@partials/form';
@@ -9,7 +10,6 @@ import { PortalModel } from '@shared/models';
 import { Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase } from '@shared/validators';
 import { merge, Observable, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',

@@ -1,34 +1,3 @@
 <app-page-wrapper title="Sessions">
-    <mat-card>
-        <mat-card-content>
-            <semi-table [dataSource]="sessions">
-                <semi-table-head>
-                    <th>Actions</th>
-                    <th>User</th>
-                    <th filterable="device_uuid" type="text">Device</th>
-                    <th filterable="active" type="checkbox">Active</th>
-                    <th>Created at</th>
-                    <th>Updated at</th>
-                </semi-table-head>
-                <ng-template let-data>
-                    <td>
-                        <button color="accent" mat-icon-button (click)="deactivateSession(data)">
-                            <mat-icon>block</mat-icon>
-                        </button>
-                    </td>
-                    <td>{{ data.user?.username }}</td>
-                    <td>{{ data.device_uuid }}</td>
-                    <td>
-                        <mat-checkbox [disabled]="true" [checked]="data.active"></mat-checkbox>
-                    </td>
-                    <td>{{ data.createdAt | date:'full' }}</td>
-                    <td>{{ data.updatedAt | date }}</td>
-                </ng-template>
-            </semi-table>
-        </mat-card-content>
-        <mat-card-footer>
-            <mat-paginator (page)="onPaginate($event)" [pageSizeOptions]="[10, 15, 20]" [showFirstLastButtons]="true">
-            </mat-paginator>
-        </mat-card-footer>
-    </mat-card>
+    <app-datagrid [dataGrid]="dataGrid"></app-datagrid>
 </app-page-wrapper>
