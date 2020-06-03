@@ -1,14 +1,14 @@
 import { Constants } from '@core/constants';
 import { _extract } from '@shared/common';
 export class NavigationItem {
-  type: 'item' | 'collapse';
+  type?: 'item' | 'collapse';
   title: string;
   icon: string;
   routerLink?: string;
   children?: NavigationItem[];
   queryParams?= null;
   constructor(item: NavigationItem) {
-    this.type = item.type;
+    this.type = item.type ?? 'item';
     this.title = item.title;
     this.icon = item.icon;
     this.routerLink = item.routerLink;

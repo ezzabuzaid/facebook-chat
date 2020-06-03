@@ -37,7 +37,7 @@
         </div>
     </ng-container>
 </mat-nav-list>
-<mat-chip-list class="px-2">
+<mat-chip-list class="px-2 sticky-bottom h-80">
     <mat-chip *ngFor="let tag of ($tags | async)" [style.background-color]="tag.color" (click)="filterByTag(tag)"
         class="pointer" selected>
     </mat-chip>
