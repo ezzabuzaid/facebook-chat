@@ -34,6 +34,7 @@ export class PincodeBoxComponent implements OnInit {
   inputCount = new Array(6);
   @Input('data') _inputData: PincodeBoxData;
   @Output() onSubmit = new EventEmitter();
+  @Output() onRetry = new EventEmitter();
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) private readonly _dialogData: PincodeBoxData

@@ -1,4 +1,3 @@
-export * from './equal.validator';
 export * from './string.validator';
 export * from './numbers.validator';
 export * from './phonenumber.validator';
