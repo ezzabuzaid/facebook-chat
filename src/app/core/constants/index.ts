@@ -86,6 +86,9 @@ export namespace Constants {
       get CHECK_PINCODE() {
         return this.base + '/checkpincode/'
       },
+      get RESET_PASSWORD() {
+        return this.base + '/resetpassword/'
+      },
       get ACCOUNT_VERIFIED() {
         return this.base + '/checkaccountverification'
       },

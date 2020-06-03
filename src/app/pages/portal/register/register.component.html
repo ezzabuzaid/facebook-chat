@@ -3,6 +3,7 @@
     <div class="col-12 col-md-10">
       <app-form-container title="Register in our system" (onSubmit)="register($event)" [formGroup]="form">
         <ng-container ngProjectAs="[form-body]">
+          <!-- TODO: Create custom password control -->
           <ng-container *ngIf="$passwordVisible | async">
             <div [ngClass]="[form.hasControlError('password', 'uppercase') ? 'text-danger':'text-success']"
               class="d-flex align-items-center">

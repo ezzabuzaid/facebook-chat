@@ -15,7 +15,7 @@ import { LoggerInterceptor, ProgressInterceptor, SetupInterceptor, TeardownInter
       SNACKBAR: false,
       PROGRESS_BAR: true,
       FORM_PROGRESS_BAR: true,
-      FULL_RESPONSE: true,
+      FULL_RESPONSE: false,
       LOCAL_CACHE: false,
       CACHE_CATEGORY: 'local_cache'
     }),

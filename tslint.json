@@ -72,7 +72,7 @@
     "prefer-for-of": false,
     "prefer-while": true,
     "prefer-template": false,
-    "prefer-readonly": true,
+    "prefer-readonly": false,
     "prefer-method-signature": true,
     "await-promise": true,
     "comment-format": true,

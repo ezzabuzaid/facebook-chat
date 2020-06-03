@@ -53,11 +53,23 @@ export namespace PortalModel {
     export interface AccountVerifiedResponse {
         emailVerified: boolean;
         mobileVerified: boolean;
+        id: string;
     }
 
     export interface ISendPincode {
         type: 'email' | 'sms';
         mobile?: string;
         email?: string;
+        id: string;
     }
+
+    export interface ICheckPincode {
+        pincode: string;
+        id: string;
+    }
+
+    export interface IResetPassword extends ICheckPincode {
+        password: string;
+    }
+
 }

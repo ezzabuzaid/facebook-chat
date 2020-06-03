@@ -63,8 +63,12 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.post(Constants.API.PORTAL.SEND_PINCODE, payload);
   }
 
-  public checkPincode(pincode: string) {
-    return this.http.post(Constants.API.PORTAL.CHECK_PINCODE, { pincode });
+  public checkPincode(payload: PortalModel.ICheckPincode) {
+    return this.http.post(Constants.API.PORTAL.CHECK_PINCODE, payload);
+  }
+
+  public resetPassword(payload: PortalModel.IResetPassword) {
+    return this.http.post(Constants.API.PORTAL.RESET_PASSWORD, payload);
   }
 
   public logout(redirectUrl?) {
