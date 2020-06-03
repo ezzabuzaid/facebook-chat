@@ -1,9 +1,10 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { AppUtils } from '@core/helpers/utils';
 
-export function createValidator(errorName: string, validator: (control: AbstractControl) => boolean): ValidatorFn {
+export function createValidator(errorName: string, validator: (control: AbstractControl, parent: AbstractControl) => boolean): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
         if (control) {
-            return validator(control) ? null : { [errorName]: true };
+            return validator(control, control.parent) ? null : { [errorName]: true };
         }
         return null;
     };
@@ -24,3 +25,11 @@ export const Between = (minlength: number, maxlength: number) => {
 function length(value: string) {
     return value && value.length;
 }
+
+export const AllEqual = (...names: string[]) => createValidator('equality', (control) => {
+    return AppUtils.equals(...names.map(name => control.get(name).value));
+});
+
+export const EqualTo = (name: string) => createValidator('equalTo', (control, parent) => {
+    return parent?.get(name).value?.trim() === control.value?.trim();
+});
