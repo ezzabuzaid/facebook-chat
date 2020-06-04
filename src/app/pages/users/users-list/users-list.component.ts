@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataGrid, DisplayColumn } from '@partials/datagrid/column';
 import { UsersModel } from '@shared/models';
 import { UsersService } from '@shared/services/users';
 
@@ -8,16 +9,20 @@ import { UsersService } from '@shared/services/users';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  public $users = this.usersService.getUsers();
+  dataGrid = new DataGrid<UsersModel.IUser>({
+    provider: (query) => this.usersService.getUsers(query),
+    columns: [
+      new DisplayColumn({ key: 'username', }),
+      new DisplayColumn({ key: 'email', }),
+      new DisplayColumn({ key: 'mobile', }),
+      new DisplayColumn({ key: 'verified', }),
+    ]
+  });
 
   constructor(
     private readonly usersService: UsersService
   ) { }
 
   ngOnInit() { }
-
-  followUser(user: UsersModel.IUser) {
-
-  }
 
 }

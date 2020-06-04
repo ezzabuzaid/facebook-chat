@@ -1,25 +1,3 @@
 <app-page-wrapper title="Users">
-    <mat-card>
-        <mat-card-content>
-            <semi-table [dataSource]="$users | async">
-                <semi-table-head>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Mobile</th>
-                    <th filterable="verified" type="checkbox">Verified</th>
-                </semi-table-head>
-                <ng-template let-data>
-                    <td>{{ data.username }}</td>
-                    <td>{{ data.email }}</td>
-                    <td>{{ data.mobile  }}</td>
-                    <td>
-                        <mat-checkbox [disabled]="true" [checked]="data.verified"></mat-checkbox>
-                    </td>
-                </ng-template>
-            </semi-table>
-        </mat-card-content>
-        <mat-card-footer>
-            <mat-paginator></mat-paginator>
-        </mat-card-footer>
-    </mat-card>
+    <app-datagrid [dataGrid]="dataGrid"></app-datagrid>
 </app-page-wrapper>

@@ -42,7 +42,6 @@ import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button
   ]
 })
 export class ContainerComponent implements OnInit {
-  public $users = this.usersService.getUsersWithoutMe();
   public $groups = this.chatService.getGroups();
   public $conversations = this.chatService.getConversations();
   constructor(

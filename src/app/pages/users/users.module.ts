@@ -3,16 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { PageWrapperModule } from '@partials/page-wrapper';
 import { MaterialModule } from '@shared/common';
-import { TableModule } from '@widget/table/table.module';
 import { UsersListComponent } from './users-list/users-list.component';
 import { UsersRoutingModule } from './users-routing.module';
+import { DatagridModule } from '@partials/datagrid';
 
 
 @NgModule({
   declarations: [UsersListComponent],
   imports: [
     CommonModule,
-    TableModule,
+    DatagridModule,
     PageWrapperModule,
     MaterialModule,
     UsersRoutingModule
