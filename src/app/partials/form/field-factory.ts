@@ -23,6 +23,7 @@ export enum EFieldType {
     NUMBER,
     TEL,
     COUNTRY,
+    RAW_FIELD
 }
 
 export class SelectOption {
@@ -32,50 +33,38 @@ export class SelectOption {
     ) { }
 }
 
-export interface IField<tvalue = any, tname = string> extends FormControl {
+export interface IBaseField<tvalue = any, tname = string> extends FormControl {
     id?: string;
     name?: tname;
-    type?: EFieldType;
-    label?: string;
-    hint?: string;
+    type: EFieldType;
     value: tvalue;
     section?: number;
-    validation?: AbstractControlOptions;
-    options?: Observable<SelectOption[]>;
-    multiple?: boolean,
+    validation?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null;
     autocomplete?: string;
-    min?: Date;
-    max?: Date;
-    typeOf(type: EFieldType): boolean;
-    addValidator(...validator: ValidatorFn[]): void;
+    addValidator?(...validator: ValidatorFn[]): void;
 }
-type Options<tvalue, tname> = Partial<Properties<IField<tvalue, tname>>>;
+type Options<T> = Partial<IBaseField & T>;
 
-export class Field<tvalue = any, tname = string> extends FormControl implements IField<tvalue, tname> {
+export class BaseField<tvalue, tname> extends FormControl implements IBaseField<tvalue, tname>{
     static incremntalSection = -1;
     public type: EFieldType = null;
     public section: number = null;
-    public label: string = null;
-    public hint: string;
     public value: tvalue = null;
     public id = null;
     public autocomplete = '';
 
     constructor(
         public name: tname,
-        options: Options<tvalue, tname> = {}
+        options: Options<IBaseField<tvalue, tname>> = {}
     ) {
-        super(null, options.validation ?? {
+        super(options.value, options.validation ?? {
             validators: [],
             asyncValidators: [],
             updateOn: 'change'
         });
-        this.value = null;
-        this.type = options.type || EFieldType.TEXT;
-        this.label = options.label ?? (this.name as any);
-        this.id = options.id || AppUtils.generateAlphabeticString(5);
+        this.type = options.type ?? EFieldType.TEXT;
+        this.id = options.id ?? AppUtils.generateAlphabeticString(5);
         this.autocomplete = options.autocomplete;
-        this.hint = options.hint;
         if (options.section) {
             this.section = options.section
             Field.incremntalSection += options.section;
@@ -84,7 +73,38 @@ export class Field<tvalue = any, tname = string> extends FormControl implements 
         }
     }
 
-    static Password<tvalue = string, tname = any>(name: tname, options?: Options<tvalue, tname>) {
+    addValidator(...validator: ValidatorFn[]) {
+        this.setValidators(Validators.compose([this.validator, ...validator]));
+    }
+
+    getElement() {
+        return document.getElementById(this.id);
+    }
+
+    on(eventName: keyof HTMLElementEventMap) {
+        return fromEvent(this.getElement(), eventName);
+    }
+}
+
+export interface IField<tvalue, tname = string> extends IBaseField<tvalue, tname> {
+    label?: string;
+    hint?: string;
+}
+
+
+export class Field<tvalue, tname = string> extends BaseField<tvalue, tname> implements IField<tvalue, tname> {
+    public label?: string = null;
+    public hint?: string;
+    constructor(
+        public name: tname,
+        options: Options<IField<tvalue, tname>> = {}
+    ) {
+        super(name, options);
+        this.label = options.label ?? (this.name as any);
+        this.hint = options.hint;
+    }
+
+    static Password<tvalue = string, tname = string>(name: tname, options?: Options<IField<tvalue, tname>>) {
         return new Field<tvalue, tname>(name, {
             type: EFieldType.PASSWORD,
             autocomplete: 'current-password',
@@ -96,7 +116,7 @@ export class Field<tvalue = any, tname = string> extends FormControl implements 
         })
     }
 
-    static Email<tvalue = string, tname = any>(name: tname, options?: Options<tvalue, tname>) {
+    static Email<tvalue = string, tname = any>(name: tname, options?: Options<IField<tvalue, tname>>) {
         return new Field<tvalue, tname>(name, {
             type: EFieldType.EMAIL,
             autocomplete: 'email',
@@ -106,22 +126,6 @@ export class Field<tvalue = any, tname = string> extends FormControl implements 
         });
     }
 
-    addValidator(...validator: ValidatorFn[]) {
-        this.setValidators(Validators.compose([this.validator, ...validator]));
-    }
-
-    public typeOf(type: EFieldType) {
-        return this.type === type;
-    }
-
-    getElement() {
-        return document.getElementById(this.id);
-    }
-
-    on(eventName: keyof HTMLElementEventMap) {
-        return fromEvent(this.getElement(), eventName);
-    }
-
 
 }
 export class SelectField<tvalue, tname> extends Field<tvalue, tname>   {
@@ -129,7 +133,7 @@ export class SelectField<tvalue, tname> extends Field<tvalue, tname>   {
     public multiple = false;
     constructor(
         public name: tname,
-        options: Options<tvalue, tname> = {}
+        options: Options<SelectField<tvalue, tname>> = {}
     ) {
         super(name, options);
         this.type = EFieldType.SELECT;
@@ -137,12 +141,12 @@ export class SelectField<tvalue, tname> extends Field<tvalue, tname>   {
         this.multiple = options.multiple;
     }
 }
-export class DateField<tvalue = Date, tname = any> extends Field<Date, tname> implements IField<Date, tname> {
+export class DateField<tvalue, tname> extends Field<Date, tname>  {
     public min?: Date;
     public max?: Date;
     constructor(
         public name: tname,
-        options: Options<Date, tname> = {}
+        options: Options<DateField<Date, tname>> = {}
     ) {
         super(name, options);
         this.type = EFieldType.DATE;
@@ -194,12 +198,19 @@ export class Form<T> extends FormGroup {
     }
 
 }
-export interface IComponentField {
-    field: Field<any>;
-}
-export class FieldSet {
-    constructor() {
 
+export class RawField<tvalue = any, tname = any> extends BaseField<tvalue, tname> {
+    component: Type<IRawFieldComponent<tvalue>>;
+    constructor(
+        public name: tname,
+        options: Partial<IBaseField<Date, tname> & RawField>
+    ) {
+        super(name, options ?? {});
+        this.type = EFieldType.RAW_FIELD;
+        this.component = options.component;
     }
 }
 
+export interface IRawFieldComponent<T> {
+    formControl: BaseField<T, any>;
+}

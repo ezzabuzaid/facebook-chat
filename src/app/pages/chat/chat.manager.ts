@@ -18,8 +18,7 @@ export class ChatManager {
 
     constructor(
         private readonly tokenService: TokenHelper
-    ) {
-    }
+    ) { }
 
     sendMessage(message: ChatModel.Message) {
         this.socket.emit('SendMessage', new ChatModel.ChatOutgoingMessage(

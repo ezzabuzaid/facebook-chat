@@ -1,10 +1,8 @@
 import { ApplicationRef, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { Logger } from '@core/helpers/logger';
 import { interval } from 'rxjs';
-import { first, switchMap, tap } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 
-const log = new Logger('ServiceWorkerUtils');
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +19,6 @@ export class ServiceWorkerUtils {
     return this.applicationRef.isStable
       .pipe(
         first(isStable => isStable === true),
-        tap((stable) => log.debug('$appIsStable => ', stable)),
         switchMap(() => interval(time)),
         switchMap(() => this.updates.checkForUpdate())
       );

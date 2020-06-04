@@ -17,13 +17,7 @@ import { from, Observable } from 'rxjs';
   }]
 })
 export class MobileControlComponent implements OnInit, OnChanges, ControlValueAccessor {
-
-  get selectedCountryCode() {
-    const country = this.intlTelInstance.getSelectedCountryData();
-    return country && country.dialCode;
-  }
   private intlTelInstance = null;
-
   @Input() private code: string = null;
   @Input() private readonly autoDetectCountry = true;
 
@@ -34,6 +28,11 @@ export class MobileControlComponent implements OnInit, OnChanges, ControlValueAc
   onTouched: () => {};
 
   constructor() { }
+
+  get selectedCountryCode() {
+    const country = this.intlTelInstance.getSelectedCountryData();
+    return country && country.dialCode;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.code && this.intlTelInstance) {

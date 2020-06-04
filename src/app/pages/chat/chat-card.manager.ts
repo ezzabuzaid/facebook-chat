@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type, ComponentFactory } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 
 export interface IChatCard<T> {

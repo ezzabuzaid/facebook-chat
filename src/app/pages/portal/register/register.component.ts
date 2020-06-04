@@ -4,10 +4,11 @@ import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
-import { DateField, EFieldType, Field, Form, SelectField, SelectOption, SubmitEvent } from '@partials/form';
+import { DateField, EFieldType, Field, Form, RawField, SelectField, SelectOption, SubmitEvent } from '@partials/form';
 import { UserService } from '@shared/account';
 import { PortalModel } from '@shared/models';
 import { Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase } from '@shared/validators';
+import { CountryControlComponent } from '@widget/country-control';
 import { merge, Observable, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -46,23 +47,24 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       autocomplete: 'mobile',
       label: 'placeholder_mobile',
       value: 792807794,
-      validation: { validators: [Validators.required] }
+      validation: Validators.required
     }),
     new Form<PortalModel.IProfile>([
       new Field('firstName', {
         label: 'placeholder_firstname',
         section: 1,
-        validation: {
-          validators: [Validators.required]
-        }
+        validation: Validators.required
       }),
       new Field('lastName', {
         label: 'placeholder_lastname',
         section: 1,
-        validation: {
-          validators: [Validators.required]
-        }
+        validation: Validators.required
       }),
+      // new RawField('nationality', {
+      //   component: CountryControlComponent,
+      //   section: 3,
+      //   validation: Validators.required
+      // }),
       new Field('nationality', {
         label: 'Nationality',
         type: EFieldType.COUNTRY,
@@ -75,25 +77,19 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         label: 'Place of birth',
         type: EFieldType.COUNTRY,
         section: 3,
-        validation: {
-          validators: [Validators.required]
-        }
+        validation: Validators.required
       }),
       new DateField('dateOfBrith', {
         label: 'Date of birth',
         section: 3,
         max: new Date(),
-        validation: {
-          validators: [Validators.required]
-        }
+        validation: Validators.required
       }),
       new SelectField('gender', {
         label: 'Gender',
         section: 3,
         options: of([new SelectOption('Male', 0), new SelectOption('Female', 1)]),
-        validation: {
-          validators: [Validators.required]
-        }
+        validation: Validators.required
       }),
       new Field('occupation', {
         label: 'Occupation',
