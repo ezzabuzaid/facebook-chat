@@ -104,8 +104,3 @@ export class MediaHubManager {
         })
     }
 }
-
-export enum MediaHubViews {
-    ListView,
-    GridView
-}

@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Type, ComponentFactory } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 
 export interface IChatCard<T> {
@@ -17,6 +17,7 @@ class CardConfig<T> {
         this.withButton = config.withButton ?? true;
     }
 }
+
 @Injectable()
 export class ChatCardManager {
 
@@ -64,7 +65,7 @@ export class ChatCardManager {
     private createButton<T>(data: T, id: string) {
         const { element, reference } = this.createComponent(this.buttonComponent, data as any, id);
         this.buttons.set(id, reference);
-        element.style.setProperty('bottom', `${this.buttons.size * 5 + 2}%`);
+        element.style.setProperty('bottom', `${ this.buttons.size * 5 + 2 }%`);
     }
 
     private close<T>(component: ComponentReference<T>) {
@@ -105,7 +106,7 @@ export class ChatCardManager {
         this.buttons.delete(id);
 
         this.buttons.forEach((button) => {
-            this.getElement(button).style.setProperty('bottom', `${this.buttons.size * 5 + 2}%`);
+            this.getElement(button).style.setProperty('bottom', `${ this.buttons.size * 5 + 2 }%`);
         });
     }
 
@@ -148,7 +149,7 @@ export class ChatCardManager {
 
     adjustCaretCardPosition() {
         const caret = this.getElement(this.currentCard).querySelector('.caret') as HTMLElement;
-        caret.style.setProperty('bottom', `${this.buttons.size * 10 + 2}%`);
+        caret.style.setProperty('bottom', `${ this.buttons.size * 10 + 2 }%`);
     }
 
     setButtonComponent(component: Component<any>) {

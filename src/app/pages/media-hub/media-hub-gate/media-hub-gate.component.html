@@ -1,4 +1,4 @@
-<app-media-hub-header (onViewChange)="changeView($event)"></app-media-hub-header>
+<app-media-hub-header></app-media-hub-header>
 
 <mat-divider></mat-divider>
 
@@ -7,11 +7,6 @@
         <app-media-hub-folders></app-media-hub-folders>
     </div>
     <div #sidebarContainer sidebar-container class="test p-3">
-        <ng-container *ngIf="currentView === EmediaHubViews.GridView">
-            <app-media-hub-grid-view [parentSelector]="sidebarContainer"></app-media-hub-grid-view>
-        </ng-container>
-        <ng-container *ngIf="currentView === EmediaHubViews.ListView">
-            <app-media-hub-list-view [files]="[]"></app-media-hub-list-view>
-        </ng-container>
+        <app-media-hub-grid-view [parentSelector]="sidebarContainer"></app-media-hub-grid-view>
     </div>
 </app-sidebar>

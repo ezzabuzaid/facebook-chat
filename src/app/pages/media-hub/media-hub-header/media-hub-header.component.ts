@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MediaModel } from '@shared/models';
 import { skip, takeUntil } from 'rxjs/operators';
-import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
+import { MediaHubManager } from '../media-hub.manager';
 
 @Component({
   selector: 'app-media-hub-header',
@@ -12,8 +12,6 @@ import { MediaHubManager, MediaHubViews } from '../media-hub.manager';
 })
 export class MediaHubHeaderComponent implements OnInit {
   searchControl = new FormControl(this.mediaHubManager.getFileName());
-  @Output() onViewChange = new EventEmitter<MediaHubViews>();
-  EMediaHubViews = MediaHubViews;
   $folder = this.mediaHubManager.onFolderChange();
   $sharedView = this.mediaHubManager.viewChange();
   constructor(
@@ -62,11 +60,5 @@ export class MediaHubHeaderComponent implements OnInit {
       this.snackbar.open('Please select folder');
     }
   }
-
-  changeView(view: MediaHubViews) {
-    this.onViewChange.emit(view);
-  }
-
-
 
 }
