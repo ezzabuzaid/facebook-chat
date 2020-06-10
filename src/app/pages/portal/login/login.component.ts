@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
-import { EFieldType, Field, Form, } from '@partials/form';
+import { EFieldType, Field, Form } from '@ezzabuzaid/ngx-form-factory';
 import { UserService } from '@shared/account';
+import { Fields } from '@shared/common';
 import { PortalModel } from '@shared/models';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -17,21 +16,19 @@ import { switchMap } from 'rxjs/operators';
   }
 })
 export class LoginComponent implements OnInit {
-  rememberMeCheckBox = new Field<boolean>('name', {
+  rememberMeCheckBox = new Field<boolean>({
     type: EFieldType.CHECKBOX,
     value: true,
     label: 'Remember me!',
   });
-  form = new Form<PortalModel.ILoginRequest>([
-    new Field('username', {
+  form = new Form<PortalModel.ILoginRequest>({
+    username: new Field({
       label: 'placeholder_username',
       autocomplete: 'username',
-      validation: {
-        validators: [Validators.required]
-      }
+      validatorOrOpts: Validators.required
     }),
-    Field.Password('password')
-  ]);
+    password: Fields.Password()
+  });
 
   constructor(
     private readonly portalService: UserService,

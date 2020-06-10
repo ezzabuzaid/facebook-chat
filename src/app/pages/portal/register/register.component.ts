@@ -1,14 +1,14 @@
 
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
-import { DateField, EFieldType, Field, Form, RawField, SelectField, SelectOption, SubmitEvent } from '@partials/form';
+import { DateField, EFieldType, Field, Form, SelectField, SelectOption, SubmitEvent } from '@ezzabuzaid/ngx-form-factory';
 import { UserService } from '@shared/account';
+import { Fields } from '@shared/common';
 import { PortalModel } from '@shared/models';
 import { Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase } from '@shared/validators';
-import { CountryControlComponent } from '@widget/country-control';
 import { merge, Observable, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 
@@ -21,92 +21,91 @@ import { mapTo } from 'rxjs/operators';
   }
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
-  form = new Form<PortalModel.IRegister>([
-    new Field('username', {
+  form = new Form<PortalModel.IRegister>({
+    username: new Field({
       label: 'placeholder_username',
       autocomplete: 'username',
-      validation: { validators: [Validators.required] }
+      validatorOrOpts: Validators.required
     }),
-    Field.Email('email'),
-    Field.Password('password', {
+    email: Fields.Email(),
+    password: Fields.Password({
       autocomplete: 'new-password',
       hint: 'at least 8 charachter',
-      validation: {
-        validators: [
-          Validators.required,
-          Between(8, 16),
-          ContainsUppercase(),
-          ContainsLowercase(),
-          ContainsSpecialCharacter(),
-          ContainsNumber()
-        ]
-      }
+      validatorOrOpts: [
+        Validators.required,
+        Between(8, 16),
+        ContainsUppercase(),
+        ContainsLowercase(),
+        ContainsSpecialCharacter(),
+        ContainsNumber()
+      ]
     }),
-    new Field('mobile', {
+    mobile: new Field({
       type: EFieldType.TEL,
       autocomplete: 'mobile',
       label: 'placeholder_mobile',
-      value: 792807794,
-      validation: Validators.required
+      value: '792807794',
+      validatorOrOpts: Validators.required
     }),
-    new Form<PortalModel.IProfile>([
-      new Field('firstName', {
+    profile: new Form<PortalModel.IProfile>({
+      firstName: new Field({
         label: 'placeholder_firstname',
-        section: 1,
-        validation: Validators.required
+        section: 'name',
+        validatorOrOpts: Validators.required
       }),
-      new Field('lastName', {
+      lastName: new Field({
         label: 'placeholder_lastname',
-        section: 1,
-        validation: Validators.required
+        section: 'name',
+        validatorOrOpts: Validators.required
       }),
       // new RawField('nationality', {
       //   component: CountryControlComponent,
       //   section: 3,
-      //   validation: Validators.required
+      //   validatorOrOpts: Validators.required
       // }),
-      new Field('nationality', {
+      nationality: new Field({
         label: 'Nationality',
         type: EFieldType.COUNTRY,
-        section: 3,
-        validation: {
-          validators: [Validators.required]
-        }
+        section: 'General',
+        validatorOrOpts: Validators.required
       }),
-      new Field('placeOfBirth', {
+      placeOfBirth: new Field({
         label: 'Place of birth',
         type: EFieldType.COUNTRY,
-        section: 3,
-        validation: Validators.required
+        section: 'General',
+        validatorOrOpts: Validators.required
       }),
-      new DateField('dateOfBrith', {
+      dateOfBrith: new DateField({
         label: 'Date of birth',
-        section: 3,
+        section: 'General',
         max: new Date(),
-        validation: Validators.required
+        validatorOrOpts: Validators.required
       }),
-      new SelectField('gender', {
+      gender: new SelectField({
         label: 'Gender',
-        section: 3,
+        section: 'General',
         options: of([new SelectOption('Male', 0), new SelectOption('Female', 1)]),
-        validation: Validators.required
+        validatorOrOpts: Validators.required
       }),
-      new Field('occupation', {
+      occupation: new Field({
         label: 'Occupation',
-        section: 3
+        section: 'General'
       }),
-    ]).withName('profile')
-  ]);
+    })
+  })
 
 
   $passwordVisible: Observable<boolean> = null;
   constructor(
     private readonly router: Router,
     private readonly userService: UserService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private formBuilder: FormBuilder
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // this.formBuilder.group()
+  }
 
   ngAfterViewInit() {
     this.$passwordVisible = merge(

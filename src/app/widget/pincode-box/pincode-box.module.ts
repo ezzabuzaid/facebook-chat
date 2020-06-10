@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormModule } from '@partials/form';
 import { MaterialModule } from '@shared/common';
 import { PincodeBoxComponent } from './pincode-box.component';
 
@@ -10,7 +9,6 @@ import { PincodeBoxComponent } from './pincode-box.component';
   imports: [
     CommonModule,
     MaterialModule,
-    FormModule
   ]
 })
 export class PincodeBoxModule { }

@@ -11,8 +11,9 @@ export namespace PortalModel {
         mobile: string;
         username: string;
         email: string;
+        profile: IProfile
     }
-    export interface IProfile {
+    export class IProfile {
         firstName: string;
         lastName: string;
         country: string;

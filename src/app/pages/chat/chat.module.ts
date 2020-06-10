@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormModule } from '@partials/form';
 import { MaterialModule } from '@shared/common';
 import { UploadFileModule } from '@widget/upload-file';
 import { GravatarModule } from 'ngx-gravatar';
@@ -8,6 +7,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { ChatCardManager } from './chat-card.manager';
 import { ChatGroupCardComponent } from './chat-group-card/chat-group-card.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { FileViewerModule } from '@partials/file-viewer';
 import { PipesModule } from '@shared/pipes';
 import { FileControlModule } from '@widget/file-control/file-control.module';
@@ -41,13 +41,13 @@ import { MessageBubbleComponent } from './message-bubble/message-bubble.componen
     CommonModule,
     MaterialModule,
     GravatarModule,
-    FormModule,
     TimeagoModule.forRoot(),
     UploadFileModule,
     FileControlModule,
     PipesModule,
     FileViewerModule,
-    InifiniteScrollingModule
+    InifiniteScrollingModule,
+    ReactiveFormsModule
   ],
   providers: [
     ChatCardManager

@@ -1,7 +1,7 @@
 <div class="container h-100">
   <div class="row align-items-center justify-content-center h-100">
     <div class="col-12 col-md-10">
-      <app-form-container title="Register in our system" (onSubmit)="register($event)" [formGroup]="form">
+      <ngx-form-factory title="Register in our system" (onSubmit)="register($event)" [formGroup]="form">
         <ng-container ngProjectAs="[form-body]">
           <!-- TODO: Create custom password control -->
           <ng-container *ngIf="$passwordVisible | async">
@@ -43,7 +43,7 @@
           </ng-container>
         </ng-container>
         <button form-footer color="primary" mat-button [routerLink]="['../', 'login']">Login</button>
-      </app-form-container>
+      </ngx-form-factory>
     </div>
   </div>
 </div>
