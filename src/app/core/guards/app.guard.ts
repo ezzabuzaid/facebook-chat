@@ -38,14 +38,4 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
     return true;
   }
 
-  // private authenticate(redirectUrl = undefined) {
-  // if (!this.userService.isAuthenticated) {
-  //   this.router.navigate([RoutesConstants.LOGIN.withSlash], {
-  //     queryParams: { [ApplicationConstants.REDIRECT_URL]: redirectUrl || undefined }
-  //   });
-  //   return false;
-  // }
-  // return true;
-  // }
-
 }

@@ -73,7 +73,7 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.get(Constants.API.PORTAL.sendverificationemail);
   }
 
-  public logout(redirectUrl?) {
+  public logout(redirectUrl = this.router.url) {
     console.log(redirectUrl);
     const blob = new Blob([JSON.stringify({})], {
       [Constants.Application.DEVICE_UUID as any]: this.getDeviceUUID()
@@ -81,9 +81,8 @@ export class UserService extends SubjectFactory<boolean> {
     this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
       queryParams: {
-        // [Constants.Application.REDIRECT_URL]: redirectUrl || undefined,
-        fuck: 'test'
-      },
+        [Constants.Application.REDIRECT_URL]: redirectUrl ?? undefined
+      }
     });
     this.tokenHelper.deleteToken();
     this.notify(this.tokenHelper.isAuthenticated);

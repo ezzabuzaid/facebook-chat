@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 import { EFieldType, Field, Form } from '@ezzabuzaid/ngx-form-factory';
 import { UserService } from '@shared/account';
-import { Fields } from '@shared/common';
+import { Fields, RouteUtility } from '@shared/common';
 import { PortalModel } from '@shared/models';
 
 @Component({
@@ -13,7 +13,8 @@ import { PortalModel } from '@shared/models';
   styleUrls: ['./login.component.scss'],
   host: {
     class: 'bg--primary d-block h-100'
-  }
+  },
+  providers: [RouteUtility]
 })
 export class LoginComponent implements OnInit {
   rememberMeCheckBox = new Field<boolean>({
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly portalService: UserService,
     private readonly router: Router,
+    private routeUtility: RouteUtility
   ) { }
 
   ngOnInit() { }
@@ -42,9 +44,14 @@ export class LoginComponent implements OnInit {
       this.portalService
         .login(value, this.rememberMeCheckBox.value)
         .subscribe(() => {
-          this.router.navigateByUrl(Constants.Routing.DEFAULT.withSlash);
+          this.navigate();
         });
     }
+  }
+
+  navigate() {
+    const redirectUrl = this.routeUtility.redirectUrl();
+    this.router.navigateByUrl(redirectUrl ?? Constants.Routing.DEFAULT.withSlash);
   }
 
 }

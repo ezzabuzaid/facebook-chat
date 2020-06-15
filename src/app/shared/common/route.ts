@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Constants } from '@core/constants';
 import { distinctUntilKeyChanged, pluck, share } from 'rxjs/operators';
 
 @Injectable({
@@ -23,4 +24,9 @@ export class RouteUtility {
     getQueryParam(param: string) {
         return this.route.snapshot.queryParamMap.get(param);
     }
+
+    redirectUrl() {
+        return this.route.snapshot.queryParamMap.get(Constants.Application.REDIRECT_URL);
+    }
+
 }
