@@ -28,6 +28,6 @@ export class Connectivity {
             fromEvent(this.window, 'online').pipe(mapTo(true)),
             fromEvent(this.window, 'offline').pipe(mapTo(false))
         )
-            .pipe(share())
+            .pipe(share());
     }
 }

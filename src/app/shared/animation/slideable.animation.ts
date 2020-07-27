@@ -11,4 +11,4 @@ export const slideableAnimation = trigger('slide', [
         }),
         animate(300)]
     )
-])
+]);

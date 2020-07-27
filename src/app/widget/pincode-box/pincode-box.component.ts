@@ -8,8 +8,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 export type PincodeBoxDialogHandler = (data: PincodeBoxData) => MatDialogRef<PincodeBoxComponent>;
 
 export interface PincodeBoxData {
-  type: 'account' | 'mobile' | 'email',
-  proxy: 'sms' | 'email'
+  type: 'account' | 'mobile' | 'email';
+  proxy: 'sms' | 'email';
 }
 
 export const PincodeBoxDialog = new InjectionToken('PincodeBoxDialog', {
@@ -19,7 +19,7 @@ export const PincodeBoxDialog = new InjectionToken('PincodeBoxDialog', {
     return (data: PincodeBoxData) => dialog.open(PincodeBoxComponent, {
       data,
       width: '600px'
-    })
+    });
   }
 });
 

@@ -92,7 +92,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.goToStep(1);
     this.verificationForm.patchValue({ username: 'profile', firstName: 'ezz', lastName: 'abuzaid', placeOfBirth: 'jo' });
-    this.sendPincodeForm.patchValue({ email: 'admin@admin.com' })
+    this.sendPincodeForm.patchValue({ email: 'admin@admin.com' });
     this.resetPasswordForm.valueChanges
       .pipe(takeUntil(this.subscription))
       .subscribe(() => {
@@ -121,7 +121,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.nextStep();
         console.log(this.sendPincodeForm.value);
-      })
+      });
   }
 
   get sendPincodeType() {
@@ -136,7 +136,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     })
       .subscribe(() => {
         this.nextStep();
-      })
+      });
   }
 
   resetPassword(event: SubmitEvent) {

@@ -1,9 +1,9 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from 'environments/environment';
 import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
 import { IRequestOptions } from '@shared/common';
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {

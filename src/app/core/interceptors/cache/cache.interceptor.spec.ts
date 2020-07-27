@@ -8,7 +8,7 @@ import { CacheInterceptor } from './cache.interceptor';
 
 
 xdescribe(`CacheInterceptor`, () => {
-    const HttpCacheHelperSpy = jasmine.createSpyObj<HttpCacheHelper>('HttpCacheHelper', ['populate', 'get'])
+    const HttpCacheHelperSpy = jasmine.createSpyObj<HttpCacheHelper>('HttpCacheHelper', ['populate', 'get']);
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientModule, HttpClientTestingModule],
@@ -33,7 +33,7 @@ xdescribe(`CacheInterceptor`, () => {
 
     it('should pass off if the request method is not get', () => {
         const httpClient = TestBed.inject(HttpClient);
-        const cacheHelper = TestBed.inject(HttpCacheHelper)
+        const cacheHelper = TestBed.inject(HttpCacheHelper);
 
         httpClient.delete('http://test.com/api/users').subscribe();
 
@@ -42,7 +42,7 @@ xdescribe(`CacheInterceptor`, () => {
 
     it('should pass off if the request is not cachable', () => {
         const httpClient = TestBed.inject(HttpClient);
-        const cacheHelper = TestBed.inject(HttpCacheHelper)
+        const cacheHelper = TestBed.inject(HttpCacheHelper);
 
         httpClient
             .configure({ LOCAL_CACHE: false })

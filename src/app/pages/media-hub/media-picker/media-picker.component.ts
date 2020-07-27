@@ -28,7 +28,7 @@ export class MediaPickerComponent implements OnInit {
       this.tagID,
       pageQuery
     )
-  );
+  )
 
   ngOnInit() { }
 

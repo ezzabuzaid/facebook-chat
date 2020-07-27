@@ -34,12 +34,12 @@ export class ChatService {
 
     public getGroupMembers(group_id: string) {
         return this.http.get<ListEntityResponse<ChatModel.IMember>>(`${Constants.API.CHAT.members}/${group_id}`)
-            .pipe(map(({ list }) => list))
+            .pipe(map(({ list }) => list));
     }
 
     public fetchMessages(room: string, query: ListEntityQuery) {
         const plainQuery = new PlainQuery(query);
-        return this.http.get<ListEntityResponse<ChatModel.Message>>(`${Constants.API.CHAT.rooms}/${room}/messages?${plainQuery.asString}`)
+        return this.http.get<ListEntityResponse<ChatModel.Message>>(`${Constants.API.CHAT.rooms}/${room}/messages?${plainQuery.asString}`);
     }
 
 }

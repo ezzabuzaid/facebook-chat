@@ -33,11 +33,11 @@ export class DatagridComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.fetchData({ page: 0, size: 20 })
+    this.fetchData({ page: 0, size: 20 });
   }
 
   onPaginate(event: PageEvent) {
-    this.fetchData({ page: event.pageIndex, size: event.pageSize })
+    this.fetchData({ page: event.pageIndex, size: event.pageSize });
   }
 
   fetchData(query) {
@@ -46,7 +46,7 @@ export class DatagridComponent implements OnInit, AfterViewInit, OnChanges {
         this.dataSource = data.list;
         this.paginator.length = data.totalCount;
       }))
-      .subscribe()
+      .subscribe();
   }
 
   // get displayColumns() {

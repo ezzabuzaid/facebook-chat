@@ -10,7 +10,7 @@ export namespace ChatModel {
     export interface IRoom extends IModel {
         folder: string;
         avatar: string;
-        name: string
+        name: string;
         single: boolean;
     }
 

@@ -6,7 +6,7 @@ export class NavigationItem {
   icon: string;
   routerLink?: string;
   children?: NavigationItem[];
-  queryParams?= null;
+  queryParams ?= null;
   constructor(item: NavigationItem) {
     this.type = item.type ?? 'item';
     this.title = item.title;

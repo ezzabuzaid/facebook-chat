@@ -28,7 +28,7 @@ export class UsersService {
 
 
     public getCurrentUser() {
-        return this.http.get<UsersModel.IUser>(`${ Constants.API.USERS.base }/${ this.tokenService.decodedToken.id }`)
+        return this.http.get<UsersModel.IUser>(`${ Constants.API.USERS.base }/${ this.tokenService.decodedToken.id }`);
     }
 
 }

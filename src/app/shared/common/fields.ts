@@ -9,7 +9,7 @@ export class Fields {
             label: 'placeholder_passowrd',
             validatorOrOpts: Validators.required,
             ...options
-        })
+        });
     }
 
     static Email(options?: IFieldOptions<string>) {

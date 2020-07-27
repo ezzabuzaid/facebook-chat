@@ -30,11 +30,11 @@ export class MediaHubFoldersComponent implements OnInit {
       .pipe(switchMap((value) => {
         return value
           ? this.uploadsService.getSharedFolders()
-          : this.uploadsService.getUserFolders()
+          : this.uploadsService.getUserFolders();
       }))
       .subscribe(data => {
         this.folders = data;
-      })
+      });
   }
 
   createFolder(name: string) {
@@ -46,7 +46,7 @@ export class MediaHubFoldersComponent implements OnInit {
             _id: id,
             name
           }));
-        })
+        });
     }
   }
 

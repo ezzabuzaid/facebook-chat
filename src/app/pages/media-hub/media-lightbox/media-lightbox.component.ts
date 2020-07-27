@@ -4,9 +4,9 @@ import { ListEntityQuery, MediaModel } from '@shared/models';
 import { UploadsService } from '@shared/services/upload';
 import { InifiniteScrollingComponent } from '@widget/inifinite-scroll';
 export interface ILightBoxData {
-  file: MediaModel.File,
-  folder?: string,
-  tag?: string
+  file: MediaModel.File;
+  folder?: string;
+  tag?: string;
 }
 @Component({
   selector: 'app-media-lightbox',
@@ -28,7 +28,7 @@ export class MediaLightboxComponent implements OnInit {
   ) { }
   $provider = (pageQuery: ListEntityQuery) => this.uploadsService.searchForFiles(
     new MediaModel.FileSearchQuery(null, this.dialogData.folder, this.dialogData.tag, pageQuery)
-  );
+  )
 
   ngOnInit() { }
 

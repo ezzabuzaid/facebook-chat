@@ -43,6 +43,6 @@ export interface IConfirmPopup extends PopupData {
 }
 
 export interface IPromptPopup extends PopupData {
-  value?: string
+  value?: string;
   confirm?: string;
 }

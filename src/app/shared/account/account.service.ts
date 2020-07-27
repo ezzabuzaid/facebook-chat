@@ -50,7 +50,7 @@ export class UserService extends SubjectFactory<boolean> {
       ))
       .pipe(tap((data) => {
         this.tokenHelper.setToken(data.token, data.refreshToken, this.tokenHelper.oneTimeLogin);
-      }))
+      }));
   }
 
   public checkIfAccountIsExist(payload: PortalModel.IRegister) {

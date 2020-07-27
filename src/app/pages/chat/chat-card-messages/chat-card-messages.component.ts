@@ -27,7 +27,7 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestr
     private readonly chatManager: ChatManager,
     private readonly elementRef: ElementRef<HTMLElement>,
   ) { }
-  $provider = (pageQuery: ListEntityQuery) => this.chatService.fetchMessages(this.id, pageQuery)
+  $provider = (pageQuery: ListEntityQuery) => this.chatService.fetchMessages(this.id, pageQuery);
 
   ngOnInit() {
     this.chatManager.socket
@@ -50,7 +50,7 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(takeUntil(this.subscription))
       .subscribe(() => {
         this.messageBubbleComponents.last.element.scrollIntoView();
-      })
+      });
   }
 
   trackBy(index: number, message: ChatModel.Message) {
@@ -67,7 +67,7 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnDestroy() {
-    AppUtils.unsubscribe(this.subscription)
+    AppUtils.unsubscribe(this.subscription);
   }
 
 }

@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   public user = this.tokenService.decodedToken;
   routes = Constants.Routing;
   languageEnum = ELanguage;
-  constructor (
+  constructor(
     private readonly languageService: LanguageService,
     private readonly sidebarService: SidebarService,
     private readonly tokenService: TokenHelper,
