@@ -1,12 +1,12 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { TestUtility } from 'test/fixture';
-import { MaterialModule } from '@shared/common';
-import { ProgressBarComponent } from './progress-bar.component';
-import { isObservable } from 'rxjs';
-import { ProgressBarManager } from './progress-bar.manager';
-import { skip } from 'rxjs/operators';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { MaterialModule } from '@shared/common';
+import { isObservable } from 'rxjs';
+import { skip } from 'rxjs/operators';
+import { TestUtility } from 'test/fixture';
+import { ProgressBarComponent } from './progress-bar.component';
+import { ProgressBarManager } from './progress-bar.manager';
 
 describe('ProgressBarComponent', () => {
   let component: ProgressBarComponent;

@@ -55,4 +55,4 @@ export class HttpCacheHelper {
         return this.collection.clear();
     }
 
-} 
+}

@@ -1,11 +1,11 @@
 import { HttpClient, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { HttpCacheHelper, CACHE_DATABASE } from '@core/helpers/cache';
+import { CACHE_DATABASE, HttpCacheHelper } from '@core/helpers/cache';
 import { AppUtils } from '@core/helpers/utils';
+import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
 import { asyncData } from 'test/fixture';
 import { CacheInterceptor } from './cache.interceptor';
-import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
 
 describe(`CacheInterceptor`, () => {
 

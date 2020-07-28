@@ -1,10 +1,10 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { FavoriteCheckboxComponent } from './favorite-checkbox.component';
-import { TestUtility } from 'test/fixture';
-import { MaterialModule } from '@shared/common';
-import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { MaterialModule } from '@shared/common';
+import { TestUtility } from 'test/fixture';
+import { FavoriteCheckboxComponent } from './favorite-checkbox.component';
 
 describe('FavoriteCheckboxComponent', () => {
   let component: FavoriteCheckboxComponent;

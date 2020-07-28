@@ -4,8 +4,14 @@ import { NgModule } from '@angular/core';
 import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
 import { RequestOptionsModule } from '@ezzabuzaid/ngx-request-options';
 import { IRequestOptions } from '@shared/common';
-import { LoggerInterceptor, ProgressInterceptor, SetupInterceptor, TeardownInterceptor, UniversalInterceptor, UrlInterceptor, CacheInterceptor } from './interceptors';
 import { CACHE_DATABASE } from './helpers/cache';
+import {
+  CacheInterceptor,
+  LoggerInterceptor,
+  ProgressInterceptor,
+  SetupInterceptor,
+  TeardownInterceptor, UniversalInterceptor, UrlInterceptor
+} from './interceptors';
 
 @NgModule({
   imports: [

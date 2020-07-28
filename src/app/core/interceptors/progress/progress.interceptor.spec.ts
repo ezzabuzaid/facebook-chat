@@ -4,7 +4,7 @@ import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AppUtils } from '@core/helpers/utils';
 import { ProgressBarManager } from '@widget/progress-bar';
-import { assertGet, assertPost, apiUrl } from 'test/fixture';
+import { apiUrl, assertGet, assertPost } from 'test/fixture';
 import { ProgressInterceptor } from './progress.interceptor';
 
 describe(`ProgressInterceptor`, () => {
@@ -100,7 +100,7 @@ describe(`ProgressInterceptor`, () => {
         // Assert
         TestBed.inject(HttpTestingController)
             .expectOne(urlPortion)
-            .flush({ message: message }, new HttpErrorResponse({ status: 400, statusText: 'Bad Request', }));
+            .flush({ message }, new HttpErrorResponse({ status: 400, statusText: 'Bad Request', }));
         expect(TestBed.inject(MatSnackBar).open).toHaveBeenCalledWith(message);
     }));
 

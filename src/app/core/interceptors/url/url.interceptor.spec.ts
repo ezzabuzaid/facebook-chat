@@ -3,8 +3,8 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
-import { UrlInterceptor } from './url.interceptor';
 import { apiUrl } from 'test/fixture';
+import { UrlInterceptor } from './url.interceptor';
 
 describe(`UrlInterceptor`, () => {
 

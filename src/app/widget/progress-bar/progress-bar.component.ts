@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ProgressBarManager } from './progress-bar.manager';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { delay } from 'rxjs/operators';
+import { ProgressBarManager } from './progress-bar.manager';
 
 @Component({
   selector: 'app-progress-bar',

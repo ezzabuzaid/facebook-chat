@@ -2,10 +2,10 @@ import { HttpClient, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/commo
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AppUtils } from '@core/helpers/utils';
-import { TeardownInterceptor } from './teardown.interceptor';
-import { UserService } from '@shared/account';
 import { TokenHelper } from '@core/helpers/token';
+import { AppUtils } from '@core/helpers/utils';
+import { UserService } from '@shared/account';
+import { TeardownInterceptor } from './teardown.interceptor';
 
 describe(`TeardownInterceptor`, () => {
 
@@ -88,7 +88,7 @@ describe(`TeardownInterceptor`, () => {
     });
 
     function getTeardownInterceptor() {
-        return (TestBed.inject(HTTP_INTERCEPTORS)[0] as TeardownInterceptor)
+        return (TestBed.inject(HTTP_INTERCEPTORS)[0] as TeardownInterceptor);
     }
 
 });

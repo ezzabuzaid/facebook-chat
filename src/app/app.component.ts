@@ -7,6 +7,7 @@ import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-
 import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 import { UserService } from '@shared/account';
 import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
@@ -33,7 +34,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly analyticService: AnalyticsService,
     private readonly connectivity: Connectivity,
     private readonly userService: UserService,
-    private readonly tokenHelper: TokenHelper
+    private readonly tokenHelper: TokenHelper,
+    private translateService: TranslateService
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -81,10 +83,10 @@ export class AppComponent implements OnInit, OnDestroy {
     //     });
     this.renderer.addClass(this.document.body, 'default-theme');
     this.seoService.populate({
-      title: 'Angular Buildozer Boilerplate',
+      title: this.translateService.instant('application_name'),
       description: 'Angular made easy',
       image: 'https://www.archer.ie/wp-content/uploads/2019/05/Angular_2.jpg',
-      keywords: ['angular', 'backbone', 'ezzabuzaid', 'buildozer', 'boilerplate', 'angular starter', 'seed', 'angular seed'].join(',')
+      keywords: ['angular', 'ezzabuzaid', 'buildozer', 'boilerplate', 'angular starter', 'seed', 'angular seed'].join(',')
     });
 
   }

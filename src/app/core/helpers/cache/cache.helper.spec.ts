@@ -1,21 +1,22 @@
 import { HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { AsyncCollection, AsyncDatabase } from '@ezzabuzaid/document-storage';
-import { CacheDatabase, HttpCacheEntry, HttpCacheHelper } from './cache.helper';
+import { CACHE_DATABASE, HttpCacheEntry, HttpCacheHelper } from './cache.helper';
 
-xdescribe('HttpCacheService', () => {
+
+describe('HttpCacheHelper', () => {
   let service: HttpCacheHelper = null;
   let storage: AsyncDatabase = null;
   const COLLECTION_NAME = 'TEST';
   const ENTRY_NAME = 'endpoint';
-  const mockCollection = jasmine.createSpyObj<AsyncCollection<any>>('AsyncCollection', ['clear', 'set', 'get', 'getAll']);
-
+  const mockCollection = jasmine.createSpyObj<AsyncCollection<any>>('AsyncCollection', ['clear', 'set', 'get']);
 
   beforeEach(() => {
+
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: CacheDatabase,
+          provide: CACHE_DATABASE,
           useValue:
           {
             collection: jasmine.createSpy().and.returnValue(mockCollection)
@@ -24,8 +25,7 @@ xdescribe('HttpCacheService', () => {
       ]
     });
     service = TestBed.inject(HttpCacheHelper);
-    storage = TestBed.inject(CacheDatabase);
-    spyOn(service, 'removeOutdatedEntries');
+    storage = TestBed.inject(CACHE_DATABASE);
   });
 
   afterEach(() => {
@@ -37,29 +37,38 @@ xdescribe('HttpCacheService', () => {
   });
 
   it('[populate] should get the specifed cache collection', () => {
+    // Arrange
     service.populate(COLLECTION_NAME);
 
+    // Act
     expect(storage.collection).toHaveBeenCalledTimes(1);
     expect(storage.collection).toHaveBeenCalledWith(COLLECTION_NAME);
   });
 
   it('[set] should save the cache entry', () => {
+    // Arrange
     service.populate(COLLECTION_NAME);
     const entry = new HttpResponse();
+
+    // Act
     service.set(ENTRY_NAME, entry);
 
+    // Assert
     expect(mockCollection.set).toHaveBeenCalledTimes(1);
     expect(mockCollection.set).toHaveBeenCalledWith(new HttpCacheEntry(ENTRY_NAME, entry));
   });
 
   it('[get] should get the entry from the cache', async () => {
+    // Arrange
     service.populate(COLLECTION_NAME);
     const valueToCache = new HttpResponse();
     const entry = new HttpCacheEntry(ENTRY_NAME, valueToCache);
     mockCollection.get.and.returnValue(Promise.resolve(entry));
 
-    const cachedValue = await service.get(null);
+    // Act
+    const cachedValue = await service.get(null).toPromise();
 
+    // Assert
     expect(cachedValue instanceof HttpResponse).toBeTruthy();
   });
 
@@ -72,10 +81,3 @@ xdescribe('HttpCacheService', () => {
 
 });
 
-
-describe('HttpCacheEntry', () => {
-  it('should stringify the value', () => {
-    const entry = new HttpCacheEntry('', new HttpResponse());
-    expect(entry.value).toEqual(JSON.parse(JSON.stringify(new HttpResponse())));
-  });
-});

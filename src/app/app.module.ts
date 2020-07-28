@@ -4,8 +4,10 @@ import { Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { Constants } from '@core/constants';
 import { CoreModule } from '@core/core.module';
 import { LanguageLoader } from '@core/helpers/language';
+import { AppUtils } from '@core/helpers/utils';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IRequestOptions } from '@shared/common';
@@ -17,7 +19,7 @@ import { StaticPagesModule } from './pages/static/static-pages.module';
 
 export const localStorageFactory = (injector: Injector) => {
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
-    return new LocalStorage('buildozer');
+    return new LocalStorage(AppUtils.pascalCase(Constants.Application.APPLICATION_NAME));
   }
   return {
     get(param: string) { },
@@ -26,7 +28,7 @@ export const localStorageFactory = (injector: Injector) => {
 
 export const sessionStorageFactory = (injector: Injector) => {
   if (isPlatformBrowser(injector.get(PLATFORM_ID))) {
-    return new SessionStorage('buildozer');
+    return new SessionStorage(AppUtils.pascalCase(Constants.Application.APPLICATION_NAME));
   }
   return {
     get(param: string) { },

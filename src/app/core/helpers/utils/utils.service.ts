@@ -384,6 +384,10 @@ export class AppUtils {
         return !value;
     }
 
+    static pascalCase(value: string) {
+        return value?.split(' ').map(AppUtils.capitalizeFirstLetter).join('');
+    }
+
 }
 
 export function tryOrThrow<T>(cb: (...args: any) => T) {

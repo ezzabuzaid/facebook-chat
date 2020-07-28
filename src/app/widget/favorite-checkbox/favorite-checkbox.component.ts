@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils/utils.service';
 @Component({
   selector: 'app-favorite-checkbox',

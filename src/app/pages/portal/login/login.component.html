@@ -2,7 +2,7 @@
   <div class="row align-items-center justify-content-center h-100">
     <div class="col-12 col-md-8 col-lg-6">
       <ngx-form-factory title="Login in to continue" [formGroup]="form" (onSubmit)="login($event)">
-        <span form-header class="text-uppercase">Angular Buildozer</span>
+        <span form-header class="text-uppercase">{{ 'application_name' | translate }}</span>
         <ng-container ngProjectAs="[form-body]">
           <ngx-field-factory [field]="rememberMeCheckBox"></ngx-field-factory>
         </ng-container>

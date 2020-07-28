@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, ResolveStart } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, ResolveStart, Router } from '@angular/router';
 import { SubjectFactory } from '@core/helpers/subject-factory';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

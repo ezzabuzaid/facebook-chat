@@ -11,9 +11,9 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LocalStorage, SessionStorage } from '@ezzabuzaid/document-storage';
-import { MaterialModule, IRequestOptions } from '@shared/common';
-import 'zone.js/dist/zone-testing';
 import { RequestOptionsModule } from '@ezzabuzaid/ngx-request-options';
+import { IRequestOptions, MaterialModule } from '@shared/common';
+import 'zone.js/dist/zone-testing';
 
 @NgModule({
   imports: [
@@ -56,8 +56,8 @@ declare module '@angular/common/http/http' {
   // Augment HttpClient with the added `configure` method
   export interface HttpClient {
     /**
-    * Configure request options.
-    */
+     * Configure request options.
+     */
     configure(options: Partial<IRequestOptions>): HttpClient;
   }
 }

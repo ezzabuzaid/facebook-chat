@@ -1,8 +1,8 @@
 {
+	"application_name": "Angular Buildozer",
 	"actions": "Actions",
 	"addresses_list": "Addresses",
 	"admin_list": "Admins",
-	"application_title": "Buildozer",
 	"arabic": "Arabic",
 	"arabic_name": "Name (Arabic)",
 	"english": "English",

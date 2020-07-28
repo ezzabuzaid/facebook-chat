@@ -13,6 +13,7 @@ export function app() {
   const distFolder = join(process.cwd(), 'dist/browser');
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
+  // @ts-ignore
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
   }));
@@ -41,7 +42,7 @@ function run() {
   // Start up the Node server
   const server = app();
   server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node Express server listening on http://localhost:${ port }`);
   });
 }
 

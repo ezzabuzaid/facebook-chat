@@ -14,7 +14,9 @@ export class SeoService {
   ) { }
 
   set title(value: string) {
-    this.titleService.setTitle(`${value} | Tradehub`);
+    this.titleService.setTitle(value);
+    this.metaService.updateTag({ name: 'application-name', content: value });
+    this.metaService.updateTag({ name: 'apple-mobile-web-app-title', content: value });
   }
 
   get title() {
@@ -80,7 +82,7 @@ export class SeoService {
 
   clear(meta: (keyof MetaTitles)[]) {
     meta.forEach(tag => {
-      this.metaService.removeTag(`name=${tag}`);
+      this.metaService.removeTag(`name=${ tag }`);
     });
   }
 
