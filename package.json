@@ -34,7 +34,7 @@
     "@angular/service-worker": "~10.0.5",
     "@auth0/angular-jwt": "^4.0.0",
     "@ezzabuzaid/document-storage": "^0.4.6",
-    "@ezzabuzaid/ngx-form-factory": "0.0.17",
+    "@ezzabuzaid/ngx-form-factory": "^0.1.0",
     "@ezzabuzaid/ngx-request-options": "0.0.7",
     "@joeattardi/emoji-button": "^2.12.1",
     "@nguniversal/express-engine": "^9.0.0",
