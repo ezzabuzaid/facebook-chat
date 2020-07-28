@@ -171,6 +171,7 @@ export class AppUtils {
             const later = () => {
                 timeout = null;
                 if (!immediate) {
+                    // @ts-ignore
                     func.apply(this, Array.from(arguments));
                 }
             };
@@ -179,6 +180,7 @@ export class AppUtils {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
             if (callNow) {
+                // @ts-ignore
                 func.apply(this, Array.from(arguments));
             }
         };

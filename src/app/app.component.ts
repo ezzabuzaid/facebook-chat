@@ -164,8 +164,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.userService.oneTimeLogin()) {
       this.userService.logout();
-      return '';
     }
+    return '';
   }
 
 }

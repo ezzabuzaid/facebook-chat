@@ -25,21 +25,10 @@ export class TeardownInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers = request.headers.set(Constants.Application.DEVICE_UUID, `${ this.userService.getDeviceUUID() }`);
-        if (this.tokenHelper.isAuthenticated) {
-            headers = headers.set('Authorization', `${ this.tokenHelper.token }`);
-        }
+        headers = request.headers.set('Authorization', `${ this.tokenHelper.token }`);
 
-
-        // const retryCount = 0;
         return next.handle(this.requestOptions.clone(request, { headers }))
             .pipe(
-                // TODO: implement retry with backoff operator
-                // retryWhen((source) => {
-                //     return source.pipe(
-                //         delay(3000),
-                //         mergeMap((error)=> retryCount > 3 ? throwError(error) : of(error) )
-                //     );
-                // }),
                 catchError((event: HttpErrorResponse) => {
                     if (event instanceof HttpErrorResponse) {
                         switch (event.status) {
@@ -47,6 +36,7 @@ export class TeardownInterceptor implements HttpInterceptor {
                                 return this.tryRefreshToken(event).pipe(switchMap(() => this.intercept(request, next)));
                             case 500:
                                 this.snackbar.open('Internal error. Please try again later.');
+                                break;
                         }
                     }
                     return throwError(event);

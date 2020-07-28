@@ -67,12 +67,10 @@ export function checkCell(tableRow: HTMLTableRowElement, index, name: string, ti
 
 
 export class TestUtility<T> {
-    fixture: ComponentFixture<T>;
+
     constructor(
-        public component: Type<T>,
-    ) {
-        this.fixture = TestBed.createComponent(component);
-    }
+        public fixture: ComponentFixture<T>,
+    ) { }
 
     getComponent<Y>(componentType: Type<Y>): Y {
         return this.getComponentDebug(componentType).componentInstance;

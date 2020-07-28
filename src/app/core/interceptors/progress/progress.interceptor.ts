@@ -25,7 +25,9 @@ export class ProgressInterceptor implements HttpInterceptor {
         }
 
         this.formFactoryManager.setState(this.requestOptions.get(request, 'FORM_PROGRESS_BAR'));
-        this.progressBarManager.notify(this.requestOptions.get(request, 'PROGRESS_BAR'));
+        if (this.requestOptions.get(request, 'PROGRESS_BAR') && request.method !== 'GET') {
+            this.progressBarManager.show();
+        }
 
         return next.handle(request)
             .pipe(
@@ -44,7 +46,7 @@ export class ProgressInterceptor implements HttpInterceptor {
                         }
                     }),
                 finalize(() => {
-                    this.progressBarManager.notify(false);
+                    this.progressBarManager.hide();
                     this.formFactoryManager.hideProgressBar();
                 }),
             );

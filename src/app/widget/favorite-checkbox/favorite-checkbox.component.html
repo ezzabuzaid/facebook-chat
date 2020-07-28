@@ -1,0 +1,10 @@
+<div class="fav-check-box">
+    <label [for]="id" class="pointer">
+        <a mat-icon-button>
+            <mat-icon class="text-warning">{{ checked ? 'star' : 'star_outline' }}</mat-icon>
+        </a>
+        <ng-content></ng-content>
+    </label>
+    <input [id]="id" type="checkbox" [checked]="checked" #checkbox
+        (change)="$event.stopImmediatePropagation(); onChange(checkbox?.checked)" hidden>
+</div>

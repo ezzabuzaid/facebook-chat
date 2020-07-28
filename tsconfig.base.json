@@ -13,12 +13,16 @@
     "target": "es2015",
     "removeComments": true,
     "resolveJsonModule": true,
-    "strict": false,
     "strictNullChecks": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "pretty": true,
     "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "downlevelIteration": true,
     "typeRoots": [
       "node_modules/@types"
     ],

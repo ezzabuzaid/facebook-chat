@@ -30,7 +30,7 @@ export class SetupInterceptor implements HttpInterceptor {
 
         return next.handle(request)
             .pipe(
-                map((response: HttpResponse<any>) => {
+                map((response) => {
                     const fullResponse = this.requestData.get(request, 'FULL_RESPONSE');
                     const defaultUrl = this.requestData.get(request, 'DEFAULT_URL');
                     if (response instanceof HttpResponse && defaultUrl && AppUtils.not(fullResponse)) {
