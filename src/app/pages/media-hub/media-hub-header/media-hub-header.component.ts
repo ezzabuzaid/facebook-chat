@@ -28,7 +28,7 @@ export class MediaHubHeaderComponent implements OnInit {
           folder: this.mediaHubManager.getFolderID(),
           tag: this.mediaHubManager.getTagID()
         });
-      })
+      });
 
     this.mediaHubManager.onFolderChange()
       .pipe(
@@ -38,7 +38,7 @@ export class MediaHubHeaderComponent implements OnInit {
       .subscribe(() => {
         this.searchControl.setValue('', { emitEvent: false });
         this.mediaHubManager.search(null);
-      })
+      });
   }
 
   async uploadFiles(files: FileList) {

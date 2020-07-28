@@ -33,7 +33,7 @@ export class MessageBubbleComponent implements OnInit {
           this.loading = false;
           this.message._id = id;
           listener.removeAllListeners();
-        })
+        });
       this.cdf.markForCheck();
     }
     this.isSender = this.tokenService.decodedToken.id === this.message.user;

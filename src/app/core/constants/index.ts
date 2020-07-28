@@ -66,47 +66,47 @@ export namespace Constants {
         return this.folders + '/tags';
       },
       get folders() {
-        return this.base + '/folders'
+        return this.base + '/folders';
       },
       get files() {
-        return this.folders + '/files'
+        return this.folders + '/files';
       },
       get search() {
-        return this.base + '/search'
+        return this.base + '/search';
       }
     };
 
     static readonly PORTAL = {
       base: 'portal',
       get refreshtoken() {
-        return this.base + '/refreshtoken'
+        return this.base + '/refreshtoken';
       },
       get SEND_PINCODE() {
-        return this.base + '/sendpincode/'
+        return this.base + '/sendpincode/';
       },
       get CHECK_PINCODE() {
-        return this.base + '/checkpincode/'
+        return this.base + '/checkpincode/';
       },
       get RESET_PASSWORD() {
-        return this.base + '/resetpassword/'
+        return this.base + '/resetpassword/';
       },
       get sendverificationemail() {
-        return this.base + '/sendverificationemail'
+        return this.base + '/sendverificationemail';
       },
       get ACCOUNT_VERIFIED() {
-        return this.base + '/checkaccountverification'
+        return this.base + '/checkaccountverification';
       },
       get login() {
-        return this.base + '/login'
+        return this.base + '/login';
       },
       get logout() {
-        return this.base + '/logout'
+        return this.base + '/logout';
       }
     };
     static readonly USERS = {
       base: 'users',
       get search() {
-        return this.base + '/search'
+        return this.base + '/search';
       }
     };
     static readonly CHAT = {

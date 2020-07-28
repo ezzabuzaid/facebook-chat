@@ -7,7 +7,7 @@ xdescribe('SubjectFactory', () => {
         [null, undefined].forEach(value => {
             it(`${value}`, () => {
                 const subjectFactory = new SubjectFactory(value);
-                expect(subjectFactory.subject).toBeInstanceOf(Subject)
+                expect(subjectFactory.subject).toBeInstanceOf(Subject);
             });
         });
     });
@@ -16,7 +16,7 @@ xdescribe('SubjectFactory', () => {
         [null, undefined].forEach(value => {
             it(`${value}`, () => {
                 const subjectFactory = new SubjectFactory('value');
-                expect(subjectFactory.subject).toBeInstanceOf(BehaviorSubject)
+                expect(subjectFactory.subject).toBeInstanceOf(BehaviorSubject);
             });
         });
     });

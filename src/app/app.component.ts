@@ -139,19 +139,19 @@ export class AppComponent implements OnInit, OnDestroy {
       $online.subscribe(() => {
         noInternetConnectionSnackbar?.dismiss();
         this.renderer.removeClass(affectedElement, noConnectionClass);
-      })
+      });
       $offline.pipe(
         switchMap(() => {
           this.renderer.addClass(affectedElement, noConnectionClass);
           noInternetConnectionSnackbar = this.snackbar.open(
             'No connection, please check you internet!',
             'Refresh!',
-            { duration: 1000 * 1000 })
+            { duration: 1000 * 1000 });
           return noInternetConnectionSnackbar.onAction();
         }),
         tap(() => location.reload())
       )
-        .subscribe()
+        .subscribe();
     }
 
   }

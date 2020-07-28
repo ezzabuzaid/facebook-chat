@@ -129,10 +129,10 @@ export class AppUtils {
     static flattenArray(ary: any[]) {
         return ary.reduce((a, b) => {
             if (Array.isArray(b)) {
-                return a.concat(AppUtils.flattenArray(b))
+                return a.concat(AppUtils.flattenArray(b));
             }
-            return a.concat(b)
-        }, [])
+            return a.concat(b);
+        }, []);
     }
 
     /**

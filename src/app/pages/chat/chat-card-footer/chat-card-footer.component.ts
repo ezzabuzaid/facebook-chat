@@ -42,12 +42,12 @@ export class ChatCardFooterComponent implements OnInit {
 
   ngOnInit() {
     this.emojiPicker.on('emoji', emoji => {
-      this.messageFormControl.setValue(this.messageFormControl.value + emoji)
+      this.messageFormControl.setValue(this.messageFormControl.value + emoji);
     });
     this.messageFormControl.valueChanges
       .subscribe(value => {
         this.onActionBarVisibilityChange.emit(this.element);
-      })
+      });
   }
 
   openEmojiPicker(event) {
@@ -86,7 +86,7 @@ export class ChatCardFooterComponent implements OnInit {
       rawFile: file,
       user: this.tokenService.decodedToken.id,
       room: this.room._id,
-    })
+    });
   }
 
   openActionBar() {

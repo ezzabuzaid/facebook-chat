@@ -18,7 +18,7 @@ export class CacheInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const isCacheable = this.requestOptions.get(request, 'LOCAL_CACHE');
         console.log(AppUtils.notEquals(request.method, 'GET'));
-        console.log(request.method !== 'GET')
+        console.log(request.method !== 'GET');
         console.log(AppUtils.isFalsy(isCacheable));
         if (AppUtils.notEquals(request.method, 'GET') || AppUtils.isFalsy(isCacheable)) {
             return next.handle(request.clone());

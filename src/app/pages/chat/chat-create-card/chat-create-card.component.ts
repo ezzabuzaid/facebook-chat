@@ -43,7 +43,7 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
       typeaheadOperator(),
       switchMap((value) => this.usersService.searchForUsers(value)),
       map(users => users.filter(user => {
-        return this.selectedUsers.findIndex(selectedUser => selectedUser._id === user._id) === -1
+        return this.selectedUsers.findIndex(selectedUser => selectedUser._id === user._id) === -1;
       }))
     );
   }
@@ -84,7 +84,7 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
             this.snackbar.open('Please enter name');
             return of(null);
           }
-          return this.chatService.createRoom(message, name, this.selectedUsers.map(user => user._id))
+          return this.chatService.createRoom(message, name, this.selectedUsers.map(user => user._id));
         }),
         filter(AppUtils.notNullOrUndefined)
       )

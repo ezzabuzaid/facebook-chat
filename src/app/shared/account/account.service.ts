@@ -9,7 +9,7 @@ import { environment } from '@environments/environment';
 import { NAVIGATOR } from '@shared/common';
 import { PortalModel, ResponseModel } from '@shared/models';
 import { tap } from 'rxjs/operators';
-
+declare const biri: any;
 @Injectable({
   providedIn: 'root'
 })
@@ -50,7 +50,7 @@ export class UserService extends SubjectFactory<boolean> {
       ))
       .pipe(tap((data) => {
         this.tokenHelper.setToken(data.token, data.refreshToken, this.tokenHelper.oneTimeLogin);
-      }))
+      }));
   }
 
   public checkIfAccountIsExist(payload: PortalModel.IRegister) {
@@ -73,10 +73,10 @@ export class UserService extends SubjectFactory<boolean> {
     return this.http.get(Constants.API.PORTAL.sendverificationemail);
   }
 
-  public logout(redirectUrl = this.router.url) {
+  public async logout(redirectUrl = this.router.url) {
     console.log(redirectUrl);
     const blob = new Blob([JSON.stringify({})], {
-      [Constants.Application.DEVICE_UUID as any]: this.getDeviceUUID()
+      [Constants.Application.DEVICE_UUID as any]: await biri()
     });
     this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {

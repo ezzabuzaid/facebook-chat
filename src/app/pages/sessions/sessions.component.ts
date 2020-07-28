@@ -15,7 +15,7 @@ export class SessionsComponent implements OnInit {
       position: 'start',
       icons: [
         new Icon('block', (session) => {
-          this.deactivateSession(session)
+          this.deactivateSession(session);
         })
       ]
     }),

@@ -42,7 +42,7 @@ export class MediaHubManager {
                     tag: this.getTagID()
                 })),
                 typeaheadOperator()
-            )
+            );
     }
 
     search(query: MediaModel.FileSearchQuery) {
@@ -60,7 +60,7 @@ export class MediaHubManager {
                 tag: defaultQuery.tag,
                 shared: this.isShared()
             }
-        })
+        });
     }
 
     /**
@@ -92,7 +92,7 @@ export class MediaHubManager {
             height: '750px',
             panelClass: ['media-dialog'],
             data: { folder }
-        })
+        });
     }
 
     openLightbox(data: ILightBoxData) {
@@ -101,6 +101,6 @@ export class MediaHubManager {
             height: '100vh',
             panelClass: ['media-dialog'],
             data
-        })
+        });
     }
 }

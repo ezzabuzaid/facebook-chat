@@ -52,7 +52,7 @@ export class DisplayColumn<T>  {
                 return EColumnTypes.TEXT;
         }
     }
-};
+}
 
 export class ActionColumn {
     position: 'start' | 'end';

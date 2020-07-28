@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         section: 'General'
       }),
     })
-  })
+  });
 
 
   $passwordVisible: Observable<boolean> = null;

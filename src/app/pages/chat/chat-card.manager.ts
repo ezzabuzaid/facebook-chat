@@ -50,7 +50,7 @@ export class ChatCardManager {
         return {
             reference: componentRef,
             element
-        }
+        };
     }
 
     private createCard<T>(component: Component<T>, data: T, id: string) {
@@ -101,7 +101,7 @@ export class ChatCardManager {
     }
 
     removeButton(id: string) {
-        const component = this.buttons.get(id)
+        const component = this.buttons.get(id);
         this.close(component);
         this.buttons.delete(id);
 

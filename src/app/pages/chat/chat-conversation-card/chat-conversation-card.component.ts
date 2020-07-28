@@ -27,7 +27,7 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
     this.navigator.mediaDevices.getUserMedia({
       video: true,
       audio: false,
-    })
+    });
     this.chatManager.socket.on('StreamAnswer', (videoStream: ChatModel.VideoStream) => {
       console.log('Streaming', videoStream);
       // const peerConnection = new RTCPeerConnection();
@@ -42,7 +42,7 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
       //   answer,
       //   to: data.socket
       // });
-    })
+    });
   }
 
   updateScroll() {

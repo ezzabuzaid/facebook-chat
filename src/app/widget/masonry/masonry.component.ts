@@ -49,7 +49,7 @@ export class MasonryComponent implements OnInit, AfterContentInit {
         const rowSpan = Math.ceil((itemContent.clientHeight + rowGap) / (rowHeight + rowGap));
         /* Set the spanning as calculated above (S) */
         item.element.style.gridRowEnd = 'span ' + rowSpan;
-      }
+      };
       /**
        * Apply spanning to all the masonry items
        *
@@ -72,7 +72,7 @@ export class MasonryComponent implements OnInit, AfterContentInit {
               resizeMasonryItem(masonryItems[i]);
             });
         }
-      }
+      };
       /**
        * Resize the items when all the images inside the masonry grid
        * finish loading. This will ensure that all the content inside our
@@ -87,7 +87,7 @@ export class MasonryComponent implements OnInit, AfterContentInit {
         window.addEventListener(event, resizeAllMasonryItems);
       });
       resizeAllMasonryItems();
-    })
+    });
   }
 
 
@@ -105,13 +105,14 @@ export class MasonryComponent implements OnInit, AfterContentInit {
           subscriber.next();
           subscriber.complete();
         }
-      }
+      };
       imgs.forEach((img) => {
-        if (img.complete)
+        if (img.complete) {
           incrementCounter();
+        }
         else {
           img.addEventListener('load', incrementCounter, false);
-        };
+        }
       });
     });
   }

@@ -20,7 +20,7 @@ export const ContainsSpecialCharacter = () => {
 
 export const Between = (minlength: number, maxlength: number) => {
     return createValidator('between', (control) => length(control.value) > minlength - 1 && length(control.value) < maxlength - 1);
-}
+};
 
 function length(value: string) {
     return value && value.length;

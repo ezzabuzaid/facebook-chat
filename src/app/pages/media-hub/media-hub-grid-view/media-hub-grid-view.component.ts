@@ -30,7 +30,7 @@ export class MediaHubGridViewComponent implements OnInit {
       this.mediaHubManager.getTagID(),
       pageQuery
     )
-  );
+  )
 
   ngOnInit() {
     this.mediaHubManager.uploadListener

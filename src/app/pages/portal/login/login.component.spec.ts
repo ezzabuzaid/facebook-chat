@@ -32,7 +32,7 @@ fdescribe('LoginComponent', () => {
                 TranslateTestingModule
             ]
         }).compileComponents();
-        testUtility = new TestUtility(LoginComponent)
+        testUtility = new TestUtility(LoginComponent);
         component = testUtility.fixture.componentInstance;
     }));
 
@@ -49,7 +49,7 @@ fdescribe('LoginComponent', () => {
             test('FormIsNotValid_DoNothing')
                 .Givin(() => ({ valid: false }))
                 .When(({ valid }) => component.login({ valid, value: null }))
-                .Then(() => expect(TestBed.inject(UserService).login).not.toHaveBeenCalled())
+                .Then(() => expect(TestBed.inject(UserService).login).not.toHaveBeenCalled());
 
             test('FormIsValid_LogTheUserIn')
                 .Givin(() => ({ value: { password: 'testPassword', username: 'testUsername' } }))
@@ -73,7 +73,7 @@ fdescribe('LoginComponent', () => {
                     });
             });
         });
-    })
+    });
     describe('#ISOLATE', () => {
         // it.todo("Verify if a user will be able to login with a valid username and valid password.")
         // it.todo("Verify if a user cannot login with a valid username and an invalid password.")
@@ -170,7 +170,7 @@ fdescribe('LoginComponent', () => {
 
 
 function Isolate(specs: () => void) {
-    describe('#ISOLATE', specs)
+    describe('#ISOLATE', specs);
 }
 
 
@@ -186,9 +186,9 @@ function test(expectation: string) {
                                 assertion(acting((arrangement)()));
                             }));
                         }
-                    }
+                    };
                 }
-            }
+            };
         }
-    }
+    };
 }
