@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { delay } from 'rxjs/operators';
 import { ProgressBarManager } from './progress-bar.manager';
 
 @Component({
   selector: 'app-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss']
+  styleUrls: ['./progress-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProgressBarComponent implements OnInit {
-  public $visible = this.progressBarManager.listen().pipe(delay(0));
-  constructor(
-    private readonly progressBarManager: ProgressBarManager
-  ) { }
+export class ProgressBarComponent {
+  public visible = this.progressBarManager.listen().pipe(delay(0));
 
-  ngOnInit() { }
+  constructor(
+    private progressBarManager: ProgressBarManager
+  ) { }
 
 }

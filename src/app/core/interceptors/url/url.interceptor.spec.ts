@@ -1,21 +1,15 @@
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
+import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
-import { RequestOptionsModule } from '@ezzabuzaid/ngx-request-options';
-import { IRequestOptions } from '@shared/common';
+import { apiUrl } from 'test/fixture';
 import { UrlInterceptor } from './url.interceptor';
 
 describe(`UrlInterceptor`, () => {
-    // let httpMock: HttpTestingController;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientTestingModule,
-                RequestOptionsModule.forRoot<IRequestOptions>(),
-            ],
             providers: [
                 {
                     provide: HTTP_INTERCEPTORS,
@@ -24,12 +18,10 @@ describe(`UrlInterceptor`, () => {
                 },
             ],
         });
-
-
     });
 
 
-    it('should prefix the incoming url with the url from the environment when DEFAULT_URL flag is true', () => {
+    it('should prefix the incoming url with the url from the environment when DEFAULT_URL flag is true', fakeAsync(() => {
         // Arrange
         const http = TestBed.inject(HttpClient);
         const httpMock = TestBed.inject(HttpTestingController);
@@ -37,12 +29,14 @@ describe(`UrlInterceptor`, () => {
 
         // Act
         http.configure({ DEFAULT_URL: true }).get(urlPortion).subscribe();
+        flush();
 
         // Assert
-        httpMock.expectOne(environment.endpointUrl + urlPortion);
-    });
+        const { request } = httpMock.expectOne(environment.endpointUrl + urlPortion);
+        expect(request.url).toMatch(apiUrl(urlPortion));
+    }));
 
-    it('should send the request as it is without any modification when DEFAULT_URL flag is false', () => {
+    it('should send the request as it is without any modification when DEFAULT_URL flag is false', fakeAsync(() => {
         // Arrange
         const http = TestBed.inject(HttpClient);
         const httpMock = TestBed.inject(HttpTestingController);
@@ -50,9 +44,15 @@ describe(`UrlInterceptor`, () => {
 
         // Act
         http.configure({ DEFAULT_URL: false }).get(urlPortion).subscribe();
+        flush();
 
         // Assert
-        httpMock.expectOne(urlPortion);
+        const { request } = httpMock.expectOne(urlPortion);
+        expect(request.url).toMatch(urlPortion);
+    }));
+
+    afterAll(() => {
+        TestBed.inject(HttpTestingController).verify();
     });
 
 });

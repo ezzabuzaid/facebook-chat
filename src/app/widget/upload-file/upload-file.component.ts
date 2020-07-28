@@ -102,7 +102,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
 
   allowedToUpload(file: File) {
     const size = (file.size / 1000 / 1000);
-    return this.supported.some(el => `image/${el}` === file.type) && size < this.size;
+    return this.supported.some(el => `image/${ el }` === file.type) && size < this.size;
   }
 
   uploadFile(file: File) {
@@ -110,7 +110,7 @@ export class UploadFileComponent implements OnInit, ControlValueAccessor {
       if (this.external) {
         this.onUpload.emit(file);
       } else {
-        return this.uploadFileService.uploadImage(file, 'others')
+        this.uploadFileService.uploadImage(file, 'others')
           .subscribe(
             ({ id, path }) => {
               this.onSuccess(path);

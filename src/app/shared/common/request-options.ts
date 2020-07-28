@@ -20,7 +20,7 @@ export interface IRequestOptions {
     /**
      * Returns the whole resoponse
      *
-     * the default is to return only the data property from the reponse
+     * the default is to return only the data property from the response
      */
     FULL_RESPONSE: boolean;
     /**

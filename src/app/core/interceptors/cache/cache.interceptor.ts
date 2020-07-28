@@ -10,37 +10,34 @@ import { map, switchMap } from 'rxjs/operators';
 const log = new Logger('CacheInterceptor');
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
+
     constructor(
-        private readonly cacheHelper: HttpCacheHelper,
-        private readonly requestOptions: RequestOptions<IRequestOptions>
+        private cacheHelper: HttpCacheHelper,
+        private requestOptions: RequestOptions<IRequestOptions>
     ) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const isCacheable = this.requestOptions.get(request, 'LOCAL_CACHE');
-        console.log(AppUtils.notEquals(request.method, 'GET'));
-        console.log(request.method !== 'GET');
-        console.log(AppUtils.isFalsy(isCacheable));
-        if (AppUtils.notEquals(request.method, 'GET') || AppUtils.isFalsy(isCacheable)) {
-            return next.handle(request.clone());
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const cacheable = this.requestOptions.get(req, 'LOCAL_CACHE');
+        if (AppUtils.not(cacheable)) {
+            return next.handle(req);
         }
-        this.cacheHelper.populate(this.requestOptions.get(request, 'CACHE_CATEGORY'));
 
-        return from(this.cacheHelper.get(request.urlWithParams))
-            .pipe(
-                switchMap(response => {
-                    if (AppUtils.isNullorUndefined(response)) {
-                        return next.handle(request.clone())
-                            .pipe(map((event: HttpResponse<any>) => {
-                                if (event instanceof HttpResponse) {
-                                    this.cacheHelper.set(request.urlWithParams, event.clone());
-                                }
-                                return event;
-                            }));
-                    } else {
-                        log.debug(`${ request.method } Request for ${ request.urlWithParams } fetched from cache`);
-                        return of(response);
-                    }
-                })
-            );
+        this.cacheHelper.populate(this.requestOptions.get(req, 'CACHE_CATEGORY'));
+
+        return this.cacheHelper.get(req.urlWithParams)
+            .pipe(switchMap(response => {
+                if (AppUtils.isNullorUndefined(response)) {
+                    return next.handle(req)
+                        .pipe(map((event) => {
+                            if (event instanceof HttpResponse) {
+                                this.cacheHelper.set(req.urlWithParams, event.clone());
+                            }
+                            return event;
+                        }));
+                } else {
+                    log.debug(`${ req.method } Request for ${ req.urlWithParams } fetched from cache`);
+                    return of(response);
+                }
+            }));
     }
 }

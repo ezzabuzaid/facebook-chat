@@ -1,72 +1,126 @@
-
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-import { SetupInterceptor } from '../setup.interceptor';
-import { HttpCacheHelper } from './../../helpers/cache';
+import { HttpClient, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpTestingController } from '@angular/common/http/testing';
+import { fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { CACHE_DATABASE, HttpCacheHelper } from '@core/helpers/cache';
+import { AppUtils } from '@core/helpers/utils';
+import { AsyncDatabase, IndexedDB } from '@ezzabuzaid/document-storage';
+import { asyncData } from 'test/fixture';
 import { CacheInterceptor } from './cache.interceptor';
 
+describe(`CacheInterceptor`, () => {
 
-xdescribe(`CacheInterceptor`, () => {
-    const HttpCacheHelperSpy = jasmine.createSpyObj<HttpCacheHelper>('HttpCacheHelper', ['populate', 'get']);
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule, HttpClientTestingModule],
             providers: [
-                {
-                    provide: HTTP_INTERCEPTORS,
-                    useClass: SetupInterceptor,
-                    multi: true
-                },
                 {
                     provide: HTTP_INTERCEPTORS,
                     useClass: CacheInterceptor,
                     multi: true
                 },
                 {
-                    provide: HttpCacheHelper,
-                    useValue: HttpCacheHelperSpy
-                }
+                    provide: CACHE_DATABASE,
+                    useValue: new AsyncDatabase(new IndexedDB('cache')) // unused in test
+                },
             ]
         });
     });
 
-    it('should pass off if the request method is not get', () => {
+    it('should pass off if the request is not cachable', fakeAsync(() => {
+        // Arrange
         const httpClient = TestBed.inject(HttpClient);
         const cacheHelper = TestBed.inject(HttpCacheHelper);
+        spyOn(TestBed.inject(HttpCacheHelper), 'populate');
 
-        httpClient.delete('http://test.com/api/users').subscribe();
 
-        expect(cacheHelper.populate).not.toHaveBeenCalled();
-    });
-
-    it('should pass off if the request is not cachable', () => {
-        const httpClient = TestBed.inject(HttpClient);
-        const cacheHelper = TestBed.inject(HttpCacheHelper);
-
+        // Act
         httpClient
             .configure({ LOCAL_CACHE: false })
             .delete('http://test.com/api/users')
             .subscribe();
 
+        flush();
+
+        // Assert
         expect(cacheHelper.populate).not.toHaveBeenCalled();
-    });
+    }));
 
-    // fit('should get the cache category from headers', fakeAsync(() => {
-    //     const httpClient = TestBed.inject(HttpClient);
-    //     const cacheHelper = TestBed.inject(HttpCacheHelper)
-    //     const CACHE_CATEGORY = 'test'
-    //     httpClient
-    //         .configure({
-    //             LOCAL_CACHE: true,
-    //             CACHE_CATEGORY
-    //         })
-    //         .get('http://test.com/api/users')
-    //         .subscribe();
-    //     flush();
+    it('should get the cache category from headers', fakeAsync(() => {
+        // Arrange
+        const httpClient = TestBed.inject(HttpClient);
+        const cacheHelper = TestBed.inject(HttpCacheHelper);
+        const CACHE_CATEGORY = AppUtils.generateAlphabeticString();
+        spyOn(TestBed.inject(HttpCacheHelper), 'get').and.returnValue(asyncData(null));
+        spyOn(TestBed.inject(HttpCacheHelper), 'populate');
 
-    //     expect(cacheHelper.populate).toHaveBeenCalledWith(CACHE_CATEGORY);
-    //     expect(cacheHelper.populate).toHaveBeenCalledTimes(1);
-    // }));
+        // Act
+        httpClient
+            .configure({
+                LOCAL_CACHE: true,
+                CACHE_CATEGORY
+            })
+            .get('http://test.com/api')
+            .subscribe();
 
+        flush();
+
+        // Assert
+        expect(cacheHelper.populate).toHaveBeenCalledWith(CACHE_CATEGORY);
+    }));
+
+    it('should save the request response in the cache if it is not there {null, undefined}', fakeAsync(() => {
+        // Arrange
+        const httpClient = TestBed.inject(HttpClient);
+        const cacheHelper = TestBed.inject(HttpCacheHelper);
+        const httpMock = TestBed.inject(HttpTestingController);
+        spyOn(TestBed.inject(HttpCacheHelper), 'get').and.returnValue(asyncData(null));
+        spyOn(TestBed.inject(HttpCacheHelper), 'populate');
+        const setSpy = spyOn(TestBed.inject(HttpCacheHelper), 'set');
+
+        const url = `http://test.com/api?${ AppUtils.generateAlphabeticString() }=${ AppUtils.generateAlphabeticString() }`;
+
+        // Act
+        httpClient
+            .configure({
+                DEFAULT_URL: false,
+                LOCAL_CACHE: true,
+                CACHE_CATEGORY: AppUtils.generateAlphabeticString()
+            })
+            .get(url)
+            .subscribe();
+
+        flush();
+
+        const body = new Object();
+        const mockRequest = httpMock.expectOne(url);
+        mockRequest.flush(body);
+
+        const [outgoingUrl, response] = setSpy.calls.argsFor(0);
+        expect(outgoingUrl).toEqual(url);
+        expect(response.body).toEqual(body);
+    }));
+
+    it('should get the request from the cache if it is there, not{null, undefined}', ((done) => {
+        // Arrange
+        const body = new Object();
+        spyOn(TestBed.inject(HttpCacheHelper), 'get')
+            .and.returnValue(asyncData(new HttpResponse({ body })));
+        spyOn(TestBed.inject(HttpCacheHelper), 'populate');
+
+        const url = `http://test.com/api?${ AppUtils.generateAlphabeticString() }=${ AppUtils.generateAlphabeticString() }`;
+
+        // Act
+        TestBed
+            .inject(HttpClient)
+            .configure({
+                LOCAL_CACHE: true,
+                CACHE_CATEGORY: AppUtils.generateAlphabeticString()
+            })
+            .get(url)
+            .subscribe((response) => {
+                // Assert
+                expect(response).toEqual(body);
+                done();
+            });
+
+    }));
 });

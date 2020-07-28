@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FullscreenDirective } from './fullscreen.directive';
 import { HoverDirective } from './hover.directive';
-import { TextAreaAutoResizeDirective } from './text-area-auto-resize.directive';
+import { PreventDefaultsDirective } from './prevent-defaults.directive';
+import { TextAreaAutoResizeDirective } from './textarea-autoresize.directive';
 import { TogglePasswodDirective } from './toggle-passwod.directive';
 
 @NgModule({
@@ -15,13 +16,15 @@ import { TogglePasswodDirective } from './toggle-passwod.directive';
     TogglePasswodDirective,
     TextAreaAutoResizeDirective,
     HoverDirective,
-    FullscreenDirective
+    FullscreenDirective,
+    PreventDefaultsDirective
   ],
   exports: [
     TogglePasswodDirective,
     TextAreaAutoResizeDirective,
     HoverDirective,
-    FullscreenDirective
+    FullscreenDirective,
+    PreventDefaultsDirective
   ]
 })
 export class DirectivesModule { }

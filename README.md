@@ -1,42 +1,73 @@
----
+# Angular buildozer
 
+A Boilerplate build on top of latest Angular version, It’s ready for production, yet not totally configured.
+I’m using it in my personal and work projects, whilst it’s a good resource to learn from
 
----
+**Better docs will be available soon, with inclusive demonstrations about the folder structure and the constraint that it was built upon**
 
-<h1 id="angular-buildozer">Angular buildozer</h1>
-<p>A Boilerplate build on top of latest Angular version, It’s ready for production, yet not totally configured.</p>
-<p>I’m using it in my personal and work projects, whilst it’s a good resource to learn from</p>
-<h3 id="better-docs-will-be-available-soon-with-inclusive-demonstrations-about-the-folder-structure-and-the-constraint-that-it-was-built-upon">Better docs will be available soon, with inclusive demonstrations about the folder structure and the constraint that it was built upon</h3>
-<h2 id="contributing">Contributing</h2>
-<p>Don’t hesitate to open issues and make a pull request to help improve code</p>
-<ol>
-<li>Fork it!</li>
-<li>Create your feature branch: <code>git checkout -b my-new-feature</code></li>
-<li>Commit your changes: <code>git commit -m 'Add some feature'</code></li>
-<li>Push to the branch: <code>git push origin my-new-feature</code></li>
-<li>Submit a pull request :D</li>
-</ol>
-<h2 id="versioning">Versioning</h2>
-<p>The project will be maintained under the semantic versioning guidelines.<br>
-Releases will be numbered with the following format:<br>
-<code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code><br>
-For more information on SemVer, please visit <a href="http://semver.org">http://semver.org</a>.</p>
-<h2 id="developer">Developer</h2>
-<h5 id="ezzabuzaid"><a href="mailto:ezzabuzaid@hotmail.com">Ezzabuzaid</a></h5>
-<ul>
-<li><a href="https://dev.to/ezzabuzaid">Dev.to</a></li>
-<li><a href="https://github.com/ezzabuzaid">GitHub</a></li>
-<li><a href="https://www.linkedin.com/in/ezzabuzaid">Linkedin</a></li>
-</ul>
-<h2 id="maintainers">Maintainers</h2>
-<p><a href="https://github.com/ezzabuzaid"><strong>ezzabuzaid</strong></a> - (author) - <a href="mailto:ezzabuzaid@hotmail.com">ezzabuzaid@hotmail.com</a></p>
-<h2 id="license">License</h2>
-<h5 id="the-mit-license-mit">The MIT License (MIT)</h5>
-<h2 id="help-is-welcomed">help is welcomed</h2>
-<h3 id="dont-heistate-to-try-it">Don’t heistate to try it</h3>
-<p>After cloning the project run <code>npm install &amp;&amp; ng serve -o</code></p>
-<h5 id="built-with-love-3">Built with love &lt;3</h5>
+## Getting Started
 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbMTk4MjY3ODY4MV19
--->
+1. Clone the project.
+2. Run `node setup [project-name] [project-title]` .
+3. Remove anything other than `[portal, static]` from `src/app/pages` .
+4. Remove anything `[services, models]` from `src/app/shared` .
+5. Free up the assets if needed.
+
+## Folder Structure
+
+* **Partials**
+
+    So you have **Orders** and **Products** pages and there's the component that's shared between them and of course you don't want to duplicate the code here and there, so as the guides tell we should use the same component for both domains, hence, we need to configure it to adapt different places with respect to single responsibility principle and remember the code should be agonistic.
+    for that, you need to use input and output functionality offered by the framework to prepare to communicate with other components in the host.
+    now, we know that the component is related to **orders** and we need to use it in other domain, therefore, we need another folder to make things consistent and easy to reach, here where it came the idea of **partial** module/components that can be used across the pages. so the things within the partials are strictly related to a domain and not just reusable component like **MainButton**
+
+* **Widget**
+
+    Container for reusable widgets that is not directly related to business
+    e.g: **stepper** module aka Wizard from is set of blocks used to navigate in one direction, it's could be part of the requirements but not essentially related to any domain.
+    at anytime you decided to make **order-stepper** that related to **Orders** domain thus it's a critical part of the application then it should be moved to **`Partials`** folder
+
+## Deprecation
+
+* Widget/gmap, is no longer maintained, I'll keep it as reference
+
+## Contributing
+
+Don’t hesitate to open issues and make a pull request to help improve code
+
+1.  Fork it!
+2.  Create your feature branch: `git checkout -b my-new-feature`
+3.  Commit your changes: `git commit -m 'Add some feature'`
+4.  Push to the branch: `git push origin my-new-feature`
+5.  Submit a pull request :D
+
+## Versioning
+
+The project will be maintained under the semantic versioning guidelines.  
+Releases will be numbered with the following format:  
+ `<major>.<minor>.<patch>`
+For more information on SemVer, please visit [http://semver.org](http://semver.org).
+
+## Developer
+
+##### [Ezzabuzaid](mailto:ezzabuzaid@hotmail.com)
+
+*   [Dev.to](https://dev.to/ezzabuzaid)
+*   [GitHub](https://github.com/ezzabuzaid)
+*   [Linkedin](https://www.linkedin.com/in/ezzabuzaid)
+
+## Maintainers
+
+[**ezzabuzaid**](https://github.com/ezzabuzaid) - (author) - [ezzabuzaid@hotmail.com](mailto:ezzabuzaid@hotmail.com)
+
+## License
+
+##### The MIT License (MIT)
+
+## help is welcomed
+
+### Don’t heistate to try it
+
+After cloning the project run `npm install && ng serve -o`
+
+##### Built with love <3

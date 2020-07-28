@@ -1,28 +1,16 @@
+
 import { HttpResponse } from '@angular/common/http';
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { AsyncCollection, AsyncDatabase } from '@ezzabuzaid/document-storage';
+import { from } from 'rxjs';
 import { AppUtils } from '../utils';
-export const CacheDatabase = new InjectionToken<AsyncDatabase>('CacheDatabase');
+export const CACHE_DATABASE = new InjectionToken<AsyncDatabase>('CacheDatabase');
 
 export class HttpCacheEntry {
-    private _value: any;
-    public lastUpdate = Date.now();
-
     constructor(
         public url: string,
-        value: HttpResponse<any>
-    ) {
-        this.value = value;
-    }
-
-    set value(response) {
-        this._value = JSON.stringify(response) as any;
-    }
-
-    get value() {
-        return JSON.parse(this._value as any);
-    }
-
+        public value: HttpResponse<any>
+    ) { }
 }
 
 @Injectable({
@@ -32,37 +20,39 @@ export class HttpCacheHelper {
     private collection: AsyncCollection<HttpCacheEntry> = null;
 
     constructor(
-        @Inject(CacheDatabase) private readonly storage: AsyncDatabase
+        @Inject(CACHE_DATABASE) private storage: AsyncDatabase
     ) { }
 
-
-    public populate(name: string) {
-        this.collection = this.storage.collection<HttpCacheEntry>(name);
-    }
-
+    // TODO: setup cache invalidate strategy
     removeOutdatedEntries() {
         this.collection.getAll()
             .then(entries => {
                 const maxAge = AppUtils.daysToSeconds(1);
-                entries.forEach(({ lastUpdate, id }) => {
-                    if (AppUtils.isDateElapsed(lastUpdate, maxAge)) {
+                entries.forEach(({ id }) => {
+                    if (AppUtils.isDateElapsed(Date.now(), maxAge)) {
                         this.collection.delete(id);
                     }
                 });
             });
     }
 
-    public get(url: string) {
-        return this.collection
-            .get((entry) => entry.url === url)
-            .then(response => response && new HttpResponse(response.value));
+    public populate(name: string) {
+        this.collection = this.storage.collection<HttpCacheEntry>(name);
     }
 
     public set(uri: string, value: HttpResponse<any>) {
         return this.collection.set(new HttpCacheEntry(uri, value));
     }
 
+    public get(url: string) {
+        const result = this.collection
+            .get((entry) => entry.url === url)
+            .then(response => response && new HttpResponse(response.value));
+        return from(result);
+    }
+
     public clear() {
         return this.collection.clear();
     }
+
 }
