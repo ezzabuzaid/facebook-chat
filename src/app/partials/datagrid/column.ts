@@ -1,4 +1,4 @@
-import { ListEntityQuery, ListEntityResponse } from '@shared/models';
+import { ListEntityQuery, ListEntityResponse, PaginationQuery } from '@shared/models';
 import { Observable } from 'rxjs';
 
 export enum EColumnTypes {
@@ -10,7 +10,7 @@ export enum EColumnTypes {
 export class DataGrid<T> {
     public columns: DisplayColumn<T>[];
     public actionColumn: ActionColumn;
-    public provider: (query: ListEntityQuery) => Observable<ListEntityResponse<any>>;
+    public provider: (query: PaginationQuery<T>) => Observable<ListEntityResponse<T>>;
     constructor(
         options: Partial<DataGrid<T>>
     ) {
@@ -26,7 +26,7 @@ export class DisplayColumn<T>  {
     key: ((keyof T extends string ? keyof T : never));
     title: string;
     format: string;
-
+    sortable: boolean;
     mapper: (row: T) => any;
 
     constructor(options: Partial<DisplayColumn<T>>) {
@@ -34,14 +34,14 @@ export class DisplayColumn<T>  {
         this.title = options.title;
         this.mapper = options.mapper;
         this.format = options.format ?? 'shortTime';
+        this.sortable = options.sortable ?? true;
     }
 
     private isDate(date) {
-        return !isNaN(new Date(date) as any);
+        return !isNaN(Date.parse(date));
     }
 
     typeOf(value: any) {
-
         switch (typeof value) {
             case 'boolean':
                 return EColumnTypes.BOOLEAN;

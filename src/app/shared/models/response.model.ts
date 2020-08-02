@@ -1,4 +1,5 @@
 import { AppUtils } from '@core/helpers/utils';
+import { SortDirection } from '@angular/material/sort';
 
 export interface ResponseModel<T> {
     name: string;
@@ -52,4 +53,14 @@ export class ListEntityQuery {
         this.page = obj.page ?? 1;
         this.size = obj.size ?? 10;
     }
+}
+
+export class PaginationQuery<T> {
+    constructor(
+        public page = 1,
+        public size = 10,
+        sort?: { [key in keyof T]: SortDirection }
+    ) {
+        Object.assign(this, sort);
+    };
 }
