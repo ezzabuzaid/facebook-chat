@@ -1,6 +1,6 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
+@import "functions";
+@import "mixins";
+@import "variables";
 
 html,
 body {
@@ -42,6 +42,18 @@ body {
   @include center_block();
 }
 
+input {
+  &:focus {
+    outline: transparent;
+    box-shadow: none;
+    border: none;
+  }
+}
+button {
+  &:focus {
+    outline: none !important;
+  }
+}
 @include scrollbar_theme();
 
 mat-form-field {
@@ -154,6 +166,23 @@ mat-chip-list {
   }
 }
 
+@for $size from 1 to 25 {
+  .font-size-#{$size} {
+    font-size: #{size}px;
+  }
+}
+
+@for $size from 0 to 20 {
+  .border-radius-#{$size} {
+    border-radius: #{$size}px !important;
+  }
+}
+
+@for $size from 0 to 20 {
+  .border--#{$size} {
+    border-width: #{$size}px !important;
+  }
+}
 @each $position in sticky, fixed {
   .#{$position}-bar {
     position: $position;

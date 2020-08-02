@@ -1,5 +1,5 @@
-@import '~bootstrap/scss/bootstrap-grid';
-@import 'variables';
+@import "~bootstrap/scss/bootstrap-grid";
+@import "variables";
 
 @mixin placeholder {
   &::-webkit-input-placeholder {
@@ -129,46 +129,7 @@
     height: 100%;
     background-color: $color;
     z-index: $zIndex;
-    content: '';
-  }
-}
-
-@mixin font_size($by: 1) {
-  @for $size from 1 to 5 {
-    .font-size-#{$size} {
-      font-size: calc(#{$size}em / #{$by});
-    }
-  }
-}
-
-@mixin border_radius($by: 1) {
-  @for $size from 0 to 20 {
-    .border-radius-#{$size} {
-      border-radius: calc(#{$size}em / #{$by});
-    }
-  }
-}
-
-@mixin border_width() {
-  @for $size from 0 to 20 {
-    .border--#{$size} {
-      border-width: #{$size}px !important;
-    }
-  }
-}
-
-@mixin bootstrab_default {
-  input {
-    &:focus {
-      outline: transparent;
-      box-shadow: none;
-      border: none;
-    }
-  }
-  button {
-    &:focus {
-      outline: none !important;
-    }
+    content: "";
   }
 }
 
