@@ -22,7 +22,7 @@ export class DatagridComponent implements AfterViewInit, OnChanges {
 
 
   sortData(event: Sort) {
-    this.fetchData(new PaginationQuery(0, 20, { [event.active]: event.direction }))
+    this.fetchData(new PaginationQuery(0, this.paginator.pageSize, { [event.active]: event.direction }))
   }
 
   ngOnChanges() {
@@ -36,7 +36,7 @@ export class DatagridComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.fetchData(new PaginationQuery(0, 20));
+    this.fetchData(new PaginationQuery(0, this.paginator.pageSize));
   }
 
   onPaginate(event: PageEvent) {

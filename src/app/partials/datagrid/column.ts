@@ -31,7 +31,7 @@ export class DisplayColumn<T>  {
 
     constructor(options: Partial<DisplayColumn<T>>) {
         this.key = options.key;
-        this.title = options.title;
+        this.title = options.title ?? options.key;
         this.mapper = options.mapper;
         this.format = options.format ?? 'shortTime';
         this.sortable = options.sortable ?? true;
