@@ -10,7 +10,8 @@ I’m using it in my personal and work projects, whilst it’s a good resource t
 1. Clone the project.
 2. Run `node setup [project-name] [project-title]` .
 3. Remove anything other than `[portal, static]` from `src/app/pages` .
-4. Remove anything `[services, models]` from `src/app/shared` .
+4. Remove `[services, models]` from `src/app/shared` .
+4. Clear out API/Routing constants.
 5. Free up the assets if needed.
 
 ## Folder Structure
@@ -30,6 +31,7 @@ I’m using it in my personal and work projects, whilst it’s a good resource t
 ## Deprecation
 
 * Widget/gmap, is no longer maintained, I'll keep it as reference
+* Widget/dialog, is no longer maintained, you can use it to create dialog
 
 ## Contributing
 

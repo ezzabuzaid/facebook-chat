@@ -8,7 +8,7 @@ import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from '@shared/account';
+import { ApplicationUser } from '@core/application-user';
 import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { SeoService } from '@shared/services/seo/seo.service';
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(NAVIGATOR) private readonly navigator: Navigator,
     private readonly analyticService: AnalyticsService,
     private readonly connectivity: Connectivity,
-    private readonly userService: UserService,
+    private readonly applicationUser: ApplicationUser,
     private readonly tokenHelper: TokenHelper,
     private translateService: TranslateService
   ) {
@@ -115,14 +115,14 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.isBrowser) {
       this.languageService.populate(ELanguage.EN);
 
-      this.userService.listen()
+      this.applicationUser.listen()
         .pipe(filter(() => this.tokenHelper.isLogged))
         .subscribe(() => {
           if (AppUtils.not(this.tokenHelper.decodedToken.verified)) {
             console.log(this.tokenHelper.decodedToken);
             this.snackbar.open('Please verify your account', 'Send Email', { duration: Number.MAX_VALUE })
               .onAction()
-              .pipe(switchMap(() => this.userService.sendVerificationEmail()))
+              .pipe(switchMap(() => this.applicationUser.sendVerificationEmail()))
               .subscribe();
           }
         });
@@ -164,8 +164,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('window:unload')
   ngOnDestroy() {
-    if (this.userService.oneTimeLogin()) {
-      this.userService.logout();
+    if (this.applicationUser.oneTimeLogin()) {
+      this.applicationUser.logout();
     }
     return '';
   }

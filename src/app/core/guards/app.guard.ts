@@ -1,16 +1,24 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { TokenHelper } from '@core/helpers/token';
-import { UserService } from '@shared/account';
-import { Observable } from 'rxjs';
+import {
+  ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad,
+  Route, RouterStateSnapshot,
 
+
+
+  UrlSegment, UrlTree
+} from '@angular/router';
+import { Logger } from '@core/helpers/logger';
+import { Observable } from 'rxjs';
+import { TokenHelper } from '@core/helpers/token';
+import { ApplicationUser } from '@core/application-user';
+const logger = new Logger('AppGuard');
 @Injectable({
   providedIn: 'root'
 })
 export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   constructor(
-    private readonly tokenHelper: TokenHelper,
-    private readonly userService: UserService
+    private tokenHelper: TokenHelper,
+    private applicationUser: ApplicationUser
   ) { }
 
   canActivate(
@@ -20,8 +28,9 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
     return this.authenticate(state.url);
   }
 
-  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authenticate();
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+    const path = segments.reduce((accumlator, currentSegment) => `${ accumlator }/${ currentSegment.path }`, '');
+    return this.authenticate(path);
   }
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot):
@@ -30,12 +39,11 @@ export class AppGuard implements CanActivate, CanLoad, CanActivateChild {
   }
 
 
-  public authenticate(redirectUrl?: string) {
+  public authenticate(redirectUrl?) {
     if (!this.tokenHelper.isAuthenticated) {
-      this.userService.logout(redirectUrl);
+      this.applicationUser.logout(redirectUrl);
       return false;
     }
     return true;
   }
-
 }

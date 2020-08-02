@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Constants } from '@core/constants';
 import { ELanguage, LanguageService } from '@core/helpers/language';
 import { TokenHelper } from '@core/helpers/token';
-import { UserService } from '@shared/account';
+import { ApplicationUser } from '@core/application-user';
 import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 
 @Component({
@@ -18,7 +18,7 @@ export class ToolbarComponent implements OnInit {
     private readonly languageService: LanguageService,
     private readonly sidebarService: SidebarService,
     private readonly tokenService: TokenHelper,
-    private readonly userService: UserService
+    private readonly applicationUser: ApplicationUser
   ) { }
 
   ngOnInit() { }
@@ -32,7 +32,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout();
+    this.applicationUser.logout();
   }
 
 }

@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
-import { UserService } from '@shared/account';
+import { ApplicationUser } from '@core/application-user';
 import { TeardownInterceptor } from './teardown.interceptor';
 
 describe(`TeardownInterceptor`, () => {

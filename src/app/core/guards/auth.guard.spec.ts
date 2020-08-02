@@ -1,60 +1,91 @@
 import { TestBed } from '@angular/core/testing';
-
-import { UserService } from '@shared/account';
+import { AppUtils } from '@core/helpers/utils';
 import { AppGuard } from './app.guard';
+import { UrlSegment } from '@angular/router';
+import { ApplicationUser } from '@core/application-user';
+import { TokenHelper } from '@core/helpers/token';
 
-describe('AuthGuard', () => {
+
+describe('AppGuard', () => {
   let guardService: AppGuard = null;
-  let userService: UserService = null;
+  let applicationUser: ApplicationUser = null;
+  let tokenHelper: TokenHelper = null;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [AppGuard]
     });
     guardService = TestBed.inject(AppGuard);
-    userService = TestBed.inject(UserService);
+    applicationUser = TestBed.inject(ApplicationUser);
+    tokenHelper = TestBed.inject(TokenHelper);
   });
 
   it('[canActivate] should check if the user is authenticated', () => {
+    // Arrange
+    const url = AppUtils.generateAlphabeticString();
     spyOn(guardService, 'authenticate');
 
-    guardService.canActivate(null, null);
+    // Act
+    guardService.canActivate(null, { url: url } as any);
 
+    // Assert
     expect(guardService.authenticate).toHaveBeenCalledTimes(1);
+    expect(guardService.authenticate).toHaveBeenCalledWith(url);
   });
 
   it('[canLoad] should check if the user is authenticated', () => {
+    // Arrange
     spyOn(guardService, 'authenticate');
+    const firstPath = AppUtils.generateAlphabeticString();
+    const secondPath = AppUtils.generateAlphabeticString();
 
-    guardService.canActivate(null, null);
+    // Act
+    guardService.canLoad(null, [
+      new UrlSegment(firstPath, {}),
+      new UrlSegment(secondPath, {}),
+    ]);
 
-    expect(guardService.authenticate).toHaveBeenCalledTimes(1);
+    // Assert
+    expect(guardService.authenticate).toHaveBeenCalledWith('/' + firstPath + '/' + secondPath);
   });
 
   it('[canActivateChild] should check if the user is authenticated', () => {
+    // Arrange
+    const url = AppUtils.generateAlphabeticString();
     spyOn(guardService, 'authenticate');
 
-    guardService.canActivate(null, null);
+    // Act
+    guardService.canActivateChild(null, { url: url } as any);
 
+    // Assert
     expect(guardService.authenticate).toHaveBeenCalledTimes(1);
+    expect(guardService.authenticate).toHaveBeenCalledWith(url);
   });
 
   describe('[authenticate]', () => {
     it('should logout the user if he is not authenticated', () => {
-      spyOnProperty(userService, 'isAuthenticated', 'get').and.returnValue(false);
-      spyOn(userService, 'logout');
+      // Arrange
+      spyOnProperty(tokenHelper, 'isAuthenticated', 'get').and.returnValue(false);
+      spyOn(applicationUser, 'logout');
 
-      const shouldPass = guardService.authenticate();
+      // Act
+      const canPass = guardService.authenticate();
 
-      expect(shouldPass).toBeFalsy();
-      expect(userService.logout).toHaveBeenCalledTimes(1);
+      // Assert
+      expect(canPass).toBeFalsy();
+      expect(applicationUser.logout).toHaveBeenCalledTimes(1);
+      expect(applicationUser.logout).toHaveBeenCalledWith(undefined);
     });
+
     it('should pass the user if he is authenticated', () => {
-      spyOnProperty(userService, 'isAuthenticated', 'get').and.returnValue(true);
+      // Arrange
+      spyOnProperty(tokenHelper, 'isAuthenticated', 'get').and.returnValue(true);
 
-      const shouldPass = guardService.authenticate();
+      // Act
+      const canPass = guardService.authenticate();
 
-      expect(shouldPass).toBeTruthy();
+      // Assert
+      expect(canPass).toBeTruthy();
     });
   });
 

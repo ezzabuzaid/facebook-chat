@@ -12,7 +12,7 @@ export function createValidator(errorName: string, validator: (control: Abstract
 
 
 export const ContainsUppercase = () => createValidator('uppercase', (control) => /[A-Z]/.test(control.value ?? ''));
-export const ContainsLowercase = () => createValidator('lowercase', (control) => /[a-z]/.test(control.value));
+export const ContainsLowercase = () => createValidator('lowercase', (control) => /[a-z]/.test(control.value ?? ''));
 export const ContainsNumber = () => createValidator('number', (control) => /\d/.test(control.value));
 export const ContainsSpecialCharacter = () => {
     return createValidator('special_character', (control) => /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(control.value));

@@ -4,16 +4,16 @@ import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 import { SubjectFactory } from '@core/helpers/subject-factory';
 import { TokenHelper } from '@core/helpers/token';
-import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { NAVIGATOR } from '@shared/common';
 import { PortalModel, ResponseModel } from '@shared/models';
-import { tap } from 'rxjs/operators';
-declare const biri: any;
+import { tap, switchMap } from 'rxjs/operators';
+import { from } from 'rxjs';
+declare const biri: () => Promise<string>;
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends SubjectFactory<boolean> {
+export class ApplicationUser extends SubjectFactory<boolean> {
 
   constructor(
     private readonly http: HttpClient,
@@ -42,15 +42,20 @@ export class UserService extends SubjectFactory<boolean> {
   }
 
   refreshToken() {
-    return this.http
-      .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
-        this.getDeviceUUID(),
-        this.tokenHelper.token,
-        this.tokenHelper.refreshToken,
-      ))
-      .pipe(tap((data) => {
-        this.tokenHelper.setToken(data.token, data.refreshToken, this.tokenHelper.oneTimeLogin);
-      }));
+    return from(this.getDeviceUUID())
+      .pipe(
+        switchMap((uuid) => {
+          return this.http
+            .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
+              uuid,
+              this.tokenHelper.token,
+              this.tokenHelper.refreshToken,
+            ))
+        }),
+        tap((data) => {
+          this.tokenHelper.setToken(data.token, data.refreshToken, this.tokenHelper.oneTimeLogin);
+        })
+      );
   }
 
   public checkIfAccountIsExist(payload: PortalModel.IRegister) {
@@ -74,9 +79,8 @@ export class UserService extends SubjectFactory<boolean> {
   }
 
   public async logout(redirectUrl = this.router.url) {
-    console.log(redirectUrl);
     const blob = new Blob([JSON.stringify({})], {
-      [Constants.Application.DEVICE_UUID as any]: await biri()
+      [Constants.Application.DEVICE_UUID as any]: await this.getDeviceUUID()
     });
     this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
@@ -89,9 +93,7 @@ export class UserService extends SubjectFactory<boolean> {
   }
 
   getDeviceUUID() {
-    let guid = this.navigator.mimeTypes.length as any;
-    guid += this.navigator.userAgent.replace(/\D+/g, '');
-    return guid;
+    return biri()
   }
 
   oneTimeLogin() {
