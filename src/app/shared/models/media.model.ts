@@ -1,9 +1,9 @@
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { of } from 'rxjs';
-import { IModel, ListEntityQuery } from './response.model';
+import { BaseModel, ListEntityQuery } from './response.model';
 export namespace MediaModel {
-    export class Folder extends IModel {
+    export class Folder extends BaseModel {
         name: string;
         constructor(payload: Partial<Folder>) {
             super(payload);
@@ -11,7 +11,7 @@ export namespace MediaModel {
         }
     }
 
-    export interface IFile extends IModel {
+    export interface IFile extends BaseModel {
         type: string;
         size: number;
         name: string;
@@ -21,10 +21,10 @@ export namespace MediaModel {
         tag: string;
     }
 
-    export class File extends IModel implements IFile {
+    export class File extends BaseModel implements IFile {
 
         get fullPath() {
-            return `${environment.serverOrigin}${this.path ? this.path.split('?')[0] : ''}`;
+            return `${ environment.serverOrigin }${ this.path ? this.path.split('?')[0] : '' }`;
         }
 
         get shortType() {

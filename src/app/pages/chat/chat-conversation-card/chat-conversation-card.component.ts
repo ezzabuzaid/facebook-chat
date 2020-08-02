@@ -10,9 +10,9 @@ import { IChatCard } from '../index';
   templateUrl: './chat-conversation-card.component.html',
   styleUrls: ['./chat-conversation-card.component.scss']
 })
-export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IRoom> {
+export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.Room> {
   public id: string;
-  public data: ChatModel.IRoom = null;
+  public data: ChatModel.Room = null;
   @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
@@ -21,7 +21,7 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
     @Inject(NAVIGATOR) private readonly navigator: Navigator
   ) { }
 
-  async  ngOnInit() {
+  async ngOnInit() {
     this.chatManager.join(this.data._id);
     this.baseCharCard.updateContentHeight();
     this.navigator.mediaDevices.getUserMedia({

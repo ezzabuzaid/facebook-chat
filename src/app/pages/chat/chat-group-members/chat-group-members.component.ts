@@ -13,7 +13,7 @@ export class ChatGroupMembersComponent implements OnInit {
 
   constructor(
     private readonly chatService: ChatService,
-    @Inject(MAT_DIALOG_DATA) private readonly data: ChatModel.IGroup
+    @Inject(MAT_DIALOG_DATA) private readonly data: ChatModel.Room
   ) { }
 
   ngOnInit() {

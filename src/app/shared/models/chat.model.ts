@@ -1,27 +1,30 @@
-import { IModel } from './response.model';
 import { UsersModel } from './users.model';
+import { WriteResult, BaseModel } from './response.model';
 
 export namespace ChatModel {
-    export interface IMember extends IModel {
+    export interface IMember extends BaseModel {
         isAdmin: boolean;
         user: UsersModel.IUser;
     }
 
-    export interface IRoom extends IModel {
+    export class Room extends WriteResult {
         folder: string;
         avatar: string;
         name: string;
         single: boolean;
+        constructor(data: Room) {
+            super(data);
+            Object.assign(this, data);
+            console.log(data);
+        }
     }
 
-    export interface IGroup extends IRoom { }
-
-    export interface IConversation extends IRoom {
+    export interface IConversation extends Room {
         user1: UsersModel.IUser;
         user2: UsersModel.IUser;
     }
 
-    export class Message extends IModel {
+    export class Message extends BaseModel {
         public timestamp = Date.now();
         user: string;
         room: string;

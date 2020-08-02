@@ -13,7 +13,7 @@ import { ChatManager } from '../chat.manager';
   styleUrls: ['./chat-card-footer.component.scss'],
 })
 export class ChatCardFooterComponent implements OnInit {
-  @Input() room: ChatModel.IRoom;
+  @Input() room: ChatModel.Room;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
   @Output() onActionBarVisibilityChange = new EventEmitter<HTMLElement>(true);

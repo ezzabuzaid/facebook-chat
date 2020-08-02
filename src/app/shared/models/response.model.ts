@@ -9,18 +9,24 @@ export interface ResponseModel<T> {
     status: string;
 }
 
-
-export class IModel {
+export class BaseModel {
     _id: string = null;
     createdAt = new Date().toISOString();
     updatedAt = new Date().toISOString();
-    constructor(payload: Partial<IModel> = {}) {
+    constructor(payload: Partial<BaseModel> = {}) {
         this._id = payload._id;
         this.createdAt = payload.createdAt || new Date().toISOString();
         this.updatedAt = payload.updatedAt || new Date().toISOString();
     }
 }
 
+export class WriteResult extends BaseModel {
+    readonly id: string;
+    constructor(entity) {
+        super(entity);
+        this.id = this._id;
+    }
+}
 export class CreateResponse {
     id: string;
 }

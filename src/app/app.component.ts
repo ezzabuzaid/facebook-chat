@@ -119,7 +119,6 @@ export class AppComponent implements OnInit, OnDestroy {
         .pipe(filter(() => this.tokenHelper.isLogged))
         .subscribe(() => {
           if (AppUtils.not(this.tokenHelper.decodedToken.verified)) {
-            console.log(this.tokenHelper.decodedToken);
             this.snackbar.open('Please verify your account', 'Send Email', { duration: Number.MAX_VALUE })
               .onAction()
               .pipe(switchMap(() => this.applicationUser.sendVerificationEmail()))

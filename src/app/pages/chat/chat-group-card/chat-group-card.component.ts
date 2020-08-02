@@ -13,9 +13,9 @@ import { ChatManager } from '../chat.manager';
   templateUrl: './chat-group-card.component.html',
   styleUrls: ['./chat-group-card.component.scss']
 })
-export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IGroup> {
+export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.Room> {
   public id: string;
-  public data: ChatModel.IGroup;
+  public data: ChatModel.Room;
   @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(
