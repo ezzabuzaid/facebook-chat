@@ -1,14 +1,14 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { SubjectFactory } from '@core/helpers/subject-factory';
 import { TokenHelper } from '@core/helpers/token';
 import { AppUtils, tryOrComplete } from '@core/helpers/utils';
 import { RequestOptions } from '@ezzabuzaid/ngx-request-options';
-import { ApplicationUser } from '@core/application-user';
 import { IRequestOptions } from '@shared/common';
-import { Observable, throwError, from } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take, tap } from 'rxjs/operators';
 
 @Injectable()
@@ -45,7 +45,7 @@ export class TeardownInterceptor implements HttpInterceptor {
                             return throwError(event);
                         })
                     );
-            }))
+            }));
 
     }
 

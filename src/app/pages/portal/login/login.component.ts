@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { EFieldType, Field, Form } from '@ezzabuzaid/ngx-form-factory';
-import { ApplicationUser } from '@core/application-user';
 import { Fields, RouteUtility } from '@shared/common';
 import { PortalModel } from '@shared/models';
 

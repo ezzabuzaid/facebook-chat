@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, Input, OnInit, Output } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { WINDOW } from '@shared/common';
-import { SidebarService } from './sidebar.service';
+import { SidebarManager } from './sidebar.manager';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   @Output() maxWidthExceeded = new EventEmitter<number>();
   @Output() minWidthExceeded = new EventEmitter<number>();
   constructor(
-    private readonly sidebarService: SidebarService,
+    private readonly sidebarService: SidebarManager,
     private readonly elementRef: ElementRef<HTMLElement>,
     @Inject(WINDOW) private readonly window: Window,
   ) { }

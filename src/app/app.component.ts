@@ -1,6 +1,7 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { ApplicationUser } from '@core/application-user';
 import { ELanguage, LanguageService } from '@core/helpers/language';
 import { Logger } from '@core/helpers/logger';
 import { ServiceWorkerUtils } from '@core/helpers/service-worker/service-worker-update.service';
@@ -8,7 +9,6 @@ import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { ApplicationUser } from '@core/application-user';
 import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { SeoService } from '@shared/services/seo/seo.service';

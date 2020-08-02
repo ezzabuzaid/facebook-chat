@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { NavigationItem } from '@layout/navbar/navigation';
-import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
+import { RegisterdSidebar, SidebarManager } from '@widget/sidebar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -18,7 +18,7 @@ export class NavbarCollapseComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly elRef: ElementRef<HTMLElement>,
-    private readonly sidebarService: SidebarService,
+    private readonly sidebarService: SidebarManager,
   ) { }
 
   ngOnInit() {

@@ -28,6 +28,16 @@ I’m using it in my personal and work projects, whilst it’s a good resource t
     e.g: **stepper** module aka Wizard from is set of blocks used to navigate in one direction, it's could be part of the requirements but not essentially related to any domain.
     at anytime you decided to make **order-stepper** that related to **Orders** domain thus it's a critical part of the application then it should be moved to **`Partials`** folder
 
+## What's inside
+
+* Widgets
+
+<!-- 1. resizable: An easy way to make any block horizontaly resizable -->
+
+1. sidebar: Customized sidebar with variaty of options inculding horizontal resizing
+2. scroll-detection: Detect that a scroll happen
+3. infinity-scroll: Infinity Scroll module
+
 ## Deprecation
 
 * Widget/gmap, is no longer maintained, I'll keep it as reference

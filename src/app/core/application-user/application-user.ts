@@ -7,8 +7,8 @@ import { TokenHelper } from '@core/helpers/token';
 import { environment } from '@environments/environment';
 import { NAVIGATOR } from '@shared/common';
 import { PortalModel, ResponseModel } from '@shared/models';
-import { tap, switchMap } from 'rxjs/operators';
 import { from } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 declare const biri: () => Promise<string>;
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class ApplicationUser extends SubjectFactory<boolean> {
             .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
               this.tokenHelper.token,
               this.tokenHelper.refreshToken,
-            ))
+            ));
         }),
         tap((data) => {
           this.tokenHelper.setToken(data.token, data.refreshToken, this.tokenHelper.oneTimeLogin);
@@ -92,7 +92,7 @@ export class ApplicationUser extends SubjectFactory<boolean> {
   }
 
   getDeviceUUID() {
-    return biri()
+    return biri();
   }
 
   oneTimeLogin() {

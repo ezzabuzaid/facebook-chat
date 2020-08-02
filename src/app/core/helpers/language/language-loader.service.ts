@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
+import { environment } from '@environments/environment';
 import { TranslateLoader } from '@ngx-translate/core';
 import { LanguageService } from './language.service';
-import { environment } from '@environments/environment';
 
 @Injectable()
 export class LanguageLoader implements TranslateLoader {

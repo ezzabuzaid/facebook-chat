@@ -9,7 +9,7 @@ import { ChatService } from '@shared/services/chat';
 import { UsersService } from '@shared/services/users';
 import { PopupManager } from '@widget/popup';
 import { Observable, of } from 'rxjs';
-import { filter, map, share, switchMap, catchError } from 'rxjs/operators';
+import { catchError, filter, map, share, switchMap } from 'rxjs/operators';
 import { ChatCardManager, IChatCard } from '../chat-card.manager';
 import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
 import { ChatGroupCardComponent } from '../chat-group-card/chat-group-card.component';

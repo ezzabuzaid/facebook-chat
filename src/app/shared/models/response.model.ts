@@ -1,5 +1,5 @@
-import { AppUtils } from '@core/helpers/utils';
 import { SortDirection } from '@angular/material/sort';
+import { AppUtils } from '@core/helpers/utils';
 
 export interface ResponseModel<T> {
     name: string;
@@ -68,5 +68,5 @@ export class PaginationQuery<T> {
         sort?: { [key in keyof T]: SortDirection }
     ) {
         Object.assign(this, sort);
-    };
+    }
 }

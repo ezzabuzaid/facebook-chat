@@ -7,10 +7,10 @@ import {
 
   UrlSegment, UrlTree
 } from '@angular/router';
-import { Logger } from '@core/helpers/logger';
-import { Observable } from 'rxjs';
-import { TokenHelper } from '@core/helpers/token';
 import { ApplicationUser } from '@core/application-user';
+import { Logger } from '@core/helpers/logger';
+import { TokenHelper } from '@core/helpers/token';
+import { Observable } from 'rxjs';
 const logger = new Logger('AppGuard');
 @Injectable({
   providedIn: 'root'

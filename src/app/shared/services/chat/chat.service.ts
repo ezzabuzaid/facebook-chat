@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constants } from '@core/constants';
 import { ChatModel, ListEntityQuery, ListEntityResponse, PlainQuery, WriteResult } from '@shared/models';
-import { map, scan, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { map, scan, tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +31,7 @@ export class ChatService {
                 if (members.length === 1) {
                     this.conversationsSubject.next([new ChatModel.Room(response)]);
                 }
-            }))
+            }));
     }
 
     public getGroup(users: string[]) {

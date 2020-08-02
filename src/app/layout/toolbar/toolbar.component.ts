@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { ELanguage, LanguageService } from '@core/helpers/language';
 import { TokenHelper } from '@core/helpers/token';
-import { ApplicationUser } from '@core/application-user';
-import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
+import { RegisterdSidebar, SidebarManager } from '@widget/sidebar';
 
 @Component({
   selector: 'app-toolbar',
@@ -16,7 +16,7 @@ export class ToolbarComponent implements OnInit {
   languageEnum = ELanguage;
   constructor(
     private readonly languageService: LanguageService,
-    private readonly sidebarService: SidebarService,
+    private readonly sidebarService: SidebarManager,
     private readonly tokenService: TokenHelper,
     private readonly applicationUser: ApplicationUser
   ) { }

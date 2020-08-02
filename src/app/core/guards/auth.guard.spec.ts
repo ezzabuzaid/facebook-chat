@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { AppUtils } from '@core/helpers/utils';
-import { AppGuard } from './app.guard';
 import { UrlSegment } from '@angular/router';
 import { ApplicationUser } from '@core/application-user';
 import { TokenHelper } from '@core/helpers/token';
+import { AppUtils } from '@core/helpers/utils';
+import { AppGuard } from './app.guard';
 
 
 describe('AppGuard', () => {
@@ -26,7 +26,7 @@ describe('AppGuard', () => {
     spyOn(guardService, 'authenticate');
 
     // Act
-    guardService.canActivate(null, { url: url } as any);
+    guardService.canActivate(null, { url } as any);
 
     // Assert
     expect(guardService.authenticate).toHaveBeenCalledTimes(1);
@@ -55,7 +55,7 @@ describe('AppGuard', () => {
     spyOn(guardService, 'authenticate');
 
     // Act
-    guardService.canActivateChild(null, { url: url } as any);
+    guardService.canActivateChild(null, { url } as any);
 
     // Assert
     expect(guardService.authenticate).toHaveBeenCalledTimes(1);

@@ -1,5 +1,5 @@
+import { BaseModel, WriteResult } from './response.model';
 import { UsersModel } from './users.model';
-import { WriteResult, BaseModel } from './response.model';
 
 export namespace ChatModel {
     export interface IMember extends BaseModel {
