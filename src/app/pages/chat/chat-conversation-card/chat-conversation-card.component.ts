@@ -24,7 +24,7 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
   async ngOnInit() {
     this.chatManager.join(this.data._id);
     this.baseCharCard.updateContentHeight();
-    this.navigator.mediaDevices.getUserMedia({
+    this.navigator.mediaDevices?.getUserMedia({
       video: true,
       audio: false,
     });

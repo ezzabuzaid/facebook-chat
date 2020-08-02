@@ -52,7 +52,7 @@ export class MediaCardComponent implements OnInit {
         filter(name => name !== this.file.name),
         switchMap(name => {
           this.file.name = name;
-          return this.uploadsService.updateFile({ name, _id: this.file._id });
+          return this.uploadsService.updateFile(this.file._id, { name });
         }))
       .subscribe();
   }
@@ -62,7 +62,7 @@ export class MediaCardComponent implements OnInit {
   }
 
   tagFile(tag: MediaModel.Tag) {
-    this.uploadsService.updateFile({ tag: tag.id, _id: this.file._id }).subscribe();
+    this.uploadsService.updateFile(this.file._id, { tag: tag.id }).subscribe();
   }
 
 }

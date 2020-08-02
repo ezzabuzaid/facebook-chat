@@ -32,8 +32,8 @@ export class UploadsService {
         return this.http.delete(`${ Constants.API.UPLOADS.base }/${ file_id }`);
     }
 
-    updateFile(file: Partial<MediaModel.IFile>) {
-        return this.http.patch(`${ Constants.API.UPLOADS.base }/${ file._id }`, file);
+    updateFile(id: string, file: Partial<MediaModel.IFile>) {
+        return this.http.patch(`${ Constants.API.UPLOADS.base }/${ id }`, file);
     }
 
     updateFolder(folder: Partial<MediaModel.Folder>) {
@@ -46,12 +46,16 @@ export class UploadsService {
     }
 
     getUserFolders() {
-        return this.http.get<ListEntityResponse<MediaModel.Folder>>(`${ Constants.API.UPLOADS.folders }/user`)
+        return this.http
+            .configure({ LOCAL_CACHE: false })
+            .get<ListEntityResponse<MediaModel.Folder>>(`${ Constants.API.UPLOADS.folders }/user`)
             .pipe(map(({ list }) => list));
     }
 
     getSharedFolders() {
-        return this.http.get<ListEntityResponse<MediaModel.Folder>>(`${ Constants.API.UPLOADS.folders }/user/shared`)
+        return this.http
+            .configure({ LOCAL_CACHE: false })
+            .get<ListEntityResponse<MediaModel.Folder>>(`${ Constants.API.UPLOADS.folders }/user/shared`)
             .pipe(map(({ list }) => list));
     }
 
@@ -66,9 +70,7 @@ export class UploadsService {
 
     getTags() {
         return this.http
-            .configure({
-                LOCAL_CACHE: true
-            })
+            .configure({ LOCAL_CACHE: true })
             .get<MediaModel.Tag[]>(`${ Constants.API.UPLOADS.tags }`);
     }
 

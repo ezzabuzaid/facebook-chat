@@ -47,7 +47,6 @@ export class ApplicationUser extends SubjectFactory<boolean> {
         switchMap((uuid) => {
           return this.http
             .post<PortalModel.ILoginResponse>(Constants.API.PORTAL.refreshtoken, new PortalModel.RefreshToken(
-              uuid,
               this.tokenHelper.token,
               this.tokenHelper.refreshToken,
             ))

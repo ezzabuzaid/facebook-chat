@@ -63,6 +63,13 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   sendMessage() {
+    if (AppUtils.hasItemWithin(this.files)) {
+      for (const file of this.files) {
+        this.chatManager.sendLocalMessage(this.createFileMessage(file));
+      }
+      this.hideActionBar();
+    }
+
     const text = this.messageFormControl.value as string;
     if (AppUtils.isTruthy(text)) {
       this.messageFormControl.setValue('');
@@ -72,17 +79,20 @@ export class ChatCardFooterComponent implements OnInit {
         this.chatManager.sendLocalMessage(this.createMessage(text));
       }
     }
-    if (AppUtils.hasItemWithin(this.files)) {
-      for (const file of this.files) {
-        this.chatManager.sendLocalMessage(this.createMessage(null, file));
-      }
-      this.hideActionBar();
-    }
   }
 
-  createMessage(text: string, file: File = null) {
+  createMessage(text: string) {
     return new ChatModel.Message({
       text,
+      rawFile: null,
+      user: this.tokenService.decodedToken.id,
+      room: this.room._id,
+    });
+  }
+
+  createFileMessage(file: File = null) {
+    return new ChatModel.Message({
+      text: null,
       rawFile: file,
       user: this.tokenService.decodedToken.id,
       room: this.room._id,
