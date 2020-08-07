@@ -97,7 +97,7 @@
               }
             ],
             "outputHashing": "media",
-            "sourceMap": false,
+            "sourceMap": true,
             "optimization": false,
             "stylePreprocessorOptions": {
               "includePaths": [
