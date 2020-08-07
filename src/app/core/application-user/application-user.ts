@@ -92,7 +92,7 @@ export class ApplicationUser extends SubjectFactory<boolean> {
   }
 
   getDeviceUUID() {
-    return biri();
+    return Promise.resolve(this.navigator.userAgent);
   }
 
   oneTimeLogin() {
