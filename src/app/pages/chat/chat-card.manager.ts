@@ -18,7 +18,9 @@ class CardConfig<T> {
     }
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ChatCardManager {
 
     public static count = 0;
