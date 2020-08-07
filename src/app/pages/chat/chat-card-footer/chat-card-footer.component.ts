@@ -72,7 +72,7 @@ export class ChatCardFooterComponent implements OnInit {
 
     const text = this.messageFormControl.value as string;
     if (AppUtils.isTruthy(text)) {
-      this.messageFormControl.setValue('');
+      this.messageFormControl.setValue('', { emitEvent: false });
       if (this.external) {
         this.onSendMessage.emit(text);
       } else {

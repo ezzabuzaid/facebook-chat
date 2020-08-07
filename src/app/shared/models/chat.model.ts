@@ -15,7 +15,6 @@ export namespace ChatModel {
         constructor(data: Room) {
             super(data);
             Object.assign(this, data);
-            console.log(data);
         }
     }
 
@@ -40,12 +39,14 @@ export namespace ChatModel {
             this.rawFile = content.rawFile;
         }
     }
-    export class VideoStream {
+
+    export class CallNegotiation {
         constructor(
             public negotiation: RTCSessionDescriptionInit,
             public id: string
         ) { }
     }
+
 
     export class ChatOutgoingMessage {
         constructor(

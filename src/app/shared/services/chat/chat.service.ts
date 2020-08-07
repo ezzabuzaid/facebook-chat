@@ -17,7 +17,7 @@ export class ChatService {
         private readonly http: HttpClient,
     ) {
         this.http.get<ListEntityResponse<ChatModel.Room>>(Constants.API.CHAT.groups)
-            .pipe(map(({ list }) => list), tap(console.log))
+            .pipe(map(({ list }) => list))
             .subscribe(this.groupsSubject);
 
         this.http.get<ListEntityResponse<ChatModel.Room>>(Constants.API.CHAT.conversation)
