@@ -1,4 +1,5 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, Inject } from '@angular/core';
 
 // Soruce code => https://codepen.io/ademilter/pen/hDtpq
 
@@ -8,6 +9,12 @@ import { AfterViewInit, Component } from '@angular/core';
   styleUrls: ['./page-not-found.component.scss']
 })
 export class PageNotFoundComponent implements AfterViewInit {
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document
+  ) {
+
+  }
 
   ngAfterViewInit() {
     const flickering = () => {
@@ -30,7 +37,7 @@ export class PageNotFoundComponent implements AfterViewInit {
 
     const WIDTH = 700;
     const HEIGHT = 500;
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    const canvas = this.document.getElementById('canvas') as HTMLCanvasElement;
     const context = canvas.getContext('2d');
     prepareCanvas();
     const imgData = context.getImageData(0, 0, WIDTH, HEIGHT);

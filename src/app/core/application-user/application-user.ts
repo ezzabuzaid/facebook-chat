@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID, } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,7 +10,6 @@ import { NAVIGATOR } from '@shared/common';
 import { PortalModel, ResponseModel } from '@shared/models';
 import { from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';
 declare const biri: () => Promise<string>;
 @Injectable({
   providedIn: 'root'
@@ -85,14 +85,14 @@ export class ApplicationUser extends SubjectFactory<boolean> {
         [Constants.Application.DEVICE_UUID as any]: await this.getDeviceUUID()
       });
       this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
+      this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
+        queryParams: {
+          [Constants.Application.REDIRECT_URL]: redirectUrl ?? undefined
+        }
+      });
+      this.tokenHelper.deleteToken();
+      this.notify(this.tokenHelper.isAuthenticated);
     }
-    this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
-      queryParams: {
-        [Constants.Application.REDIRECT_URL]: redirectUrl ?? undefined
-      }
-    });
-    this.tokenHelper.deleteToken();
-    this.notify(this.tokenHelper.isAuthenticated);
   }
 
   getDeviceUUID() {
