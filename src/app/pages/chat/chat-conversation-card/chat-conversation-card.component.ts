@@ -53,17 +53,16 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
       this.video.play();
     };
 
-    // this.peerConnection.onicecandidate = (event) => {
-    //   if (event.candidate) {
-    //     console.log(event.candidate);
-    //     this.chatManager.socket.emit('CallerCandidate', new ChatModel.CallNegotiation(event.candidate as any, this.data._id));
-    //   }
-    // };
+    this.peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        console.log(event.candidate);
+        this.chatManager.socket.emit('CallerCandidate', new ChatModel.CallNegotiation(event.candidate as any, this.data._id));
+      }
+    };
 
-    // this.chatManager.socket.on('CalleeCandidate', (candidate: ChatModel.CallNegotiation) => {
-    //   console.log(candidate.negotiation);
-    //   this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate.negotiation as any));
-    // });
+    this.chatManager.socket.on('CalleeCandidate', (candidate: ChatModel.CallNegotiation) => {
+      this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate.negotiation as any));
+    });
 
 
   }
