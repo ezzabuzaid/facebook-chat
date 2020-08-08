@@ -22,6 +22,7 @@ export const localStorageFactory = (injector: Injector) => {
     return new LocalStorage(AppUtils.pascalCase(Constants.Application.APPLICATION_NAME));
   }
   return {
+    delete(name: string) { },
     get(param: string) { },
   } as Partial<LocalStorage>;
 };
@@ -31,6 +32,7 @@ export const sessionStorageFactory = (injector: Injector) => {
     return new SessionStorage(AppUtils.pascalCase(Constants.Application.APPLICATION_NAME));
   }
   return {
+    delete(name: string) { },
     get(param: string) { },
   } as Partial<SessionStorage>;
 };
