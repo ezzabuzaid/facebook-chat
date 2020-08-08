@@ -10,6 +10,7 @@ import { FileViewerModule } from '@partials/file-viewer';
 import { PipesModule } from '@shared/pipes';
 import { FileControlModule } from '@widget/file-control/file-control.module';
 import { InifiniteScrollingModule } from '@widget/inifinite-scroll';
+import { TimeagoModule } from 'ngx-timeago';
 import { ChatCardFooterComponent } from './chat-card-footer/chat-card-footer.component';
 import { ChatCardMessagesComponent } from './chat-card-messages/chat-card-messages.component';
 import { ChatCardComponent } from './chat-card/chat-card.component';
@@ -18,7 +19,6 @@ import { ChatCreateCardComponent } from './chat-create-card/chat-create-card.com
 import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
 import { ChatGroupMembersComponent } from './chat-group-members/chat-group-members.component';
 import { MessageBubbleComponent } from './message-bubble/message-bubble.component';
-import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [

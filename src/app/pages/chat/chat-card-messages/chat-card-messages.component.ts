@@ -32,17 +32,22 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestr
   ngOnInit() {
     this.chatManager.socket
       .on('Message', message => {
+        console.log('RECIVIE:', message);
         this.messages.push(message);
       });
 
     this.chatManager.messageListener.listen()
+      .pipe(takeUntil(this.subscription))
       .subscribe(message => {
         message.order = this.getLastMessageOrder() + 1;
         if (message.text) {
           this.chatManager.sendMessage(message);
         }
-        this.messages.push(message);
       });
+  }
+
+  ngOnDestroy() {
+    AppUtils.unsubscribe(this.subscription);
   }
 
   ngAfterViewInit() {
@@ -64,10 +69,6 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestr
 
   prependMessages(messages: ChatModel.Message[]) {
     this.messages.unshift(...messages.reverse());
-  }
-
-  ngOnDestroy() {
-    AppUtils.unsubscribe(this.subscription);
   }
 
 }

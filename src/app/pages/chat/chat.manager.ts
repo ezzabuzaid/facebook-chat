@@ -1,23 +1,26 @@
-import { Injectable } from '@angular/core';
+import { inject, Inject, Injectable, InjectionToken } from '@angular/core';
 import { SubjectFactory } from '@core/helpers/subject-factory';
 import { TokenHelper } from '@core/helpers/token';
 import { environment } from '@environments/environment';
 import { ChatModel } from '@shared/models';
-import { fromEvent } from 'rxjs';
 import * as io from 'socket.io-client';
 
-@Injectable({
-    providedIn: 'root'
-})
+export const SOCKET_IO = new InjectionToken('SOCKET_IO', {
+    providedIn: 'root', factory: () => {
+        const tokenHelper = inject(TokenHelper);
+        return io(environment.serverOrigin, {
+            query: { token: tokenHelper.token },
+            transports: ['websocket']
+        });
+    }
+});
+@Injectable()
 export class ChatManager {
-    public socket = io(environment.serverOrigin, {
-        query: { token: this.tokenService.token }
-    });
-    public onConnect = fromEvent(this.socket, 'connect');
+
     public messageListener = new SubjectFactory<ChatModel.Message>();
 
     constructor(
-        private readonly tokenService: TokenHelper
+        @Inject(SOCKET_IO) public readonly socket: SocketIOClient.Socket
     ) { }
 
     sendMessage(message: ChatModel.Message) {
@@ -29,8 +32,12 @@ export class ChatManager {
         ));
     }
 
-    streamVideo(videoStream: ChatModel.VideoStream) {
-        this.socket.emit('StreamOffer', videoStream);
+    makeCallNegotiation(callNegotiation: ChatModel.CallNegotiation) {
+        this.socket.emit('MakeCallNegotiation', callNegotiation);
+    }
+
+    acceptCallNegotiation(callNegotiation: ChatModel.CallNegotiation) {
+        this.socket.emit('AcceptCallNegotiation', callNegotiation);
     }
 
     sendLocalMessage(message: ChatModel.Message) {
