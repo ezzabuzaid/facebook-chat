@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, } from '@angular/core';
 import { Router } from '@angular/router';
 import { Constants } from '@core/constants';
 import { SubjectFactory } from '@core/helpers/subject-factory';
@@ -9,6 +9,7 @@ import { NAVIGATOR } from '@shared/common';
 import { PortalModel, ResponseModel } from '@shared/models';
 import { from } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 declare const biri: () => Promise<string>;
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class ApplicationUser extends SubjectFactory<boolean> {
     private readonly tokenHelper: TokenHelper,
     private readonly router: Router,
     @Inject(NAVIGATOR) private readonly navigator: Navigator,
+    @Inject(PLATFORM_ID) private readonly platformId: any,
   ) {
     super(tokenHelper.isAuthenticated);
   }
@@ -78,10 +80,12 @@ export class ApplicationUser extends SubjectFactory<boolean> {
   }
 
   public async logout(redirectUrl = this.router.url) {
-    const blob = new Blob([JSON.stringify({})], {
-      [Constants.Application.DEVICE_UUID as any]: await this.getDeviceUUID()
-    });
-    this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
+    if (this.isBrowser) {
+      const blob = new Blob([JSON.stringify({})], {
+        [Constants.Application.DEVICE_UUID as any]: await this.getDeviceUUID()
+      });
+      this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
+    }
     this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
       queryParams: {
         [Constants.Application.REDIRECT_URL]: redirectUrl ?? undefined
@@ -99,4 +103,7 @@ export class ApplicationUser extends SubjectFactory<boolean> {
     return this.tokenHelper.oneTimeLogin;
   }
 
+  get isBrowser() {
+    return isPlatformBrowser(this.platformId);
+  }
 }
