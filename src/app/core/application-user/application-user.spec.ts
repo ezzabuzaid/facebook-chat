@@ -1,11 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { UserService } from './account.service';
 
-describe('UserService', () => {
+describe('ApplicationUser', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: UserService = TestBed.inject(UserService);
+    const service: ApplicationUser = TestBed.inject(ApplicationUser);
     expect(service).toBeTruthy();
   });
 });

@@ -3,9 +3,9 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { DateField, EFieldType, Field, Form, SelectField, SelectOption, SubmitEvent } from '@ezzabuzaid/ngx-form-factory';
-import { UserService } from '@shared/account';
 import { Fields } from '@shared/common';
 import { PortalModel } from '@shared/models';
 import { Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase } from '@shared/validators';
@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   $passwordVisible: Observable<boolean> = null;
   constructor(
     private readonly router: Router,
-    private readonly userService: UserService,
+    private readonly applicationUser: ApplicationUser,
     private snackbar: MatSnackBar,
     private formBuilder: FormBuilder
   ) { }
@@ -116,7 +116,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   register({ valid, value }: SubmitEvent<PortalModel.IRegister>) {
     if (valid) {
-      this.userService.register(value)
+      this.applicationUser.register(value)
         .subscribe(({ message }) => {
           this.snackbar.open(message, 'Close', { duration: Number.MAX_VALUE });
           this.router.navigate([Constants.Routing.LOGIN.withSlash]);

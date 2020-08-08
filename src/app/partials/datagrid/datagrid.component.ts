@@ -1,6 +1,8 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import { AppUtils } from '@core/helpers/utils';
+import { PaginationQuery } from '@shared/models';
 import { tap } from 'rxjs/operators';
 import { DataGrid, DisplayColumn, EColumnTypes } from './column';
 
@@ -10,18 +12,19 @@ import { DataGrid, DisplayColumn, EColumnTypes } from './column';
   styleUrls: ['./datagrid.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatagridComponent implements OnInit, AfterViewInit, OnChanges {
+export class DatagridComponent implements AfterViewInit, OnChanges {
   @Input() dataGrid: DataGrid<any> = null;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dataSource = [];
   EColumnTypes = EColumnTypes;
   lock = false;
   displayColumns = [];
-  constructor(
-    private cdf: ChangeDetectorRef
-  ) { }
 
-  ngOnInit() { }
+
+  sortData(event: Sort) {
+    this.fetchData(new PaginationQuery(0, this.paginator.pageSize, { [event.active]: event.direction }));
+  }
+
   ngOnChanges() {
     if (AppUtils.not(this.lock) && this.dataGrid) {
       this.lock = true;
@@ -33,14 +36,14 @@ export class DatagridComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.fetchData({ page: 0, size: 20 });
+    this.fetchData(new PaginationQuery(0, this.paginator.pageSize));
   }
 
   onPaginate(event: PageEvent) {
-    this.fetchData({ page: event.pageIndex, size: event.pageSize });
+    this.fetchData(new PaginationQuery(event.pageIndex, event.pageSize));
   }
 
-  fetchData(query) {
+  fetchData(query: PaginationQuery<any>) {
     return this.dataGrid?.provider(query)
       .pipe(tap(data => {
         this.dataSource = data.list;

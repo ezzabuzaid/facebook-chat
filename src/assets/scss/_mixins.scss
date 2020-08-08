@@ -133,45 +133,6 @@
   }
 }
 
-@mixin font_size($by: 1) {
-  @for $size from 1 to 5 {
-    .font-size-#{$size} {
-      font-size: calc(#{$size}em / #{$by});
-    }
-  }
-}
-
-@mixin border_radius($by: 1) {
-  @for $size from 0 to 20 {
-    .border-radius-#{$size} {
-      border-radius: calc(#{$size}em / #{$by});
-    }
-  }
-}
-
-@mixin border_width() {
-  @for $size from 0 to 20 {
-    .border--#{$size} {
-      border-width: #{$size}px !important;
-    }
-  }
-}
-
-@mixin bootstrab_default {
-  input {
-    &:focus {
-      outline: transparent;
-      box-shadow: none;
-      border: none;
-    }
-  }
-  button {
-    &:focus {
-      outline: none !important;
-    }
-  }
-}
-
 @mixin direction($dir) {
   body[dir="#{$dir}"] &,
   html[dir="#{$dir}"] & {

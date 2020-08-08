@@ -45,7 +45,6 @@ export class ContainerComponent implements OnInit {
   public $groups = this.chatService.getGroups();
   public $conversations = this.chatService.getConversations();
   constructor(
-    private readonly usersService: UsersService,
     private readonly chatCardManager: ChatCardManager,
     private readonly chatService: ChatService,
   ) { }
@@ -54,14 +53,14 @@ export class ContainerComponent implements OnInit {
     this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
   }
 
-  openChatCard(conversation: ChatModel.IRoom) {
+  openChatCard(conversation: ChatModel.Room) {
     this.chatCardManager.open(ChatConversationCardComponent, {
       id: conversation._id,
       data: conversation
     });
   }
 
-  openGroupChatCard(room: ChatModel.IRoom) {
+  openGroupChatCard(room: ChatModel.Room) {
     this.chatCardManager.open(ChatGroupCardComponent, {
       id: room._id,
       data: room

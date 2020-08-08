@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { EFieldType, Field, Form } from '@ezzabuzaid/ngx-form-factory';
-import { UserService } from '@shared/account';
 import { Fields, RouteUtility } from '@shared/common';
 import { PortalModel } from '@shared/models';
 
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private readonly portalService: UserService,
+    private readonly portalService: ApplicationUser,
     private readonly router: Router,
     private routeUtility: RouteUtility
   ) { }

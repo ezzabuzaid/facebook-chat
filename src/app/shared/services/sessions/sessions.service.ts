@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constants } from '@core/constants';
-import { ListEntityQuery, ListEntityResponse, PlainQuery, SessionsModel } from '@shared/models';
+import { ListEntityQuery, ListEntityResponse, PaginationQuery, PlainQuery, SessionsModel } from '@shared/models';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +19,7 @@ export class SessionsService {
         return this.http.patch(`${ Constants.API.SESSIONS.deactivate }`, payload);
     }
 
-    public getSessions(query: ListEntityQuery) {
+    public getSessions(query: PaginationQuery<SessionsModel.ISession>) {
         const plainQuery = new PlainQuery<ListEntityQuery>(query);
         return this.http.get<ListEntityResponse<SessionsModel.ISession>>(`${ Constants.API.SESSIONS.base }?${ plainQuery.asString }`);
     }

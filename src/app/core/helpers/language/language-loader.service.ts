@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
+import { environment } from '@environments/environment';
 import { TranslateLoader } from '@ngx-translate/core';
 import { LanguageService } from './language.service';
 
@@ -16,8 +17,8 @@ export class LanguageLoader implements TranslateLoader {
         return http
             .configure({
                 DEFAULT_URL: false,
-                LOCAL_CACHE: true,
-                // CACHE_CATEGORY: 'language'
+                LOCAL_CACHE: environment.production,
+                CACHE_CATEGORY: 'language'
             })
             .get(`assets/i18n/${ languageService.language }.json`);
     }

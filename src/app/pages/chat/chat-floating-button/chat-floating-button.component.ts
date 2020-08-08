@@ -8,8 +8,8 @@ import { IChatCard } from '../index';
   templateUrl: './chat-floating-button.component.html',
   styleUrls: ['./chat-floating-button.component.scss']
 })
-export class ChatFloatingButtonComponent implements OnInit, IChatCard<ChatModel.IRoom>{
-  data: ChatModel.IRoom;
+export class ChatFloatingButtonComponent implements OnInit, IChatCard<ChatModel.Room>{
+  data: ChatModel.Room;
   id: string;
 
   constructor(

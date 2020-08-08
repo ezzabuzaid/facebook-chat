@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '@shared/services/users';
-import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
+import { RegisterdSidebar, SidebarManager } from '@widget/sidebar';
 
 @Component({
   selector: 'app-navbar-header',
@@ -10,7 +10,7 @@ import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
 export class NavbarHeaderComponent implements OnInit {
   $user = this.usersService.getCurrentUser();
   constructor(
-    private readonly sidebarService: SidebarService,
+    private readonly sidebarService: SidebarManager,
     private readonly usersService: UsersService
   ) { }
 

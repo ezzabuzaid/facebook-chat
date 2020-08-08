@@ -2,10 +2,10 @@ import { async, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { TokenHelper } from '@core/helpers/token';
 import { FormModule } from '@partials/form';
-import { UserService } from '@shared/account';
 import { MaterialModule } from '@shared/common';
 import { PortalModel } from '@shared/models';
 import { asyncData, TestUtility } from 'test/fixture';
@@ -42,14 +42,14 @@ fdescribe('LoginComponent', () => {
             let loginResponse: PortalModel.ILoginResponse;
             beforeEach(() => {
                 loginResponse = { refreshToken: 'refreshToken', token: 'token' };
-                spyOn(TestBed.inject(UserService), 'login').and.returnValue(asyncData(loginResponse));
+                spyOn(TestBed.inject(ApplicationUser), 'login').and.returnValue(asyncData(loginResponse));
                 spyOn(TestBed.inject(TokenHelper), 'setToken');
                 spyOn(TestBed.inject(Router), 'navigateByUrl');
             });
             test('FormIsNotValid_DoNothing')
                 .Givin(() => ({ valid: false }))
                 .When(({ valid }) => component.login({ valid, value: null }))
-                .Then(() => expect(TestBed.inject(UserService).login).not.toHaveBeenCalled());
+                .Then(() => expect(TestBed.inject(ApplicationUser).login).not.toHaveBeenCalled());
 
             test('FormIsValid_LogTheUserIn')
                 .Givin(() => ({ value: { password: 'testPassword', username: 'testUsername' } }))
@@ -58,8 +58,8 @@ fdescribe('LoginComponent', () => {
                     return value;
                 })
                 .Then((value) => {
-                    expect(TestBed.inject(UserService).login).toHaveBeenCalledWith(value);
-                    expect(TestBed.inject(UserService).login).toHaveBeenCalledTimes(1);
+                    expect(TestBed.inject(ApplicationUser).login).toHaveBeenCalledWith(value);
+                    expect(TestBed.inject(ApplicationUser).login).toHaveBeenCalledTimes(1);
                 });
 
 
@@ -142,14 +142,14 @@ fdescribe('LoginComponent', () => {
     // });
 
     // describe('[INTEGRATE]', () => {
-    //     it('should call login method in userService after submitting the form', fakeAsync(() => {
-    //         const userService = getService<UserService>(UserService);
+    //     it('should call login method in applicationUser after submitting the form', fakeAsync(() => {
+    //         const applicationUser = getService<UserService>(UserService);
     //         component.getControl('username').setValue(fakeCreds.username);
     //         component.getControl('password').setValue(fakeCreds.password);
     //         fixture.detectChanges();
     //         byQuerySelector('#submitButtons').click();
-    //         expect(userService.login).toHaveBeenCalledTimes(1);
-    //         expect(userService.login).toHaveBeenCalledWith(component.form.value);
+    //         expect(applicationUser.login).toHaveBeenCalledTimes(1);
+    //         expect(applicationUser.login).toHaveBeenCalledWith(component.form.value);
     //     }));
 
     //     it('should redirect to app entry page after successed login', fakeAsync(() => {

@@ -1,3 +1,4 @@
+import { SortDirection } from '@angular/material/sort';
 import { AppUtils } from '@core/helpers/utils';
 
 export interface ResponseModel<T> {
@@ -8,18 +9,24 @@ export interface ResponseModel<T> {
     status: string;
 }
 
-
-export class IModel {
+export class BaseModel {
     _id: string = null;
     createdAt = new Date().toISOString();
     updatedAt = new Date().toISOString();
-    constructor(payload: Partial<IModel> = {}) {
+    constructor(payload: Partial<BaseModel> = {}) {
         this._id = payload._id;
         this.createdAt = payload.createdAt || new Date().toISOString();
         this.updatedAt = payload.updatedAt || new Date().toISOString();
     }
 }
 
+export class WriteResult extends BaseModel {
+    readonly id: string;
+    constructor(entity) {
+        super(entity);
+        this.id = this._id;
+    }
+}
 export class CreateResponse {
     id: string;
 }
@@ -51,5 +58,15 @@ export class ListEntityQuery {
     constructor(obj: ListEntityQuery) {
         this.page = obj.page ?? 1;
         this.size = obj.size ?? 10;
+    }
+}
+
+export class PaginationQuery<T> {
+    constructor(
+        public page = 1,
+        public size = 10,
+        sort?: { [key in keyof T]: SortDirection }
+    ) {
+        Object.assign(this, sort);
     }
 }

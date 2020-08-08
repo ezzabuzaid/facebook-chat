@@ -11,11 +11,12 @@ import { ChatManager } from '../chat.manager';
 @Component({
   selector: 'app-group-chat-card',
   templateUrl: './chat-group-card.component.html',
-  styleUrls: ['./chat-group-card.component.scss']
+  styleUrls: ['./chat-group-card.component.scss'],
+  providers: [ChatManager]
 })
-export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.IGroup> {
+export class ChatGroupCardComponent implements OnInit, OnDestroy, IChatCard<ChatModel.Room> {
   public id: string;
-  public data: ChatModel.IGroup;
+  public data: ChatModel.Room;
   @ViewChild(ChatCardComponent, { static: true }) baseCharCard: ChatCardComponent;
 
   constructor(

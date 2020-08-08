@@ -13,7 +13,7 @@ import { ChatManager } from '../chat.manager';
   styleUrls: ['./chat-card-footer.component.scss'],
 })
 export class ChatCardFooterComponent implements OnInit {
-  @Input() room: ChatModel.IRoom;
+  @Input() room: ChatModel.Room;
   @Input() external = false;
   @Output() onSendMessage = new EventEmitter();
   @Output() onActionBarVisibilityChange = new EventEmitter<HTMLElement>(true);
@@ -63,26 +63,36 @@ export class ChatCardFooterComponent implements OnInit {
   }
 
   sendMessage() {
+    if (AppUtils.hasItemWithin(this.files)) {
+      for (const file of this.files) {
+        this.chatManager.sendLocalMessage(this.createFileMessage(file));
+      }
+      this.hideActionBar();
+    }
+
     const text = this.messageFormControl.value as string;
     if (AppUtils.isTruthy(text)) {
-      this.messageFormControl.setValue('');
+      this.messageFormControl.setValue('', { emitEvent: false });
       if (this.external) {
         this.onSendMessage.emit(text);
       } else {
         this.chatManager.sendLocalMessage(this.createMessage(text));
       }
     }
-    if (AppUtils.hasItemWithin(this.files)) {
-      for (const file of this.files) {
-        this.chatManager.sendLocalMessage(this.createMessage(null, file));
-      }
-      this.hideActionBar();
-    }
   }
 
-  createMessage(text: string, file: File = null) {
+  createMessage(text: string) {
     return new ChatModel.Message({
       text,
+      rawFile: null,
+      user: this.tokenService.decodedToken.id,
+      room: this.room._id,
+    });
+  }
+
+  createFileMessage(file: File = null) {
+    return new ChatModel.Message({
+      text: null,
       rawFile: file,
       user: this.tokenService.decodedToken.id,
       room: this.room._id,

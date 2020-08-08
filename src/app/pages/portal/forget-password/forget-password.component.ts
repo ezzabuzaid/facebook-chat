@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ApplicationUser } from '@core/application-user';
 import { Constants } from '@core/constants';
 import { AppUtils } from '@core/helpers/utils';
 import { EFieldType, Field, Form, SubmitEvent } from '@ezzabuzaid/ngx-form-factory';
-import { UserService } from '@shared/account';
 import { Fields, _extract } from '@shared/common';
 import { PortalModel } from '@shared/models';
 import { AllEqual, Between, ContainsLowercase, ContainsNumber, ContainsSpecialCharacter, ContainsUppercase, EqualTo } from '@shared/validators';
@@ -84,7 +84,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   subscription = new Subject();
 
   constructor(
-    private userService: UserService,
+    private applicationUser: ApplicationUser,
     private router: Router,
     private snackbar: MatSnackBar
   ) { }
@@ -102,7 +102,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
 
   checkUser(event: SubmitEvent) {
     if (event.valid) {
-      this.userService.checkIfAccountIsExist(event.value)
+      this.applicationUser.checkIfAccountIsExist(event.value)
         .subscribe((response) => {
           this.nextStep();
           this.accountVerificationResponse = response;
@@ -112,7 +112,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
 
   sendPincode(event: SubmitEvent) {
     console.log(this.accountVerificationResponse);
-    this.userService
+    this.applicationUser
       .sendPincode({
         type: this.sendPincodeType,
         id: this.accountVerificationResponse.id,
@@ -130,7 +130,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
 
   checkPincode(pincode: string) {
     this.pincode = pincode;
-    this.userService.checkPincode({
+    this.applicationUser.checkPincode({
       pincode,
       id: this.accountVerificationResponse.id
     })
@@ -140,7 +140,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   }
 
   resetPassword(event: SubmitEvent) {
-    this.userService.resetPassword({
+    this.applicationUser.resetPassword({
       id: this.accountVerificationResponse.id,
       password: event.value.password,
       pincode: this.pincode

@@ -1,11 +1,11 @@
 <header class="container-fluid d-flex align-items-center justify-content-between">
-    <div class="w-50">
+    <div class="flex-fill">
         <mat-form-field appearance="legacy">
-            <mat-label>Search for a file!</mat-label>
+            <mat-label>Search</mat-label>
             <input matInput [formControl]="searchControl">
         </mat-form-field>
     </div>
-    <div class="actions d-flex align-items-center">
+    <div class="actions d-flex align-items-center ml-3">
         <app-file-control (onChange)="uploadFiles($event)" [disabled]="$sharedView | async">
             <button mat-stroked-button tabindex="-1" [disabled]="$sharedView | async">Upload</button>
         </app-file-control>

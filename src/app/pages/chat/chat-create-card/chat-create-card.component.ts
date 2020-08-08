@@ -9,15 +9,17 @@ import { ChatService } from '@shared/services/chat';
 import { UsersService } from '@shared/services/users';
 import { PopupManager } from '@widget/popup';
 import { Observable, of } from 'rxjs';
-import { filter, map, share, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, share, switchMap } from 'rxjs/operators';
 import { ChatCardManager, IChatCard } from '../chat-card.manager';
 import { ChatConversationCardComponent } from '../chat-conversation-card/chat-conversation-card.component';
 import { ChatGroupCardComponent } from '../chat-group-card/chat-group-card.component';
+import { ChatManager } from '../chat.manager';
 
 @Component({
   selector: 'app-chat-create-card',
   templateUrl: './chat-create-card.component.html',
-  styleUrls: ['./chat-create-card.component.scss']
+  styleUrls: ['./chat-create-card.component.scss'],
+  providers: [ChatManager]
 })
 export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   data: any;
@@ -27,7 +29,7 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   autocompleteControl = new FormControl();
 
-  $room: Observable<ChatModel.IRoom> = null;
+  $room: Observable<ChatModel.Room> = null;
 
   constructor(
     private readonly chatCardManager: ChatCardManager,
@@ -44,7 +46,8 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
       switchMap((value) => this.usersService.searchForUsers(value)),
       map(users => users.filter(user => {
         return this.selectedUsers.findIndex(selectedUser => selectedUser._id === user._id) === -1;
-      }))
+      })),
+      catchError(() => of([]))
     );
   }
 
@@ -96,7 +99,7 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
       });
   }
 
-  jumpToRroom(room: ChatModel.IRoom, message: string) {
+  jumpToRroom(room: ChatModel.Room, message: string) {
     const component = room.single ? ChatConversationCardComponent : ChatGroupCardComponent;
     this.chatCardManager.open(component, {
       id: room._id,

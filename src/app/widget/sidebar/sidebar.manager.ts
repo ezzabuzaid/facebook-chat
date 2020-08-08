@@ -4,7 +4,7 @@ import { SidebarComponent } from './sidebar.component';
 @Injectable({
   providedIn: 'root'
 })
-export class SidebarService {
+export class SidebarManager {
   components: { name: string, sidebar: SidebarComponent }[] = [];
   constructor() { }
 

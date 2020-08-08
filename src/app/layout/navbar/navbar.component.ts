@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserService } from '@shared/account';
-import { RegisterdSidebar, SidebarService } from '@widget/sidebar';
+import { ApplicationUser } from '@core/application-user';
+import { RegisterdSidebar, SidebarManager } from '@widget/sidebar';
 import navigation, { NavigationItem } from './navigation';
 
 @Component({
@@ -16,12 +16,12 @@ export class NavbarComponent {
     type: 'item',
   });
   constructor(
-    private readonly userService: UserService,
-    private readonly sidebarService: SidebarService
+    private readonly applicationUser: ApplicationUser,
+    private readonly sidebarService: SidebarManager
   ) { }
 
   logout() {
-    this.userService.logout();
+    this.applicationUser.logout();
   }
 
   closeSidebar() {

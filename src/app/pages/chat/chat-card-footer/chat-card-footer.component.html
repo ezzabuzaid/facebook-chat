@@ -27,7 +27,8 @@
         <div *ngIf="base64Files.length" class="d-flex pt-3 px-2 overflow-auto flex-fill">
             <div class="attachment-box mx-1 position-relative" *ngFor="let file of files; let index = index;">
                 <mat-icon (click)="disposeFile(index)"
-                    class="pointer text-muted position-absolute bg-white border-radius-1 shadow">close
+                    class="pointer text-muted position-absolute bg-white border-radius-1 shadow font-size-15 center-flex">
+                    close
                 </mat-icon>
                 <img *ngIf="isImage(file.name); else documentType" class="img-fluid h-100 border-radius-1"
                     [src]="base64Files[index] | async">

@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/commo
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApplicationUser } from '@core/application-user';
 import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
-import { UserService } from '@shared/account';
 import { TeardownInterceptor } from './teardown.interceptor';
 
 describe(`TeardownInterceptor`, () => {

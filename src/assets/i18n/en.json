@@ -1,5 +1,5 @@
 {
-	"application_name": "Angular Buildozer",
+	"application_name": "Buildozer",
 	"actions": "Actions",
 	"addresses_list": "Addresses",
 	"admin_list": "Admins",
@@ -30,7 +30,7 @@
 	"navbar_users": "Users",
 	"navbar_sessions": "Sessions",
 	"navbar_media": "Media hub",
-	"navbar_home": "navbar_home",
+	"navbar_home": "Home",
 	"placeholder_confirm_password": "Confirm passord",
 	"placeholder_fullname": "Fullname",
 	"placeholder_lastname": "Last name",

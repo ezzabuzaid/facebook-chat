@@ -41,7 +41,6 @@ export namespace PortalModel {
     }
     export class RefreshToken {
         constructor(
-            public uuid: string,
             public token: string,
             public refreshToken: string,
         ) { }

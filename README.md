@@ -10,7 +10,8 @@ I’m using it in my personal and work projects, whilst it’s a good resource t
 1. Clone the project.
 2. Run `node setup [project-name] [project-title]` .
 3. Remove anything other than `[portal, static]` from `src/app/pages` .
-4. Remove anything `[services, models]` from `src/app/shared` .
+4. Remove `[services, models]` from `src/app/shared` .
+4. Clear out API/Routing constants.
 5. Free up the assets if needed.
 
 ## Folder Structure
@@ -27,9 +28,20 @@ I’m using it in my personal and work projects, whilst it’s a good resource t
     e.g: **stepper** module aka Wizard from is set of blocks used to navigate in one direction, it's could be part of the requirements but not essentially related to any domain.
     at anytime you decided to make **order-stepper** that related to **Orders** domain thus it's a critical part of the application then it should be moved to **`Partials`** folder
 
+## What's inside
+
+* Widgets
+
+<!-- 1. resizable: An easy way to make any block horizontaly resizable -->
+
+1. sidebar: Customized sidebar with variaty of options inculding horizontal resizing
+2. scroll-detection: Detect that a scroll happen
+3. infinity-scroll: Infinity Scroll module
+
 ## Deprecation
 
 * Widget/gmap, is no longer maintained, I'll keep it as reference
+* Widget/dialog, is no longer maintained, you can use it to create dialog
 
 ## Contributing
 

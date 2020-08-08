@@ -1,5 +1,16 @@
+@import 'mixins';
 :host {
-  app-field-factory {
-    flex-basis: 100%;
+  ngx-form-factory {
+    @include media-breakpoint-down(md) {
+      background-color: #fff;
+      ::ng-deep {
+        mat-card {
+          border-radius: 0 !important;
+          @include center_absolute();
+          box-shadow: none !important;
+          width: 100%;
+        }
+      }
+    }
   }
 }

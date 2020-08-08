@@ -26,6 +26,7 @@ export class MessageBubbleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // timestamp means that the message sent localy and not retrived from the server
     if (this.message.timestamp) {
       this.loading = true;
       const listener = this.chatManager.socket
@@ -33,8 +34,9 @@ export class MessageBubbleComponent implements OnInit {
           this.loading = false;
           this.message._id = id;
           listener.removeAllListeners();
+          this.cdf.markForCheck();
+          // TODO: If an error occured to upload file nothing will pop this up so we need to Output upload error
         });
-      this.cdf.markForCheck();
     }
     this.isSender = this.tokenService.decodedToken.id === this.message.user;
     this.cdf.markForCheck();

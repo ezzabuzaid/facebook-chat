@@ -1,0 +1,15 @@
+@import 'mixins';
+:host {
+    ngx-form-factory {
+        @include media-breakpoint-down(md) {
+            background-color: #fff;
+            ::ng-deep {
+                mat-card {
+                    border-radius: 0 !important;
+                    box-shadow: none !important;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
