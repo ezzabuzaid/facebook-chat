@@ -8,3 +8,4 @@ export * from './route';
 export * from './fields';
 export * from './network-connectivity';
 export * from './request-options';
+export * from './socket';

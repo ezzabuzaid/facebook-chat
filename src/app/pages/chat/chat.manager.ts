@@ -1,19 +1,8 @@
-import { inject, Inject, Injectable, InjectionToken } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { SubjectFactory } from '@core/helpers/subject-factory';
-import { TokenHelper } from '@core/helpers/token';
-import { environment } from '@environments/environment';
+import { SOCKET_IO } from '@shared/common';
 import { ChatModel } from '@shared/models';
-import * as io from 'socket.io-client';
 
-export const SOCKET_IO = new InjectionToken('SOCKET_IO', {
-    providedIn: 'root', factory: () => {
-        const tokenHelper = inject(TokenHelper);
-        return io(environment.serverOrigin, {
-            query: { token: tokenHelper.token },
-            transports: ['websocket']
-        });
-    }
-});
 @Injectable()
 export class ChatManager {
 
