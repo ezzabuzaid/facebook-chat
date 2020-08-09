@@ -39,7 +39,6 @@
     "@joeattardi/emoji-button": "^2.12.1",
     "@nguniversal/express-engine": "^9.0.0",
     "@ngx-translate/core": "^12.0.0",
-    "@types/simple-peer": "^9.6.0",
     "bootstrap": "^4.5.0",
     "core-js": "^3.2.1",
     "express": "^4.15.2",
@@ -48,7 +47,6 @@
     "ngx-infinite-scroll": "^9.0.0",
     "ngx-timeago": "^1.0.4",
     "rxjs": "~6.5.4",
-    "simple-peer": "^9.7.2",
     "socket.io-client": "^2.3.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

@@ -41,7 +41,7 @@ export class ProgressInterceptor implements HttpInterceptor {
                         }
                     },
                     (error) => {
-                        if (error instanceof HttpErrorResponse && error.error) {
+                        if (error instanceof HttpErrorResponse && error?.error?.message) {
                             this.snackbar.open(error.error.message);
                         }
                     }),

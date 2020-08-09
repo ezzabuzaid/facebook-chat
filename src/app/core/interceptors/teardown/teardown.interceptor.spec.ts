@@ -43,7 +43,7 @@ describe(`TeardownInterceptor`, () => {
 
     });
 
-    it('should show the snackbar with custom message if request status is 500', (() => {
+    it('should show a snackbar with custom message if request status is 500', (() => {
         // Arrange
         const urlPortion = AppUtils.generateAlphabeticString();
         spyOn(TestBed.inject(MatSnackBar), 'open');
@@ -60,7 +60,27 @@ describe(`TeardownInterceptor`, () => {
                 status: 500,
                 statusText: 'Server Error',
             }));
-        expect(TestBed.inject(MatSnackBar).open).toHaveBeenCalledWith('An error occurred to the server, please contact the maintenance');
+        expect(TestBed.inject(MatSnackBar).open).toHaveBeenCalledWith('Internal server error. Please try again later.');
+    }));
+
+    it('should show a snackbar with custom message if request status is 0', (() => {
+        // Arrange
+        const urlPortion = AppUtils.generateAlphabeticString();
+        spyOn(TestBed.inject(MatSnackBar), 'open');
+        // Act
+        TestBed.inject(HttpClient)
+            .get(urlPortion)
+            .subscribe(() => { }, () => { });
+
+        // Assert
+        TestBed
+            .inject(HttpTestingController)
+            .expectOne(urlPortion)
+            .flush({}, new HttpErrorResponse({
+                status: 0,
+                statusText: 'Unknown Error',
+            }));
+        expect(TestBed.inject(MatSnackBar).open).toHaveBeenCalledWith('Internal server error. Please try again later.');
     }));
 
     // TODO: rewrite the test case
