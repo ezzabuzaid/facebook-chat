@@ -1,9 +1,7 @@
-# Angular buildozer
+# Angular buildozer, A Production-ready Angular boilerplate
 
-A Boilerplate build on top of latest Angular version, It’s ready for production, yet not totally configured.
-I’m using it in my personal and work projects, whilst it’s a good resource to learn from
-
-**Better docs will be available soon, with inclusive demonstrations about the folder structure and the constraint that it was built upon**
+**Better document will be available soon, with inclusive demonstrations about the folder structure and what you need to kick things off**
+ 
 
 ## Getting Started
 
@@ -19,14 +17,14 @@ I’m using it in my personal and work projects, whilst it’s a good resource t
 * **Partials**
 
     So you have **Orders** and **Products** pages and there's the component that's shared between them and of course you don't want to duplicate the code here and there, so as the guides tell we should use the same component for both domains, hence, we need to configure it to adapt different places with respect to single responsibility principle and remember the code should be agonistic.
-    for that, you need to use input and output functionality offered by the framework to prepare to communicate with other components in the host.
+    for that, you need to use input and output functionality offered by the framework to communicate with the host.
     now, we know that the component is related to **orders** and we need to use it in other domain, therefore, we need another folder to make things consistent and easy to reach, here where it came the idea of **partial** module/components that can be used across the pages. so the things within the partials are strictly related to a domain and not just reusable component like **MainButton**
 
 * **Widget**
 
-    Container for reusable widgets that is not directly related to business
-    e.g: **stepper** module aka Wizard from is set of blocks used to navigate in one direction, it's could be part of the requirements but not essentially related to any domain.
-    at anytime you decided to make **order-stepper** that related to **Orders** domain thus it's a critical part of the application then it should be moved to **`Partials`** folder
+    A Container of reusable widgets that is not directly related to a domain
+    e.g: **stepper** module aka Wizard Form is set of blocks used to navigate in one direction, it's could be part of the requirements but not essentially related to any domain.
+    When you want to make **order-stepper** that related to **Orders** domain you need to move it to  **`Partials`** folder because  it's a critical part of the application
 
 ## What's inside
 
