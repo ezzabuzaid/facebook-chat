@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, Component, Inject } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser, } from '@angular/common';
+import { AfterViewInit, Component, Inject, PLATFORM_ID } from '@angular/core';
 
 // Soruce code => https://codepen.io/ademilter/pen/hDtpq
 
@@ -11,40 +11,37 @@ import { AfterViewInit, Component, Inject } from '@angular/core';
 export class PageNotFoundComponent implements AfterViewInit {
 
   constructor(
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private readonly platformId: any,
   ) {
 
   }
 
   ngAfterViewInit() {
-    const flickering = () => {
-      for (let i = 0; i < pix.length; i += 4) {
-        const color = (Math.random() * 255) + 50;
-        pix[i] = color;
-        pix[i + 1] = color;
-        pix[i + 2] = color;
-      }
-      context.putImageData(imgData, 0, 0);
-    };
-
-    const prepareCanvas = () => {
+    if (isPlatformBrowser(this.platformId)) {
+      const WIDTH = 700;
+      const HEIGHT = 500;
+      const canvas = this.document.getElementById('canvas') as HTMLCanvasElement;
+      const context = canvas.getContext('2d');
+      const flickering = () => {
+        for (let i = 0; i < pix.length; i += 4) {
+          const color = (Math.random() * 255) + 50;
+          pix[i] = color;
+          pix[i + 1] = color;
+          pix[i + 2] = color;
+        }
+        context.putImageData(imgData, 0, 0);
+      };
       canvas.width = WIDTH;
       canvas.height = HEIGHT;
       context.fillStyle = 'white';
       context.fillRect(0, 0, WIDTH, HEIGHT);
       context.fill();
-    };
-
-    const WIDTH = 700;
-    const HEIGHT = 500;
-    const canvas = this.document.getElementById('canvas') as HTMLCanvasElement;
-    const context = canvas.getContext('2d');
-    prepareCanvas();
-    const imgData = context.getImageData(0, 0, WIDTH, HEIGHT);
-    let pix = imgData.data;
-    pix = imgData.data;
-    setInterval(flickering, 30);
-
+      const imgData = context.getImageData(0, 0, WIDTH, HEIGHT);
+      let pix = imgData.data;
+      pix = imgData.data;
+      setInterval(flickering, 30);
+    }
   }
 
 }
