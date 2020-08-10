@@ -41,8 +41,7 @@
             ],
             "scripts": [
               "node_modules/intl-tel-input/build/js/intlTelInput.min.js",
-              "node_modules/intl-tel-input/build/js/utils.js",
-              "node_modules/simple-peer/simplepeer.min.js"
+              "node_modules/intl-tel-input/build/js/utils.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
