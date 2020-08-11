@@ -9,7 +9,7 @@
     "bundle-report": "npm run build:stats && webpack-bundle-analyzer ./dist/browser/stats-es2015.json",
     "ng": "ng",
     "e2e": "ng e2e",
-    "start": "ng serve -o",
+    "start": "ng run buildozer:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "test": "clear && ng test",
     "test:coverage": "rm -rf ./coverage && ng test --codeCoverage --watch false",
