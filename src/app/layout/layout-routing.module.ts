@@ -9,6 +9,7 @@ const routes: Routes = [
     path: '',
     component: ContainerComponent,
     canActivate: [AppGuard],
+    canActivateChild: [AppGuard],
     children: [
       {
         path: Constants.Routing.Users.withoutSlash,
