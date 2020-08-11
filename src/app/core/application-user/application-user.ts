@@ -85,14 +85,14 @@ export class ApplicationUser extends SubjectFactory<boolean> {
         [Constants.Application.DEVICE_UUID as any]: await this.getDeviceUUID()
       });
       this.navigator.sendBeacon(`${ environment.endpointUrl }${ Constants.API.PORTAL.logout }`, blob);
-      this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
-        queryParams: {
-          [Constants.Application.REDIRECT_URL]: redirectUrl ?? undefined
-        }
-      });
-      this.tokenHelper.deleteToken();
-      this.notify(this.tokenHelper.isAuthenticated);
     }
+    this.router.navigateByUrl(Constants.Routing.LOGIN.withSlash, {
+      queryParams: {
+        [Constants.Application.REDIRECT_URL]: redirectUrl ?? undefined
+      }
+    });
+    this.tokenHelper.deleteToken();
+    this.notify(this.tokenHelper.isAuthenticated);
   }
 
   getDeviceUUID() {

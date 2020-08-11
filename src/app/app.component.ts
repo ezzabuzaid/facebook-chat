@@ -9,7 +9,7 @@ import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { Connectivity, NAVIGATOR, SOCKET_IO } from '@shared/common';
+import { Connectivity, NAVIGATOR } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { SeoService } from '@shared/services/seo/seo.service';
 import { partition } from 'rxjs';
@@ -36,7 +36,6 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly applicationUser: ApplicationUser,
     private readonly tokenHelper: TokenHelper,
     private translateService: TranslateService,
-    @Inject(SOCKET_IO) public readonly socket: SocketIOClient.Socket
   ) {
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
@@ -168,7 +167,6 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.applicationUser.oneTimeLogin()) {
       this.applicationUser.logout();
     }
-    this.socket.close();
     return '';
   }
 

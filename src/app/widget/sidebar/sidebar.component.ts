@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, Input, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { WINDOW } from '@shared/common';
 import { SidebarManager } from './sidebar.manager';
+import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -40,6 +41,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly sidebarService: SidebarManager,
     private readonly elementRef: ElementRef<HTMLElement>,
+    @Inject(PLATFORM_ID) private readonly platformId: any,
     @Inject(WINDOW) private readonly window: Window,
   ) { }
 
@@ -48,7 +50,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.resizable) {
+    if (this.resizable && isPlatformBrowser(this.platformId)) {
       const cursor = this.right ? 'w-resize' : 'e-resize';
       this.resizer.style.setProperty('cursor', cursor);
       this.setResizerPosition({

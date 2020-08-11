@@ -26,7 +26,9 @@ import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button
         ], { optional: true }),
         query(':enter', [
           style({ transform: 'translateX(-100%)' })
-        ], { optional: true }),
+        ],
+          { optional: true }
+        ),
         query(':leave', animateChild(), { optional: true }),
         group([
           query(':leave', [
@@ -36,7 +38,10 @@ import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button
             animate('300ms ease-in-out', style({ transform: 'translateX(0)' }))
           ], { optional: true })
         ]),
-        query(':enter', animateChild()),
+        query(':enter',
+          animateChild(),
+          { optional: true }
+        ),
       ])
     ])
   ]
