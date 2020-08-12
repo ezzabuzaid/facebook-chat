@@ -1,9 +1,9 @@
-@import '~@angular/material/theming';
-@import 'functions';
-@import 'variables';
-@import 'layout/layout.theme';
-@import 'pages/chat/chat.theme';
-@import 'widget/upload-file/upload-file.theme';
+@import "~@angular/material/theming";
+@import "functions";
+@import "variables";
+@import "layout/layout.theme";
+@import "pages/chat/chat.theme";
+@import "widget/upload-file/upload-file.theme";
 
 @include mat-core();
 
@@ -16,8 +16,8 @@
 }
 
 .default-theme {
-  $primary: mat-palette($mat-light-blue, 900);
-  $accent: mat-palette($mat-cyan, 300);
+  $primary: mat-palette($mat-blue);
+  $accent: mat-palette($mat-red);
   $theme: mat-light-theme($primary, $accent);
   @include application_theme($theme);
 }

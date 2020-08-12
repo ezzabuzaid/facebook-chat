@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   private initialTouchPos;
-  @Input() @HostBinding('class.toggled') public closed = false;
+  @Input() @HostBinding('class.opened') public opened = false;
   @Input() @HostBinding('class.right') public right = false;
   @Input() resizable = true;
   @HostBinding('class.resizing') public resizing = false;
@@ -61,17 +61,17 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
-  toggle(value = !this.closed) {
-    this.closed = value;
-    this.onToggle.next({ toggle: this.closed });
+  toggle(value?: boolean) {
+    this.opened = value ?? !this.opened;
+    this.onToggle.next({ toggle: this.opened });
   }
 
   open() {
-    this.toggle(false);
+    this.toggle(true);
   }
 
   close() {
-    this.toggle(true);
+    this.toggle(false);
   }
 
   private attachEvents(element: HTMLElement) {

@@ -1,23 +1,45 @@
-<button (click)="toggleSidebar()" class="toolbar-button" mat-flat-button>
+<div class="d-md-flex d-none">
+  <button fullscreen="document" mat-flat-button class="toolbar-button">
+    <mat-icon class="text--accent">fullscreen</mat-icon>
+  </button>
+  <button mat-flat-button class="toolbar-button">
+    <mat-icon class="text--accent">widgets</mat-icon>
+  </button>
+  <button [matMenuTriggerFor]="menu" mat-flat-button class="toolbar-button">
+    <mat-icon class="text--accent">public</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button (click)="changeLanguage(languageEnum.AR)" mat-menu-item>
+      <img style="width:10%" src="assets/images/flags/sa.svg" alt="Arabic">
+      <span class="mx-3">{{ 'arabic' | translate }}</span>
+    </button>
+    <button (click)="changeLanguage(languageEnum.EN)" mat-menu-item>
+      <img style="width:10%" src="assets/images/flags/us.svg" alt="English">
+      <span class="mx-3">{{ 'english' | translate }}</span>
+    </button>
+  </mat-menu>
+</div>
+<button (click)="toggleNavbar()" class="toolbar-button position-absolute left-0" mat-flat-button>
   <mat-icon class="text--accent">reorder</mat-icon>
 </button>
-<button fullscreen mat-flat-button class="toolbar-button">
-  <mat-icon class="text--accent">fullscreen</mat-icon>
-</button>
-<button mat-flat-button class="toolbar-button">
-  <mat-icon class="text--accent">widgets</mat-icon>
-</button>
-<button [matMenuTriggerFor]="menu" mat-flat-button class="toolbar-button">
-  <mat-icon class="text--accent">public</mat-icon>
-</button>
-
-<mat-menu #menu="matMenu">
-  <button (click)="changeLanguage(languageEnum.AR)" mat-menu-item>
-    <img style="width:10%" src="assets/images/flags/sa.svg" alt="Arabic">
-    <span class="mx-3">{{ 'arabic' | translate }}</span>
+<div class="d-md-none d-flex justify-content-center align-items-center align-content-center d-flex w-100">
+  <h6 class="text-center mb-0">Buildozer</h6>
+  <button [matMenuTriggerFor]="moreMenu" class="toolbar-button position-absolute right-0" mat-flat-button>
+    <mat-icon class="text--accent">more_horiz</mat-icon>
   </button>
-  <button (click)="changeLanguage(languageEnum.EN)" mat-menu-item>
-    <img style="width:10%" src="assets/images/flags/us.svg" alt="English">
-    <span class="mx-3">{{ 'english' | translate }}</span>
-  </button>
-</mat-menu>
+  <mat-menu #moreMenu="matMenu">
+    <button mat-menu-item (click)="openChatBar()">
+      <mat-icon class="text--accent">chat</mat-icon>
+      <span>Chat</span>
+    </button>
+    <button mat-menu-item class="toolbar-button">
+      <mat-icon class="text--accent">widgets</mat-icon>
+      <span>Widgets</span>
+    </button>
+    <button [matMenuTriggerFor]="menu" mat-menu-item class="toolbar-button">
+      <mat-icon class="text--accent">public</mat-icon>
+      <span>Language</span>
+    </button>
+  </mat-menu>
+</div>

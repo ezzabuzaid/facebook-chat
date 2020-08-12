@@ -27,8 +27,12 @@ export class ToolbarComponent implements OnInit {
     this.languageService.changeLanguage(language);
   }
 
-  toggleSidebar() {
+  toggleNavbar() {
     this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
+  }
+
+  openChatBar() {
+    this.sidebarService.getSidebar(RegisterdSidebar.CHAT).open();
   }
 
   logout() {

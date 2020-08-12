@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { AppUtils } from '@core/helpers/utils';
 import { NavigationItem } from '@layout/navbar/navigation';
 import { MEDIA_BREAKPOINTS } from '@shared/common';
@@ -13,8 +13,8 @@ import { Subject } from 'rxjs';
 })
 export class NavbarItemComponent implements OnInit, OnDestroy {
 
-  public get toggled() {
-    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).closed;
+  public get opened() {
+    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).opened;
   }
   private readonly subscribtion = new Subject();
   @Input() public item: NavigationItem;
@@ -28,9 +28,10 @@ export class NavbarItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() { }
 
+  // @HostListener('click')
   toggleNavbar() {
-    if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md')) && !this.collapse) {
-      this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
+    if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md'))) {
+      this.sidebarService.getSidebar(RegisterdSidebar.CHAT).close();
     }
   }
 

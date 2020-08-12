@@ -14,8 +14,8 @@ export class NavbarHeaderComponent implements OnInit {
     private readonly usersService: UsersService
   ) { }
 
-  public get toggled() {
-    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).closed;
+  public get opened() {
+    return this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).opened;
   }
 
   ngOnInit() {

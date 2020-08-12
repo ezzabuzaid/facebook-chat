@@ -34,7 +34,7 @@ export class NavbarCollapseComponent implements OnInit, OnDestroy {
   }
 
   expand(shouldExpand = !this.classList.contains('expanded')) {
-    if (this.navbarInstance.closed) {
+    if (this.navbarInstance.opened) {
       this.navbarInstance.open();
     }
     if (shouldExpand) {

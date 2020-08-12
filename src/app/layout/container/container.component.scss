@@ -11,7 +11,9 @@
   app-sidebar {
     --width: 275px;
     [sidebar-drawer] {
-      background-color: transparent;
+      @include mixins.media-breakpoint-up(md) {
+        background-color: transparent;
+      }
       mat-nav-list {
         img {
           width: 30px !important;

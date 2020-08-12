@@ -74,6 +74,7 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
   closeCard() {
     this.chatCardManager.removeCard();
     this.chatCardManager.removeButton(this.id);
+    this.chatManager.leave(this.data._id);
   }
 
   ngOnDestroy() {

@@ -26,5 +26,6 @@ export class SidebarManager {
 
 export enum RegisterdSidebar {
   NAVBAR = 'navbar',
+  CHAT = "chat_bar"
 }
 

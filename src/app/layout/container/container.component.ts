@@ -1,12 +1,13 @@
 import { animate, animateChild, group, query, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ChatModel } from '@shared/models';
 import { ChatService } from '@shared/services/chat';
-import { UsersService } from '@shared/services/users';
-import { ChatCardManager, ChatGroupCardComponent } from 'app/pages/chat';
-import { ChatConversationCardComponent } from 'app/pages/chat/chat-conversation-card/chat-conversation-card.component';
-import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
+import { ChatCardManager, ChatGroupCardComponent, ChatConversationCardComponent } from 'app/pages/chat';
+import { SidebarManager, RegisterdSidebar } from '@widget/sidebar';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { MEDIA_BREAKPOINTS } from '@shared/common';
 import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button/chat-floating-button.component';
+import { ChatCreateCardComponent } from 'app/pages/chat/chat-create-card/chat-create-card.component';
 
 @Component({
   selector: 'app-container',
@@ -46,16 +47,25 @@ import { ChatFloatingButtonComponent } from 'app/pages/chat/chat-floating-button
     ])
   ]
 })
-export class ContainerComponent implements OnInit {
+export class ContainerComponent implements OnInit, AfterViewInit {
   public $groups = this.chatService.getGroups();
   public $conversations = this.chatService.getConversations();
+
   constructor(
     private readonly chatCardManager: ChatCardManager,
     private readonly chatService: ChatService,
+    private readonly sidebarService: SidebarManager,
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit() {
-    this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
+  }
+  ngAfterViewInit() {
+    if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md'))) {
+      this.sidebarService.getSidebar(RegisterdSidebar.CHAT).close();
+    } else {
+      this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
+    }
   }
 
   openChatCard(conversation: ChatModel.Room) {
@@ -63,6 +73,7 @@ export class ContainerComponent implements OnInit {
       id: conversation._id,
       data: conversation
     });
+    // this.sidebarService.getSidebar(RegisterdSidebar.CHAT).close();
   }
 
   openGroupChatCard(room: ChatModel.Room) {
