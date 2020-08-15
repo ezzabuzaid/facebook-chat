@@ -80,7 +80,7 @@ describe(`TeardownInterceptor`, () => {
                 status: 0,
                 statusText: 'Unknown Error',
             }));
-        expect(TestBed.inject(MatSnackBar).open).toHaveBeenCalledWith('Internal server error. Please try again later.');
+        expect(TestBed.inject(MatSnackBar).open).toHaveBeenCalledWith('Please check youre internet or VPN then try again.');
     }));
 
     // TODO: rewrite the test case

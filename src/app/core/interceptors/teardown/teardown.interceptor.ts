@@ -38,8 +38,10 @@ export class TeardownInterceptor implements HttpInterceptor {
                                     case 401:
                                         return this.tryRefreshToken(event).pipe(switchMap(() => this.intercept(request, next)));
                                     case 500:
-                                    case 0:
                                         this.snackbar.open('Internal server error. Please try again later.');
+                                        break;
+                                    case 0:
+                                        this.snackbar.open('Please check youre internet or VPN then try again.');
                                         break;
                                 }
                             }

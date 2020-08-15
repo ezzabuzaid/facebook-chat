@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private readonly portalService: ApplicationUser,
+    private readonly applicationUser: ApplicationUser,
     private readonly router: Router,
     private routeUtility: RouteUtility
   ) { }
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   login({ valid, value }) {
     if (valid) {
-      this.portalService
+      this.applicationUser
         .login(value, this.rememberMeCheckBox.value)
         .subscribe(() => {
           this.navigate();
