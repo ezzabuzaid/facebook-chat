@@ -19,6 +19,9 @@ import { ChatCreateCardComponent } from './chat-create-card/chat-create-card.com
 import { ChatFloatingButtonComponent } from './chat-floating-button/chat-floating-button.component';
 import { ChatGroupMembersComponent } from './chat-group-members/chat-group-members.component';
 import { MessageBubbleComponent } from './message-bubble/message-bubble.component';
+import { ChatPageComponent } from './chat-page/chat-page.component';
+import { ChatRoutingModule } from './chat-routing.module';
+import { SidebarModule } from '@widget/sidebar';
 
 @NgModule({
   declarations: [
@@ -31,10 +34,7 @@ import { MessageBubbleComponent } from './message-bubble/message-bubble.componen
     ChatCardMessagesComponent,
     ChatCardFooterComponent,
     MessageBubbleComponent,
-  ],
-  exports: [
-    ChatConversationCardComponent,
-    ChatGroupCardComponent
+    ChatPageComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +46,9 @@ import { MessageBubbleComponent } from './message-bubble/message-bubble.componen
     PipesModule,
     FileViewerModule,
     InifiniteScrollingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChatRoutingModule,
+    SidebarModule
   ]
 })
 export class ChatModule { }

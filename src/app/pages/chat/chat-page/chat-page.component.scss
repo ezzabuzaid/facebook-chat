@@ -1,0 +1,15 @@
+@use "mixins";
+:host {
+    .avatar {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    app-sidebar {
+        --width: 300px;
+        [sidebar-drawer] {
+            @include mixins.media-breakpoint-up(md) {
+                background-color: transparent;
+            }
+        }
+    }
+}

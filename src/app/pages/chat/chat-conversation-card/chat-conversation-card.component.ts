@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { NAVIGATOR } from '@shared/common';
 import { ChatModel } from '@shared/models';
 import { ChatCardManager } from '../chat-card.manager';
@@ -15,7 +15,7 @@ export class ChatConversationCardComponent implements OnInit, OnDestroy, IChatCa
   video = document.querySelector('#webrtc') as HTMLVideoElement;
   localVideo = document.querySelector('#localVideo') as HTMLVideoElement;
   public id: string;
-  public data: ChatModel.Room = null;
+  @Input('room') public data: ChatModel.Room = null;
   peerConnection = new RTCPeerConnection({
     iceServers: [{
       urls: ['stun:stun.l.google.com:19302']

@@ -4,14 +4,20 @@
         <div class="w-100 d-flex align-items-center justify-content-between">
             <h6 class="mb-0">{{data.name}}</h6>
             <div class="d-flex">
-                <button mat-icon-button (click)="callUser()">
-                    <mat-icon class="text--primary">call</mat-icon>
+                <button mat-icon-button color="primary" (click)="callUser()">
+                    <mat-icon>call</mat-icon>
                 </button>
-                <button mat-icon-button>
-                    <mat-icon class="text--primary">add</mat-icon>
+                <button mat-icon-button color="primary" (click)="callUser()">
+                    <mat-icon>video_call</mat-icon>
                 </button>
-                <button mat-icon-button>
-                    <mat-icon (click)="closeCard()" class="text--primary">close</mat-icon>
+                <button mat-icon-button color="primary">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <button mat-icon-button color="primary">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button mat-icon-button color="primary">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
             </div>
         </div>

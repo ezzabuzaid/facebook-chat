@@ -44,6 +44,10 @@ export namespace Constants {
       withSlash: '/portal',
       withoutSlash: 'portal',
     };
+    static CHAT = {
+      withSlash: '/chat',
+      withoutSlash: 'chat',
+    };
     static SESSIONS = {
       withSlash: '/sessions',
       withoutSlash: 'sessions',

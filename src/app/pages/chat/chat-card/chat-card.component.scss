@@ -1,17 +1,10 @@
 :host {
-  position: fixed;
   height: 450px;
   width: 350px;
   bottom: 2%;
-  border-top-right-radius: 15px;
-  border-top-left-radius: 15px;
   right: inherit;
   z-index: 0;
 
-  mat-card {
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
-  }
   .caret {
     transition: bottom 0.25s;
     position: absolute;

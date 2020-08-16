@@ -1,13 +1,13 @@
-@import 'functions';
-@import 'mixins';
-@import 'variables';
+@import "functions";
+@import "mixins";
+@import "variables";
 
 html,
 body {
   height: 100%;
   user-select: none;
   margin: 0;
-  background-color: #f1f2f5;
+  background-color: #f1f1f1;
   &.no-connection {
     background-color: #d5dfe799;
   }

@@ -83,6 +83,7 @@ export class ChatCreateCardComponent implements OnInit, IChatCard<any> {
       .afterClosed()
       .pipe(
         switchMap((name) => {
+          // FIXME: if the room is group type name is not required because you can aggregate
           if (AppUtils.isEmptyString(name)) {
             this.snackbar.open('Please enter name');
             return of(null);

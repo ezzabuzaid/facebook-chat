@@ -1,0 +1,33 @@
+<app-sidebar name="chat_bar">
+    <div sidebar-drawer class="border-left">
+        <div class="d-flex align-items-center justify-content-between px-2 my-3">
+            <img ngxGravatar email="ezzabuzaid@hotmail.com" class="avatar" fallback="identicon">
+            <h6 class="mb-0 mr-2">Messenger</h6>
+            <button mat-icon-button class="add-chat-button">
+                <mat-icon class="font-size-18">launch</mat-icon>
+            </button>
+        </div>
+        <mat-card-content>
+            <mat-nav-list>
+                <h3 mat-subheader class="mb-0"> Conversations </h3>
+                <mat-list-item *ngFor="let conversation of ($conversations | async)"
+                    (click)="openChatCard(conversation)">
+                    <img matListAvatar ngxGravatar [src]="conversation.avatar" [email]="conversation.avatar"
+                        fallback="identicon">
+                    <p matLine class="font-weight-500"> {{conversation.name}} </p>
+                    <small mat-line class="text-muted font-weight-lighter"> Lorem ipsum dolor, sit amet consectetur
+                        adipisicing
+                        elit</small>
+                </mat-list-item>
+                <h3 mat-subheader class="mb-0"> Groups </h3>
+                <mat-list-item *ngFor="let group of ($groups | async)" (click)="openGroupChatCard(group)">
+                    <img matListAvatar ngxGravatar [email]="group.avatar" [src]="group.avatar" fallback="identicon">
+                    <p matLine> {{group.name}} </p>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-card-content>
+    </div>
+    <div sidebar-container class="bg-white">
+        <app-user-card *ngIf="currentRoom" [room]="currentRoom"></app-user-card>
+    </div>
+</app-sidebar>
