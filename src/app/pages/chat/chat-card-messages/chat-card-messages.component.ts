@@ -31,7 +31,7 @@ export class ChatCardMessagesComponent implements OnInit, AfterViewInit, OnDestr
 
   ngOnInit() {
     this.chatManager.socket
-      .on('Message', message => {
+      .on('Message', (message: ChatModel.Message) => {
         console.log('RECIVIE:', message);
         this.messages.push(message);
       });

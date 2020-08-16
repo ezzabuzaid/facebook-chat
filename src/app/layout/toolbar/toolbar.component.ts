@@ -31,8 +31,8 @@ export class ToolbarComponent implements OnInit {
     this.sidebarService.getSidebar(RegisterdSidebar.NAVBAR).toggle();
   }
 
-  openChatBar() {
-    this.sidebarService.getSidebar(RegisterdSidebar.CHAT).open();
+  toggleChatBar() {
+    this.sidebarService.getSidebar(RegisterdSidebar.CHAT).toggle();
   }
 
   logout() {

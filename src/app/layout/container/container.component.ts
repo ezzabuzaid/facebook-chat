@@ -64,8 +64,10 @@ export class ContainerComponent implements OnInit, AfterViewInit {
     if (this.breakpointObserver.isMatched(MEDIA_BREAKPOINTS.DOWN('md'))) {
       this.sidebarService.getSidebar(RegisterdSidebar.CHAT).close();
     } else {
-      this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
     }
+    // FIXME: mobile design should make fill the card to the whole screen so the button is not needed then
+    // FIXME: a search input should be at the top for the user to search across the user lists
+    this.chatCardManager.setButtonComponent(ChatFloatingButtonComponent);
   }
 
   openChatCard(conversation: ChatModel.Room) {

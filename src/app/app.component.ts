@@ -9,11 +9,13 @@ import { TokenHelper } from '@core/helpers/token';
 import { AppUtils } from '@core/helpers/utils';
 import { environment } from '@environments/environment';
 import { TranslateService } from '@ngx-translate/core';
-import { Connectivity, NAVIGATOR } from '@shared/common';
+import { Connectivity, NAVIGATOR, SOCKET_IO } from '@shared/common';
 import { AnalyticsService } from '@shared/services/analytics';
 import { SeoService } from '@shared/services/seo/seo.service';
 import { partition } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
+import { ChatManager } from './pages/chat';
+import { ChatModel } from '@shared/models';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +38,14 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly applicationUser: ApplicationUser,
     private readonly tokenHelper: TokenHelper,
     private translateService: TranslateService,
+    @Inject(SOCKET_IO) public readonly socket: SocketIOClient.Socket
   ) {
+    if (tokenHelper.isAuthenticated) {
+      this.socket.emit('Join', { id: this.tokenHelper.decodedToken.id })
+      this.socket.on('Message', (message: ChatModel.Message) => {
+        this.snackbar.open(message.text);
+      });
+    }
 
     // STUB if requestSubscription reject the subscribeToPushNotification result must be false
     // STUB if requestSubscription reject the pushNotificationService.subscribe must not be called

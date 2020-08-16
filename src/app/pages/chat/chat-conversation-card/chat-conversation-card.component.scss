@@ -1,4 +1,7 @@
 :host {
+  z-index: 999999;
+  position: relative;
+
   textarea.mat-input-element.cdk-textarea-autosize {
     box-sizing: content-box;
   }
