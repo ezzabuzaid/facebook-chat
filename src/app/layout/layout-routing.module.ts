@@ -12,14 +12,6 @@ const routes: Routes = [
     canActivateChild: [AppGuard],
     children: [
       {
-        path: Constants.Routing.Users.withoutSlash,
-        loadChildren: () => import('../pages/users/users.module').then(module => module.UsersModule)
-      },
-      {
-        path: Constants.Routing.SESSIONS.withoutSlash,
-        loadChildren: () => import('../pages/sessions/sessions.module').then(module => module.SessionsModule)
-      },
-      {
         path: Constants.Routing.MediaHub.withoutSlash,
         loadChildren: () => import('../pages/media-hub/media-hub.module').then(module => module.MediaHubModule)
       },

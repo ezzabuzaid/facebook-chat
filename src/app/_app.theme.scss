@@ -1,7 +1,6 @@
 @import "~@angular/material/theming";
 @import "functions";
 @import "variables";
-@import "layout/layout.theme";
 @import "pages/chat/chat.theme";
 @import "widget/upload-file/upload-file.theme";
 
@@ -10,7 +9,6 @@
 @mixin application_theme($theme) {
   @include angular-material-theme($theme);
   @include theme_classes($theme);
-  @include layout_theme($theme);
   @include chat_theme($theme);
   @include upload_file($theme);
 }

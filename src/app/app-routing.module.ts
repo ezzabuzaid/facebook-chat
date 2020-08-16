@@ -10,10 +10,6 @@ const routes = [
     redirectTo: Constants.Routing.HOME.withSlash,
   },
   {
-    path: Constants.Routing.Portal.withoutSlash,
-    loadChildren: () => import('./pages/portal/portal.module').then(({ PortalModule }) => PortalModule)
-  },
-  {
     path: '',
     loadChildren: () => import('./layout/layout.module').then(({ LayoutModule }) => LayoutModule)
   },

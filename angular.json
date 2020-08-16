@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "buildozer": {
+    "messenger": {
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -111,8 +111,8 @@
         "prerender": {
           "builder": "@nguniversal/builders:prerender",
           "options": {
-            "browserTarget": "buildozer:build:production",
-            "serverTarget": "buildozer:server:production",
+            "browserTarget": "messenger:build:production",
+            "serverTarget": "messenger:server:production",
             "routes": [
               "/portal"
             ]
@@ -124,8 +124,8 @@
         "serve-ssr": {
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
-            "browserTarget": "buildozer:build",
-            "serverTarget": "buildozer:server"
+            "browserTarget": "messenger:build",
+            "serverTarget": "messenger:server"
           },
           "configurations": {
             "production": {}
@@ -134,19 +134,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "buildozer:build",
+            "browserTarget": "messenger:build",
             "aot": true
           },
           "configurations": {
             "production": {
-              "browserTarget": "buildozer:build:production"
+              "browserTarget": "messenger:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "buildozer:build"
+            "browserTarget": "messenger:build"
           }
         },
         "lint": {
@@ -189,18 +189,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "buildozer:serve"
+            "devServerTarget": "messenger:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "buildozer:serve:production"
+              "devServerTarget": "messenger:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "buildozer",
+  "defaultProject": "messenger",
   "cli": {
     "analytics": "c0863d07-34f4-4b95-b876-0ab1036d2c37"
   }

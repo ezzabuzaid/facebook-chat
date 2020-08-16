@@ -1,4 +1,0 @@
-1_ info window class
-2_ marker element
-3_ element for searching
-4_ as (3) will have a text property to bind a text to input as view (this.gmapComponent.searchText = place.formatted_address;)

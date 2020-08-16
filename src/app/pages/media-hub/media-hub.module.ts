@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatagridModule } from '@partials/datagrid';
 import { FileViewerModule } from '@partials/file-viewer';
 import { MaterialModule } from '@shared/common';
 import { DirectivesModule } from '@shared/directives';
@@ -40,7 +39,6 @@ import { MediaPickerComponent } from './media-picker/media-picker.component';
     ReactiveFormsModule,
     SidebarModule,
     MasonryModule,
-    DatagridModule,
     DirectivesModule,
     PipesModule,
     FileViewerModule,
